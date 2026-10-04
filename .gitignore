@@ -1,0 +1,30 @@
+# Xcode build products and per-user workspace state
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.hmap
+
+# Swift Package Manager and platform build products
+.build/
+.swiftpm/
+
+# Test result bundles and local logs
+*.xcresult
+*.testresult
+*.log
+
+# Credentials and signing material
+.env
+.env.*
+!.env.example
+*.p12
+*.mobileprovision
+*.provisionprofile
+AuthKey_*.p8
+secrets.*
+
+# macOS noise
+.DS_Store
