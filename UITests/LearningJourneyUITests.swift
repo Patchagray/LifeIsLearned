@@ -20,9 +20,11 @@ final class LearningJourneyUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Before the report"].waitForExistence(timeout: 5))
         snapshot(app, "live-simulator-reader")
         XCUIDevice.shared.orientation = .landscapeLeft
+        waitForOrientation(landscape: true, in: app)
         XCTAssertTrue(app.buttons["Next screen"].isHittable)
         snapshot(app, "live-simulator-reader-landscape")
         XCUIDevice.shared.orientation = .portrait
+        waitForOrientation(landscape: false, in: app)
         app.buttons["Previous screen"].tap()
         for _ in 0..<7 { app.buttons["Next screen"].tap() }
         let revealCard = app.buttons["Reveal the idea"]
@@ -64,5 +66,13 @@ final class LearningJourneyUITests: XCTestCase {
     private func snapshot(_ app: XCUIApplication, _ name: String) {
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
+    }
+    private func waitForOrientation(landscape: Bool, in app: XCUIApplication) {
+        // A hittable button alone does not mean the system rotation has finished.
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            let size = app.screenshot().image.size
+            return landscape ? size.width > size.height : size.height > size.width
+        }, object: app)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 8), .completed)
     }
 }
