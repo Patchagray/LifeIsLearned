@@ -20,6 +20,24 @@
 		EF28063157974F05DA44D1AE /* LessonPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA3B93E1778F00494B3656 /* LessonPackage.swift */; };
 		F3EB0414900FBDDD7C8F5B48 /* LibraryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E2254DDB3A9D1A0BC1913 /* LibraryStore.swift */; };
 		FFC4291F46F5EE7FE2B53814 /* LessonSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD835B05F1625D3105D7ABF0 /* LessonSession.swift */; };
+		A8508970907E434F39310A08 /* PresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48C70D94F0EC51603D0A8E2 /* PresentationTests.swift */; };
+		E2A1AF1A4531CD5595341879 /* CollectionContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE96609AD1BF9D27B917EC7 /* CollectionContract.swift */; };
+		551794A1EA5F24D6A47528D6 /* LearningDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FE3BF4C1355FE54812F6B /* LearningDestination.swift */; };
+		DC9E81A33DD5BAC54D036087 /* LessonProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2738E4B8B93B9561C9823BA /* LessonProgress.swift */; };
+		26FC8084BBE938B899BCC4AE /* CollectionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A50A4456B2AF5DAAF19A50 /* CollectionStorage.swift */; };
+		BFC6FA1035297D3BC08B1869 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A4BC228F4C7BFF10C8920A /* ArtworkView.swift */; };
+		19C51F25A6A82A177C5D54AD /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EC1A55E51E1B6440D12852 /* BookDetailView.swift */; };
+		947B6245CE9471EFC8D20871 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D3FC91EAEBE41989E79854 /* DesignSystem.swift */; };
+		3B85EB96940873F0D64CF726 /* ImportReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2CF6511CF75E73B5DC6ADE /* ImportReviewView.swift */; };
+		F1B7A29A3F249062B7E35628 /* LearningHomeComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741A503EF1FB02839939F5DC /* LearningHomeComponents.swift */; };
+		6244258689441C9E03930DF9 /* LessonCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9078A2E37A29D541199F2B /* LessonCompletionView.swift */; };
+		739F3E70DF2AF374EBDB6F2F /* NarrationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B963CF0B8D759836F5E043AD /* NarrationText.swift */; };
+		D113C52EA0DCADA60FC95239 /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FE5D9E735A2497EDB38684 /* PracticeView.swift */; };
+		AEEC1A35EEEF85F298599F08 /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401CD2319BEF8E57BC7B91 /* SourcesView.swift */; };
+		83FF6BB06B5CBAA1F9350959 /* TakeawayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B535E0AD728E041117DDB6 /* TakeawayCard.swift */; };
+		02ADA44CE7FF22E4A418BC8D /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42D34CE1AA1573D0254555 /* CollectionTests.swift */; };
+		8AD91FB46F938B25756EB0D4 /* ResumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911FFA0F4A0172E51E17276A /* ResumeTests.swift */; };
+		F2092C22456548D145E34BF3 /* LearningJourneyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB09FE97F26A647248965A; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +66,25 @@
 		DA1DB05E9EE692B4F8170AA9 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		F739566ED5280322FF98A798 /* LifeIsLearnedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = LifeIsLearnedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD835B05F1625D3105D7ABF0 /* LessonSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSession.swift; sourceTree = "<group>"; };
+		B48C70D94F0EC51603D0A8E2 /* PresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationTests.swift; sourceTree = "<group>"; };
+		7EE96609AD1BF9D27B917EC7 /* CollectionContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionContract.swift; sourceTree = "<group>"; };
+		960FE3BF4C1355FE54812F6B /* LearningDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningDestination.swift; sourceTree = "<group>"; };
+		A2738E4B8B93B9561C9823BA /* LessonProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgress.swift; sourceTree = "<group>"; };
+		F3A50A4456B2AF5DAAF19A50 /* CollectionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStorage.swift; sourceTree = "<group>"; };
+		10A4BC228F4C7BFF10C8920A /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
+		F3EC1A55E51E1B6440D12852 /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
+		B5D3FC91EAEBE41989E79854 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		9F2CF6511CF75E73B5DC6ADE /* ImportReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportReviewView.swift; sourceTree = "<group>"; };
+		741A503EF1FB02839939F5DC /* LearningHomeComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningHomeComponents.swift; sourceTree = "<group>"; };
+		2F9078A2E37A29D541199F2B /* LessonCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCompletionView.swift; sourceTree = "<group>"; };
+		B963CF0B8D759836F5E043AD /* NarrationText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NarrationText.swift; sourceTree = "<group>"; };
+		F3FE5D9E735A2497EDB38684 /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
+		4F401CD2319BEF8E57BC7B91 /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
+		77B535E0AD728E041117DDB6 /* TakeawayCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeawayCard.swift; sourceTree = "<group>"; };
+		7C42D34CE1AA1573D0254555 /* CollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTests.swift; sourceTree = "<group>"; };
+		911FFA0F4A0172E51E17276A /* ResumeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeTests.swift; sourceTree = "<group>"; };
+		1EDB09FE97F26A647248965A /* LearningJourneyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningJourneyUITests.swift; sourceTree = "<group>"; };
+		197ACBCE178086083DF2C68A /* LifeIsLearnedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = LifeIsLearnedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +102,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		41FE116E66BDA8193CB57524 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -73,6 +111,7 @@
 			children = (
 				681C948D238C526E9E3424E0 /* LifeIsLearned.app */,
 				F739566ED5280322FF98A798 /* LifeIsLearnedTests.xctest */,
+				197ACBCE178086083DF2C68A /* LifeIsLearnedUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,6 +121,7 @@
 			children = (
 				FC233BDA2344D97687F5A251 /* LifeIsLearned */,
 				C4E2E7F217DE3642E7714F4E /* Tests */,
+				913D89A0BCA78AFA58CCD860 /* UITests */,
 				0A3E27B8CA818264D75C8D81 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,6 +138,7 @@
 		6B8B2B5CD808F874BF4EE1BA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F3A50A4456B2AF5DAAF19A50 /* CollectionStorage.swift */,
 				FD835B05F1625D3105D7ABF0 /* LessonSession.swift */,
 				055E2254DDB3A9D1A0BC1913 /* LibraryStore.swift */,
 				737AB2CF9CFB2B8399AB4DAB /* PlaybackSettings.swift */,
@@ -109,6 +150,16 @@
 		6C923F6D92369A43B16924F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				77B535E0AD728E041117DDB6 /* TakeawayCard.swift */,
+				4F401CD2319BEF8E57BC7B91 /* SourcesView.swift */,
+				F3FE5D9E735A2497EDB38684 /* PracticeView.swift */,
+				B963CF0B8D759836F5E043AD /* NarrationText.swift */,
+				2F9078A2E37A29D541199F2B /* LessonCompletionView.swift */,
+				741A503EF1FB02839939F5DC /* LearningHomeComponents.swift */,
+				9F2CF6511CF75E73B5DC6ADE /* ImportReviewView.swift */,
+				B5D3FC91EAEBE41989E79854 /* DesignSystem.swift */,
+				F3EC1A55E51E1B6440D12852 /* BookDetailView.swift */,
+				10A4BC228F4C7BFF10C8920A /* ArtworkView.swift */,
 				B7B157575EC184C68EA87A9B /* Components.swift */,
 				3CA530377942251DF3E857C7 /* LibraryView.swift */,
 				DA1DB05E9EE692B4F8170AA9 /* ReaderView.swift */,
@@ -120,6 +171,9 @@
 		A2A9809DAF0AEE6960B34B37 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A2738E4B8B93B9561C9823BA /* LessonProgress.swift */,
+				960FE3BF4C1355FE54812F6B /* LearningDestination.swift */,
+				7EE96609AD1BF9D27B917EC7 /* CollectionContract.swift */,
 				1ACA3B93E1778F00494B3656 /* LessonPackage.swift */,
 			);
 			path = Models;
@@ -128,6 +182,9 @@
 		C4E2E7F217DE3642E7714F4E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				911FFA0F4A0172E51E17276A /* ResumeTests.swift */,
+				7C42D34CE1AA1573D0254555 /* CollectionTests.swift */,
+				B48C70D94F0EC51603D0A8E2 /* PresentationTests.swift */,
 				246F684ECF776260D1120241 /* LessonSessionTests.swift */,
 			);
 			path = Tests;
@@ -145,6 +202,7 @@
 			path = LifeIsLearned;
 			sourceTree = "<group>";
 		};
+		913D89A0BCA78AFA58CCD860 /* UITests */ = {isa = PBXGroup; children = (1EDB09FE97F26A647248965A,); path = UITests; sourceTree = "<group>"; };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -183,6 +241,7 @@
 			productReference = 681C948D238C526E9E3424E0 /* LifeIsLearned.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D51D0EF3057B859406AFEC9E /* LifeIsLearnedUITests */ = {isa = PBXNativeTarget; buildConfigurationList = FF7143CCF615217A6F1F241D; buildPhases = (B163B2B27B191635FF8E9FC8,41FE116E66BDA8193CB57524,); buildRules = (); dependencies = (F26350DAFE3F19AABFD69AC4,); name = LifeIsLearnedUITests; productName = LifeIsLearnedUITests; productReference = 197ACBCE178086083DF2C68A; productType = "com.apple.product-type.bundle.ui-testing"; };
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -214,6 +273,7 @@
 			projectRoot = "";
 			targets = (
 				C1E9827DB735CA9BAA54A540 /* LifeIsLearned */,
+				D51D0EF3057B859406AFEC9E /* LifeIsLearnedUITests */,
 				9805CBD60EB4F66728D5D195 /* LifeIsLearnedTests */,
 			);
 		};
@@ -243,6 +303,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83FF6BB06B5CBAA1F9350959 /* TakeawayCard.swift in Sources */,
+				AEEC1A35EEEF85F298599F08 /* SourcesView.swift in Sources */,
+				D113C52EA0DCADA60FC95239 /* PracticeView.swift in Sources */,
+				739F3E70DF2AF374EBDB6F2F /* NarrationText.swift in Sources */,
+				6244258689441C9E03930DF9 /* LessonCompletionView.swift in Sources */,
+				F1B7A29A3F249062B7E35628 /* LearningHomeComponents.swift in Sources */,
+				3B85EB96940873F0D64CF726 /* ImportReviewView.swift in Sources */,
+				947B6245CE9471EFC8D20871 /* DesignSystem.swift in Sources */,
+				19C51F25A6A82A177C5D54AD /* BookDetailView.swift in Sources */,
+				BFC6FA1035297D3BC08B1869 /* ArtworkView.swift in Sources */,
+				26FC8084BBE938B899BCC4AE /* CollectionStorage.swift in Sources */,
+				DC9E81A33DD5BAC54D036087 /* LessonProgress.swift in Sources */,
+				551794A1EA5F24D6A47528D6 /* LearningDestination.swift in Sources */,
+				E2A1AF1A4531CD5595341879 /* CollectionContract.swift in Sources */,
 				A1C4AEF683C991BD4056BAC0 /* LifeIsLearnedApp.swift in Sources */,
 				EF28063157974F05DA44D1AE /* LessonPackage.swift in Sources */,
 				FFC4291F46F5EE7FE2B53814 /* LessonSession.swift in Sources */,
@@ -260,10 +334,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AD91FB46F938B25756EB0D4 /* ResumeTests.swift in Sources */,
+				02ADA44CE7FF22E4A418BC8D /* CollectionTests.swift in Sources */,
+				A8508970907E434F39310A08 /* PresentationTests.swift in Sources */,
 				89716BCC15850977F645FB65 /* LessonSessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B163B2B27B191635FF8E9FC8 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (F2092C22456548D145E34BF3,); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -379,6 +457,8 @@
 			};
 			name = Release;
 		};
+		7C233544B17DD67C39852A5C = {isa = XCBuildConfiguration; name = Debug; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.mariosinclair.lifeislearned.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = LifeIsLearned; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; }; };
+		58F1DDCC41908ACB3CE7DAD8 = {isa = XCBuildConfiguration; name = Release; buildSettings = {CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.mariosinclair.lifeislearned.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = LifeIsLearned; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; }; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -409,6 +489,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		FF7143CCF615217A6F1F241D = {isa = XCConfigurationList; buildConfigurations = (7C233544B17DD67C39852A5C,58F1DDCC41908ACB3CE7DAD8,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 /* End XCConfigurationList section */
 	};
 	rootObject = 244210E48437B6556980A702 /* Project object */;

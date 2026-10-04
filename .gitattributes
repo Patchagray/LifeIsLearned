@@ -1,0 +1,2 @@
+# Preserve supplied PDFs byte for byte; do not apply text diffs or conversions.
+*.pdf binary

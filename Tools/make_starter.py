@@ -56,7 +56,9 @@ book = dict(id='influential-mind', title='The Influential Mind',author='Tali Sha
  coverageNote='Starter collection: one introductory lesson on priors. Grounded in the publisher’s prologue and a separately identified 2019 research paper. The full book and Chapter 1 have not been reviewed; completion here means completion of the available lesson only.',
  sources=sources,lessons=[dict(id='priors',revision=1,title='The Prior Problem',subtitle='Why evidence does not enter an empty mind',estimatedMinutes=5,
  scopeNote='Original teaching story. Introductory coverage of priors; not an exhaustive chapter summary. Fictional report findings are not research results.',pages=pages,questions=questions)])
-package = dict(formatVersion=1,book=book)
+from convert_package import convert
+book['isDemo'] = True
+package = convert(dict(formatVersion=1,book=book), revision=1)
 payload = json.dumps(package,ensure_ascii=False,indent=2)+'\n'
 (root/'LifeIsLearned/Resources/starter.json').write_text(payload)
 (root/'Example-Lesson-Package.json').write_text(payload)

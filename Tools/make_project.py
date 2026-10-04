@@ -1,7 +1,11 @@
 """Generate a self-contained Xcode project without third-party project tools."""
 from pathlib import Path
-import hashlib,json
+import hashlib,json,sys,subprocess
 root=Path(__file__).resolve().parents[1]
+existing_project = root/'LifeIsLearned.xcodeproj/project.pbxproj'
+previous_objects = {}
+if existing_project.exists():
+ raise SystemExit('The maintained project includes signing settings and UI tests. Edit it in Xcode; regeneration is disabled to preserve these changes.')
 def uid(s):return hashlib.sha256(s.encode()).hexdigest()[:24].upper()
 def q(s):return json.dumps(s)
 objects={}
@@ -47,7 +51,8 @@ def configs(prefix,values):
   d=dict(values)
   if prefix=='project':
    d.update({'SWIFT_OPTIMIZATION_LEVEL':'-Onone' if name=='Debug' else '-O','DEBUG_INFORMATION_FORMAT':'dwarf' if name=='Debug' else 'dwarf-with-dsym'})
-   if name=='Debug': d['SWIFT_ACTIVE_COMPILATION_CONDITIONS']='DEBUG'
+   if name=='Debug': d.update(SWIFT_ACTIVE_COMPILATION_CONDITIONS='DEBUG',SWIFT_ENABLE_TESTABILITY='YES')
+  d.update(previous_objects.get(uid(prefix+name),{}).get('buildSettings',{}))
   ids.append(obj(prefix+name,f'{{isa = XCBuildConfiguration; buildSettings = {settings(d)}; name = {name};}}'))
  return obj(prefix+'configs',f'{{isa = XCConfigurationList; buildConfigurations = {array(ids)}; defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;}}')
 project_config=configs('project',base);app_config=configs('app',app_base);test_config=configs('test',test_base)
