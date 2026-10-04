@@ -78,8 +78,7 @@ import UIKit
                             takeaway
                         } else {
                             Text(session.page.title).font(.largeTitle.bold())
-                            narratedText(session.page.text).font(.custom("Georgia", size: settings.textSize, relativeTo: .body))
-                                .lineSpacing(7).frame(maxWidth: .infinity, alignment: .leading)
+                            narratedText.frame(maxWidth: .infinity, alignment: .leading)
                             LessonIllustration(page: session.page)
                         }
                         if session.page.kind == .intro {
@@ -90,18 +89,21 @@ import UIKit
                         if let error = speech.errorMessage { Text(error).font(.footnote).foregroundStyle(Palette.amber) }
                     }.padding(.horizontal, 24).padding(.bottom, 24).frame(maxWidth: 680).frame(maxWidth: .infinity)
                 }.onChange(of: session.index) { _, _ in proxy.scrollTo("top", anchor: .top) }
+                    .onChange(of: speech.spokenRange) { _, range in
+                        // Replay brings the title back into view before body narration starts.
+                        if speech.isPlaying, range?.location == 0,
+                           speech.spokenText == session.page.title + ". " + session.page.text {
+                            proxy.scrollTo("top", anchor: .top)
+                        }
+                    }
             }
             controls
         }
     }
-    private func narratedText(_ text: String) -> Text {
-        let prefix = session.page.title + ". "
-        guard speech.spokenText == prefix + text, let spoken = speech.spokenRange else { return Text(text) }
-        let offset = (prefix as NSString).length
-        let adjusted = NSRange(location: spoken.location - offset, length: spoken.length)
-        guard adjusted.location >= 0, let range = Range(adjusted, in: text) else { return Text(text) }
-        return Text(String(text[..<range.lowerBound])) + Text(String(text[range])).bold().foregroundColor(Palette.teal)
-            + Text(String(text[range.upperBound...]))
+    private var narratedText: some View {
+        NarrationText(text: session.page.text, title: session.page.title,
+                      spokenText: speech.spokenText, spokenRange: speech.spokenRange,
+                      isPlaying: speech.isPlaying, textSize: settings.textSize)
     }
     private var takeaway: some View {
         VStack(spacing: 22) {
@@ -113,7 +115,7 @@ import UIKit
                         .font(.system(size: 48)).foregroundStyle(Palette.amber)
                     Text(session.page.title).font(.title.bold())
                     if session.takeawayRevealed {
-                        Text(session.page.text).font(.custom("Georgia", size: settings.textSize, relativeTo: .body)).lineSpacing(7)
+                        narratedText
                     } else {
                         Text("Tap to reveal your idea card.").foregroundStyle(.secondary)
                     }

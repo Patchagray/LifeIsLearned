@@ -1,0 +1,26 @@
+{
+  "productionSourceSHA256": {
+    "LifeIsLearned/Views/Components.swift": "99e4e1b2b36cd7f81de7f25170498f7fb9c7dfe77708fdfc0a9ec9c0dadad5f4",
+    "LifeIsLearned/Views/ReaderView.swift": "b68c34648474719e76f384bba20134ff94563c57ad12008775eb558cadee6949"
+  },
+  "runs": [
+    {
+      "result": "Passed",
+      "passedTests": 11,
+      "failedTests": 0,
+      "device": "iPhone 16e",
+      "osVersion": "26.3.1",
+      "platform": "iOS Simulator",
+      "localResultBundle": "/tmp/LifeIsLearned-scroll-final.xcresult"
+    },
+    {
+      "result": "Passed",
+      "passedTests": 11,
+      "failedTests": 0,
+      "device": "iPad (A16)",
+      "osVersion": "26.3.1",
+      "platform": "iOS Simulator",
+      "localResultBundle": "/tmp/LifeIsLearned-scroll-ipad-final.xcresult"
+    }
+  ]
+}

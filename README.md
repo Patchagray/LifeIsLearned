@@ -20,6 +20,7 @@ Use **⌘U** to run the included XCTest target. Use an installed simulator. Voic
 - Three original scene illustrations (setup, disagreement, collaboration) reused where appropriate.
 - Guide and storyteller voice choices, previews, speed and screen-pause controls.
 - Auto-advance on actual speech completion, pause/resume, replay, back/next, spoken-word emphasis.
+- Narration follows long lesson text by scrolling the spoken line into view when needed. Manual drags take priority; following resumes as narration continues after the drag settles. Reduce Motion is respected, and automatic following is disabled while VoiceOver is running.
 - A revealable idea card. Playback stops here. Practice requires your action.
 - Two practice questions, feedback for every answer, retries, first-attempt score, completion.
 - Reading position and practice progress saved on device. You can revisit screens freely.
@@ -60,4 +61,4 @@ The app is intentionally a lesson player. Automatic book/PDF extraction, live AI
 
 ## Validation status
 
-This package was created in a Linux workspace. It has **not been compiled or run in Xcode** here. Content, file references, scheme structure and image packaging were checked; native compiler and simulator checks remain the first Mac-side step. The XCTest suite is included but has not been executed here. Do not label this a tested iOS build until those checks pass.
+The supplied package was originally created in a Linux workspace. It has since built and passed the included tests on the Mac. Narration-follow scrolling adds simulator tests for line visibility, pause/replay, text sizing, and the actual reader layout. See `VALIDATION.md` for the exact commands, outcomes, simulator evidence, user-reported phone checks, and remaining hardware checks for the latest change.
