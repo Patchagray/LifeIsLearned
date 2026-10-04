@@ -223,7 +223,7 @@ final class CollectionTests: XCTestCase {
         XCTAssertEqual(try String(contentsOf: root.appendingPathComponent(pointer.current).appendingPathComponent("collections.json")), "broken")
     }
 
-    @MainActor func testMaximumRepresentativeCollectionValidationKeepsMainActorResponsive() async throws {
+    @MainActor func testMaximumRepresentativeCollectionImportKeepsMainActorResponsive() async throws {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
         var package = f.multiIdea(count: 100)
         let imageKey = try XCTUnwrap(package.assets?.keys.sorted().first)
@@ -244,8 +244,17 @@ final class CollectionTests: XCTestCase {
             while !Task.isCancelled { ticks += 1; try? await Task.sleep(nanoseconds: 10_000_000) }
         }
         await f.store.prepareImport(from: url)
-        heartbeat.cancel()
         XCTAssertNil(f.store.errorMessage); XCTAssertEqual(f.store.importReview?.package.book.lessons.count, 100)
+        let review = try XCTUnwrap(f.store.importReview)
+        await f.store.commitImport(review)
+        await f.store.flush()
+        heartbeat.cancel()
+        XCTAssertNil(f.store.errorMessage)
+        XCTAssertEqual(f.store.books.first?.lessons.count, 100)
+        let reloaded = LibraryStore(documentsURL: f.directory, defaults: f.defaults, includeDemo: false)
+        await reloaded.ready()
+        XCTAssertEqual(reloaded.books.first?.lessons.count, 100)
+        XCTAssertEqual(reloaded.books.first?.lessons.last?.pages.count, 40)
         XCTAssertGreaterThan(ticks, 2, "Main actor should keep responding during collection validation")
         print("REPRESENTATIVE_COLLECTION bytes=\(try Data(contentsOf: url).count) ideas=100 pagesPerIdea=40 assets=32 seconds=\(Date().timeIntervalSince(started)) mainActorTicks=\(ticks)")
     }
