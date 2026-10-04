@@ -51,13 +51,13 @@ After installing and running the starter on their phone, the user reported:
 - A correct answer showed positive reinforcement.
 - Text extending below the visible area required manual scrolling while narration continued. This prompted the narration-follow scrolling change.
 
-These are the user's physical-device observations of the earlier build, not automated results or agent-observed hardware checks. The new scrolling behavior still needs a phone check after installation. Device/OS version and the exact previously installed commit were not supplied.
+These are the user's physical-device observations of the earlier build, not automated results or agent-observed hardware checks. After the scrolling update was delivered at `ead7e58b2d6fd55cf29d448128e9e94ac85894d6`, the user reported “Everything works fine” and requested that all changes be committed and submitted for review. This records user-reported acceptance of the updated phone experience. Device/OS version and the exact installed binary were not independently verified.
 
 ## Narration-follow scrolling
 
 The reader now uses the actual spoken UTF-16 range and rendered text-line geometry to keep narration visible. It scrolls when the line approaches the bottom edge, placing it near the upper third of the reading area. Visible lines do not cause scrolling. The same behavior applies to a revealed takeaway; replay returns to the title. Following stops on pause/stop, yields during manual dragging/deceleration, honors Reduce Motion, and is disabled while VoiceOver is running.
 
-The implementation uses native UIKit text layout inside the existing SwiftUI reader. No lesson content or speech sequencing changed. The user's pre-existing Xcode project formatting and development-team selections remain local and are excluded from this feature commit.
+The implementation uses native UIKit text layout inside the existing SwiftUI reader. No lesson content or speech sequencing changed. The user's existing Xcode project formatting and development-team selections were preserved during implementation. They are now included in the review branch at the user's request to commit all remaining changes. Semantic comparison confirms that the project changes add only the app target's existing development-team selection in Debug and Release; the remaining diff is Xcode formatting.
 
 Commands (from the repository root; `test` builds the app and test targets):
 
@@ -72,4 +72,8 @@ xcodebuild -project LifeIsLearned.xcodeproj -scheme LifeIsLearned -destination '
 - New coverage: Unicode title/body offsets, invalid or stale ranges, actual line visibility in portrait/landscape/tablet-sized viewports, safe-area insets, pause/replay, Dynamic Type, the actual SwiftUI `ReaderView`, and cancellation of a queued follow operation when playback stops.
 - The first new test run caught an incorrect test-fixture assumption that a scroll view always starts at offset zero. The fixture now explicitly sets and checks its insets. The corrected tests passed; production failures were not suppressed.
 - Raw logs and `.xcresult` bundles remain in `/tmp/LifeIsLearned-scroll-*` and are not committed. App build products remain in `/tmp/LifeIsLearned-Scroll-DerivedData`.
-- Reader screenshots are rendered by the simulator test with an injected spoken range at accessibility text size. They demonstrate layout and scroll movement, not a live speech/audio audition. The new scrolling behavior with the user's premium voices, manual dragging, and animation still needs a physical-device check.
+- Reader screenshots are rendered by the simulator test with an injected spoken range at accessibility text size. They demonstrate layout and scroll movement, not a live speech/audio audition. The user subsequently confirmed the updated phone experience worked fine. This is user-reported functional acceptance; detailed device checks of VoiceOver, Reduce Motion, interruptions, and every manual-drag edge case were not separately documented.
+
+## Review handoff
+
+The review branch contains the narration-scrolling implementation, focused tests, sanitized evidence, user-reported phone acceptance, and the existing Xcode signing-team configuration. Application source is unchanged from the passing simulator runs recorded above. The handoff changes only project metadata and verification documentation, so the simulator tests were not repeated for this commit.
