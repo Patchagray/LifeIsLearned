@@ -2,7 +2,7 @@
 
 ## Purpose and priorities
 
-Build a native SwiftUI iPhone/iPad app primarily for personal learning.
+Build a native SwiftUI iPhone/iPad app primarily for my personal learning.
 
 Prioritize:
 
@@ -20,7 +20,7 @@ Preserve this journey:
 
 Book overview → ordered idea list → introduction → illustrated lesson screens → revealable takeaway → practice questions → explanatory feedback → completion → return to the book.
 
-Use a guide voice for introductions, explanations, takeaways, and feedback; use a storyteller voice for the lesson body. The user's preference is an older, crisp male guide and a younger, softer female storyteller. Provide previews and choices; do not promise vocal characteristics that have not been auditioned.
+Use a guide voice for introductions, explanations, takeaways, and feedback; use a storyteller voice for the lesson body. My preference is an older, crisp male guide and a younger, softer female storyteller. Provide previews and choices; do not promise vocal characteristics that have not been auditioned.
 
 Automatic progression must follow actual narration completion, with an adjustable pause between screens. Stop for reflection and questions. Support pause/resume, replay, back/next, and saved reading position.
 
@@ -56,7 +56,7 @@ Clearly distinguish code inspection, successful compilation, passing tests, simu
 
 ## Shared work and evidence
 
-Once the GitHub destination is confirmed, commit and push completed implementation work to a dedicated branch. Inspect the diff first and stage only task-related files. Do not merge into the default branch without approval.
+Once the GitHub destination is confirmed, commit and push completed implementation work to a dedicated branch. Inspect the diff first and stage only task-related files. Do not merge into the default branch without my approval.
 
 Make the actual source changes available for review—not just a narrative report. Identify the repository, branch, and exact commit.
 
@@ -64,8 +64,8 @@ Keep relevant build/test evidence tied to that commit. Do not commit secrets, pe
 
 ## Communication
 
-The user is a beginner. Keep updates brief and professional.
+I am a beginner. Keep updates brief and professional.
 
-When user action is needed, explain exactly what to open, click, or select. When giving code for manual editing, provide the complete file or an exact insertion location.
+When my action is needed, explain exactly what to open, click, or select. When giving code for manual editing, provide the complete file or an exact insertion location.
 
 At handoff, state what changed, what was verified, what remains uncertain, and where the pushed work can be inspected.
