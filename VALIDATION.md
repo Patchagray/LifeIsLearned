@@ -39,13 +39,17 @@ The [measurement](Evidence/Handoff003/premium-reference-timing.json) and [releas
 
 Boundary tests demonstrate 299.692308 seconds passes planning and 300.153846 fails; synthetic measurement validation accepts exactly 300 and rejects 300.01. Missing measurements, non-premium voices, changed scripts/revisions or altered reference settings cannot approve a release.
 
+### User-reported device acceptance — October 5, 2026
+
+After the Handoff 003 build was installed and launched on PATCHA, Mario reported **“everything works.”** This is recorded as the user's overall physical-device acceptance of the delivered patch. The user did not enumerate individual voice, interruption, accessibility or background scenarios, so this statement does not independently document results for each one. The premium timing evidence above is the separately measured device result.
+
 ### Repairs, evidence and remaining scope
 
 An initial new test failed Swift exclusivity checking; a local image value fixed the fixture. An initial Files UI test assumed a five-second provider startup; it now waits for actual provider readiness before choosing its navigation path. The final full suites pass without weakening acceptance assertions. Raw development logs, including failures, and the three principal result bundles are archived in the ignored local `LocalVerification/Handoff003/` folder. Published evidence excludes device identifiers, signing profiles and raw result bundles.
 
 Xcode emitted debugger-version diagnostics, simulator voice fallback messages, and physical AVAudioSession/AudioQueue diagnostics. The recorded test/build/install/launch operations nevertheless completed successfully; these logs do not establish subjective audio quality. An early attachment export ran before Xcode finalized its result bundle; the subsequent completed-bundle export succeeded.
 
-Subjective audition and a new physical pass for real interruptions/audio routes, background/foreground, VoiceOver and Reduce Motion remain unperformed for this patch. Prior user acceptance of Handoff 002 remains historical. No authentication or signing blocker remains. The two full companion collections, cloud distribution/catalog, release publication and default-branch merge are outside this patch.
+The user’s overall device acceptance is recorded above; detailed voice audition and individual interruption/audio-route, background/foreground, VoiceOver and Reduce Motion results were not enumerated. Prior Handoff 002 acceptance remains separately historical. No authentication or signing blocker remains. The two full companion collections, cloud distribution/catalog, release publication and default-branch merge are outside this patch.
 
 To try the update: open `LifeIsLearned.xcodeproj`, select **LifeIsLearned → PATCHA** and press **⌘R** (the build is already installed). Save `Example-Lesson-Package.json` to the iPhone's Files app, then choose **+ / Import book → that file → Import complete update → Open book**. Import is intentionally not automatic; the old revision's progress remains archived.
 
