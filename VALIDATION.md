@@ -1,5 +1,56 @@
 # Validation report
 
+## Handoff 003 — October 4–5, 2026
+
+Implementation: `f78c7f1781b6fa2087559d138c2b4947b0dcfc52`, branch `feature/handoff-003-content-limits`, based on accepted Handoff 002 commit `d10a60f84b9921cd24a74666b5877359f0623090`. The follow-up evidence commit changes documentation and screenshots only. This section supersedes earlier import-count and duration guidance; historical results below remain unchanged. See [commands, hashes and screenshots](Evidence/Handoff003/README.md).
+
+### Changes and preservation
+
+- New imports and updates require 1–12 unique ideas. Stored-content loading separately preserves valid 13–100-idea format-2 collections and legacy format-1 content. Reducing an installed collection requires explicit removals and acknowledgement; all old progress remains archived.
+- Removed the numerical image-count cap. Retained 64 MiB encoded packages, 2 MiB per image, 24 MiB combined base64-decoded image-file bytes, 2048 × 2048 dimensions, single-frame PNG/JPEG native decoding, unique nonempty IDs, references and cover checks.
+- Added repeatable whole-idea timing and authoring/release gates, including options, feedback prefixes, completion, page pauses and answering allowance. The runtime never interrupts narration to meet a deadline. Selection and coverage appear before the first start; duration help explains individual variation.
+- Shortened the separate demo update to six screens and two application questions, collection/idea revision 2. The startup seed remains byte-for-byte unchanged. Sources and original artwork are retained; full-book coverage is not claimed. The two larger companions are being curated externally for later import, as requested.
+- The speech service is byte-for-byte unchanged. Session changes centralize the same spoken strings for playback/timing parity. Existing signing settings, manual Files picker, revision checks, recovery and user data are preserved.
+
+### Actual results
+
+| Destination / tool | Result |
+| --- | --- |
+| iPhone 16e simulator · iOS 26.3.1 | Build succeeded; 35 passed, 0 failed, 1 intentional physical-voice skip |
+| iPad (A16) simulator · iOS 26.3.1 | Build succeeded; 35 passed, 0 failed, 1 intentional physical-voice skip |
+| Python authoring tests | 12 passed |
+| Portable package/project validation | 320 checks passed; structural/header checks only |
+| Physical iPhone 15 Pro Max · iOS 27.2 | Premium narration timing: 1 passed, no skip |
+| Signed device build / install / launch | All succeeded from the implementation commit; installed in place |
+
+Each simulator run includes 32 passing unit/layout tests, one explicitly skipped hardware voice test, and three passing actual-app UI journeys. The UI tests cover the original lesson, first-start preface/duration help, and actual Files selection → update preview/confirmation → shortened lesson → wrong answer → terminate/relaunch → retry → completion with first-attempt score → return to book. Both portrait and landscape controls are exercised. Screenshots distinguish actual UI automation from injected large-text layout states.
+
+Native tests accept 1/12 and reject 0/13; reject duplicate IDs, bad manifests, missing references, malformed images and oversized byte/dimension budgets; load and migrate a stored 100-idea book without recovery/truncation; then apply a reviewed 12-idea update while retaining all 100 progress records. Existing no-op, revision/downgrade, removal, failed-write recovery, voice-role, pause/resume, stale-callback, manual-navigation, reflection, retry, restoration and narration-follow tests pass.
+
+The native stress fixture contains 12 ideas × 40 pages, 43 shared asset entries and a cover (25,317,046 encoded bytes). Every reference and image byte survives relaunch. iPhone validation/commit/relaunch took **8.51 s**, with **778 main-actor ticks** and sampled resident memory **172,425,216 → 259,862,528 peak → 211,230,720 bytes**. iPad took **6.78 s**, with **624 ticks** and **191,700,992 → 280,637,440 peak → 230,981,632 bytes**. These are Debug simulator process samples, not production-device performance guarantees. The 43 entries reuse original illustration bytes to test count removal; this synthetic stress collection intentionally exceeds the editorial timing budget and is not an authored release.
+
+### Premium reference timing
+
+The shortened `priors` revision 2 has **413 reference spoken words**. Planning at 130 words/minute gives **240.62 seconds** including five 2-second transitions and 40 seconds for answers. The displayed approximate plan is **About 5 min · whole idea**.
+
+On PATCHA, the production speech player measured **175.17 seconds of actual narration** using **Jamie (Premium)** (`com.apple.voice.premium.en-GB.Malcolm`) as guide and **Serena (Premium)** (`com.apple.voice.premium.en-GB.Serena`) as storyteller, normal speed 1.0, 2-second page pauses. Adding 10 seconds of pauses and the 40-second answer allowance yields **225.17 seconds (3m45s)**. Observed script wall time was 225.50 seconds. No enhanced/compact fallback was used.
+
+The [measurement](Evidence/Handoff003/premium-reference-timing.json) and [release-gate report](Evidence/Handoff003/short-demo-timing-report.json) match the exact ordered native and Python narration scripts. The physical run predates a word-count allocation optimization; the measured script and production speech service are identical to the final implementation. This is physical callback timing with a scripted answer allowance, not a human comprehension trial or subjective audition. Release-gate approval establishes timing/structure, not factual correctness.
+
+Boundary tests demonstrate 299.692308 seconds passes planning and 300.153846 fails; synthetic measurement validation accepts exactly 300 and rejects 300.01. Missing measurements, non-premium voices, changed scripts/revisions or altered reference settings cannot approve a release.
+
+### Repairs, evidence and remaining scope
+
+An initial new test failed Swift exclusivity checking; a local image value fixed the fixture. An initial Files UI test assumed a five-second provider startup; it now waits for actual provider readiness before choosing its navigation path. The final full suites pass without weakening acceptance assertions. Raw development logs, including failures, and the three principal result bundles are archived in the ignored local `LocalVerification/Handoff003/` folder. Published evidence excludes device identifiers, signing profiles and raw result bundles.
+
+Xcode emitted debugger-version diagnostics, simulator voice fallback messages, and physical AVAudioSession/AudioQueue diagnostics. The recorded test/build/install/launch operations nevertheless completed successfully; these logs do not establish subjective audio quality. An early attachment export ran before Xcode finalized its result bundle; the subsequent completed-bundle export succeeded.
+
+Subjective audition and a new physical pass for real interruptions/audio routes, background/foreground, VoiceOver and Reduce Motion remain unperformed for this patch. Prior user acceptance of Handoff 002 remains historical. No authentication or signing blocker remains. The two full companion collections, cloud distribution/catalog, release publication and default-branch merge are outside this patch.
+
+To try the update: open `LifeIsLearned.xcodeproj`, select **LifeIsLearned → PATCHA** and press **⌘R** (the build is already installed). Save `Example-Lesson-Package.json` to the iPhone's Files app, then choose **+ / Import book → that file → Import complete update → Open book**. Import is intentionally not automatic; the old revision's progress remains archived.
+
+---
+
 ## Handoff 002 — October 4, 2026
 
 Implemented on `feature/handoff-002-ui-polish`, starting from the working narration-scroll branch at `7913c1d9af31ee457decf0a0efc8e6790cc43174`. The supplied PDF is preserved byte for byte at the repository root (SHA-256 `8cceffefa6a4d9f7fb4f64273ae5bca289fc3e67af47758fb614c5b6b482c012`). Existing signing-team settings and the native speech service were preserved. No default-branch merge was performed.

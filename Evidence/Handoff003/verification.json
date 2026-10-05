@@ -1,0 +1,384 @@
+{
+  "implementationCommit": "f78c7f1781b6fa2087559d138c2b4947b0dcfc52",
+  "baselineCommit": "d10a60f84b9921cd24a74666b5877359f0623090",
+  "branch": "feature/handoff-003-content-limits",
+  "verificationDates": "2026-10-04 through 2026-10-05 America/New_York",
+  "toolchain": "Xcode 26.5 (17F42)",
+  "scheme": "LifeIsLearned",
+  "simulatorRuns": [
+    {
+      "destination": "iPhone 16e",
+      "os": "iOS 26.3.1",
+      "simulatorUDID": "20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+      "build": "succeeded",
+      "passed": 35,
+      "failed": 0,
+      "skipped": 1,
+      "skipReason": "Physical premium voices intentionally unavailable in simulator test",
+      "unitAndLayout": {
+        "passed": 32,
+        "skipped": 1
+      },
+      "uiJourney": {
+        "passed": 3
+      },
+      "stressFixture": {
+        "bytes": 25317046,
+        "ideas": 12,
+        "pagesPerIdea": 40,
+        "assets": 43,
+        "seconds": 8.51374101638794,
+        "mainActorTicks": 778,
+        "residentBefore": 172425216,
+        "sampledResidentPeak": 259862528,
+        "residentAfter": 211230720
+      },
+      "command": "xcodebuild -project LifeIsLearned.xcodeproj -scheme LifeIsLearned -configuration Debug -destination 'platform=iOS Simulator,id=20E0C31B-8975-45A3-8E2C-B91BC6C64E66' -derivedDataPath /tmp/LifeIsLearned-H003-DerivedData -resultBundlePath /tmp/LifeIsLearned-h003-phone-final.xcresult -parallel-testing-enabled NO test > /tmp/LifeIsLearned-h003-phone-final.log 2>&1",
+      "log": "LifeIsLearned-h003-phone-final.log",
+      "resultBundle": "LifeIsLearned-h003-phone-final.xcresult"
+    },
+    {
+      "destination": "iPad (A16)",
+      "os": "iOS 26.3.1",
+      "simulatorUDID": "B219EF2E-CFAA-43D2-8F69-804ED944F678",
+      "build": "succeeded",
+      "passed": 35,
+      "failed": 0,
+      "skipped": 1,
+      "skipReason": "Physical premium voices intentionally unavailable in simulator test",
+      "unitAndLayout": {
+        "passed": 32,
+        "skipped": 1
+      },
+      "uiJourney": {
+        "passed": 3
+      },
+      "stressFixture": {
+        "bytes": 25317046,
+        "ideas": 12,
+        "pagesPerIdea": 40,
+        "assets": 43,
+        "seconds": 6.778941988945007,
+        "mainActorTicks": 624,
+        "residentBefore": 191700992,
+        "sampledResidentPeak": 280637440,
+        "residentAfter": 230981632
+      },
+      "command": "xcodebuild -project LifeIsLearned.xcodeproj -scheme LifeIsLearned -configuration Debug -destination 'platform=iOS Simulator,id=B219EF2E-CFAA-43D2-8F69-804ED944F678' -derivedDataPath /tmp/LifeIsLearned-H003-iPad-DerivedData -resultBundlePath /tmp/LifeIsLearned-h003-ipad-final.xcresult -parallel-testing-enabled NO test > /tmp/LifeIsLearned-h003-ipad-final.log 2>&1",
+      "log": "LifeIsLearned-h003-ipad-final.log",
+      "resultBundle": "LifeIsLearned-h003-ipad-final.xcresult"
+    }
+  ],
+  "pythonTests": {
+    "passed": 12,
+    "failed": 0,
+    "command": "python3 Tools/test_authoring.py > /tmp/LifeIsLearned-h003-authoring-final.log 2>&1",
+    "planningBoundary": [
+      {
+        "words": 541,
+        "seconds": 299.692308,
+        "exit": 0
+      },
+      {
+        "words": 542,
+        "seconds": 300.153846,
+        "exit": 1
+      }
+    ],
+    "syntheticMeasuredBoundary": [
+      {
+        "seconds": 300,
+        "passed": true
+      },
+      {
+        "seconds": 300.01,
+        "passed": false
+      }
+    ]
+  },
+  "portableValidation": {
+    "checks": 320,
+    "command": "python3 Tools/validate_package.py --report /tmp/LifeIsLearned-h003-structural-final.json > /tmp/LifeIsLearned-h003-structural-final.log 2>&1",
+    "scope": "Structural/header/project checks, not native image decoding"
+  },
+  "premiumDeviceTiming": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "deviceModel": "iPhone 15 Pro Max",
+    "os": "iOS 27.2 (24B5089g)",
+    "speechSeconds": 175.17039512500014,
+    "pauseSeconds": 10,
+    "answerAllowanceSeconds": 40,
+    "totalSeconds": 225.17039512500014,
+    "planningSeconds": 240.6153846153846,
+    "scriptParity": "Exact ordered id/role/text equality across both final native test attachments, Python report and physical measurement",
+    "measurement": "premium-reference-timing.json",
+    "releaseGate": "short-demo-timing-report.json",
+    "scope": "Production SpeechPlayer completion callbacks on physical hardware. Does not establish subjective listening quality or a human comprehension time.",
+    "command": "xcodebuild -project LifeIsLearned.xcodeproj -scheme LifeIsLearned -configuration Debug -destination 'platform=iOS,id=<PRIVATE_DEVICE_UDID>' -derivedDataPath /tmp/LifeIsLearned-H003-Device-DerivedData -resultBundlePath /tmp/LifeIsLearned-h003-premium-first.xcresult -parallel-testing-enabled NO -only-testing:LifeIsLearnedTests/PremiumNarrationTimingTests -allowProvisioningUpdates DEVELOPMENT_TEAM=<EXISTING_TEAM> test > /tmp/LifeIsLearned-h003-premium-first.log 2>&1"
+  },
+  "deviceDeployment": {
+    "sourceCommit": "f78c7f1781b6fa2087559d138c2b4947b0dcfc52",
+    "build": "succeeded",
+    "install": "succeeded",
+    "launch": "succeeded",
+    "preservedExistingInstallation": true,
+    "libraryImported": false,
+    "signing": "Existing team, no project signing changes"
+  },
+  "sourceSHA256": {
+    "Example-Lesson-Package.json": "44ec91ae1b57cfcabc471c95e466ef42ef3ec6e36f112d565295bf9024da9c4b",
+    "LifeIsLearned.xcodeproj/project.pbxproj": "8678c32ccebd741465d0165f831a6b35ebd8dc47e060e02ad0e8d0eed5f7b675",
+    "LifeIsLearned.xcodeproj/xcshareddata/xcschemes/LifeIsLearned.xcscheme": "f20b5697078c9ffa14b0176b02b6f0b72ea976a0ca84974732d5965d3d5ef689",
+    "LifeIsLearned/LifeIsLearnedApp.swift": "262e703935da1b1c54089fb019e63f3aa885428f3481e479d640b47b8c09064e",
+    "LifeIsLearned/Models/CollectionContract.swift": "f0591183043602391b5c0e453aac89c2ad1db6c035a951aadac3ae6c5499369b",
+    "LifeIsLearned/Models/LearningDestination.swift": "c4ef8fe1a5bca63b8f38716a4c49192d7929f587d7ad9855b24ab3e7137acd29",
+    "LifeIsLearned/Models/LessonPackage.swift": "06603bd456aa58b9d0b593f435314212ae864461d6327f33759d86031b23cd12",
+    "LifeIsLearned/Models/LessonProgress.swift": "1be9bb1413181a51d86620f7b0df7f44fe540332db86847764101a9daf21f9ca",
+    "LifeIsLearned/Models/LessonTiming.swift": "31feb644f02950145ea75b1726f1784b70f8a1a37e7da7149ae36dfe27115aa7",
+    "LifeIsLearned/Resources/starter.json": "6e0a78609124f38b0f2defab8cbef42dda3ccbbfebfbfa89a4b7d4b53989e650",
+    "LifeIsLearned/Services/CollectionStorage.swift": "9eb03750b985f1ef216f454e76bead76702c3a8d26d9d546175c65fc58520982",
+    "LifeIsLearned/Services/LessonSession.swift": "5127372d477c213c63e6c6ac1667d1a8977378d0ad115efabfe614874f1a80bf",
+    "LifeIsLearned/Services/LibraryStore.swift": "ab1965ab387044f4decc7c759c04e72fe27abc3ea19fbf8d1ce348cfff70e453",
+    "LifeIsLearned/Services/PlaybackSettings.swift": "3bc052e7ef700b0e9a343047653eb70ed9cc31316bad7a13befd3c01650ca285",
+    "LifeIsLearned/Services/SpeechPlayer.swift": "b61a295f17db3ecc6cb9a3ec209b564196a033eb643674ef03f0d4c7659484c3",
+    "LifeIsLearned/Views/ArtworkView.swift": "14a3c2e11dd9221871b3add76deac7a5e11f8f73e221c56d510560a458c6e913",
+    "LifeIsLearned/Views/BookDetailView.swift": "85631c3d6e453d99b950d49914e77877f4212ea389958c0c9a57824dbda6b901",
+    "LifeIsLearned/Views/Components.swift": "671764051d0079697c952846885f7c0c183f2e0b8f583a0f275b02502a380143",
+    "LifeIsLearned/Views/DesignSystem.swift": "4745bc29dbc26a10ef9edd902c5ce16b96588562067c1c41d3828cf8d9a50b2d",
+    "LifeIsLearned/Views/ImportReviewView.swift": "7c90a28e6d255b787476ae5a5193d3228895e8ae80d63ddbd71c8836ecb51035",
+    "LifeIsLearned/Views/LearningHomeComponents.swift": "4401f239509238c22c2fc07c6c53f11010a179ead2b595087069dcda2bfd98e7",
+    "LifeIsLearned/Views/LessonCompletionView.swift": "e4fe709d22aae71115ac7ebb52bed37e0d95d2cf2f88d52c94a4cdf8d9c9cc60",
+    "LifeIsLearned/Views/LibraryView.swift": "cba4e0e93c103ad2bea6f7469df6a73fd7066c193f7b893f59cd178d4e83b07e",
+    "LifeIsLearned/Views/NarrationText.swift": "7933896dd8d3f562695b8b87c6e71b57009ca126761bfeb85743204c69598b80",
+    "LifeIsLearned/Views/PracticeView.swift": "ffe9933d8362d11e75daffadc8c7da949f832af3d7ec32b1f3a88bf5690a99e0",
+    "LifeIsLearned/Views/ReaderView.swift": "2825e0c143e9eeadadd207e6703f59116e7da38c94fd1221b50db34fc12ff2e7",
+    "LifeIsLearned/Views/SettingsView.swift": "1765bc7d235456200d64bf0a31bd87c9cbda209a038c809d4160c0b1a1cdffec",
+    "LifeIsLearned/Views/SourcesView.swift": "ec5deb3225309c83b89a1bfff81e2bc8ab8601275b1b586b0ae417be49445f77",
+    "LifeIsLearned/Views/TakeawayCard.swift": "2264907d21b18deb3807ac502a96ec2c8ec2a6f92f30232c3732e0782e3c3b97",
+    "LifeIsLearned_Handoff_003_Content_Limits_Patch.pdf": "c4d034dbc51da5ee6ca11e37ee49beb4506e6229010d9527e0313a9cbaed2168",
+    "Tests/CollectionTests.swift": "94ffc62d59c4ea116f678c44285e593922ff63c4948e8c1a2892f4059d1c3dbc",
+    "Tests/ContentPolicyTests.swift": "b7c78abdc25d9ed516067dd7c4229496d46f50e0cad6ed8f517e37e7177c089a",
+    "Tests/LessonSessionTests.swift": "267a93d6d9b56ae9d7efa7eaf9de06035a48c7fa451d3a4934bb1d6e65d00539",
+    "Tests/PremiumNarrationTimingTests.swift": "6b456f1b652aa8e99ffc90c431fd648610b0da6841690f76c6b449b6e26ea9f1",
+    "Tests/PresentationTests.swift": "8f1ad22ec9f44977a7964c2bae55aa6aea5dc7f1bb2b711350e235f66c2df33e",
+    "Tests/ResumeTests.swift": "1fa695ec7e3e35a0cb91d9aa38d6ceca1900f6d038e39b612f09641d3ddf9661",
+    "Tools/convert_package.py": "a505b407f8170eb12c6ae65b9808b12f532739e954004ecff55e114ead66e8ca",
+    "Tools/lesson_timing.py": "c0c66d6c7299338924c733314fe83aaf590db7024a1ffad5d4460b7d39e86a3c",
+    "Tools/make_project.py": "b2e0232ed48a4e8ab167c584de2fe6c81ccab9665e2316bfa21a6915ef22842f",
+    "Tools/make_starter.py": "34507a84bab392fa2d81e33d93f25a4c19307379fd236689fbc5c17f73406a98",
+    "Tools/make_verification_fixture.py": "6549db37a021c8255be6b6008ec5eb5b9b6d9bacae6e221ce31a6c6ce1089a2b",
+    "Tools/prepare_simulator_import.py": "fa8e44deac95a7427d8c144e2a7246747961144209ad0587b10bc5d7c5578495",
+    "Tools/test_authoring.py": "096391348984705599c7e9a857a9832b2d3650cfc470b367ee8cba31ed6cb52a",
+    "Tools/validate_package.py": "49425a5736752149e6e3fdcf1398121f5b6fb7b154c2a10e238ab6818a3f8fd9",
+    "UITests/LearningJourneyUITests.swift": "d43a5de6a66527b9938ba647692f48cd67c42a48ebbe7975b97b685824f83f50"
+  },
+  "screenshots": [
+    {
+      "file": "Evidence/Handoff003/Screenshots/iphone-reader-large-text.jpg",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "sourceResult": "LifeIsLearned-h003-phone-final.xcresult",
+      "sourceSHA256": "97237c37a99239c5029035ffade58cedbbc381d8d49baeac5152697c4e104204",
+      "sha256": "97e98593821cc08037643857292e7453b0c7ec696319dcbdbd7d14b483896c3a",
+      "label": "iPhone simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/iphone-selection-preface.jpg",
+      "test": "LearningJourneyUITests/testFirstStartShowsSelectionAndDurationHelp()",
+      "sourceResult": "LifeIsLearned-h003-phone-final.xcresult",
+      "sourceSHA256": "7043d89f4d8097d37e43b661cf1b63ab0aa239447b074214bf3aebf312d5ca64",
+      "sha256": "30bdfdf295cca52292ae2b82c48f883e85af81232c0c26c32c434039ddc1184e",
+      "label": "iPhone simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/iphone-live-simulator-completion.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-phone-final.xcresult",
+      "sourceSHA256": "5af610d3c46f4f0015018ed2bb36aebe135184fee901aaa54a4225ae3911769b",
+      "sha256": "83012b044d2317f7c74193cd35288be7d9ee3e3469da32ae2b6114dfc3742b0f",
+      "label": "iPhone simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/iphone-live-simulator-incorrect-feedback.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-phone-final.xcresult",
+      "sourceSHA256": "3cf0fd6fefebeee9ebde1c0b05d46483d9b9f0aab2767c85e7534b39c2c7bac7",
+      "sha256": "6fbe52215ca47aa71ab90270c3bd932342ffed43cd2864ebbcaa21f58d0e891b",
+      "label": "iPhone simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/iphone-live-simulator-reader.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-phone-final.xcresult",
+      "sourceSHA256": "5597872df74694f907958abb238c65e5d714aaab78ecbfaca8a17537f54418e5",
+      "sha256": "4ddb82b2bb20b7329ee7419fc5778270df1a0a819ac992c590b62ea738f7d4eb",
+      "label": "iPhone simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/iphone-short-demo-ready.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-phone-final.xcresult",
+      "sourceSHA256": "90ef1b4069b9c6b1ead081fe64a1e074ef539c73706dae305eeec15d87484301",
+      "sha256": "d78ec31ccde0dade1318d26ae57f73b7583b1ef1a80140cc7729a54683408539",
+      "label": "iPhone simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/iphone-short-demo-update-review.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-phone-final.xcresult",
+      "sourceSHA256": "a5aa715a86c248fb541ba4d0b14d1f68cbab400800a12dd3cfdc030848294ef4",
+      "sha256": "7f92875f5fdb0daf93b649ff9a41cb9749c208539601d9b843ae278775ccb3fa",
+      "label": "iPhone simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/iphone-manual-files-picker.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-phone-final.xcresult",
+      "sourceSHA256": "d27420d50a5d9435b0d8f6280b14e3abda0a4a3846d354cb6e6a1d9b41911a97",
+      "sha256": "750c92879c57d8ddb8b94456e2ec7cd3758842ae2312357193669692e605d40f",
+      "label": "iPhone simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/ipad-reader-large-text.jpg",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "sourceResult": "LifeIsLearned-h003-ipad-final.xcresult",
+      "sourceSHA256": "6d05292f78ad856d561651364eebc290c64ffe6555595e4bf38110719340d7e1",
+      "sha256": "29b283a715cac30f07fffa357ba187b425a696328bde55a917379ad904e14724",
+      "label": "iPad simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/ipad-selection-preface.jpg",
+      "test": "LearningJourneyUITests/testFirstStartShowsSelectionAndDurationHelp()",
+      "sourceResult": "LifeIsLearned-h003-ipad-final.xcresult",
+      "sourceSHA256": "dc7d2c859c2870f625c0cd6cdf0fd2ff56b774ebc3c994e78f0fb876211d6d8a",
+      "sha256": "8257fb7b6a63ddb8c23c8c1237205d0e270c1ec3c3756aec8446e1a9a4937f38",
+      "label": "iPad simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/ipad-live-simulator-completion.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-ipad-final.xcresult",
+      "sourceSHA256": "ac909e7700b11a08889626da1759a2ae1c91cd33d4dfc0b1533360aae0c24c23",
+      "sha256": "9d7003080797894c14faf0cd75210c0313b252430853186775a4813cf4ba4cb9",
+      "label": "iPad simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/ipad-live-simulator-incorrect-feedback.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-ipad-final.xcresult",
+      "sourceSHA256": "1c922d1100d670088367a18e0408c7fe5716c375589b563595f7c3de9e1800e8",
+      "sha256": "141c782253cf06a67158375092ceeb5d246f66f070062d9e72035efd9d908124",
+      "label": "iPad simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/ipad-live-simulator-reader.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-ipad-final.xcresult",
+      "sourceSHA256": "05490c7c6edb2b13f12bc57df29c0bf4e6aa67a5fc0ad5a1b078baea923265c4",
+      "sha256": "53351bdeab3cd0fa5a5804b8444716c22a1481c42ebf3ba485cc5a6bd72e2a0a",
+      "label": "iPad simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/ipad-short-demo-ready.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-ipad-final.xcresult",
+      "sourceSHA256": "2f9fa8369ea04afef5b8108f145d42d46b59c2210760e61105f0cbb60689948d",
+      "sha256": "07ed3e84d864073ded47637ee8cff6fe08b27a11e087cf1b9fd48b7a902c161a",
+      "label": "iPad simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/ipad-short-demo-update-review.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-ipad-final.xcresult",
+      "sourceSHA256": "1bd3941abb4e2030c350b9a0bb0a2e5230224f81e72d9e6bbcd67f019824aa83",
+      "sha256": "46e179c5433533e880b71a45b532c9aade8850bb3caac2a5559483aa5f20fce5",
+      "label": "iPad simulator; JPEG compression and size reduction only"
+    },
+    {
+      "file": "Evidence/Handoff003/Screenshots/ipad-manual-files-picker.jpg",
+      "test": "LearningJourneyUITests/testManualFilesImportOfShortDemoAndJourney()",
+      "sourceResult": "LifeIsLearned-h003-ipad-final.xcresult",
+      "sourceSHA256": "1b19a6c02169cd946213238a424200744d43aa850b87995930336fe6a733d16a",
+      "sha256": "9c45821e3c8770c991c339149aa78eab9e4ae277518aa5a8b275a59b577a55f5",
+      "label": "iPad simulator; JPEG compression and size reduction only"
+    }
+  ],
+  "localRawArchive": "LocalVerification/Handoff003 (gitignored)",
+  "rawLogs": [
+    {
+      "name": "LifeIsLearned-h003-43-images-validation.log",
+      "sha256": "284f2abc7cfb89fd67061dd0bccc4eeae421075bb7e57fc54bb5196ee11a12c9"
+    },
+    {
+      "name": "LifeIsLearned-h003-authoring-final.log",
+      "sha256": "565df4ce0208ad0d7da193e4045d42ae95b8904563639013e6160bebd4eeec33"
+    },
+    {
+      "name": "LifeIsLearned-h003-authoring-tests.log",
+      "sha256": "030970474675b9f1b621aaf51398b43f610b30080ebc68f6925b2ecf2b16d4ff"
+    },
+    {
+      "name": "LifeIsLearned-h003-device-final-build.log",
+      "sha256": "7be07ccff2ba2ac9592472ffdad3cc931c2b699130769e0db1e634b02fd2f0de"
+    },
+    {
+      "name": "LifeIsLearned-h003-device-install.log",
+      "sha256": "30cb028426b7510ed6a74f94d27309fa9641ea2ae3e0260f8339c9c410e02148"
+    },
+    {
+      "name": "LifeIsLearned-h003-device-launch.log",
+      "sha256": "0505b0995f1e8e2c7118005dd128b9f716fd1aaba9f53c5070541732191c3697"
+    },
+    {
+      "name": "LifeIsLearned-h003-ipad-final.log",
+      "sha256": "f936d486bfce579ce4eb2d6311ce90e20b3b27e3b17969b35f2e1c0626c09acf"
+    },
+    {
+      "name": "LifeIsLearned-h003-phone-attachment-export.log",
+      "sha256": "cdc82d35b6ac97b73764858f8426c55bc443feef2280c6f917367c7921acb715"
+    },
+    {
+      "name": "LifeIsLearned-h003-phone-final.log",
+      "sha256": "d240af846300234a35aa8488912660c2d910b2f4edec4b6a54b867db6cd0251f"
+    },
+    {
+      "name": "LifeIsLearned-h003-phone-first.log",
+      "sha256": "670bdf0585785b28d20d11d56ffa006c474cd53b1a8b08c6a7f0fc404d05ae3d"
+    },
+    {
+      "name": "LifeIsLearned-h003-phone-picker-retry.log",
+      "sha256": "c9332c86b5bd4df4c5abd4a43cc5afe168aa3ba61a349d8245b9a336fb550c3f"
+    },
+    {
+      "name": "LifeIsLearned-h003-phone-second.log",
+      "sha256": "9535b5bcedc006efc27c49fdfe0b8c4d1f979d225b952f47e41b8902b3751727"
+    },
+    {
+      "name": "LifeIsLearned-h003-phone-ui.log",
+      "sha256": "d74052be950a6dd9690b70878cc28076fddf2a66478e756874e35055f96f03be"
+    },
+    {
+      "name": "LifeIsLearned-h003-premium-first.log",
+      "sha256": "7622ce9265b143674ba58d61c016744e522a3bb6b9e49b4e058217dfa3d2e4c6"
+    },
+    {
+      "name": "LifeIsLearned-h003-release-gate-final.log",
+      "sha256": "0431fac5f263fc7f610418e7050d0135119db412dd752dc92bea0293cc50a6b4"
+    },
+    {
+      "name": "LifeIsLearned-h003-structural-final.log",
+      "sha256": "d0dfa325f7cb884623484e9e0faafd3415b12d144edf1db175b3a2d29355d7b4"
+    },
+    {
+      "name": "LifeIsLearned-h003-structural.log",
+      "sha256": "486f3951fbcb3d8cc8eebfeaf4d1e6a5e3751748897d6ebfb6b534599e16d8e7"
+    }
+  ],
+  "remainingScope": [
+    "Two companion collections are curated externally for later import, per user.",
+    "Subjective audition and new physical-device interruption, audio-route, VoiceOver and background checks remain unperformed for this patch. Prior Handoff 002 user acceptance remains historical.",
+    "43 asset entries reuse original image bytes; synthetic workload, not 43 unique illustrations or a ready-to-import authored release.",
+    "No cloud distribution, releases, catalog, default-branch merge or repository visibility changes."
+  ]
+}
