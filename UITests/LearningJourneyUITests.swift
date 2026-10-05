@@ -64,13 +64,14 @@ final class LearningJourneyUITests: XCTestCase {
         XCTAssertTrue(element.exists && element.isHittable, "Expected a visible control: \(element)")
     }
     private func snapshot(_ app: XCUIApplication, _ name: String) {
-        let attachment = XCTAttachment(screenshot: app.screenshot())
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
     }
     private func waitForOrientation(landscape: Bool, in app: XCUIApplication) {
+        // Capture the screen rather than an app element's portrait-coordinate crop.
         // A hittable button alone does not mean the system rotation has finished.
         let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
-            let size = app.screenshot().image.size
+            let size = XCUIScreen.main.screenshot().image.size
             return landscape ? size.width > size.height : size.height > size.width
         }, object: app)
         XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 8), .completed)
