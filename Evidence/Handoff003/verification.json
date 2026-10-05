@@ -379,6 +379,13 @@
     "Two companion collections are curated externally for later import, per user.",
     "Subjective audition and new physical-device interruption, audio-route, VoiceOver and background checks remain unperformed for this patch. Prior Handoff 002 user acceptance remains historical.",
     "43 asset entries reuse original image bytes; synthetic workload, not 43 unique illustrations or a ready-to-import authored release.",
-    "No cloud distribution, releases, catalog, default-branch merge or repository visibility changes."
-  ]
+    "No cloud distribution, releases, catalog, default-branch merge or repository visibility changes.",
+    "Individual physical voice audition and interruption/audio-route/background/accessibility outcomes were not itemized in the user\u2019s overall acceptance report."
+  ],
+  "userReportedDeviceAcceptance": {
+    "date": "2026-10-05",
+    "context": "After implementation commit was built, installed in place and launched on PATCHA.",
+    "statement": "Everything works.",
+    "scope": "Overall user-reported acceptance; individual voice, interruption, audio-route, background and accessibility scenarios were not itemized."
+  }
 }

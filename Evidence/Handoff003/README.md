@@ -16,7 +16,7 @@ Base: accepted Handoff 002, `d10a60f84b9921cd24a74666b5877359f0623090`. Evidence
 
 [Machine-readable verification](verification.json) records source/log/screenshot SHA-256 hashes, exact simulator commands, destinations, stress memory observations and pending checks. [Premium measurement](premium-reference-timing.json) contains the actual voice IDs and segment durations; [release report](short-demo-timing-report.json) binds those observations to the exact revision and narration. Final native attachments on both simulators match every measured segment's ID, role and text. Timing/structure approval does not replace source and answer-key review.
 
-The physical measurement ran before a word-count allocation optimization; exact narration and the speech service are unchanged. It measures production callback completion, with a fixed answer allowance, rather than a human's learning time. Subjective voice audition and a new physical interruption/audio-route/background/VoiceOver pass remain unperformed. The two complete companion books are curated externally for later import.
+The physical measurement ran before a word-count allocation optimization; exact narration and the speech service are unchanged. It measures production callback completion, with a fixed answer allowance, rather than a human's learning time. Overall physical-device acceptance is user-reported below; individual voice audition and interruption/audio-route/background/VoiceOver results were not itemized. The two complete companion books are curated externally for later import.
 
 ## Commands actually run
 
@@ -57,6 +57,10 @@ The preface images show the preserved revision-1 seed. The update/reader/practic
 | Incorrect-answer feedback | [View](Screenshots/iphone-live-simulator-incorrect-feedback.jpg) | [View](Screenshots/ipad-live-simulator-incorrect-feedback.jpg) |
 | Completion after retry | [View](Screenshots/iphone-live-simulator-completion.jpg) | [View](Screenshots/ipad-live-simulator-completion.jpg) |
 | Large-text layout, legacy reader | [View](Screenshots/iphone-reader-large-text.jpg) | [View](Screenshots/ipad-reader-large-text.jpg) |
+
+## User-reported device acceptance
+
+After the committed Handoff 003 build was installed and launched on PATCHA, Mario reported **“everything works.”** This records overall user-reported device acceptance. Individual voice audition, interruption/audio-route, background/foreground and accessibility scenarios were not itemized; the statement is not presented as a separate measured result for each scenario.
 
 ## Local evidence and limits
 
