@@ -29,7 +29,8 @@ import UniformTypeIdentifiers
                         ProgressView("Opening your reading room…").frame(maxWidth: .infinity).padding(.vertical, 80)
                     } else if let destination = library.continueLearning {
                         ContinueLearningFeature(destination: destination, assets: library.package(for: destination.book)?.artwork ?? [:]) {
-                            if destination.action == .revisit { selectedBook = destination.book }
+                            // Show the selection/coverage preface before a first start.
+                            if destination.action == .revisit || destination.action == .start { selectedBook = destination.book }
                             else { launch = LessonLaunch(book: destination.book, lesson: destination.lesson) }
                         }
                     } else {

@@ -25,7 +25,7 @@ struct LearningDestination: Identifiable {
     }
     var position: String {
         if action == .revisit { return "All \(book.lessons.count) available ideas practiced" }
-        if action == .start || action == .next { return "\(lesson.estimatedMinutes) min · read & listen" }
+        if action == .start || action == .next { return LessonTiming(lesson: lesson).label }
         if progress.updated { return "Updated · review this idea again" }
         if progress.phase == .practice { return "Practice · Question \(min(max(0, progress.practice.questionIndex), lesson.questions.count - 1) + 1) of \(lesson.questions.count)" }
         return "Reading · Screen \(min(max(0, progress.pageIndex), lesson.pages.count - 1) + 1) of \(lesson.pages.count)"

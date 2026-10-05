@@ -11,7 +11,22 @@ An independent native SwiftUI iPhone/iPad app for Mario: learn one idea at a tim
 5. Open The Influential Mind → The Prior Problem → Play. The app begins with the guide, switches to the storyteller, and returns to the guide for the explanation and takeaway.
 6. Tap the sliders to audition and select both voices. Download any additional English voices in the device's Accessibility voice settings before selecting them. Age and vocal texture cannot be guaranteed by Apple's voice API; listen on the actual device.
 
-Use **⌘U** to run the unit, rendered-layout, and app journey test targets. Use an installed simulator. Voice quality should be checked on hardware, rather than inferred from the simulator.
+Use an installed simulator for unit/layout and app journey tests. The manual Files-import UI check requires its fixture first: boot the selected simulator, run `python3 Tools/prepare_simulator_import.py SIMULATOR_UDID`, then press **⌘U**. Premium-voice timing runs on a physical device and is explicitly skipped in simulator suites. See `VALIDATION.md` for the exact commands.
+
+## Handoff 003: content limits and whole-idea timing
+
+New collections and updates contain **1–12 selected ideas**. Previously valid installed books with 13–100 ideas remain readable with their progress intact. Shared images have **no numerical count cap**; file-size, decoded-byte, dimension, type and decoding protections remain. Manual Files import, preview and explicit confirmation are unchanged.
+
+New authored ideas have exactly two application questions and a **five-minute reference budget for the complete experience**, including narration, options, feedback, transitions and answering time. The interface shows an approximate whole-idea estimate and explains why individual listening time can vary. First start opens the book's selection and source coverage before reading.
+
+The shortened demo is `Example-Lesson-Package.json`: `influential-mind` / `priors`, collection and idea revision **2**, six screens, 413 total reference spoken words. It is an explicit complete update. Select it using **Import book → Files → Import complete update**. The old revision's progress stays archived; the revised idea begins unpracticed. The revision-1 startup seed is frozen to preserve installed content.
+
+- Brief: `LifeIsLearned_Handoff_003_Content_Limits_Patch.pdf`.
+- Authoring limits, timing gate and premium-voice measurement: `CONTENT_AUTHORING.md`.
+- Stored-book compatibility and migration: `PERSISTENCE.md`.
+- Verification: `VALIDATION.md` and `Evidence/Handoff003/`.
+
+The two larger companion collections are being curated separately for later import under these rules. No cloud catalog, release publishing, bulk import or new book material is included in this patch.
 
 ## Handoff 002
 
@@ -26,7 +41,7 @@ One learning home now combines Continue learning and your book library. Prepared
 ## Included experience
 
 - Book library, book description, source notes, available idea list.
-- Eight lesson screens; 684 narrated words, approximately 4–5 minutes at the default pace.
+- Frozen legacy demo: eight screens, retained for continuity. Explicit shortened update: six screens; the complete reference timing includes the quiz and feedback, not only the story.
 - Three original scene illustrations (setup, disagreement, collaboration) reused where appropriate.
 - Guide and storyteller voice choices, previews, speed and screen-pause controls.
 - Auto-advance on actual speech completion, pause/resume, replay, back/next, spoken-word emphasis.
@@ -72,4 +87,6 @@ The app is intentionally a lesson player. Automatic book/PDF extraction, live AI
 
 ## Validation status
 
-Handoff 002 passed 29 tests on each of the iPhone 16e and iPad (A16) simulators. Commit `f4a8693645c3e97a54567f1034f4d463b6506fb3` then built, installed, and launched on an iPhone 15 Pro Max running iOS 27.2. After checking that device build, the user reported “All checks are good” and approved pushing the work. See [VALIDATION.md](VALIDATION.md) for commands, outcomes, simulator evidence, and the scope of user-reported physical-device acceptance.
+Historical Handoff 002 verification passed 29 tests on each of the iPhone 16e and iPad (A16) simulators. Commit `f4a8693645c3e97a54567f1034f4d463b6506fb3` then built, installed, and launched on an iPhone 15 Pro Max running iOS 27.2. After checking that device build, the user reported “All checks are good” and approved pushing the work. See [VALIDATION.md](VALIDATION.md) for commands, outcomes, simulator evidence, and the scope of user-reported physical-device acceptance.
+
+Handoff 003 results, premium voice settings/durations, and current import evidence are recorded in [VALIDATION.md](VALIDATION.md).

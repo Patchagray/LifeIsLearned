@@ -1,0 +1,101 @@
+{
+  "answerAllowanceSeconds" : 40,
+  "bookID" : "influential-mind",
+  "collectionRevision" : 2,
+  "ideas" : [
+    {
+      "id" : "priors",
+      "revision" : 2,
+      "segments" : [
+        {
+          "id" : "page:welcome",
+          "role" : "guide",
+          "seconds" : 15.682373833333259,
+          "text" : "The Prior Problem. Existing beliefs can shape what we notice. This introductory lesson draws on reviewed material about priors, not the whole book. Malik, Elena, their college, and the report in this example are fictional."
+        },
+        {
+          "id" : "page:before",
+          "role" : "storyteller",
+          "seconds" : 21.315420416666711,
+          "text" : "Before the report. Malik wanted to keep the college work-study program. His job had helped him pay for transport and build confidence. Elena wanted fewer student jobs: her friend had taken extra shifts and fallen behind in class.\n\nBefore opening the report, each already had a picture of what working during college meant."
+        },
+        {
+          "id" : "page:same",
+          "role" : "storyteller",
+          "seconds" : 23.448781416666861,
+          "text" : "One report. Two readings.. The report described useful skills alongside fatigue and missed study time. It could not establish what caused those outcomes.\n\nMalik pointed to the benefits. Elena pointed to the problems. Each finding was on the page, but each student favored the part that matched an existing belief. More quotations only hardened their disagreement."
+        },
+        {
+          "id" : "page:revise",
+          "role" : "storyteller",
+          "seconds" : 25.584587291667049,
+          "text" : "A better question. Their adviser asked, “What finding would make you reconsider?”\n\nMalik realized he had collected support, not looked for challenges. Elena recognized the same habit. They agreed to examine both benefits and costs, including workload differences. Understanding each other’s experiences helped them discuss the evidence. It did not prove the program worked, or guarantee they would agree."
+        },
+        {
+          "id" : "page:distinction",
+          "role" : "guide",
+          "seconds" : 18.933213708332914,
+          "text" : "Belief or bias?. A prior is a belief held before new information arrives. Confirmation bias favors information that fits an existing view. Experience can be useful; unequal scrutiny is the problem. The adviser’s question is our teaching example, not a research-tested guarantee of persuasion."
+        },
+        {
+          "id" : "page:takeaway",
+          "role" : "guide",
+          "seconds" : 13.288741249999475,
+          "text" : "Test your starting point. Name your belief. Ask what evidence could change it. Examine credible support and challenges with equal care. Shared goals can help discussion; they cannot decide what is true."
+        },
+        {
+          "id" : "question:recognition",
+          "role" : "guide",
+          "seconds" : 18.536399874999915,
+          "text" : "A manager expects remote work to fail. She dismisses credible benefits but accepts weak criticism. What is the problem?\nOption 1. Unequal scrutiny that favors her existing belief.\nOption 2. The report proves remote work fails.\nOption 3. Having any belief before reading."
+        },
+        {
+          "id" : "feedback:recognition",
+          "role" : "guide",
+          "seconds" : 7.8855857500002458,
+          "text" : "That's right. Exactly: evidence quality should matter on both sides. An initial belief alone is not the problem."
+        },
+        {
+          "id" : "question:transfer",
+          "role" : "guide",
+          "seconds" : 15.890034250000099,
+          "text" : "You favor tutoring; your friend doubts it. What would help you evaluate a new study fairly?\nOption 1. Collect only success stories.\nOption 2. Treat a shared goal as proof.\nOption 3. Agree what findings would change either view."
+        },
+        {
+          "id" : "feedback:transfer",
+          "role" : "guide",
+          "seconds" : 8.9012680833338891,
+          "text" : "That's right. Explicit standards help you assess support and challenges consistently. They structure evaluation without guaranteeing agreement."
+        },
+        {
+          "id" : "completion",
+          "role" : "guide",
+          "seconds" : 5.7039892499997222,
+          "text" : "Lesson complete. You've practiced a new idea. 2 of 2 correct on the first try."
+        }
+      ]
+    }
+  ],
+  "measuredSpeechSeconds" : 175.17039512500014,
+  "measuredTotalSeconds" : 225.17039512500014,
+  "method" : "speech-completion-callbacks",
+  "observedScriptWallSeconds" : 225.49546337500033,
+  "pauseSeconds" : 10,
+  "reference" : {
+    "deviceModel" : "iPhone",
+    "guide" : {
+      "identifier" : "com.apple.voice.premium.en-GB.Malcolm",
+      "name" : "Jamie (Premium)",
+      "quality" : "premium"
+    },
+    "os" : "iOS 27.2",
+    "pagePauseSeconds" : 2,
+    "speed" : 1,
+    "storyteller" : {
+      "identifier" : "com.apple.voice.premium.en-GB.Serena",
+      "name" : "Serena (Premium)",
+      "quality" : "premium"
+    }
+  },
+  "scope" : "Production SpeechPlayer scripted reference with longest feedback per question. Not a word-count estimate, user comprehension test, or automatic import."
+}

@@ -15,6 +15,67 @@ final class LearningJourneyUITests: XCTestCase {
         let idea = app.buttons["idea-priors"]
         reveal(idea, in: app)
         idea.tap()
+        try exerciseJourney(app, pageCount: 8)
+    }
+
+    func testFirstStartShowsSelectionAndDurationHelp() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launch()
+        XCTAssertTrue(app.buttons["continue-learning"].waitForExistence(timeout: 15))
+        app.buttons["continue-learning"].tap()
+        let preface = app.staticTexts["collection-preface"]
+        XCTAssertTrue(preface.waitForExistence(timeout: 5))
+        XCTAssertTrue(preface.label.contains("1 selected idea"))
+        XCTAssertFalse(app.buttons["Next screen"].exists)
+        snapshot(app, "handoff003-selection-preface")
+        let help = app.buttons["About idea durations"]
+        reveal(help, in: app); help.tap()
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Approximate whole-idea time includes narration")).firstMatch.exists)
+        snapshot(app, "handoff003-duration-help")
+    }
+
+    /// Fixture is placed in this simulator's Files provider before the run.
+    /// This uses the actual system picker, preview, confirmation and persisted library.
+    func testManualFilesImportOfShortDemoAndJourney() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launch()
+        XCTAssertTrue(app.buttons["Import book"].waitForExistence(timeout: 15))
+        app.buttons["Import book"].tap()
+        let browse = app.buttons["Browse"].firstMatch
+        let local = app.staticTexts.matching(NSPredicate(format: "label IN %@", ["On My iPhone", "On My iPad"])).firstMatch
+        let file = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "Handoff003-ShortDemo")).firstMatch
+        // A newly booted simulator may start the remote Files provider slowly.
+        // Wait for its controls before deciding which navigation path is visible.
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            browse.exists || local.exists || file.exists
+        }, object: app)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 60), .completed)
+        if browse.exists { browse.tap() }
+        if !file.exists && local.waitForExistence(timeout: 20) { local.tap() }
+        if !file.waitForExistence(timeout: 30) { print("FILES_PICKER_TREE " + app.debugDescription) }
+        XCTAssertTrue(file.exists, "Place Handoff003-ShortDemo.json in the simulator Files provider before this acceptance test.")
+        snapshot(app, "handoff003-manual-files-picker")
+        file.tap()
+        let confirm = app.buttons["Import complete update"]
+        XCTAssertTrue(confirm.waitForExistence(timeout: 20))
+        snapshot(app, "handoff003-short-demo-update-review")
+        reveal(confirm, in: app); confirm.tap()
+        let open = app.buttons["Open book"]
+        XCTAssertTrue(open.waitForExistence(timeout: 20)); open.tap()
+        let idea = app.buttons["idea-priors"]
+        reveal(idea, in: app)
+        XCTAssertTrue(idea.label.contains("About 5 min"))
+        XCTAssertTrue(idea.label.contains("Updated"))
+        snapshot(app, "handoff003-short-demo-ready")
+        idea.tap()
+        try exerciseJourney(app, pageCount: 6)
+    }
+
+    private func exerciseJourney(_ app: XCUIApplication, pageCount: Int) throws {
         XCTAssertTrue(app.buttons["Next screen"].waitForExistence(timeout: 5))
         app.buttons["Next screen"].tap()
         XCTAssertTrue(app.staticTexts["Before the report"].waitForExistence(timeout: 5))
@@ -26,7 +87,7 @@ final class LearningJourneyUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
         waitForOrientation(landscape: false, in: app)
         app.buttons["Previous screen"].tap()
-        for _ in 0..<7 { app.buttons["Next screen"].tap() }
+        for _ in 0..<(pageCount - 1) { app.buttons["Next screen"].tap() }
         let revealCard = app.buttons["Reveal the idea"]
         reveal(revealCard, in: app); revealCard.tap()
         let practice = app.buttons["Practice this idea"]

@@ -23,3 +23,14 @@ Progress and collections load independently from the committed snapshot. A bad c
 For recovery, first copy the entire `Library-v2` directory and retained legacy files from the app's document container. The preserved UUID snapshots and original `lessonProgress.v1` can be inspected and restored by a developer. Do not delete/reset the app to resolve an import error. This release deliberately offers no destructive in-app reset.
 
 A failed write leaves the old pointer and installed collection usable. The UI surfaces the failure. In-memory reading progress can be retried on the next action; only successfully written progress survives termination. Original snapshots are retained, so long-term snapshot compaction is future maintenance rather than an implicit history deletion.
+
+
+## Handoff 003: import policy versus stored readability
+
+`LessonPackage.validated(for:)` explicitly distinguishes `.newImport` from `.storedContent`. All selected files and confirmation-time revalidation use the new-import boundary: 1–12 ideas, a complete ordered manifest and unchanged revision/resource protections. Storage loading, recovery and legacy migration use stored-content validation, preserving previously valid format-2 collections of 13–100 ideas and format-1 installations. Lowering the new-import cap does not truncate, hide or force recovery for those books.
+
+An over-cap installed collection can receive a complete compliant update. Omitted IDs must be in `removedLessonIDs`, the preview lists them, and publication requires acknowledgement. Unchanged idea progress remains active; removed/replaced revision keys stay archived. New or materially revised ideas never inherit a completed state from retired material.
+
+There is no numerical image-count cap in either validation context. Both retain nonempty IDs, valid references/cover, 2 MiB per image, 24 MiB combined decoded image-file data, single-frame PNG/JPEG decoding and 2048-pixel dimensions. New files retain the 64 MiB encoded-package check before JSON decoding. Validation, hashing and disk work remain on the storage actor.
+
+The revision-1 startup seed is deliberately unchanged. `Example-Lesson-Package.json` is the explicit shortened revision-2 update, selected through Files and confirmed in the normal preview. Loading a seed never supersedes a committed installed catalog. Tests cover a previously valid stored 100-idea library, its legacy-file migration path, and a confirmed reduction to 12 with all 100 progress records retained. There is no automatic demo replacement, destructive migration, signing change or playback-time cutoff.

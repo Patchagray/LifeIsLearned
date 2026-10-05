@@ -66,13 +66,13 @@ import Combine
         let token = generation
         autoRunning = settings.autoAdvance && phase == .reading
         if phase == .practice {
-            let text = choice.map { (answerCorrect ? "That's right. " : "Let's reconsider. ") + $0.feedback }
-                ?? (question.prompt + "\n" + question.choices.enumerated().map { "Option \($0.offset + 1). \($0.element.text)" }.joined(separator: "\n"))
+            let text = choice.map { LessonNarration.feedback($0, correct: answerCorrect) }
+                ?? LessonNarration.question(question)
             speech.speak(text, role: .guide, settings: settings, finished: nil)
             return
         }
         if page.kind == .takeaway { takeawayRevealed = true; persist() }
-        speech.speak(page.title + ". " + page.text, role: page.role, settings: settings) { [weak self] in
+        speech.speak(LessonNarration.page(page), role: page.role, settings: settings) { [weak self] in
             guard let self, self.generation == token else { return }
             guard self.autoRunning, self.page.kind != .takeaway, self.index < self.lesson.pages.count - 1 else {
                 self.autoRunning = false; return
@@ -128,7 +128,7 @@ import Combine
         attempted = true; selectedID = id
         persist()
         if let choice {
-            speech.speak((answerCorrect ? "That's right. " : "Let's reconsider. ") + choice.feedback,
+            speech.speak(LessonNarration.feedback(choice, correct: answerCorrect),
                          role: .guide, settings: settings, finished: nil)
         }
     }
@@ -146,7 +146,7 @@ import Combine
             }
             phase = .complete
             persist()
-            speech.speak("Lesson complete. You've practiced a new idea. \(firstTryCorrect) of \(lesson.questions.count) correct on the first try.", role: .guide, settings: settings, finished: nil)
+            speech.speak(LessonNarration.completion(correct: firstTryCorrect, total: lesson.questions.count), role: .guide, settings: settings, finished: nil)
         }
     }
 }

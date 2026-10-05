@@ -32,3 +32,6 @@ secrets.*
 # Local authoring-tool bytecode
 __pycache__/
 *.pyc
+
+# Private local verification archive (raw logs, device identifiers, result bundles)
+LocalVerification/

@@ -1,5 +1,6 @@
 """Read-only portable validation of whole collections. Native image decoding is checked by the app."""
-import argparse,base64,json,re,struct,xml.etree.ElementTree as ET
+import argparse,base64,json,re,struct,sys,xml.etree.ElementTree as ET
+from lesson_timing import package_report, planning_errors, apply_measurements
 from pathlib import Path
 from urllib.parse import urlparse
 ROOT=Path(__file__).resolve().parents[1]
@@ -30,11 +31,12 @@ def content(p):
     check(p['fullCollection'] is True,'Declare fullCollection: true')
     b=p['book'];lessons=b['lessons'];sources=b['sources'];assets=p.get('assets',{})
     check(all(clean(b[k]) for k in ['id','title','author','coverageNote']),'Book identity and coverage required')
-    check(1<=len(lessons)<=100 and unique([l['id'] for l in lessons]),'Provide 1–100 unique ideas')
+    check(len(lessons)<=12,f'This collection contains {len(lessons)} ideas. Prepare a complete release with no more than 12 selected ideas.')
+    check(bool(lessons) and unique([l['id'] for l in lessons]),'Provide 1–12 unique, nonempty idea IDs')
     check(p['manifest']==[{'id':l['id'],'revision':l['revision']} for l in lessons],'Ordered manifest must exactly match all ideas/revisions')
     removed=p.get('removedLessonIDs',[])
     check(unique(removed) and not set(removed)&{l['id'] for l in lessons},'Removed IDs must be unique and absent from the active manifest')
-    check(len(assets)<=32 and unique(list(assets)),'Use up to 32 uniquely named shared assets')
+    check(unique(list(assets)),'Shared asset IDs must be unique and nonempty; resource budgets apply without a count limit')
     total=0
     for asset in assets.values():
         raw=base64.b64decode(asset['data'],validate=True);total+=len(raw)
@@ -121,18 +123,61 @@ def validate_project():
     for ref in scheme.findall('.//BuildableReference'):check(ref.attrib['BlueprintIdentifier'] in objects,'Shared scheme target resolves')
     check(len(scheme.findall('.//TestableReference'))==2,'Shared scheme includes unit and UI tests')
 
-if __name__=='__main__':
+def unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f'Duplicate JSON object key: {key}')
+        result[key] = value
+    return result
+
+
+def read_package(path):
+    check(path.stat().st_size <= 64*1024*1024, 'Package size at most 64 MiB before reading')
+    data = path.read_bytes()
+    check(len(data) <= 64*1024*1024, 'Package size at most 64 MiB')
+    return json.loads(data, object_pairs_hook=unique_object), len(data)
+
+
+def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('packages',type=Path,nargs='*');parser.add_argument('--report',type=Path)
-    args=parser.parse_args();paths=args.packages or [ROOT/'LifeIsLearned/Resources/starter.json',ROOT/'Example-Lesson-Package.json']
-    results=[]
-    for path in paths:
-        data=path.read_bytes();check(len(data)<=64*1024*1024,'Package size at most 64 MiB')
-        package=json.loads(data);ideas=content(package)
-        results.append({'file':path.name,'bytes':len(data),'ideas':ideas,'assets':len(package.get('assets',{}))})
-    if not args.packages:
-        check(json.loads(paths[0].read_text())==json.loads(paths[1].read_text()),'Bundled demo matches example package')
-        validate_project()
-    report={'checksPassed':len(checks),'packages':results,'scope':'Portable structural/header checks; native decoding, compilation and runtime checks are separate.'}
-    if args.report:args.report.write_text(json.dumps(report,indent=2)+'\n')
-    print(json.dumps(report,indent=2))
+    parser.add_argument('packages',type=Path,nargs='*')
+    parser.add_argument('--report',type=Path)
+    parser.add_argument('--authoring-gate',action='store_true',help='Fail over-budget plans, non-two-question releases and inconsistent whole-idea estimates.')
+    parser.add_argument('--measurements',type=Path,help='Premium-voice speech-completion timing JSON for one collection.')
+    parser.add_argument('--approve-release',action='store_true',help='Also require matching measured premium-voice timing at or below 300 seconds.')
+    args=parser.parse_args()
+    paths=args.packages or [ROOT/'LifeIsLearned/Resources/starter.json',ROOT/'Example-Lesson-Package.json']
+    if args.measurements and len(paths)!=1:
+        parser.error('Supply exactly one collection with --measurements.')
+    results=[];errors=[]
+    try:
+        for path in paths:
+            package,size=read_package(path);ideas=content(package)
+            timing=package_report(package)
+            if args.authoring_gate or args.approve_release:
+                errors.extend(planning_errors(package,timing))
+            if args.measurements:
+                errors.extend(apply_measurements(timing,json.loads(args.measurements.read_text())))
+            elif args.approve_release:
+                errors.append('Release approval requires measured premium voices; a planning estimate alone is insufficient.')
+            results.append(dict(file=path.name,bytes=size,ideas=ideas,assets=len(package.get('assets',{})),timing=timing))
+        if not args.packages:
+            validate_project()
+    except (ValueError,KeyError,TypeError,IndexError,struct.error) as error:
+        errors.append(str(error))
+    report=dict(checksPassed=len(checks),packages=results,errors=errors,
+                authoringGate='failed' if errors else 'passed' if args.authoring_gate or args.approve_release else 'not-requested',
+                releaseApproval='approved' if args.approve_release and not errors else 'not-approved',
+                scope='Portable structural/header checks and explicit planning estimates. Native decoding, compilation and measured playback are separate.')
+    if args.report:args.report.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+    # Keep the terminal summary brief; detailed scripts and counts are in --report.
+    print(json.dumps({k:v for k,v in report.items() if k!='packages'},indent=2))
+    for result in results:
+        for idea in result['timing']['ideas']:
+            print(f"{result['file']} / {idea['id']}: {idea['spokenWords']} spoken words, {idea['estimatedTotalSeconds']:.2f}s planned, {idea['measurementStatus']}")
+    return 1 if errors else 0
+
+
+if __name__=='__main__':
+    sys.exit(main())
