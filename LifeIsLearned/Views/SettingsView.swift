@@ -46,6 +46,8 @@ import Combine
             }.environment(\.defaultMinListRowHeight, 48).scrollContentBackground(.hidden).background(Palette.paper)
                 .foregroundStyle(Palette.ink).tint(Palette.teal)
                 .navigationTitle("Read & listen").navigationBarTitleDisplayMode(.inline)
+                .toolbarBackground(Palette.paper, for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
                 .toolbar { Button("Done") { preview.stop(); dismiss() } }
         }.onDisappear { preview.stop() }
             .onReceive(NotificationCenter.default.publisher(for: AVSpeechSynthesizer.availableVoicesDidChangeNotification)) { _ in

@@ -53,6 +53,8 @@ struct FineRule: View {
 struct ReadingCanvas: ViewModifier {
     func body(content: Content) -> some View {
         content.foregroundStyle(Palette.ink).background(Palette.paper.ignoresSafeArea()).tint(Palette.teal)
+            .toolbarBackground(Palette.paper, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
     }
 }
 extension View {
