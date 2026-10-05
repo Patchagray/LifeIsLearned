@@ -1,7 +1,9 @@
 # Handoff 003 — review evidence
 
-Implementation commit: **`f78c7f1781b6fa2087559d138c2b4947b0dcfc52`**  
-Branch: **`feature/handoff-003-content-limits`**  
+Implementation commit: **`f78c7f1781b6fa2087559d138c2b4947b0dcfc52`**
+
+Branch: **`feature/handoff-003-content-limits`**
+
 Base: accepted Handoff 002, `d10a60f84b9921cd24a74666b5877359f0623090`. Evidence follow-up changes documentation/screenshots only. The app installed on PATCHA is built from the implementation commit.
 
 ## Results
