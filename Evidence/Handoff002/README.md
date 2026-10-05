@@ -2,7 +2,11 @@
 
 Repository: [Patchagray/LifeIsLearned](https://github.com/Patchagray/LifeIsLearned) · Branch: `feature/handoff-002-ui-polish`
 
-Tested source: [`12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a`](https://github.com/Patchagray/LifeIsLearned/commit/12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a). Later evidence/documentation commits do not alter the tested implementation. [Machine-readable verification](verification.json) records exact commands, destinations, results, timings, and source/image SHA-256 hashes. [Validation details and pending hardware checks](../../VALIDATION.md).
+Tested source: [`12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a`](https://github.com/Patchagray/LifeIsLearned/commit/12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a). Later evidence/documentation commits do not alter the tested implementation. [Machine-readable verification](verification.json) records exact commands, destinations, results, timings, and source/image SHA-256 hashes. [Validation details and physical-device acceptance](../../VALIDATION.md).
+
+## Physical-device acceptance
+
+On October 4, 2026, commit `f4a8693645c3e97a54567f1034f4d463b6506fb3` built, installed, and launched on an iPhone 15 Pro Max running iOS 27.2. After performing the physical checks, the user reported **“All checks are good”** and approved pushing the work. [Device verification](DEVICE_VERIFICATION.md) records the deployment evidence and distinguishes it from the user's overall acceptance report. The images below remain simulator captures.
 
 ## Before and after
 
@@ -38,7 +42,7 @@ The additional collection and long titles are clearly labeled synthetic interfac
 
 [Actual iPhone simulator in landscape](iphone-live-reader-landscape.jpg) · [Actual iPad simulator in landscape](ipad-live-reader-landscape.jpg)
 
-These images use the [XCTest full-screen capture API](https://developer.apple.com/documentation/xcuiautomation/xcuiscreen). The UI test verifies orientation before capture. Reading screens are manually navigated in this UI test; automatic speech transitions are verified separately using the controllable narrator. Audio quality remains a hardware check.
+These images use the [XCTest full-screen capture API](https://developer.apple.com/documentation/xcuiautomation/xcuiscreen). The UI test verifies orientation before capture. Reading screens are manually navigated in this UI test; automatic speech transitions are verified separately using the controllable narrator. The user's subsequent hardware acceptance is recorded separately above.
 
 ## Adaptive and accessible layouts
 

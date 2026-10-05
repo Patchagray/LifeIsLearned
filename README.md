@@ -72,4 +72,4 @@ The app is intentionally a lesson player. Automatic book/PDF extraction, live AI
 
 ## Validation status
 
-The supplied package was originally created in a Linux workspace. It has since built and passed the included tests on the Mac. Narration-follow scrolling adds simulator tests for line visibility, pause/replay, text sizing, and the actual reader layout. See `VALIDATION.md` for the exact commands, outcomes, simulator evidence, user-reported phone checks, and remaining hardware checks for the latest change.
+Handoff 002 passed 29 tests on each of the iPhone 16e and iPad (A16) simulators. Commit `f4a8693645c3e97a54567f1034f4d463b6506fb3` then built, installed, and launched on an iPhone 15 Pro Max running iOS 27.2. After checking that device build, the user reported “All checks are good” and approved pushing the work. See [VALIDATION.md](VALIDATION.md) for commands, outcomes, simulator evidence, and the scope of user-reported physical-device acceptance.

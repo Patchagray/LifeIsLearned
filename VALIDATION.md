@@ -68,11 +68,19 @@ Before/after home, book, and reader captures and final import/practice captures 
 
 During development, new test-file registration and an unsupported test-only environment assignment caused compilation failures; those were corrected. Failed runs were retained locally. Tests were not weakened to obtain passing results. Simulator voice-database fallback messages and UIKit test-host appearance messages occurred; these do not establish hardware voice quality. Raw logs and `.xcresult` bundles remain local; relevant sanitized summaries and compressed images are committed.
 
-### Mario's physical-device evidence and remaining checks
+### Physical-device deployment and user acceptance — October 4, 2026
+
+The app was built, installed, and launched on the connected **iPhone 15 Pro Max, iOS 27.2 (24B5089g)** from commit `f4a8693645c3e97a54567f1034f4d463b6506fb3`. Xcode 26.5 used the existing signing settings. The build succeeded, and both device installation and foreground launch returned success. The existing app was updated in place without uninstalling it. See the [sanitized device evidence](Evidence/Handoff002/DEVICE_VERIFICATION.md) for commands, outcomes, and local log hashes.
+
+After taking responsibility for the physical checks and receiving that build, Mario reported **“All checks are good”** and authorized committing and pushing the accepted work. This records user-reported physical-device acceptance of the deployed Handoff 002 build. No remaining blocker was reported. The report is an overall acceptance result; individual voice, interruption, accessibility, and other scenario results were not separately enumerated or observed by the agent.
+
+This acceptance supersedes the pending overall physical-device pass recorded before deployment. The simulator results above remain the automated evidence. This follow-up changes only documentation and evidence, so no new build or test run was performed after the accepted device build. Long-term snapshot compaction remains deferred; old recovery files are deliberately retained.
+
+### Earlier physical-device reports
 
 Handoff 002 records Mario's October 4 report that the lesson ran through completion, quizzes/explanatory feedback worked, and playback, progression, and pauses worked as expected. The pacing was acceptable; he preferred roughly another half-second between screens. These are **user-reported results on the earlier build**. Device model, OS, and installed build SHA were not supplied. Earlier premium-voice and read-along reports remain in the history below.
 
-The new implementation still needs a physical-device pass for premium-voice audition/switching, active speech and reflection-delay pause/resume, manual navigation/scrolling while speaking, closure/reopen, real interruptions/audio-route changes, background/foreground, and VoiceOver/Reduce Motion interaction. Accessibility labels and motion guards were inspected; large text and contrast were tested on simulators. No new physical-device verification is claimed. Long-term snapshot compaction is deferred; old recovery files are deliberately retained.
+Before the deployment and acceptance above, the requested physical pass covered premium-voice audition/switching, active speech and reflection-delay pause/resume, manual navigation/scrolling while speaking, closure/reopen, real interruptions/audio-route changes, background/foreground, and VoiceOver/Reduce Motion interaction. Accessibility labels and motion guards were inspected; large text and contrast were tested on simulators.
 
 ---
 

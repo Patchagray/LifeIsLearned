@@ -496,12 +496,24 @@
     }
   ],
   "limits": "64 MiB encoded JSON; 100 ideas; 40 pages/idea; 32 PNG/JPEG assets; 2 MiB per image-file data, 24 MiB total base64-decoded image-file data; 2048 px maximum dimension; one frame.",
-  "scope": "Build/test and visual evidence from simulators. State tests use a controlled narrator. No new physical-device or voice-quality verification is claimed.",
-  "pendingHardware": [
+  "scope": "Build/test and visual evidence from simulators. State tests use a controlled narrator. Subsequent physical-device deployment and user-reported acceptance are recorded in DEVICE_VERIFICATION.md.",
+  "hardwareChecksListedBeforeDevicePass": [
     "Premium voice audition/switching",
     "Real interruptions and audio-route changes",
     "Foreground/background and playback controls on hardware",
     "VoiceOver/Reduce Motion interaction and manual drag while speech follows"
   ],
-  "priorHardware": "Mario reported successful earlier device playback, progression, quizzes, explanatory feedback and completion; model, OS and exact installed build were not provided."
+  "priorHardware": "Mario reported successful earlier device playback, progression, quizzes, explanatory feedback and completion; model, OS and exact installed build were not provided.",
+  "physicalDeviceFollowUp": {
+    "date": "2026-10-04",
+    "deployedCommit": "f4a8693645c3e97a54567f1034f4d463b6506fb3",
+    "model": "iPhone 15 Pro Max",
+    "os": "iOS 27.2 (24B5089g)",
+    "build": "succeeded",
+    "install": "succeeded",
+    "launch": "succeeded",
+    "acceptance": "User reported: All checks are good",
+    "acceptanceScope": "Overall physical-device acceptance; individual scenario results were not separately enumerated or observed by the agent.",
+    "evidence": "DEVICE_VERIFICATION.md"
+  }
 }
