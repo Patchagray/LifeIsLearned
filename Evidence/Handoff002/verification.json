@@ -1,0 +1,507 @@
+{
+  "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+  "baselineCommit": "7913c1d9af31ee457decf0a0efc8e6790cc43174",
+  "repository": "https://github.com/Patchagray/LifeIsLearned",
+  "branch": "feature/handoff-002-ui-polish",
+  "runs": [
+    {
+      "name": "phone-review",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "destination": "platform=iOS Simulator,id=20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+      "device": "iPhone 16e",
+      "os": "iOS 26.3.1",
+      "xcode": "26.5 (17F42)",
+      "result": "Passed",
+      "passedTests": 29,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "startedUTC": "2026-10-05T00:08:06.883000+00:00",
+      "finishedUTC": "2026-10-05T00:13:43.657000+00:00",
+      "command": "xcodebuild -project LifeIsLearned.xcodeproj -scheme LifeIsLearned -destination 'platform=iOS Simulator,id=20E0C31B-8975-45A3-8E2C-B91BC6C64E66' -derivedDataPath /tmp/LifeIsLearned-UI0025-DerivedData -resultBundlePath /tmp/LifeIsLearned-ui002-phone-review.xcresult -parallel-testing-enabled NO test > /tmp/LifeIsLearned-ui002-phone-review.log 2>&1",
+      "rawLog": "/tmp/LifeIsLearned-ui002-phone-review.log",
+      "rawLogSHA256": "03176769ac14b107a587be79b075c423afa71c70a0cd6ad1319cf91d93b5618a",
+      "rawResultBundle": "/tmp/LifeIsLearned-ui002-phone-review.xcresult",
+      "largeFixture": {
+        "bytes": 21792441,
+        "ideas": 100,
+        "pagesPerIdea": 40,
+        "assets": 32,
+        "secondsIncludingRelaunch": 29.43907606601715,
+        "mainActorTicksDuringImport": 2590
+      }
+    },
+    {
+      "name": "ipad-review",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "destination": "platform=iOS Simulator,id=B219EF2E-CFAA-43D2-8F69-804ED944F678",
+      "device": "iPad (A16)",
+      "os": "iOS 26.3.1",
+      "xcode": "26.5 (17F42)",
+      "result": "Passed",
+      "passedTests": 29,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "startedUTC": "2026-10-05T00:08:06.858000+00:00",
+      "finishedUTC": "2026-10-05T00:13:48.036000+00:00",
+      "command": "xcodebuild -project LifeIsLearned.xcodeproj -scheme LifeIsLearned -destination 'platform=iOS Simulator,id=B219EF2E-CFAA-43D2-8F69-804ED944F678' -derivedDataPath /tmp/LifeIsLearned-UI002-iPadReview-DerivedData -resultBundlePath /tmp/LifeIsLearned-ui002-ipad-review.xcresult -parallel-testing-enabled NO test > /tmp/LifeIsLearned-ui002-ipad-review.log 2>&1",
+      "rawLog": "/tmp/LifeIsLearned-ui002-ipad-review.log",
+      "rawLogSHA256": "23fd1ad3211a1749023e1a99bb8b021124964aeca0a82bce23ea8406fb58abb3",
+      "rawResultBundle": "/tmp/LifeIsLearned-ui002-ipad-review.xcresult",
+      "largeFixture": {
+        "bytes": 21792441,
+        "ideas": 100,
+        "pagesPerIdea": 40,
+        "assets": 32,
+        "secondsIncludingRelaunch": 29.36315906047821,
+        "mainActorTicksDuringImport": 2584
+      }
+    }
+  ],
+  "portable": {
+    "checksPassed": 311,
+    "packages": [
+      {
+        "file": "starter.json",
+        "bytes": 1669277,
+        "ideas": 1,
+        "assets": 3
+      },
+      {
+        "file": "Example-Lesson-Package.json",
+        "bytes": 1669277,
+        "ideas": 1,
+        "assets": 3
+      }
+    ],
+    "scope": "Portable structural/header checks; native decoding, compilation and runtime checks are separate."
+  },
+  "largePortableFixture": {
+    "checksPassed": 20877,
+    "packages": [
+      {
+        "file": "LifeIsLearned-ui002-largest.json",
+        "bytes": 22221977,
+        "ideas": 100,
+        "assets": 32
+      }
+    ],
+    "scope": "Portable structural/header checks; native decoding, compilation and runtime checks are separate."
+  },
+  "sourceSHA256": {
+    "LifeIsLearned.xcodeproj/project.pbxproj": "fb6543554a1526f49e2114ce73168fb2ace2fed73ae77fd794d5a23b255a3c5c",
+    "LifeIsLearned.xcodeproj/xcshareddata/xcschemes/LifeIsLearned.xcscheme": "f20b5697078c9ffa14b0176b02b6f0b72ea976a0ca84974732d5965d3d5ef689",
+    "LifeIsLearned/LifeIsLearnedApp.swift": "262e703935da1b1c54089fb019e63f3aa885428f3481e479d640b47b8c09064e",
+    "LifeIsLearned/Models/CollectionContract.swift": "f0591183043602391b5c0e453aac89c2ad1db6c035a951aadac3ae6c5499369b",
+    "LifeIsLearned/Models/LearningDestination.swift": "7a5211560d46ca2886b1f752487c723d5f3c1850861514eaf79492b0da89a244",
+    "LifeIsLearned/Models/LessonPackage.swift": "f086b229c8663ece07d689f98c5aa283d4ed555b6d2c5fe4036fc71cf04db8b8",
+    "LifeIsLearned/Models/LessonProgress.swift": "1be9bb1413181a51d86620f7b0df7f44fe540332db86847764101a9daf21f9ca",
+    "LifeIsLearned/Resources/Assets.xcassets/Contents.json": "e8e8ef4b27126d62305af321d12a6e64b866ca0b160f0f83efae90111f0ee576",
+    "LifeIsLearned/Resources/Assets.xcassets/priors-conflict.imageset/Contents.json": "cdf8aa28f8ab89a7f793a8db8bf5f92a4e418064ae45627269f40ed2b7d1c7d1",
+    "LifeIsLearned/Resources/Assets.xcassets/priors-conflict.imageset/illustration.png": "3c4aa728ded2e07be708fb301edd3679131f04bcbe2ea0efe2151728d66d1ecb",
+    "LifeIsLearned/Resources/Assets.xcassets/priors-resolution.imageset/Contents.json": "cdf8aa28f8ab89a7f793a8db8bf5f92a4e418064ae45627269f40ed2b7d1c7d1",
+    "LifeIsLearned/Resources/Assets.xcassets/priors-resolution.imageset/illustration.png": "2ccc0cd9c70c16cee746a2498ae81cac258fa6f5032705300f3445dc8dd9e19b",
+    "LifeIsLearned/Resources/Assets.xcassets/priors-setup.imageset/Contents.json": "cdf8aa28f8ab89a7f793a8db8bf5f92a4e418064ae45627269f40ed2b7d1c7d1",
+    "LifeIsLearned/Resources/Assets.xcassets/priors-setup.imageset/illustration.png": "1385de4faa0acc8dfb3c1d7e576cfdbde9b961aa492ae6c98e15d25dbea82f33",
+    "LifeIsLearned/Resources/starter.json": "6e0a78609124f38b0f2defab8cbef42dda3ccbbfebfbfa89a4b7d4b53989e650",
+    "LifeIsLearned/Services/CollectionStorage.swift": "4827d85b1278faf312aa707bb569224d590de4723d380957149799c0244fd616",
+    "LifeIsLearned/Services/LessonSession.swift": "5f8e8c17a974e63af63cc64214989af7a54e43f02acf8bd95ff95b003e190771",
+    "LifeIsLearned/Services/LibraryStore.swift": "ab1965ab387044f4decc7c759c04e72fe27abc3ea19fbf8d1ce348cfff70e453",
+    "LifeIsLearned/Services/PlaybackSettings.swift": "3bc052e7ef700b0e9a343047653eb70ed9cc31316bad7a13befd3c01650ca285",
+    "LifeIsLearned/Services/SpeechPlayer.swift": "b61a295f17db3ecc6cb9a3ec209b564196a033eb643674ef03f0d4c7659484c3",
+    "LifeIsLearned/Views/ArtworkView.swift": "14a3c2e11dd9221871b3add76deac7a5e11f8f73e221c56d510560a458c6e913",
+    "LifeIsLearned/Views/BookDetailView.swift": "052dfba5946d4ee691ea0b60fa0d4a2c59403115b1fdf6a5184f133c4efb626d",
+    "LifeIsLearned/Views/Components.swift": "671764051d0079697c952846885f7c0c183f2e0b8f583a0f275b02502a380143",
+    "LifeIsLearned/Views/DesignSystem.swift": "4745bc29dbc26a10ef9edd902c5ce16b96588562067c1c41d3828cf8d9a50b2d",
+    "LifeIsLearned/Views/ImportReviewView.swift": "7c90a28e6d255b787476ae5a5193d3228895e8ae80d63ddbd71c8836ecb51035",
+    "LifeIsLearned/Views/LearningHomeComponents.swift": "4401f239509238c22c2fc07c6c53f11010a179ead2b595087069dcda2bfd98e7",
+    "LifeIsLearned/Views/LessonCompletionView.swift": "e4fe709d22aae71115ac7ebb52bed37e0d95d2cf2f88d52c94a4cdf8d9c9cc60",
+    "LifeIsLearned/Views/LibraryView.swift": "2f867471027c4d2d89236e89913dc1cd2cb7d3986bd80fd6147698ff2c7f690e",
+    "LifeIsLearned/Views/NarrationText.swift": "7933896dd8d3f562695b8b87c6e71b57009ca126761bfeb85743204c69598b80",
+    "LifeIsLearned/Views/PracticeView.swift": "ffe9933d8362d11e75daffadc8c7da949f832af3d7ec32b1f3a88bf5690a99e0",
+    "LifeIsLearned/Views/ReaderView.swift": "2825e0c143e9eeadadd207e6703f59116e7da38c94fd1221b50db34fc12ff2e7",
+    "LifeIsLearned/Views/SettingsView.swift": "1765bc7d235456200d64bf0a31bd87c9cbda209a038c809d4160c0b1a1cdffec",
+    "LifeIsLearned/Views/SourcesView.swift": "ec5deb3225309c83b89a1bfff81e2bc8ab8601275b1b586b0ae417be49445f77",
+    "LifeIsLearned/Views/TakeawayCard.swift": "2264907d21b18deb3807ac502a96ec2c8ec2a6f92f30232c3732e0782e3c3b97",
+    "Tests/CollectionTests.swift": "34da7ac1587f550cf19646b1b42c2594bfd8ced8befe9648bb1f0ada37dce94f",
+    "Tests/LessonSessionTests.swift": "267a93d6d9b56ae9d7efa7eaf9de06035a48c7fa451d3a4934bb1d6e65d00539",
+    "Tests/PresentationTests.swift": "8f1ad22ec9f44977a7964c2bae55aa6aea5dc7f1bb2b711350e235f66c2df33e",
+    "Tests/ResumeTests.swift": "1fa695ec7e3e35a0cb91d9aa38d6ceca1900f6d038e39b612f09641d3ddf9661",
+    "Tools/convert_package.py": "89482a401704d9414f8de93a5819504c8edd178394f2e8cab14e342b529b7e77",
+    "Tools/make_project.py": "b2e0232ed48a4e8ab167c584de2fe6c81ccab9665e2316bfa21a6915ef22842f",
+    "Tools/make_starter.py": "0fa74563abe96d2fb5ed65eeb8b642d3058e8a844926b0510eef1085e0b2734b",
+    "Tools/make_verification_fixture.py": "97445bf92704ac70c0e15274346b80709e742b61a4c6909565a2b9ab4db92519",
+    "Tools/validate_package.py": "6f8778be1046f33fcbf934a2a084db64484d3153621eb1f57a8a859b7b53ccb8",
+    "UITests/LearningJourneyUITests.swift": "9a8ef53820667f2c82d67d0ba0107748190283402030e45ac9b073e68820a6e5"
+  },
+  "screenshots": [
+    {
+      "file": "before-home-iphone-simulator.jpg",
+      "capture": "before-home",
+      "kind": "Simulator-hosted baseline view; temporary capture test",
+      "sourceCommit": "7913c1d9af31ee457decf0a0efc8e6790cc43174",
+      "test": "PresentationTests/testLearningScreens()",
+      "rawSHA256": "256a52e0786de919eae2e25907c5b798a733e0ff6e81074fc7d3507cf251bffb",
+      "publishedSHA256": "c8bc82056fbff68b854f2563ddd2df47f3847f3c0bc32a8b1f174ee8ce1e7930",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "before-book-iphone-simulator.jpg",
+      "capture": "before-book",
+      "kind": "Simulator-hosted baseline view; temporary capture test",
+      "sourceCommit": "7913c1d9af31ee457decf0a0efc8e6790cc43174",
+      "test": "PresentationTests/testLearningScreens()",
+      "rawSHA256": "5ece359838e209a1cf7582cfab8419392d54296991d47052ee2e94cab661e986",
+      "publishedSHA256": "4be0414f9a38a125019e8223ef5818b52239ef990bf49af5fd30e5344896390e",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "before-reader-iphone-simulator.jpg",
+      "capture": "before-reader",
+      "kind": "Simulator-hosted baseline view; temporary capture test",
+      "sourceCommit": "7913c1d9af31ee457decf0a0efc8e6790cc43174",
+      "test": "PresentationTests/testLearningScreens()",
+      "rawSHA256": "59ed0bd535a7a38b10b73093f998f75f84eab2c62ceafab41e6f50964172663b",
+      "publishedSHA256": "bd8ec7bb84c5bc84c4f9c03ce2fd3d41c7bf5f64d4e532389b85d718245e0b18",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-home.jpg",
+      "capture": "iphone-home",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "d4f3e0e6d8181c9a6e7d63af0b0a2b8c334e50a826a7df5ba1337a4db2730796",
+      "publishedSHA256": "d5ea15cd19c2c644dfb0e87765315140688e1f046d4b3ea194736e643fc37192",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-book.jpg",
+      "capture": "iphone-book",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "f6d9209c2c0b485963c3883ea5a635a3af3382ae1f898194496c77e54fc8e8c7",
+      "publishedSHA256": "8d322517184b73c7529bb50940a712862efe2e537ee1e0199fa5cc39086708f9",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-reader.jpg",
+      "capture": "iphone-reader",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "079676ebaadc1ba85c52f36a24572ee4ff1d8f2c1fdca53e2e3874cf91982a4b",
+      "publishedSHA256": "503ea307b83fafc405ac17ee33e03556ca5c7334c810600d0f43727b05341451",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-reader-dark.jpg",
+      "capture": "iphone-reader-dark",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "1193e2a53986260b067c6f7c3c35e4004137f0b207daf629c6e2d9121d3af638",
+      "publishedSHA256": "3dbc18dd64cf40d7ad48c252e1356d61669ba8fa479bc6c29fe8e6277c8da449",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-reader-large-text.jpg",
+      "capture": "iphone-reader-large-text",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "97237c37a99239c5029035ffade58cedbbc381d8d49baeac5152697c4e104204",
+      "publishedSHA256": "97e98593821cc08037643857292e7453b0c7ec696319dcbdbd7d14b483896c3a",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-home-multiple-books.jpg",
+      "capture": "iphone-home-multiple-books",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "8706ec9456d44cbe3b8faa444bec920e2f747a9c8937d30ffb4a3113c91c7026",
+      "publishedSHA256": "8f6af45230d968ccf530d13be135474b268cc8b3933842e22931fdfcbd10db26",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-library-large-text.jpg",
+      "capture": "iphone-library-large-text",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "a743982685bd478338fe3da18739ec7ab6219d21b082243f168b7c025cb02360",
+      "publishedSHA256": "f0f4bc6755ee5e3d1c3a0045bf7e52268f3b28b2cd8ebf4bc5aa2d9c02fc4a1e",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-search-empty.jpg",
+      "capture": "iphone-search-empty",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "35147cdd7b1d0e596b3cd21f589f2062609fb801d7c88079fa1a8ab570af9b7f",
+      "publishedSHA256": "3164f2beedde3a224c33fbd27cd5fedadf1e0086fbc54bb1f1d7345ac49aec8d",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-book-long-title.jpg",
+      "capture": "iphone-book-long-title",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "a0d2fb7fcfc5a95da785db4fc1c195d6176c3d6ab36c18b8f9e3be19fc5324d7",
+      "publishedSHA256": "3a36354c2ce9b07dd686c2c91cb8787cc37df574c1d4494227752bdeca5e3b0e",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-takeaway-open.jpg",
+      "capture": "iphone-takeaway-open",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "48766eb4ab1e8fb57868932adfc0edb12a52ccf6378bc6fa2c894d854cfefa19",
+      "publishedSHA256": "1438c1fa590e4a3728794e774ab0e56a8cbed785dd9b4a8d2a0a316d1052d126",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-practice-retry.jpg",
+      "capture": "iphone-practice-retry",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "3e92f7d8b0f597379cf3743bd6dac1d561b13bc83de2485c5076ff9057068fb3",
+      "publishedSHA256": "93eda76cbda91fa20ce80c74813211456c87677a877d8cd4b7daae71c710ed3c",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-practice-correct.jpg",
+      "capture": "iphone-practice-correct",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "65f19b839260f40447bfa46d69cf2666170652bc382c7c29e70394dfd29c6edf",
+      "publishedSHA256": "bd29e7429163de119866ab83b0113d12e5d1cacc14add47c4483832e09c07915",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-completion.jpg",
+      "capture": "iphone-completion",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "2a0f63b25f26746ee92d4c8c2552e3dafb903c1feff2ed402ec3d7e467d5f098",
+      "publishedSHA256": "b5c42be9461699a29e200de96caf1020e00ae273b13657a4986ee5597d131180",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-settings.jpg",
+      "capture": "iphone-settings",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "b7e145f08f4717702a2351eebaa8a8b906facf2364a6df980b6c31c136668548",
+      "publishedSHA256": "90ce70ff090ce8b8138115dcf12b5e0bad02bfe4c9188e020510ea02308cfd83",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-import-preview.jpg",
+      "capture": "iphone-import-preview",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "eb57ae8629e372b7e750c02b74546c63b5c9c58736920c6cab34235b7fbd8c7c",
+      "publishedSHA256": "ba4cdd789f07cb15d217a2694c14f723d269b591868a8cdc1dbb07edde15da48",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-import-update.jpg",
+      "capture": "iphone-import-update",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "050f1d74763d01e6999eb0542160eef7588398e25c886a9d566a17833d7f6085",
+      "publishedSHA256": "d181b53cf416f1baddd6170477b2e9b8f6c3069956ca1cb00470e9a6339bf381",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-sources.jpg",
+      "capture": "iphone-sources",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "287dc133db3c8641e15e2fca85890eff0a12399f0423dc93b6ad2ddc6c2ffe5c",
+      "publishedSHA256": "1b5ebd3922584a389d6e84a924f81d1a4faaf03440215628ec7d01068843b156",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-empty-library-narrow.jpg",
+      "capture": "empty-library-narrow",
+      "kind": "Simulator-hosted empty library at 320 \u00d7 568 points",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testEmptyLibraryAndSemanticContrast()",
+      "rawSHA256": "6ef6b8eb38c995c5e842bfc2078d39f1ac01b61e02273762e3bcdfcb847aaef9",
+      "publishedSHA256": "a7a005187175228385fe31ba11535fb60138f5ac80189a048a12426b8c09b7e9",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-home.jpg",
+      "capture": "ipad-home",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "85420b6d14e1dce792cb94c19e5ec452689b7da6f5f665285e289040bdb9452e",
+      "publishedSHA256": "280e8d05c9821b382394464f9888b3cee991b502998aaafb14c727123fd36309",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-book.jpg",
+      "capture": "ipad-book",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "af19d37839b2df650f2cfbd02f550501ec47b674f50aa408610cf0244d391ec8",
+      "publishedSHA256": "b0c78ea8402b4e792fc28a3d2dc14d6b49f6bd9ef57639c108197a92d9c52e13",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-reader.jpg",
+      "capture": "ipad-reader",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "02c91a10b0463d31c564f2b27bfeacdc70018e37b2ff9c09c56e9ab2a30cfb7a",
+      "publishedSHA256": "aa1082c3d90a1cfd534db5c9b5cb13649a04361f12bce5e8dc2ceac5b83725b2",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-practice-retry-dark.jpg",
+      "capture": "ipad-practice-retry-dark",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "4e7692bef58ccc75c309a0cb0db2950e0faf8e545896aa0e0a14130622db6fa2",
+      "publishedSHA256": "80ca3f8b172a59d153eaeb75f54d72a0dd305fcda3e6a06a13ccee672b3beac1",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-takeaway-dark.jpg",
+      "capture": "ipad-takeaway-dark",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "f54b07a98bca6f5b6aa782d1483572c4482da980882cfaba2f22034ebd1fb4ea",
+      "publishedSHA256": "ea4a1fc1313643d57c6dce9789cbfb791f30069b76b0f6404cd936ffab7b1fa8",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-settings-dark.jpg",
+      "capture": "ipad-settings-dark",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "6aa82f11b04f5cb42906e4d88aa1c8de5af0ae7bdc17e781eed7c4d4bb34c96c",
+      "publishedSHA256": "6ef967d0ab8a2b513b41669c789e05174bc6ebb1a212ef30d0024aca1af3f7f0",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-home-multiple-books.jpg",
+      "capture": "ipad-home-multiple-books",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "a0c87fb7a3551a899fe58ebb7bd8cf51ac6c950b0bfcd68ceb5eb81d8b6d7749",
+      "publishedSHA256": "2bdb75e056809527b17f78653693d48b7875fa634157c1a36496a3b606e8310f",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-library-large-text.jpg",
+      "capture": "ipad-library-large-text",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "dbf4befc47e954256f29e9a6d39833059db3e29f2cafb56eb17b1339be05a141",
+      "publishedSHA256": "6cba537560e439b82b72d95dafeda919f950ceb9a9d0d8bfbb7c43f549d60d26",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-reader-landscape.jpg",
+      "capture": "ipad-reader-landscape",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "6de20a6c39a6cf43b6b17123fc329e5d9e678d5b936e1c7ab67fba49a0eca8ed",
+      "publishedSHA256": "01d219851640c7a92f19a182b584c6bdedca10b4b9843e3fcaa35a793275ce67",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-import-preview-dark.jpg",
+      "capture": "ipad-import-preview-dark",
+      "kind": "Simulator-hosted real SwiftUI view with deterministic fixture/session state",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+      "rawSHA256": "041f79628809b225f0dc4c40c01a9c3e1eb7ae4a06eb8d0585b0087789803ffd",
+      "publishedSHA256": "8025d96d6f8e7c05f5f993e6a8f4d589417787cda5b4c8785c01e3429531c0a1",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-live-reader.jpg",
+      "capture": "live-simulator-reader",
+      "kind": "Actual app journey controlled by XCTest on an iPhone simulator",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "LearningJourneyUITests/testBookReadingRetryResumeAndCompletionJourney()",
+      "rawSHA256": "a047e636f561cadd6329592dee95a78a9fbcd4c3bd76c773effc359f111ea492",
+      "publishedSHA256": "ca2be5660c1be2352d8dbce95d97df2cecc2303e5d6121d7baac6cd2b340fed3",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-live-reader-landscape.jpg",
+      "capture": "live-simulator-reader-landscape",
+      "kind": "Actual app journey controlled by XCTest on an iPhone simulator",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "LearningJourneyUITests/testBookReadingRetryResumeAndCompletionJourney()",
+      "rawSHA256": "6739ef3f2d797e434ae8c4a32eb30be47bc1347b7f64d8a9563137989a1ff790",
+      "publishedSHA256": "0bf9f60e0bc58abc74b8494cf721c441999bdcc0a1980405cc42907beab35904",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-live-incorrect-feedback.jpg",
+      "capture": "live-simulator-incorrect-feedback",
+      "kind": "Actual app journey controlled by XCTest on an iPhone simulator",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "LearningJourneyUITests/testBookReadingRetryResumeAndCompletionJourney()",
+      "rawSHA256": "b1e27f9c727b4b0e9efe227eb0511f91f9e3e282482e38f5d0796cfe54b22744",
+      "publishedSHA256": "6aa6f310f1e6f6a7531d79ff6544b7d622adb12f5b14a709a7bf468b2237801d",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "iphone-live-completion.jpg",
+      "capture": "live-simulator-completion",
+      "kind": "Actual app journey controlled by XCTest on an iPhone simulator",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "LearningJourneyUITests/testBookReadingRetryResumeAndCompletionJourney()",
+      "rawSHA256": "5281be26e47c2b51a323853da44ec5661a8dd1d3f7e3d191f1651879f764739d",
+      "publishedSHA256": "00f02f49c6c25b7d253cca6557171b0c46de7a02bf6bce282fea73dfeaf4252a",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    },
+    {
+      "file": "ipad-live-reader-landscape.jpg",
+      "capture": "live-simulator-reader-landscape",
+      "kind": "Actual app journey controlled by XCTest on an iPad simulator",
+      "sourceCommit": "12ec69ad440384531e2ee9bad7c3b65a8ed0ea0a",
+      "test": "LearningJourneyUITests/testBookReadingRetryResumeAndCompletionJourney()",
+      "rawSHA256": "37428359405549aa6f52d3884754ea8ac1a84cc40ad4b667db7fcd376385bb83",
+      "publishedSHA256": "dbc9a8d0bc3b4c1983230bbe104ff65d548de3122403e74e76c7044e45dfb958",
+      "conversion": "JPEG quality 85, longest edge at most 1600 px; no layout edits"
+    }
+  ],
+  "limits": "64 MiB encoded JSON; 100 ideas; 40 pages/idea; 32 PNG/JPEG assets; 2 MiB per image-file data, 24 MiB total base64-decoded image-file data; 2048 px maximum dimension; one frame.",
+  "scope": "Build/test and visual evidence from simulators. State tests use a controlled narrator. No new physical-device or voice-quality verification is claimed.",
+  "pendingHardware": [
+    "Premium voice audition/switching",
+    "Real interruptions and audio-route changes",
+    "Foreground/background and playback controls on hardware",
+    "VoiceOver/Reduce Motion interaction and manual drag while speech follows"
+  ],
+  "priorHardware": "Mario reported successful earlier device playback, progression, quizzes, explanatory feedback and completion; model, OS and exact installed build were not provided."
+}
