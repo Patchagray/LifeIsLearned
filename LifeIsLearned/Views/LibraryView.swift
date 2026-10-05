@@ -105,7 +105,7 @@ import UniformTypeIdentifiers
             if filteredBooks.isEmpty {
                 EmptyLearningView(title: "No books found.", message: "Try another title or author, or clear your search to return to the library.")
             } else {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: typeSize.isAccessibilitySize ? 260 : 145, maximum: 230), spacing: 24, alignment: .top)], alignment: .leading, spacing: 32) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: typeSize.isAccessibilitySize ? 260 : 145, maximum: typeSize.isAccessibilitySize ? 360 : 230), spacing: 24, alignment: .top)], alignment: .leading, spacing: 32) {
                     ForEach(filteredBooks) { book in
                         Button { selectedBook = book } label: {
                             LibraryBookCard(book: book, assets: library.package(for: book)?.artwork ?? [:], practiced: book.lessons.filter { library.status(book: book, lesson: $0).practiceComplete }.count)

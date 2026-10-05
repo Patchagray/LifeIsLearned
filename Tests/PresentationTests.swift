@@ -91,6 +91,7 @@ final class PresentationTests: XCTestCase {
         try await capture(NavigationStack { BookDetailView(book: collection.book) }, "book-long-title", type: .accessibility1)
         try await capture(LibraryView(), "home-dark", scheme: .dark)
         try await capture(LibraryView(), "home-large-text", type: .accessibility3)
+        try await capture(LibraryView(), "library-large-text", type: .accessibility3, bottom: true)
         session.stop()
         await store.flush()
         XCTAssertFalse(speech.isPlaying, "Screenshots inject session state; they never start real audio")
