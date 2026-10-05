@@ -69,3 +69,7 @@ I am a beginner. Keep updates brief and professional.
 When my action is needed, explain exactly what to open, click, or select. When giving code for manual editing, provide the complete file or an exact insertion location.
 
 At handoff, state what changed, what was verified, what remains uncertain, and where the pushed work can be inspected.
+
+## Whole-collection imports (Handoff 002)
+
+Import books only as their entire prepared, reviewed collection, including updates. Require a versioned collection manifest, stable IDs/revisions, shared artwork, and explicit coverage. Stage and review changes before confirmation. Never silently import individual-idea patches, remove omitted ideas, reset unchanged progress, or treat structural validation as factual review. Preserve archived progress and legacy installations through recoverable migration. See CONTENT_AUTHORING.md and LifeIsLearned_Handoff_002.pdf.

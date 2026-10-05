@@ -28,3 +28,7 @@ secrets.*
 
 # macOS noise
 .DS_Store
+
+# Local authoring-tool bytecode
+__pycache__/
+*.pyc

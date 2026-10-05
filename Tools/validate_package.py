@@ -1,45 +1,73 @@
-"""Portable content/project checks; intentionally not a substitute for xcodebuild."""
-import base64,json,re,struct,xml.etree.ElementTree as ET
+"""Read-only portable validation of whole collections. Native image decoding is checked by the app."""
+import argparse,base64,json,re,struct,xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import urlparse
 ROOT=Path(__file__).resolve().parents[1]
 checks=[]
 def check(value,message):
-    assert value,message
+    if not value: raise ValueError(message)
     checks.append(message)
-def unique(items):return len(items)==len(set(items)) and all(items)
-def content(package):
-    check(package['formatVersion']==1,'Package format version is supported')
-    b=package['book'];sources=b['sources']
-    check(bool(b['id']) and bool(b['title']) and bool(b['author']) and bool(b['coverageNote']),'Book metadata and coverage note present')
-    check(unique([s['id'] for s in sources]),'Source IDs unique')
-    for s in sources:
-        u=urlparse(s['url'])
-        check(u.scheme=='https' and bool(u.netloc) and all(s[k] for k in ['title','locator','scope']),f'Source complete: {s["id"]}')
-    check(unique([l['id'] for l in b['lessons']]),'Lesson IDs unique')
+def clean(value):return isinstance(value,str) and bool(value.strip())
+def unique(items):return len(items)==len(set(items)) and all(clean(i) for i in items)
+def dimensions(raw):
+    if raw[:8]==b'\x89PNG\r\n\x1a\n': return 'image/png',struct.unpack('>II',raw[16:24])
+    if raw[:2]==b'\xff\xd8':
+        i=2
+        while i<len(raw):
+            if raw[i]!=255:i+=1;continue
+            while i<len(raw) and raw[i]==255:i+=1
+            marker=raw[i];i+=1
+            if marker in (0xd8,0xd9):continue
+            length=int.from_bytes(raw[i:i+2],'big')
+            if marker in (0xc0,0xc1,0xc2):
+                return 'image/jpeg',(int.from_bytes(raw[i+5:i+7],'big'),int.from_bytes(raw[i+3:i+5],'big'))
+            if length<2:break
+            i+=length
+    raise ValueError('Unreadable PNG/JPEG header')
+def content(p):
+    check(p['formatVersion']==2,'New imports require formatVersion 2; convert reviewed legacy collections first')
+    check(type(p['collectionRevision']) is int and p['collectionRevision']>0,'Positive collectionRevision required')
+    check(p['fullCollection'] is True,'Declare fullCollection: true')
+    b=p['book'];lessons=b['lessons'];sources=b['sources'];assets=p.get('assets',{})
+    check(all(clean(b[k]) for k in ['id','title','author','coverageNote']),'Book identity and coverage required')
+    check(1<=len(lessons)<=100 and unique([l['id'] for l in lessons]),'Provide 1–100 unique ideas')
+    check(p['manifest']==[{'id':l['id'],'revision':l['revision']} for l in lessons],'Ordered manifest must exactly match all ideas/revisions')
+    removed=p.get('removedLessonIDs',[])
+    check(unique(removed) and not set(removed)&{l['id'] for l in lessons},'Removed IDs must be unique and absent from the active manifest')
+    check(len(assets)<=32 and unique(list(assets)),'Use up to 32 uniquely named shared assets')
+    total=0
+    for asset in assets.values():
+        raw=base64.b64decode(asset['data'],validate=True);total+=len(raw)
+        check(len(raw)<=2*1024*1024,'Each image must be at most 2 MiB')
+        mime,(w,h)=dimensions(raw)
+        check(asset['mediaType']==mime and 0<w<=2048 and 0<h<=2048,'Use PNG/JPEG with matching mediaType and dimensions at most 2048 × 2048')
+    check(total<=24*1024*1024,'Total decoded image bytes must be at most 24 MiB')
+    if b.get('coverAssetID'):check(b['coverAssetID'] in assets and clean(b.get('coverDescription')),'Cover asset and accessible description required')
+    check(bool(sources) and unique([s['id'] for s in sources]),'Source IDs must be unique')
+    for source in sources:
+        url=urlparse(source['url'])
+        check(url.scheme=='https' and bool(url.netloc) and all(clean(source[k]) for k in ['title','locator','scope']),'Source title, HTTPS URL, locator and scope required')
     known={s['id'] for s in sources}
-    for lesson in b['lessons']:
-        check(lesson['revision']>0 and lesson['estimatedMinutes']>0 and bool(lesson['scopeNote']),'Lesson revision, estimate, scope present')
-        p=lesson['pages']; qs=lesson['questions']
-        check(2<=len(p)<=40 and unique([x['id'] for x in p]),'Lesson screen IDs/count valid')
-        check(p[0]['kind']=='intro' and p[-1]['kind']=='takeaway','Intro/takeaway boundaries correct')
-        for page in p:
-            check(page['kind'] in ['intro','story','explanation','takeaway'] and page['role'] in ['guide','storyteller'],f'Screen type and voice: {page["id"]}')
-            check(page['title'] and 0<len(page['text'])<=6000,f'Screen text: {page["id"]}')
-            check(set(page['sourceIDs'])<=known and (page['kind']=='story' or bool(page['sourceIDs'])),f'Source links: {page["id"]}')
-            if page.get('imageAsset'):
-                folder=ROOT/'LifeIsLearned/Resources/Assets.xcassets'/(page['imageAsset']+'.imageset')
-                meta=json.loads((folder/'Contents.json').read_text())
-                check((folder/meta['images'][0]['filename']).is_file() and page.get('imageDescription'),f'Illustration and accessibility: {page["id"]}')
-        check(2<=len(qs)<=10 and unique([q['id'] for q in qs]),'Practice questions present with unique IDs')
-        for q in qs:
-            choices=q['choices']
-            check(2<=len(choices)<=6 and unique([c['id'] for c in choices]) and q['correctChoiceID'] in [c['id'] for c in choices],f'Answer key: {q["id"]}')
-            check(all(c['text'] and c['feedback'] for c in choices),f'Feedback for every answer: {q["id"]}')
-    return sum(len((p['title']+' '+p['text']).split()) for l in b['lessons'] for p in l['pages'])
-
+    for lesson in lessons:
+        check(type(lesson['revision']) is int and lesson['revision']>0 and lesson['estimatedMinutes']>0 and clean(lesson['title']) and clean(lesson['scopeNote']),'Idea title, revision, estimate and scope required')
+        pages=lesson['pages'];questions=lesson['questions']
+        check(2<=len(pages)<=40 and unique([x['id'] for x in pages]),'Use 2–40 unique screens')
+        check(pages[0]['kind']=='intro' and pages[-1]['kind']=='takeaway','Begin with intro and end with takeaway')
+        for page in pages:
+            check(page['kind'] in ['intro','story','explanation','takeaway'] and page['role'] in ['guide','storyteller'],'Valid screen kind and voice required')
+            check(clean(page['title']) and clean(page['text']) and len(page['text'])<=6000,'Screen needs title and 1–6000 text characters')
+            check(set(page['sourceIDs'])<=known and (page['kind']=='story' or bool(page['sourceIDs'])),'Teaching screens need valid source references')
+            check(not page.get('imageAsset') and not page.get('imageBase64'),'Format 2 uses shared imageID references')
+            if page.get('imageID'):check(page['imageID'] in assets and clean(page.get('imageDescription')),'Image ID and accessible description required')
+        check(2<=len(questions)<=10 and unique([q['id'] for q in questions]),'Use 2–10 unique questions')
+        for question in questions:
+            choices=question['choices']
+            check(clean(question['prompt']) and 2<=len(choices)<=6 and unique([c['id'] for c in choices]),'Question prompt and unique choices required')
+            check(question['correctChoiceID'] in [c['id'] for c in choices] and all(clean(c['text']) and clean(c['feedback']) for c in choices),'Correct answer and explanatory feedback required')
+    return len(lessons)
 # Minimal OpenStep parser validates project syntax and every object reference.
 def parse_pbx(text):
+    text=re.sub(r'/\*.*?\*/','',text,flags=re.S)
     text=re.sub(r'//[^\n]*','',text)
     tokens=re.findall(r'"(?:\\.|[^"\\])*"|[{}()=;,]|[^\s{}()=;,]+',text)
     pos=0
@@ -67,46 +95,44 @@ def parse_pbx(text):
     result=value();assert pos==len(tokens)
     return result
 
-starter=json.loads((ROOT/'LifeIsLearned/Resources/starter.json').read_text())
-words=content(starter)
-check(starter==json.loads((ROOT/'Example-Lesson-Package.json').read_text()),'Importable example matches bundled content')
-project=parse_pbx((ROOT/'LifeIsLearned.xcodeproj/project.pbxproj').read_text());objects=project['objects']
-check(project['rootObject'] in objects,'Project root resolves')
-for key,value in objects.items():
+
+def validate_project():
+    project=parse_pbx((ROOT/'LifeIsLearned.xcodeproj/project.pbxproj').read_text());objects=project['objects']
+    check(project['rootObject'] in objects,'Project root resolves')
     def walk(item):
         if isinstance(item,dict):
-            for v in item.values():walk(v)
+            for value in item.values():walk(value)
         elif isinstance(item,list):
-            for v in item:walk(v)
-        elif isinstance(item,str) and re.fullmatch('[A-F0-9]{24}',item):
-            assert item in objects,f'Dangling project reference: {item}'
-    walk(value)
-check(True,'Every Xcode object reference resolves')
-root_obj=objects[project['rootObject']];resolved=[]
-def visit(groupid,parent):
-    group=objects[groupid]
-    base=parent/group.get('path','')
-    for childid in group.get('children',[]):
-        child=objects[childid]
-        if child['isa']=='PBXGroup':visit(childid,base)
-        elif child['isa']=='PBXFileReference' and child.get('sourceTree')!='BUILT_PRODUCTS_DIR':
-            path=base/child['path'];check(path.exists(),f'Project file exists: {path.relative_to(ROOT)}');resolved.append(path.resolve())
-visit(root_obj['mainGroup'],ROOT)
-expected={p.resolve() for p in (ROOT/'LifeIsLearned').rglob('*.swift')}|{p.resolve() for p in (ROOT/'Tests').glob('*.swift')}
-check(expected<={p for p in resolved},'All app and test Swift files included in project')
-for phase in objects.values():
-    if phase['isa'] in ['PBXSourcesBuildPhase','PBXResourcesBuildPhase']:
-        for b in phase['files']:
-            ref=objects[objects[b]['fileRef']]
-            check(ref['isa']=='PBXFileReference','Build phase references a real file')
-scheme=ET.parse(ROOT/'LifeIsLearned.xcodeproj/xcshareddata/xcschemes/LifeIsLearned.xcscheme')
-for ref in scheme.findall('.//BuildableReference'):
-    check(ref.attrib['BlueprintIdentifier'] in objects,'Shared scheme target resolves')
-check(len(scheme.findall('.//TestableReference'))==1,'Shared scheme includes XCTest target')
-for img in (ROOT/'LifeIsLearned/Resources/Assets.xcassets').rglob('illustration.png'):
-    raw=img.read_bytes();check(raw[:8]==b'\x89PNG\r\n\x1a\n','Illustration has PNG signature')
-    w,h=struct.unpack('>II',raw[16:24]);check(w>0 and h>0,f'Illustration dimensions: {w}×{h}')
-check(len(list((ROOT/'LifeIsLearned/Resources/Assets.xcassets').rglob('illustration.png')))==3,'Three scene illustrations bundled')
-report=f'''# Validation report\n\nPortable checks passed: **{len(checks)}**.\n\n- Starter content: {len(starter['book']['lessons'][0]['pages'])} screens, {words} narrated words, two practice questions, complete per-answer feedback.\n- Source IDs, scopes, coverage notes, page boundaries, answer keys and illustration descriptions checked.\n- Bundled and importable example content match.\n- OpenStep Xcode project parsed; all object/file references resolve and all Swift files are included.\n- Shared scheme XML parsed; app and XCTest targets resolve.\n- Three valid PNG assets packaged with asset-catalog metadata.\n\n**Not executed in this Linux environment:** Swift compilation, Xcode build, XCTest execution, simulator UI checks, hardware speech checks. The portable checks do not prove the app compiles or that playback works on iOS.\n\nThe next step is the Mac-side build/test pass in CODEX_HANDOFF.md.\n'''
-(ROOT/'VALIDATION.md').write_text(report)
-print(report)
+            for value in item:walk(value)
+        elif isinstance(item,str) and re.fullmatch('[A-F0-9]{24}',item):check(item in objects,'Project reference resolves: '+item)
+    for obj in objects.values():walk(obj)
+    resolved=[]
+    def visit(groupid,parent):
+        group=objects[groupid];base=parent/group.get('path','')
+        for childid in group.get('children',[]):
+            child=objects[childid]
+            if child['isa']=='PBXGroup':visit(childid,base)
+            elif child['isa']=='PBXFileReference' and child.get('sourceTree')!='BUILT_PRODUCTS_DIR':
+                path=base/child['path'];check(path.exists(),'Project file exists: '+str(path.relative_to(ROOT)));resolved.append(path.resolve())
+    visit(objects[project['rootObject']]['mainGroup'],ROOT)
+    expected={p.resolve() for p in (ROOT/'LifeIsLearned').rglob('*.swift')}|{p.resolve() for p in (ROOT/'Tests').glob('*.swift')}|{p.resolve() for p in (ROOT/'UITests').glob('*.swift')}
+    check(expected<=set(resolved),'All Swift sources and tests are in the project')
+    scheme=ET.parse(ROOT/'LifeIsLearned.xcodeproj/xcshareddata/xcschemes/LifeIsLearned.xcscheme')
+    for ref in scheme.findall('.//BuildableReference'):check(ref.attrib['BlueprintIdentifier'] in objects,'Shared scheme target resolves')
+    check(len(scheme.findall('.//TestableReference'))==2,'Shared scheme includes unit and UI tests')
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('packages',type=Path,nargs='*');parser.add_argument('--report',type=Path)
+    args=parser.parse_args();paths=args.packages or [ROOT/'LifeIsLearned/Resources/starter.json',ROOT/'Example-Lesson-Package.json']
+    results=[]
+    for path in paths:
+        data=path.read_bytes();check(len(data)<=64*1024*1024,'Package size at most 64 MiB')
+        package=json.loads(data);ideas=content(package)
+        results.append({'file':path.name,'bytes':len(data),'ideas':ideas,'assets':len(package.get('assets',{}))})
+    if not args.packages:
+        check(json.loads(paths[0].read_text())==json.loads(paths[1].read_text()),'Bundled demo matches example package')
+        validate_project()
+    report={'checksPassed':len(checks),'packages':results,'scope':'Portable structural/header checks; native decoding, compilation and runtime checks are separate.'}
+    if args.report:args.report.write_text(json.dumps(report,indent=2)+'\n')
+    print(json.dumps(report,indent=2))

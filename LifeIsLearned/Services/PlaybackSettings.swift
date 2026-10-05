@@ -16,7 +16,7 @@ import AVFoundation
         guideVoiceID = d.string(forKey: "guideVoice") ?? ""
         storyVoiceID = d.string(forKey: "storyVoice") ?? ""
         speed = d.object(forKey: "speed") as? Double ?? 1
-        pagePause = d.object(forKey: "pagePause") as? Double ?? 1.5
+        pagePause = d.object(forKey: "pagePause") as? Double ?? 2.0
         autoAdvance = d.object(forKey: "autoAdvance") as? Bool ?? true
         textSize = d.object(forKey: "textSize") as? Double ?? 20
     }
