@@ -33,9 +33,9 @@ actor CollectionStorage {
         }
         var packages: [LessonPackage] = []
         do {
-            if let seed { packages = [try seed.validated(allowLegacy: true)] }
+            if let seed { packages = [try seed.validated(for: .storedContent)] }
             else if let seedURL {
-                packages = [try JSONDecoder().decode(LessonPackage.self, from: Data(contentsOf: seedURL)).validated(allowLegacy: true)]
+                packages = [try JSONDecoder().decode(LessonPackage.self, from: Data(contentsOf: seedURL)).validated(for: .storedContent)]
             }
         } catch { warnings.append("The demo could not load: \(error.localizedDescription)") }
         var catalog = CollectionCatalog(packages: packages)
@@ -62,7 +62,7 @@ actor CollectionStorage {
                         do {
                             let candidate = try JSONDecoder().decode(CollectionCatalog.self,
                                             from: Data(contentsOf: directory.appendingPathComponent("collections.json")))
-                            for package in candidate.packages { _ = try package.validated(allowLegacy: true) }
+                            for package in candidate.packages { _ = try package.validated(for: .storedContent) }
                             catalog = candidate; loadedCatalog = true
                             reusableCatalog = (candidate.version, directory.appendingPathComponent("collections.json"))
                             if id != pointer.current { warnings.append("Recovered the previous collection snapshot; the damaged file is preserved.") }
@@ -86,7 +86,7 @@ actor CollectionStorage {
             do {
                 let old = try JSONDecoder().decode([LessonPackage].self, from: Data(contentsOf: legacy))
                 for package in old {
-                    let validated = try package.validated(allowLegacy: true)
+                    let validated = try package.validated(for: .storedContent)
                     packages.removeAll { $0.book.id == package.book.id }
                     packages.append(validated)
                 }

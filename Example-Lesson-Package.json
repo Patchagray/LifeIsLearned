@@ -5,7 +5,7 @@
     "title": "The Influential Mind",
     "author": "Tali Sharot",
     "synopsis": "Explore how existing beliefs shape the way we receive information. Start with a fictional college meeting, then try the idea in a new situation.",
-    "coverageNote": "Starter collection: one introductory lesson on priors. Grounded in the publisher’s prologue and a separately identified 2019 research paper. The full book and Chapter 1 have not been reviewed; completion here means completion of the available lesson only.",
+    "coverageNote": "One selected introductory idea, not an exhaustive summary or the author’s ranking. Based on the previously reviewed publisher prologue and separately identified 2019 paper. The full book and Chapter 1 were not reviewed. This shortened demo does not establish coverage of the rest of the book.",
     "sources": [
       {
         "id": "book",
@@ -25,18 +25,18 @@
     "lessons": [
       {
         "id": "priors",
-        "revision": 1,
+        "revision": 2,
         "title": "The Prior Problem",
         "subtitle": "Why evidence does not enter an empty mind",
         "estimatedMinutes": 5,
-        "scopeNote": "Original teaching story. Introductory coverage of priors; not an exhaustive chapter summary. Fictional report findings are not research results.",
+        "scopeNote": "One introductory distinction: prior beliefs versus biased treatment of new evidence. The college, report and adviser are original fiction. The adviser’s question is a teaching strategy, not a tested persuasion result. This is not a complete chapter or book summary.",
         "pages": [
           {
             "id": "welcome",
             "kind": "intro",
             "role": "guide",
             "title": "The Prior Problem",
-            "text": "What you already believe can shape how you receive new information. This is a starting point for exploring priors in Tali Sharot’s The Influential Mind. First, meet two students looking at one report. Their college, experiences, and report are invented for this lesson. Watch what each person notices—and what each person overlooks.",
+            "text": "Existing beliefs can shape what we notice. This introductory lesson draws on reviewed material about priors, not the whole book. Malik, Elena, their college, and the report in this example are fictional.",
             "imageDescription": "Malik and Elena sit across a college meeting table with a shared laptop.",
             "sourceIDs": [
               "book",
@@ -49,7 +49,7 @@
             "kind": "story",
             "role": "storyteller",
             "title": "Before the report",
-            "text": "Malik arrived at the student council meeting with a yellow notebook and a clear opinion. The college’s work-study program deserved another year. Working during school had helped him pay for transport and learn how to handle responsibility.\n\nAcross the table, Elena opened her laptop. She wanted the program reduced. Her friend Rosa had taken extra shifts, missed assignments, and eventually dropped a class. When Elena pictured student employment, she pictured Rosa falling asleep over a textbook.\n\nNeither had opened today’s report. Both already expected to know what it would mean.",
+            "text": "Malik wanted to keep the college work-study program. His job had helped him pay for transport and build confidence. Elena wanted fewer student jobs: her friend had taken extra shifts and fallen behind in class.\n\nBefore opening the report, each already had a picture of what working during college meant.",
             "imageDescription": "Malik in a mustard overshirt and Elena in a sage sweater review a laptop before discussing the report.",
             "sourceIDs": [],
             "imageID": "art-1385de4faa0acc8d"
@@ -59,37 +59,17 @@
             "kind": "story",
             "role": "storyteller",
             "title": "One report. Two readings.",
-            "text": "The report offered a complicated picture. Some participants described useful skills and greater confidence. Others described fatigue and difficulty finding time to study. Its authors recommended further investigation; it could not establish that the program caused either outcome.\n\nMalik tapped the section about confidence. “That’s what I’m talking about. It gives people a foothold.”\n\nElena pointed to the complaints about fatigue. “And that’s what worries me. Students already have enough to carry.”\n\nBoth comments referred to something actually on the page. But each had started with the passage that fit an existing expectation.",
+            "text": "The report described useful skills alongside fatigue and missed study time. It could not establish what caused those outcomes.\n\nMalik pointed to the benefits. Elena pointed to the problems. Each finding was on the page, but each student favored the part that matched an existing belief. More quotations only hardened their disagreement.",
             "imageDescription": "Each student points to a different part of the same fictional report.",
             "sourceIDs": [],
             "imageID": "art-3c4aa728ded2e07b"
-          },
-          {
-            "id": "argument",
-            "kind": "story",
-            "role": "storyteller",
-            "title": "More facts. Less listening.",
-            "text": "Malik read another positive comment aloud. Elena answered with another complaint. Soon they were talking faster than either could listen.\n\n“You’re ignoring the benefit,” Malik said.\n\n“You’re ignoring the cost,” Elena replied.\n\nTheir adviser asked a quiet question: “Which finding would make each of you reconsider?”\n\nMalik looked down. He had been collecting support for keeping the program, not deciding what might count against it. Elena realized she had done the same in the other direction.\n\nThe report had become ammunition. Neither had treated it as a question that was still open.",
-            "imageDescription": "Malik and Elena disagree politely, holding papers that emphasize different findings.",
-            "sourceIDs": [],
-            "imageID": "art-3c4aa728ded2e07b"
-          },
-          {
-            "id": "listen",
-            "kind": "story",
-            "role": "storyteller",
-            "title": "What came into the room?",
-            "text": "Elena explained what had happened to Rosa. Malik’s expression changed. He had assumed Elena disliked work itself. Now he understood her concern about overload.\n\nThen Malik described the supervisor who had taught him to plan a shift and speak up when he needed help. Elena had assumed he cared only about keeping a popular program. Now she understood the opportunity he wanted to protect.\n\nTheir experiences were different. Their aim was similar: help students succeed.\n\nThat did not settle the argument. It gave them a reason to examine the whole report instead of defending their first reactions.",
-            "imageDescription": "The students listen to one another and begin looking at the report together.",
-            "sourceIDs": [],
-            "imageID": "art-2ccc0cd9c70c16ce"
           },
           {
             "id": "revise",
             "kind": "story",
             "role": "storyteller",
             "title": "A better question",
-            "text": "“What if we looked at which students were struggling, and how many hours they worked?” Malik asked.\n\n“And compared students with similar workloads,” Elena added. “Maybe we need better evidence before deciding.”\n\nThey drafted a small trial with work-hour limits and academic check-ins, then agreed to evaluate both benefits and problems. Malik wrote down what would make him favor reducing the program. Elena wrote down what would make her favor keeping it.\n\nThey had not magically become unbiased. They had changed the task—from winning an argument to testing an idea.",
+            "text": "Their adviser asked, “What finding would make you reconsider?”\n\nMalik realized he had collected support, not looked for challenges. Elena recognized the same habit. They agreed to examine both benefits and costs, including workload differences. Understanding each other’s experiences helped them discuss the evidence. It did not prove the program worked, or guarantee they would agree.",
             "imageDescription": "Malik and Elena collaborate over one report, considering both benefits and concerns.",
             "sourceIDs": [],
             "imageID": "art-2ccc0cd9c70c16ce"
@@ -98,8 +78,8 @@
             "id": "distinction",
             "kind": "explanation",
             "role": "guide",
-            "title": "Beliefs are a starting point",
-            "text": "A prior is a belief held before new information arrives. It is not automatically a mistake. Confirmation bias is the tendency to favor information that fits an existing view.\n\nA later study involving Sharot found that people used others’ confidence more when those opinions agreed with their earlier judgments.\n\nOur story illustrates selective interpretation. Shared goals and the adviser’s question are teaching strategies we added, not a guaranteed persuasion method tested by that study. Different conclusions can also reflect legitimate differences in values or evidence quality. Facts still matter.",
+            "title": "Belief or bias?",
+            "text": "A prior is a belief held before new information arrives. Confirmation bias favors information that fits an existing view. Experience can be useful; unequal scrutiny is the problem. The adviser’s question is our teaching example, not a research-tested guarantee of persuasion.",
             "imageDescription": null,
             "sourceIDs": [
               "book",
@@ -110,8 +90,8 @@
             "id": "takeaway",
             "kind": "takeaway",
             "role": "guide",
-            "title": "Notice your starting point",
-            "text": "Before defending a conclusion, name what you already believe. Ask what evidence could change your mind. Then examine the strongest support and challenge with the same care.\n\nWhen listening to someone else, understand their starting point too. Common ground can open a conversation; it does not decide what is true.",
+            "title": "Test your starting point",
+            "text": "Name your belief. Ask what evidence could change it. Examine credible support and challenges with equal care. Shared goals can help discussion; they cannot decide what is true.",
             "imageDescription": null,
             "sourceIDs": [
               "book",
@@ -122,45 +102,45 @@
         "questions": [
           {
             "id": "recognition",
-            "prompt": "A manager expects remote work to fail. A mixed report contains benefits and problems. She highlights every problem and dismisses the benefits without checking their quality. What best explains this pattern?",
+            "prompt": "A manager expects remote work to fail. She dismisses credible benefits but accepts weak criticism. What is the problem?",
             "correctChoiceID": "selective",
             "choices": [
               {
                 "id": "selective",
-                "text": "Her prior belief is influencing which evidence she takes seriously.",
-                "feedback": "Yes. Favoring evidence because it fits an existing view is confirmation bias. The problem is unequal scrutiny, not merely having an initial belief."
+                "text": "Unequal scrutiny that favors her existing belief.",
+                "feedback": "Exactly: evidence quality should matter on both sides. An initial belief alone is not the problem."
               },
               {
                 "id": "certain",
-                "text": "The report proves remote work is ineffective.",
-                "feedback": "A mixed report does not establish that conclusion. We would need to assess the evidence. Her selective handling of it is the pattern being tested."
+                "text": "The report proves remote work fails.",
+                "feedback": "That conclusion needs evidence. Selective scrutiny cannot establish whether remote work succeeds or fails."
               },
               {
                 "id": "badprior",
-                "text": "Any belief formed before reading a report is irrational.",
-                "feedback": "Priors can reflect useful experience. Bias arises when the new evidence is handled unevenly because of the existing belief."
+                "text": "Having any belief before reading.",
+                "feedback": "Experience can inform a prior. The problem is favoring agreement over evidence quality."
               }
             ]
           },
           {
             "id": "transfer",
-            "prompt": "You favor a new tutoring program. Your friend doubts it. Which next step best helps you both evaluate the evidence fairly?",
+            "prompt": "You favor tutoring; your friend doubts it. What would help you evaluate a new study fairly?",
             "correctChoiceID": "test",
             "choices": [
               {
                 "id": "pile",
-                "text": "Send only success stories until your friend agrees.",
-                "feedback": "Success stories may be useful evidence, but selecting only one side repeats the problem. Look at credible challenges as well as support."
+                "text": "Collect only success stories.",
+                "feedback": "Selecting only support repeats the bias. Examine credible challenges too."
               },
               {
                 "id": "agree",
-                "text": "Find a shared goal and assume that means the program works.",
-                "feedback": "A shared goal may help the discussion. It cannot establish whether a program works. That still needs evidence."
+                "text": "Treat a shared goal as proof.",
+                "feedback": "A shared goal may help discussion, but cannot show whether tutoring works."
               },
               {
                 "id": "test",
-                "text": "Name your starting beliefs and agree on findings that would make each of you reconsider.",
-                "feedback": "Yes. This makes the beliefs and standards explicit. Then assess the quality of both supporting and challenging evidence. It helps structure the evaluation; it does not guarantee agreement."
+                "text": "Agree what findings would change either view.",
+                "feedback": "Explicit standards help you assess support and challenges consistently. They structure evaluation without guaranteeing agreement."
               }
             ]
           }
@@ -169,12 +149,12 @@
     ],
     "isDemo": true
   },
-  "collectionRevision": 1,
+  "collectionRevision": 2,
   "fullCollection": true,
   "manifest": [
     {
       "id": "priors",
-      "revision": 1
+      "revision": 2
     }
   ],
   "removedLessonIDs": [],

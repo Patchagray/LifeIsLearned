@@ -73,3 +73,16 @@ At handoff, state what changed, what was verified, what remains uncertain, and w
 ## Whole-collection imports (Handoff 002)
 
 Import books only as their entire prepared, reviewed collection, including updates. Require a versioned collection manifest, stable IDs/revisions, shared artwork, and explicit coverage. Stage and review changes before confirmation. Never silently import individual-idea patches, remove omitted ideas, reset unchanged progress, or treat structural validation as factual review. Preserve archived progress and legacy installations through recoverable migration. See CONTENT_AUTHORING.md and LifeIsLearned_Handoff_002.pdf.
+
+
+## Content limits and timing (Handoff 003)
+
+Handoff 003 supersedes conflicting limits and duration guidance in Handoff 002. New complete collections and updates contain 1–12 selected ideas; twelve is a ceiling, never a quota. Preserve previously valid installed collections of up to 100 ideas and all progress. Apply the new limit at import/review, never by truncating stored books or creating disguised volumes. Updates explicitly declare removals and preserve archived progress.
+
+There is no numerical image-count ceiling. Keep shared assets, unique nonempty IDs, valid references and cover validation. Retain 64 MiB package, 2 MiB per image, 24 MiB total decoded image-file bytes, 2048 × 2048 dimensions, single-frame PNG/JPEG and native decoding protections.
+
+Authored releases have exactly two meaningful application questions. Budget the entire reference idea at no more than 300 seconds: all spoken titles/prose, options and their labels, one longest feedback response per question with spoken prefixes, completion, actual page-transition pauses, and 40 seconds for answers. Start planning at 130 words/minute and a 2-second page pause; measure at normal speed using only installed premium reference voices. Record actual voice IDs/settings/durations separately from estimates. An estimatedMinutes value is not evidence. Block over-budget authoring/export and require matching premium measurements for release approval. Never shorten runtime speech or change a user's speed/pause to enforce the budget.
+
+Show the actual selected-idea count and honest coverage before starting; do not imply an exhaustive summary or an author's ranking. Keep source limits explicit and use original, attributed content/artwork. Changed content/estimates require idea and collection revision increases. The shortened demo is an explicit reviewed full-collection update, never an automatic replacement of an installed book. Mario is curating the two companion collections externally for later import.
+
+Keep the manual Files picker. GitHub Releases plus a small catalog is a future distribution direction; cloud browsing, accounts, downloads, release publishing and bulk imports are outside this patch.

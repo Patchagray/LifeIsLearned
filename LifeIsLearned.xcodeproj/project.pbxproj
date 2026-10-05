@@ -38,6 +38,10 @@
 		02ADA44CE7FF22E4A418BC8D /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42D34CE1AA1573D0254555 /* CollectionTests.swift */; };
 		8AD91FB46F938B25756EB0D4 /* ResumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911FFA0F4A0172E51E17276A /* ResumeTests.swift */; };
 		F2092C22456548D145E34BF3 /* LearningJourneyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB09FE97F26A647248965A; };
+		C8AC3D4EA958A1462AECD6B0 /* LessonTiming.swift */ = {isa = PBXBuildFile; fileRef = 74E6E0E54A8396D5C027DDEC; };
+		99133B5FA67877419A88A69B /* ContentPolicyTests.swift */ = {isa = PBXBuildFile; fileRef = 619BE1436C7606DD98BB9948; };
+		686D6B17D709CD9CCD36CDF5 /* PremiumNarrationTimingTests.swift */ = {isa = PBXBuildFile; fileRef = 3477BC317B06409A9365BF8B; };
+		604489C2A692127D676820BE /* Example-Lesson-Package.json */ = {isa = PBXBuildFile; fileRef = A200E34B03B55278067A26DA; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +89,10 @@
 		911FFA0F4A0172E51E17276A /* ResumeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeTests.swift; sourceTree = "<group>"; };
 		1EDB09FE97F26A647248965A /* LearningJourneyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningJourneyUITests.swift; sourceTree = "<group>"; };
 		197ACBCE178086083DF2C68A /* LifeIsLearnedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = LifeIsLearnedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74E6E0E54A8396D5C027DDEC /* LessonTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LessonTiming.swift"; sourceTree = "<group>"; };
+		619BE1436C7606DD98BB9948 /* ContentPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentPolicyTests.swift"; sourceTree = "<group>"; };
+		3477BC317B06409A9365BF8B /* PremiumNarrationTimingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PremiumNarrationTimingTests.swift"; sourceTree = "<group>"; };
+		A200E34B03B55278067A26DA /* Example-Lesson-Package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "../Example-Lesson-Package.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +179,7 @@
 		A2A9809DAF0AEE6960B34B37 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				74E6E0E54A8396D5C027DDEC /* LessonTiming.swift */,
 				A2738E4B8B93B9561C9823BA /* LessonProgress.swift */,
 				960FE3BF4C1355FE54812F6B /* LearningDestination.swift */,
 				7EE96609AD1BF9D27B917EC7 /* CollectionContract.swift */,
@@ -182,6 +191,9 @@
 		C4E2E7F217DE3642E7714F4E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A200E34B03B55278067A26DA /* Example-Lesson-Package.json */,
+				3477BC317B06409A9365BF8B /* PremiumNarrationTimingTests.swift */,
+				619BE1436C7606DD98BB9948 /* ContentPolicyTests.swift */,
 				911FFA0F4A0172E51E17276A /* ResumeTests.swift */,
 				7C42D34CE1AA1573D0254555 /* CollectionTests.swift */,
 				B48C70D94F0EC51603D0A8E2 /* PresentationTests.swift */,
@@ -284,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				604489C2A692127D676820BE /* Example-Lesson-Package.json */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8AC3D4EA958A1462AECD6B0 /* LessonTiming.swift */,
 				83FF6BB06B5CBAA1F9350959 /* TakeawayCard.swift in Sources */,
 				AEEC1A35EEEF85F298599F08 /* SourcesView.swift in Sources */,
 				D113C52EA0DCADA60FC95239 /* PracticeView.swift in Sources */,
@@ -334,6 +348,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				686D6B17D709CD9CCD36CDF5 /* PremiumNarrationTimingTests.swift */,
+				99133B5FA67877419A88A69B /* ContentPolicyTests.swift */,
 				8AD91FB46F938B25756EB0D4 /* ResumeTests.swift in Sources */,
 				02ADA44CE7FF22E4A418BC8D /* CollectionTests.swift in Sources */,
 				A8508970907E434F39310A08 /* PresentationTests.swift in Sources */,

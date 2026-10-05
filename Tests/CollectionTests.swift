@@ -37,7 +37,8 @@ struct CollectionFixture {
         result.book.author = "Interface verification fixture"
         result.book.isDemo = nil
         result.book.coverageNote = "Synthetic verification collection. Repeats the reviewed starter to test import order, shared artwork and interface states; not a new book summary."
-        result.book.lessons = (1...count).map { number in
+        result.book.lessons = (0..<count).map { offset in
+            let number = offset + 1
             var lesson = package.book.lessons[0]; lesson.id = "fixture-\(number)"; lesson.title = "A different point of view · \(number)"
             return lesson
         }
@@ -225,38 +226,50 @@ final class CollectionTests: XCTestCase {
 
     @MainActor func testMaximumRepresentativeCollectionImportKeepsMainActorResponsive() async throws {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
-        var package = f.multiIdea(count: 100)
+        var package = f.multiIdea(count: 12)
         let imageKey = try XCTUnwrap(package.assets?.keys.sorted().first)
         let image = try XCTUnwrap(package.assets?[imageKey])
-        package.assets = Dictionary(uniqueKeysWithValues: (0..<32).map { ("shared-\($0)", image) })
+        package.assets = Dictionary(uniqueKeysWithValues: (0..<43).map { ("shared-\($0)", image) })
         for i in package.book.lessons.indices {
             let original = package.book.lessons[i].pages
             package.book.lessons[i].pages = (0..<40).map { j in
                 var page = original[j == 0 ? 0 : j == 39 ? original.count - 1 : 1]
-                page.id = "page-\(j)"; page.imageID = "shared-\(j % 32)"; page.imageDescription = "Verification illustration"
+                page.id = "page-\(j)"; page.imageID = "shared-\((i * 40 + j) % 43)"; page.imageDescription = "Verification illustration"
                 return page
             }
         }
+        package.book.coverAssetID = "shared-42"
+        package.book.coverDescription = "Verification cover from shared artwork"
+        let allReferences = Set(package.book.lessons.flatMap { $0.pages.compactMap(\.imageID) })
+        XCTAssertEqual(allReferences, Set(package.artwork.keys))
+        XCTAssertEqual(package.artwork.count, 43)
         let url = try f.file(package)
+        let memoryBefore = residentBytes()
+        var memoryPeak = memoryBefore
         let started = Date()
         var ticks = 0
         let heartbeat = Task { @MainActor in
-            while !Task.isCancelled { ticks += 1; try? await Task.sleep(nanoseconds: 10_000_000) }
+            while !Task.isCancelled { ticks += 1; memoryPeak = max(memoryPeak, residentBytes()); try? await Task.sleep(nanoseconds: 10_000_000) }
         }
         await f.store.prepareImport(from: url)
-        XCTAssertNil(f.store.errorMessage); XCTAssertEqual(f.store.importReview?.package.book.lessons.count, 100)
+        XCTAssertNil(f.store.errorMessage); XCTAssertEqual(f.store.importReview?.package.book.lessons.count, 12)
         let review = try XCTUnwrap(f.store.importReview)
         await f.store.commitImport(review)
         await f.store.flush()
-        heartbeat.cancel()
         XCTAssertNil(f.store.errorMessage)
-        XCTAssertEqual(f.store.books.first?.lessons.count, 100)
+        XCTAssertEqual(f.store.books.first?.lessons.count, 12)
         let reloaded = LibraryStore(documentsURL: f.directory, defaults: f.defaults, includeDemo: false)
         await reloaded.ready()
-        XCTAssertEqual(reloaded.books.first?.lessons.count, 100)
+        XCTAssertEqual(reloaded.books.first?.lessons.count, 12)
         XCTAssertEqual(reloaded.books.first?.lessons.last?.pages.count, 40)
+        heartbeat.cancel()
+        XCTAssertNil(reloaded.errorMessage); XCTAssertFalse(reloaded.readOnly)
+        let restored = try XCTUnwrap(reloaded.catalog.packages.first)
+        XCTAssertEqual(restored.artwork, package.artwork)
+        XCTAssertEqual(restored.book.coverAssetID, "shared-42")
+        XCTAssertEqual(restored.book.lessons.flatMap { $0.pages.compactMap(\.imageID) }, package.book.lessons.flatMap { $0.pages.compactMap(\.imageID) })
         XCTAssertGreaterThan(ticks, 2, "Main actor should keep responding during collection validation")
-        print("REPRESENTATIVE_COLLECTION bytes=\(try Data(contentsOf: url).count) ideas=100 pagesPerIdea=40 assets=32 seconds=\(Date().timeIntervalSince(started)) mainActorTicks=\(ticks)")
+        print("REPRESENTATIVE_COLLECTION bytes=\(try Data(contentsOf: url).count) ideas=12 pagesPerIdea=40 assets=43 seconds=\(Date().timeIntervalSince(started)) mainActorTicks=\(ticks) residentBefore=\(memoryBefore) sampledResidentPeak=\(memoryPeak) residentAfter=\(residentBytes())")
     }
 }
 
@@ -301,4 +314,16 @@ extension CollectionTests {
         XCTAssertEqual(try String(contentsOf: file), "unreadable progress")
         XCTAssertEqual(try JSONDecoder().decode(CollectionStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json"))).current, pointer.current)
     }
+}
+
+// Resident bytes are sampled process observations, not a hardware memory guarantee.
+private func residentBytes() -> UInt64 {
+    var info = mach_task_basic_info()
+    var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size / MemoryLayout<integer_t>.size)
+    let result = withUnsafeMutablePointer(to: &info) { pointer in
+        pointer.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
+            task_info(mach_task_self_, task_flavor_t(MACH_TASK_BASIC_INFO), $0, &count)
+        }
+    }
+    return result == KERN_SUCCESS ? info.resident_size : 0
 }

@@ -1,0 +1,150 @@
+{
+  "checksPassed": 57,
+  "packages": [
+    {
+      "file": "Example-Lesson-Package.json",
+      "bytes": 1665488,
+      "ideas": 1,
+      "assets": 3,
+      "timing": {
+        "bookID": "influential-mind",
+        "collectionRevision": 2,
+        "method": "word-count planning estimate; not measured playback",
+        "prefaceNarrated": false,
+        "sourcesAndInterfaceNarrated": false,
+        "feedbackPolicy": "Longest single response per question, including its spoken prefix; retries excluded.",
+        "ideas": [
+          {
+            "id": "priors",
+            "revision": 2,
+            "spokenWords": 413,
+            "wordsByKind": {
+              "completion": 15,
+              "explanation": 45,
+              "feedback": 35,
+              "intro": 35,
+              "question": 82,
+              "story": 169,
+              "takeaway": 32
+            },
+            "wordsByRole": {
+              "guide": 244,
+              "storyteller": 169
+            },
+            "wordsPerMinute": 130,
+            "transitionCount": 5,
+            "pagePauseSeconds": 2,
+            "pauseSeconds": 10,
+            "answerAllowanceSeconds": 40,
+            "estimatedSpeechSeconds": 190.6153846153846,
+            "estimatedTotalSeconds": 240.6153846153846,
+            "approximateMinutes": 5,
+            "planningPass": true,
+            "measurementStatus": "passed",
+            "segments": [
+              {
+                "id": "page:welcome",
+                "kind": "intro",
+                "role": "guide",
+                "text": "The Prior Problem. Existing beliefs can shape what we notice. This introductory lesson draws on reviewed material about priors, not the whole book. Malik, Elena, their college, and the report in this example are fictional.",
+                "words": 35
+              },
+              {
+                "id": "page:before",
+                "kind": "story",
+                "role": "storyteller",
+                "text": "Before the report. Malik wanted to keep the college work-study program. His job had helped him pay for transport and build confidence. Elena wanted fewer student jobs: her friend had taken extra shifts and fallen behind in class.\n\nBefore opening the report, each already had a picture of what working during college meant.",
+                "words": 54
+              },
+              {
+                "id": "page:same",
+                "kind": "story",
+                "role": "storyteller",
+                "text": "One report. Two readings.. The report described useful skills alongside fatigue and missed study time. It could not establish what caused those outcomes.\n\nMalik pointed to the benefits. Elena pointed to the problems. Each finding was on the page, but each student favored the part that matched an existing belief. More quotations only hardened their disagreement.",
+                "words": 56
+              },
+              {
+                "id": "page:revise",
+                "kind": "story",
+                "role": "storyteller",
+                "text": "A better question. Their adviser asked, “What finding would make you reconsider?”\n\nMalik realized he had collected support, not looked for challenges. Elena recognized the same habit. They agreed to examine both benefits and costs, including workload differences. Understanding each other’s experiences helped them discuss the evidence. It did not prove the program worked, or guarantee they would agree.",
+                "words": 59
+              },
+              {
+                "id": "page:distinction",
+                "kind": "explanation",
+                "role": "guide",
+                "text": "Belief or bias?. A prior is a belief held before new information arrives. Confirmation bias favors information that fits an existing view. Experience can be useful; unequal scrutiny is the problem. The adviser’s question is our teaching example, not a research-tested guarantee of persuasion.",
+                "words": 45
+              },
+              {
+                "id": "page:takeaway",
+                "kind": "takeaway",
+                "role": "guide",
+                "text": "Test your starting point. Name your belief. Ask what evidence could change it. Examine credible support and challenges with equal care. Shared goals can help discussion; they cannot decide what is true.",
+                "words": 32
+              },
+              {
+                "id": "question:recognition",
+                "kind": "question",
+                "role": "guide",
+                "text": "A manager expects remote work to fail. She dismisses credible benefits but accepts weak criticism. What is the problem?\nOption 1. Unequal scrutiny that favors her existing belief.\nOption 2. The report proves remote work fails.\nOption 3. Having any belief before reading.",
+                "words": 43
+              },
+              {
+                "id": "feedback:recognition",
+                "kind": "feedback",
+                "role": "guide",
+                "text": "That's right. Exactly: evidence quality should matter on both sides. An initial belief alone is not the problem.",
+                "words": 18
+              },
+              {
+                "id": "question:transfer",
+                "kind": "question",
+                "role": "guide",
+                "text": "You favor tutoring; your friend doubts it. What would help you evaluate a new study fairly?\nOption 1. Collect only success stories.\nOption 2. Treat a shared goal as proof.\nOption 3. Agree what findings would change either view.",
+                "words": 39
+              },
+              {
+                "id": "feedback:transfer",
+                "kind": "feedback",
+                "role": "guide",
+                "text": "That's right. Explicit standards help you assess support and challenges consistently. They structure evaluation without guaranteeing agreement.",
+                "words": 17
+              },
+              {
+                "id": "completion",
+                "kind": "completion",
+                "role": "guide",
+                "text": "Lesson complete. You've practiced a new idea. 2 of 2 correct on the first try.",
+                "words": 15
+              }
+            ],
+            "measuredSpeechSeconds": 175.17039512500014,
+            "measuredTotalSeconds": 225.17039512500014
+          }
+        ],
+        "referenceVoices": {
+          "deviceModel": "iPhone",
+          "guide": {
+            "identifier": "com.apple.voice.premium.en-GB.Malcolm",
+            "name": "Jamie (Premium)",
+            "quality": "premium"
+          },
+          "os": "iOS 27.2",
+          "pagePauseSeconds": 2,
+          "speed": 1,
+          "storyteller": {
+            "identifier": "com.apple.voice.premium.en-GB.Serena",
+            "name": "Serena (Premium)",
+            "quality": "premium"
+          }
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "authoringGate": "passed",
+  "releaseApproval": "approved",
+  "scope": "Portable structural/header checks and explicit planning estimates. Native decoding, compilation and measured playback are separate."
+}

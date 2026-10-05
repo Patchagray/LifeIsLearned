@@ -68,6 +68,7 @@ struct LearningBook: Codable, Identifiable, Sendable {
 }
 
 struct LessonPackage: Codable, Sendable {
+    enum ValidationPurpose { case newImport, storedContent }
     var formatVersion: Int
     var book: LearningBook
     var collectionRevision: Int? = nil
@@ -76,21 +77,28 @@ struct LessonPackage: Codable, Sendable {
     var removedLessonIDs: [String]? = nil
     var assets: [String: CollectionArtwork]? = nil
 
-    func validated(allowLegacy: Bool = false) throws -> LessonPackage {
+    func validated(for purpose: ValidationPurpose = .newImport) throws -> LessonPackage {
         func require(_ condition: Bool, _ message: String) throws {
             if !condition { throw PackageError.invalid(message) }
         }
         func clean(_ string: String) -> Bool { !string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
         func unique(_ ids: [String]) -> Bool { ids.allSatisfy(clean) && Set(ids).count == ids.count }
-        try require(formatVersion == 2 || (allowLegacy && formatVersion == 1),
+        try require(formatVersion == 2 || (purpose == .storedContent && formatVersion == 1),
                     "New imports require formatVersion 2 and a complete collection manifest. Use Tools/convert_package.py to convert a reviewed legacy release.")
+        // New editorial policy must never invalidate an already-installed library.
+        if purpose == .newImport && book.lessons.count > 12 {
+            throw PackageError.invalid("This collection contains \(book.lessons.count) ideas. Prepare a complete release with no more than 12 selected ideas.")
+        }
+        let maximumIdeas = purpose == .storedContent ? 100 : 12
+        try require(!book.lessons.isEmpty && book.lessons.count <= maximumIdeas && unique(book.lessons.map(\.id)),
+                    "Provide 1–\(maximumIdeas) ideas with unique, nonempty IDs.")
         if formatVersion == 2 {
             try require((collectionRevision ?? 0) > 0 && fullCollection == true, "Declare a positive collectionRevision and fullCollection: true.")
             try require(manifest == book.lessons.map { IdeaManifestEntry(id: $0.id, revision: $0.revision) },
                         "The manifest must list every idea ID/revision exactly once in the same order as book.lessons.")
             try require(unique(removedLessonIDs ?? []), "removedLessonIDs must contain unique, nonempty IDs.")
             try require(Set(removedLessonIDs ?? []).isDisjoint(with: Set(book.lessons.map(\.id))), "Removed ideas cannot also be in the collection.")
-            try require(artwork.count <= 32 && artwork.keys.allSatisfy(clean), "Use up to 32 shared images with nonempty asset IDs.")
+            try require(artwork.keys.allSatisfy(clean), "Shared images need nonempty asset IDs.")
             try require(artwork.values.reduce(0) { $0 + $1.data.count } <= CollectionLimits.allAssetBytes, "Shared images exceed 24 MiB decoded. Optimize images before export.")
             for image in artwork.values { try CollectionLimits.validateImage(image) }
             if let cover = book.coverAssetID {
@@ -105,7 +113,6 @@ struct LessonPackage: Codable, Sendable {
             try require(url?.scheme == "https" && url?.host != nil, "Source \(source.id) needs a valid HTTPS link.")
             try require(clean(source.title) && clean(source.locator) && clean(source.scope), "Source \(source.id) needs title, locator and scope.")
         }
-        try require(!book.lessons.isEmpty && book.lessons.count <= 100 && unique(book.lessons.map(\.id)), "Provide 1–100 lessons with unique IDs.")
         let sourceIDs = Set(book.sources.map(\.id))
         for lesson in book.lessons {
             try require(lesson.revision > 0 && clean(lesson.title) && clean(lesson.scopeNote), "Lesson \(lesson.id) needs title, positive revision and scopeNote.")

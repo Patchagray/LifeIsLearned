@@ -2,6 +2,9 @@
 import argparse, base64, copy, hashlib, json, subprocess, tempfile
 from pathlib import Path
 
+from validate_package import content
+from lesson_timing import package_report, planning_errors
+
 ROOT = Path(__file__).resolve().parents[1]
 
 def optimize(raw):
@@ -15,6 +18,9 @@ def optimize(raw):
         return data
 
 def convert(package, revision=1):
+    count = len(package['book']['lessons'])
+    if not 1 <= count <= 12:
+        raise ValueError(f'This collection contains {count} ideas. Prepare a complete release with 1–12 selected ideas before conversion.')
     result = copy.deepcopy(package)
     assets = {}; seen = {}
     for lesson in result['book']['lessons']:
@@ -35,6 +41,10 @@ def convert(package, revision=1):
     result.update(formatVersion=2,collectionRevision=revision,fullCollection=True,
                   manifest=[{'id':l['id'],'revision':l['revision']} for l in result['book']['lessons']],
                   removedLessonIDs=[],assets=assets)
+    content(result)
+    errors = planning_errors(result, package_report(result))
+    if errors:
+        raise ValueError('Draft export blocked: ' + '; '.join(errors))
     return result
 
 if __name__=='__main__':
@@ -49,4 +59,4 @@ if __name__=='__main__':
     if package.get('formatVersion')!=1: parser.error('This conversion is for formatVersion 1 only.')
     result=convert(package,args.collection_revision)
     args.destination.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
-    print('Converted complete collection. Review revisions, coverage, answer keys and removals before importing.')
+    print('Converted review draft within the planning budget. Review revisions, coverage, answers and removals; premium-voice measurement is required before release approval.')

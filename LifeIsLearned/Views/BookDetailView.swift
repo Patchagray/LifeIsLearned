@@ -24,12 +24,19 @@ import SwiftUI
                 Text(book.synopsis).lineSpacing(5).fixedSize(horizontal: false, vertical: true)
                 VStack(alignment: .leading, spacing: 10) {
                     Eyebrow(text: book.isDemo == true ? "Demo · introductory collection" : "About this collection")
+                    Text(book.selectionPreface).font(.subheadline).lineSpacing(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("collection-preface")
                     Text(book.coverageNote).font(.footnote).foregroundStyle(Palette.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                     Button { speech.stop(); showingSources = true } label: {
                         Label("Sources & coverage", systemImage: "text.book.closed").font(.subheadline.weight(.semibold)).frame(minHeight: 44)
                     }.buttonStyle(EditorialButtonStyle())
                 }.padding(20).background(Palette.surface, in: RoundedRectangle(cornerRadius: 16))
+                DisclosureGroup("About idea durations") {
+                    Text(LessonTiming.help).font(.footnote).foregroundStyle(Palette.secondary)
+                        .fixedSize(horizontal: false, vertical: true).padding(.top, 8)
+                }.font(.subheadline).accessibilityIdentifier("duration-help")
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
                         Text("Your progress").font(.subheadline.weight(.semibold))
@@ -82,7 +89,7 @@ struct IdeaRow: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(lesson.title).font(.headline).foregroundStyle(Palette.ink).fixedSize(horizontal: false, vertical: true)
                 Text(lesson.subtitle).font(.subheadline).foregroundStyle(Palette.secondary).fixedSize(horizontal: false, vertical: true)
-                Text("\(lesson.estimatedMinutes) min · \(status.label)").font(.caption.weight(.medium)).foregroundStyle(status.updated ? Palette.amber : Palette.teal)
+                Text("\(LessonTiming(lesson: lesson).label) · \(status.label)").font(.caption.weight(.medium)).foregroundStyle(status.updated ? Palette.amber : Palette.teal)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 0)
