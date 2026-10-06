@@ -1,0 +1,19 @@
+test_complete_spoken_script_and_reference_settings (test_authoring.AuthoringTests.test_complete_spoken_script_and_reference_settings) ... ok
+test_converter_rejects_over_cap_and_over_budget_before_export (test_authoring.AuthoringTests.test_converter_rejects_over_cap_and_over_budget_before_export) ... ok
+test_duplicate_ideas_and_mismatched_manifest (test_authoring.AuthoringTests.test_duplicate_ideas_and_mismatched_manifest) ... ok
+test_duplicate_json_keys_are_rejected (test_authoring.AuthoringTests.test_duplicate_json_keys_are_rejected) ... ok
+test_exactly_two_questions_and_consistent_estimate (test_authoring.AuthoringTests.test_exactly_two_questions_and_consistent_estimate) ... ok
+test_forty_three_shared_images_with_cover_and_references (test_authoring.AuthoringTests.test_forty_three_shared_images_with_cover_and_references) ... ok
+test_image_byte_dimension_and_reference_limits_remain (test_authoring.AuthoringTests.test_image_byte_dimension_and_reference_limits_remain) ... ok
+test_measured_300_passes_and_just_over_fails (test_authoring.AuthoringTests.test_measured_300_passes_and_just_over_fails) ... ok
+test_measurements_require_premium_exact_script_and_settings (test_authoring.AuthoringTests.test_measurements_require_premium_exact_script_and_settings) ... ok
+test_new_collection_count_boundaries (test_authoring.AuthoringTests.test_new_collection_count_boundaries) ... ok
+test_planning_boundary_and_cli_exit_codes (test_authoring.AuthoringTests.test_planning_boundary_and_cli_exit_codes) ... ok
+test_release_approval_cannot_use_planning_alone (test_authoring.AuthoringTests.test_release_approval_cannot_use_planning_alone) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.772s
+
+OK
+AUTHORING_GATE words=541 plannedSeconds=299.692308 exit=0
+AUTHORING_GATE words=542 plannedSeconds=300.153846 exit=1

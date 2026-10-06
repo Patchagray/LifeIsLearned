@@ -1,0 +1,100 @@
+Implementation: fb735c0f1bffb2f92f9c0cb6850624f3160771cc
+Sanitized XCTest result lines; full raw output retained locally.
+
+Test Suite 'Selected tests' started at 2026-10-05 22:39:15.349.
+Test Suite 'LifeIsLearnedTests.xctest' started at 2026-10-05 22:39:15.350.
+Test Suite 'CollectionTests' started at 2026-10-05 22:39:15.350.
+Test Case '-[LifeIsLearnedTests.CollectionTests testFailedWriteLeavesCollectionAndProgressUsableAfterRelaunch]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testFailedWriteLeavesCollectionAndProgressUsableAfterRelaunch]' passed (0.528 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testInstalledLegacyCollectionReadableButFreshLegacyImportRejected]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testInstalledLegacyCollectionReadableButFreshLegacyImportRejected]' passed (0.213 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testLegacyMigrationKeepsProgressAndCorruptContentDoesNotEraseIt]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testLegacyMigrationKeepsProgressAndCorruptContentDoesNotEraseIt]' passed (0.277 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testMaximumRepresentativeCollectionImportKeepsMainActorResponsive]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testMaximumRepresentativeCollectionImportKeepsMainActorResponsive]' passed (4.921 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testRevisionRulesAndDeterministicContentComparison]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testRevisionRulesAndDeterministicContentComparison]' passed (0.573 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testSnapshotProgressRecoversIndependentlyAndUncommittedDirectoryIsIgnored]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testSnapshotProgressRecoversIndependentlyAndUncommittedDirectoryIsIgnored]' passed (0.289 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testUnreadableProgressIsPreservedAndNeverOverwrittenWithEmptyState]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testUnreadableProgressIsPreservedAndNeverOverwrittenWithEmptyState]' passed (0.194 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testUpdateReordersPreservesUnchangedAndArchivesRevisedAndRemoved]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testUpdateReordersPreservesUnchangedAndArchivesRevisedAndRemoved]' passed (1.602 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testValidatorRejectsIncompleteDuplicateMissingAndOversizedAssets]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testValidatorRejectsIncompleteDuplicateMissingAndOversizedAssets]' passed (0.181 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testWholeCollectionPreviewCancelImportAndIdenticalNoOp]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testWholeCollectionPreviewCancelImportAndIdenticalNoOp]' passed (0.669 seconds).
+Test Suite 'CollectionTests' passed at 2026-10-05 22:39:24.807.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 9.447 (9.457) seconds
+Test Suite 'ContentPolicyTests' started at 2026-10-05 22:39:24.807.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testNewImportIdeaBoundariesAndAssetResourceBudgets]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testNewImportIdeaBoundariesAndAssetResourceBudgets]' passed (0.807 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testShortDemoIsExplicitRevisionUpdateAndDoesNotReplaceInstalledSeed]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testShortDemoIsExplicitRevisionUpdateAndDoesNotReplaceInstalledSeed]' passed (0.379 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testStoredHundredIdeaCollectionSurvivesAndCompliantUpdateRequiresRemovals]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testStoredHundredIdeaCollectionSurvivesAndCompliantUpdateRequiresRemovals]' passed (8.326 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testWholeIdeaTimingIncludesTitlesChoicesFeedbackAndPauses]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testWholeIdeaTimingIncludesTitlesChoicesFeedbackAndPauses]' passed (0.040 seconds).
+Test Suite 'ContentPolicyTests' passed at 2026-10-05 22:39:34.363.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 9.552 (9.556) seconds
+Test Suite 'IdeaCardPresentationTests' started at 2026-10-05 22:39:34.364.
+Test Case '-[LifeIsLearnedTests.IdeaCardPresentationTests testGridAccessibilityActionsKeepIdentityAndSeparateOpenFromDetails]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardPresentationTests testGridAccessibilityActionsKeepIdentityAndSeparateOpenFromDetails]' passed (1.144 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardPresentationTests testRenderedCollectionStates]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardPresentationTests testRenderedCollectionStates]' passed (27.170 seconds).
+Test Suite 'IdeaCardPresentationTests' passed at 2026-10-05 22:40:02.680.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 28.314 (28.316) seconds
+Test Suite 'IdeaCardTests' started at 2026-10-05 22:40:02.681.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testCardCorruptionRecoversIndependentlyAndTotalFailurePreservesFiles]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testCardCorruptionRecoversIndependentlyAndTotalFailurePreservesFiles]' passed (0.257 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testFailedFavoriteSaveDoesNotPublishPartialState]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testFailedFavoriteSaveDoesNotPublishPartialState]' passed (0.203 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testImperfectCompletionEarnsOnceAndReviewPreservesOriginalScoreAndDate]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testImperfectCompletionEarnsOnceAndReviewPreservesOriginalScoreAndDate]' passed (0.280 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testLegacyMigrationUsesCommittedCompletionAndUnknownDatesRemainUnknown]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testLegacyMigrationUsesCommittedCompletionAndUnknownDatesRemainUnknown]' passed (0.337 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testOrderingIdentityAndMotionPolicy]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testOrderingIdentityAndMotionPolicy]' passed (0.353 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRecoveredCardsBackfillNewOwnershipFromCommittedProgress]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRecoveredCardsBackfillNewOwnershipFromCommittedProgress]' passed (0.338 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRevisionMetadataReorderAndRemovalPreserveOwnedCards]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRevisionMetadataReorderAndRemovalPreserveOwnedCards]' passed (1.190 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testSequentialNextResumesPracticeReviewsCompletedAndStopsAtFinalIdea]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testSequentialNextResumesPracticeReviewsCompletedAndStopsAtFinalIdea]' passed (0.460 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testTwentyCardFilteringRetainsIdentityAndFavoriteState]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testTwentyCardFilteringRetainsIdentityAndFavoriteState]' passed (1.133 seconds).
+Test Suite 'IdeaCardTests' passed at 2026-10-05 22:40:07.240.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 4.550 (4.559) seconds
+Test Suite 'LifeIsLearnedTests.xctest' passed at 2026-10-05 22:40:07.240.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 51.864 (51.891) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 22:40:07.241.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 51.864 (51.893) seconds
+Test Suite 'Selected tests' started at 2026-10-05 22:40:10.784.
+Test Suite 'LifeIsLearnedUITests.xctest' started at 2026-10-05 22:40:10.785.
+Test Suite 'IdeaCollectionUITests' started at 2026-10-05 22:40:10.786.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testAccessibilityTextUsesOneColumnAndReadableCarousel]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testAccessibilityTextUsesOneColumnAndReadableCarousel]' passed (60.137 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testCompletionGoesDirectlyToSavedNextIdea]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testCompletionGoesDirectlyToSavedNextIdea]' passed (39.461 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testEmptyCollectionAndEmptyFavorites]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testEmptyCollectionAndEmptyFavorites]' passed (11.230 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testFilterSortAndAccessibleGridOrder]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testFilterSortAndAccessibleGridOrder]' passed (26.299 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' skipped (0.195 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testTwentyCardsGridCarouselFlipFavoriteRelaunchAndReview]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testTwentyCardsGridCarouselFlipFavoriteRelaunchAndReview]' passed (71.448 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testVisibleFavoriteShimmersWhileUnfavoritedCardStaysStill]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testVisibleFavoriteShimmersWhileUnfavoritedCardStaysStill]' passed (18.501 seconds).
+Test Suite 'IdeaCollectionUITests' passed at 2026-10-05 22:43:58.066.
+	 Executed 7 tests, with 1 test skipped and 0 failures (0 unexpected) in 227.272 (227.280) seconds
+Test Suite 'LearningJourneyUITests' started at 2026-10-05 22:43:58.068.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testManualFilesImportOfShortDemoAndJourney]' started.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testManualFilesImportOfShortDemoAndJourney]' passed (69.145 seconds).
+Test Suite 'LearningJourneyUITests' passed at 2026-10-05 22:45:07.214.
+	 Executed 1 test, with 0 failures (0 unexpected) in 69.145 (69.146) seconds
+Test Suite 'LifeIsLearnedUITests.xctest' passed at 2026-10-05 22:45:07.215.
+	 Executed 8 tests, with 1 test skipped and 0 failures (0 unexpected) in 296.416 (296.430) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 22:45:07.217.
+	 Executed 8 tests, with 1 test skipped and 0 failures (0 unexpected) in 296.416 (296.433) seconds
+** TEST SUCCEEDED **

@@ -1,0 +1,15 @@
+{
+  "result": "Passed",
+  "totalTestCount": 33,
+  "passedTests": 32,
+  "failedTests": 0,
+  "skippedTests": 1,
+  "startTime": 1791254349.056,
+  "finishTime": 1791254734.179,
+  "implementationCommit": "fb735c0f1bffb2f92f9c0cb6850624f3160771cc",
+  "destination": {
+    "name": "iPhone 16e",
+    "platform": "iOS Simulator",
+    "osVersion": "26.3.1"
+  }
+}

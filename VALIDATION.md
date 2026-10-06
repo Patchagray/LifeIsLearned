@@ -1,5 +1,13 @@
 # Validation report
 
+## Catalog 001 foundation — October 5, 2026
+
+Implementation: `fb735c0f1bffb2f92f9c0cb6850624f3160771cc`, branch `feature/catalog-001-foundation`, based on the accepted Handoff 004 result `7f0146ae065d2e75917af88726be30484171fb5b`. See [Catalog 001 evidence, reconciliation and exact commands](Evidence/Catalog001/README.md).
+
+The approved static editorial manifest contains 50 unique books, eight shelves, primary counts **10 / 7 / 8 / 7 / 7 / 4 / 3 / 4**, and authoring priorities exactly 1–50. It is separate from installed `CollectionCatalog`. The existing authored Never Split package uses `never-split-the-difference`, matching the approved manifest; `influential-mind` also matches. No reconciliation rename was needed. Future authoring now looks up exact catalog IDs before writing packages.
+
+The read-only validator passed; all 13 catalog tests and 12 existing Python authoring tests passed. Xcode 26.5 (17F42) built/tested the selected iPhone 16e/iOS 26.3.1 regression suite: **32 passed, 0 failed, 1 explicit Reduce Motion skip** (25 native tests and 7 UI tests). This includes the import/recovery/revision/card/layout suites, all normal-motion Handoff 004 UI journeys, and actual Files import → retry/resume → completion. App sources, project/signing, native/UI tests, and example content remain byte-for-byte unchanged. No new runtime layout or physical-device verification is claimed for this static patch. Raw logs/results are retained in ignored `LocalVerification/Catalog001/`.
+
 ## Handoff 004 — October 5, 2026
 
 Tested implementation: `7a31213bf574ba6540e663d5177ceb4f178371a7`, branch `feature/handoff-004-idea-collection`, based on accepted Handoff 003 head `0fd3ef261b275c7adffbba2575f468398f0f4146`. The follow-up evidence commit changes documentation and screenshots only. See [Handoff 004 commands, results, screenshots and limits](Evidence/Handoff004/README.md).
