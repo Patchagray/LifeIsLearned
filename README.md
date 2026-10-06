@@ -87,6 +87,8 @@ The app is intentionally a lesson player. Automatic book/PDF extraction, live AI
 
 ## Validation status
 
+Handoff 004: the committed implementation passed 52 tests on each simulator, plus the separate system Reduce Motion check. Six card UI tests passed on PATCHA; the signed build was installed and launched normally. The report includes 27 simulator screenshots, exact commands and remaining manual device checks. See [Handoff 004 evidence](Evidence/Handoff004/README.md).
+
 Handoff 003: both simulator builds passed 35 tests each (one hardware-only voice test skipped per simulator), and all 12 Python authoring tests passed. The premium-only physical reference measured 225.17 seconds including pauses and answering allowance. The committed patch was built, installed and launched on PATCHA. See [Handoff 003 evidence](Evidence/Handoff003/README.md) for exact source, commands, screenshots and remaining physical checks.
 
 Historical Handoff 002 verification passed 29 tests on each of the iPhone 16e and iPad (A16) simulators. Commit `f4a8693645c3e97a54567f1034f4d463b6506fb3` then built, installed, and launched on an iPhone 15 Pro Max running iOS 27.2. After checking that device build, the user reported “All checks are good” and approved pushing the work. See [VALIDATION.md](VALIDATION.md) for commands, outcomes, simulator evidence, and the scope of user-reported physical-device acceptance.

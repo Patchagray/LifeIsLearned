@@ -1,5 +1,26 @@
 # Validation report
 
+## Handoff 004 — October 5, 2026
+
+Tested implementation: `7a31213bf574ba6540e663d5177ceb4f178371a7`, branch `feature/handoff-004-idea-collection`, based on accepted Handoff 003 head `0fd3ef261b275c7adffbba2575f468398f0f4146`. The follow-up evidence commit changes documentation and screenshots only. See [Handoff 004 commands, results, screenshots and limits](Evidence/Handoff004/README.md).
+
+- Added direct sequential next-idea/resume/review navigation and final Finish book; no new autoplay.
+- Earned idea cards survive imperfect practice, retries, review, revisions and removals. Atomic card persistence includes historical migration, preserved unknown dates, independent recovery, favorites and archived source review.
+- Added Home Ideas, a staggered lazy grid, centered carousel, front/back cards, separate favorites, book filtering and sorting. Includes iPad, accessibility text, explicit accessibility order/actions, and visibility/Reduce Motion-aware favorite animation.
+- SpeechPlayer, starter content and the example collection are byte-for-byte unchanged; signing and import format/limits are preserved.
+
+| Destination / check | Result |
+| --- | --- |
+| iPhone 16e simulator, iOS 26.3.1 | Build/test succeeded: 52 passed, 0 failed, 2 explicit skips |
+| iPad (A16) simulator, iOS 26.3.1 | Build/test succeeded: 52 passed, 0 failed, 2 explicit skips |
+| iPad, actual system Reduce Motion enabled | 1 passed, 0 failed/skipped; prior setting restored |
+| PATCHA, iPhone 15 Pro Max, iOS 27.2 | 6 H004 UI tests passed, 0 failed, 1 explicit Reduce Motion skip |
+| Signed device build, in-place install, normal launch | All succeeded for the tested implementation |
+
+The full simulator runs each include 43 passing unit/layout tests and 9 passing UI tests. Skips are physical premium-voice timing and the Reduce Motion-only check; the latter passed separately. Tests cover card ownership/recovery/revisions, 20 synthetic cards and 7 favorites, saved next-idea entry, existing playback boundaries, first-attempt scoring, incorrect-answer retry, and the actual Files import journey. Twenty-seven labeled simulator screenshots accompany sanitized results and hashes; raw logs and result bundles are retained in ignored `LocalVerification/Handoff004/`.
+
+The device UI tests exercise earning, favorites across relaunch, grid/carousel/flip, direct next-idea resume and review. Pixel comparisons establish that favorite animation is active and ordinary cards stay still; they do not measure frame rate or establish subjective smoothness. Mario’s manual animation/haptic/VoiceOver checks remain pending. Premium voices, interruptions and background playback were not newly verified on hardware for H004; earlier H003 physical acceptance is preserved below as historical evidence.
+
 ## Handoff 003 — October 4–5, 2026
 
 Implementation: `f78c7f1781b6fa2087559d138c2b4947b0dcfc52`, branch `feature/handoff-003-content-limits`, based on accepted Handoff 002 commit `d10a60f84b9921cd24a74666b5877359f0623090`. The follow-up evidence commit changes documentation and screenshots only. This section supersedes earlier import-count and duration guidance; historical results below remain unchanged. See [commands, hashes and screenshots](Evidence/Handoff003/README.md).

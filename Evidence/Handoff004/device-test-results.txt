@@ -1,0 +1,28 @@
+Source: 7a31213bf574ba6540e663d5177ceb4f178371a7
+Destination: device
+Sanitized XCTest result lines; full raw log retained locally.
+
+Test Suite 'Selected tests' started at 2026-10-05 21:00:54.954.
+Test Suite 'LifeIsLearnedUITests.xctest' started at 2026-10-05 21:00:54.954.
+Test Suite 'IdeaCollectionUITests' started at 2026-10-05 21:00:54.954.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testAccessibilityTextUsesOneColumnAndReadableCarousel]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testAccessibilityTextUsesOneColumnAndReadableCarousel]' passed (27.688 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testCompletionGoesDirectlyToSavedNextIdea]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testCompletionGoesDirectlyToSavedNextIdea]' passed (28.472 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testEmptyCollectionAndEmptyFavorites]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testEmptyCollectionAndEmptyFavorites]' passed (8.512 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testFilterSortAndAccessibleGridOrder]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testFilterSortAndAccessibleGridOrder]' passed (16.076 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' skipped (0.039 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testTwentyCardsGridCarouselFlipFavoriteRelaunchAndReview]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testTwentyCardsGridCarouselFlipFavoriteRelaunchAndReview]' passed (50.966 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testVisibleFavoriteShimmersWhileUnfavoritedCardStaysStill]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testVisibleFavoriteShimmersWhileUnfavoritedCardStaysStill]' passed (12.007 seconds).
+Test Suite 'IdeaCollectionUITests' passed at 2026-10-05 21:03:18.726.
+	 Executed 7 tests, with 1 test skipped and 0 failures (0 unexpected) in 143.760 (143.771) seconds
+Test Suite 'LifeIsLearnedUITests.xctest' passed at 2026-10-05 21:03:18.728.
+	 Executed 7 tests, with 1 test skipped and 0 failures (0 unexpected) in 143.760 (143.773) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 21:03:18.729.
+	 Executed 7 tests, with 1 test skipped and 0 failures (0 unexpected) in 143.760 (143.775) seconds
+** TEST SUCCEEDED **

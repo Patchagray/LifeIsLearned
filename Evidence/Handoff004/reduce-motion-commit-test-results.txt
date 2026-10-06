@@ -1,0 +1,16 @@
+Source: 7a31213bf574ba6540e663d5177ceb4f178371a7
+Destination: reduce-motion-commit
+Sanitized XCTest result lines; full raw log retained locally.
+
+Test Suite 'Selected tests' started at 2026-10-05 21:07:43.053.
+Test Suite 'LifeIsLearnedUITests.xctest' started at 2026-10-05 21:07:43.054.
+Test Suite 'IdeaCollectionUITests' started at 2026-10-05 21:07:43.055.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' passed (19.081 seconds).
+Test Suite 'IdeaCollectionUITests' passed at 2026-10-05 21:08:02.140.
+	 Executed 1 test, with 0 failures (0 unexpected) in 19.081 (19.085) seconds
+Test Suite 'LifeIsLearnedUITests.xctest' passed at 2026-10-05 21:08:02.141.
+	 Executed 1 test, with 0 failures (0 unexpected) in 19.081 (19.087) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 21:08:02.143.
+	 Executed 1 test, with 0 failures (0 unexpected) in 19.081 (19.090) seconds
+** TEST SUCCEEDED **

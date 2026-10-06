@@ -1,0 +1,17 @@
+[
+  {
+    "file": "LifeIsLearned/Services/SpeechPlayer.swift",
+    "unchangedFrom": "0fd3ef261b275c7adffbba2575f468398f0f4146",
+    "sha256": "b61a295f17db3ecc6cb9a3ec209b564196a033eb643674ef03f0d4c7659484c3"
+  },
+  {
+    "file": "LifeIsLearned/Resources/starter.json",
+    "unchangedFrom": "0fd3ef261b275c7adffbba2575f468398f0f4146",
+    "sha256": "6e0a78609124f38b0f2defab8cbef42dda3ccbbfebfbfa89a4b7d4b53989e650"
+  },
+  {
+    "file": "Example-Lesson-Package.json",
+    "unchangedFrom": "0fd3ef261b275c7adffbba2575f468398f0f4146",
+    "sha256": "44ec91ae1b57cfcabc471c95e466ef42ef3ec6e36f112d565295bf9024da9c4b"
+  }
+]
