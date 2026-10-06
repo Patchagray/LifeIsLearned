@@ -42,6 +42,19 @@
 		99133B5FA67877419A88A69B /* ContentPolicyTests.swift */ = {isa = PBXBuildFile; fileRef = 619BE1436C7606DD98BB9948; };
 		686D6B17D709CD9CCD36CDF5 /* PremiumNarrationTimingTests.swift */ = {isa = PBXBuildFile; fileRef = 3477BC317B06409A9365BF8B; };
 		604489C2A692127D676820BE /* Example-Lesson-Package.json */ = {isa = PBXBuildFile; fileRef = A200E34B03B55278067A26DA; };
+		D370502EF64D30A8291BF3ED /* IdeaCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44608A7C347CB4E93C2C4822; };
+		3E93BB94B3269F1F1D1F82CF /* IdeaCardStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2475A34BAF033E5A6BC3E852; };
+		AE3386D9C30CDD4FD9BAF029 /* IdeaCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AB4BF28D4FD37C82C5A64A; };
+		079A47250AE0EB50C968FDE9 /* IdeaCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90524A9E03A9857C3B980EE6; };
+		B9731486EF261ED72825AB1C /* IdeaCardGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B7124FC4DA8EC313B17F5F; };
+		D2CE79EEA52F1BCA480F9332 /* IdeaCardCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F7D08E609A53D855FDF95E; };
+		2D2CC0FA5215A71F730E0774 /* FavoriteCardBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42617E37A679533EE189C9BF; };
+		6AB177430AF0F10D4939D760 /* LessonJourneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DF269888BF9A336EDFEAD; };
+		A15CFF0AEBE28467C7388448 /* IdeaCardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3C42DD5BF08D1692D0E1F; };
+		D2632AF2E902FC462C73BD79 /* IdeaCardFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF723EC05F67B7A4D0E9A15; };
+		424FD54B6DFDDF152509AA78 /* IdeaCardPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12192D0E8E49F7F45772B17D; };
+		4DEF3E397B5055751EEE2F0E /* IdeaCollectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233ED48EC65F20E7DA38E68; };
+		A354F1CA1388904ED4799A0C /* IdeaGridAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F803D637FE660296EC215B1; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +106,19 @@
 		619BE1436C7606DD98BB9948 /* ContentPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentPolicyTests.swift"; sourceTree = "<group>"; };
 		3477BC317B06409A9365BF8B /* PremiumNarrationTimingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PremiumNarrationTimingTests.swift"; sourceTree = "<group>"; };
 		A200E34B03B55278067A26DA /* Example-Lesson-Package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "../Example-Lesson-Package.json"; sourceTree = "<group>"; };
+		44608A7C347CB4E93C2C4822 /* IdeaCardRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCardRecord.swift; sourceTree = "<group>"; };
+		2475A34BAF033E5A6BC3E852 /* IdeaCardStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCardStorage.swift; sourceTree = "<group>"; };
+		11AB4BF28D4FD37C82C5A64A /* IdeaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCollectionView.swift; sourceTree = "<group>"; };
+		90524A9E03A9857C3B980EE6 /* IdeaCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCardView.swift; sourceTree = "<group>"; };
+		06B7124FC4DA8EC313B17F5F /* IdeaCardGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCardGrid.swift; sourceTree = "<group>"; };
+		A5F7D08E609A53D855FDF95E /* IdeaCardCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCardCarousel.swift; sourceTree = "<group>"; };
+		42617E37A679533EE189C9BF /* FavoriteCardBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCardBorder.swift; sourceTree = "<group>"; };
+		C96DF269888BF9A336EDFEAD /* LessonJourneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonJourneyView.swift; sourceTree = "<group>"; };
+		5FC3C42DD5BF08D1692D0E1F /* IdeaCardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCardTests.swift; sourceTree = "<group>"; };
+		3AF723EC05F67B7A4D0E9A15 /* IdeaCardFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCardFixture.swift; sourceTree = "<group>"; };
+		12192D0E8E49F7F45772B17D /* IdeaCardPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCardPresentationTests.swift; sourceTree = "<group>"; };
+		7233ED48EC65F20E7DA38E68 /* IdeaCollectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaCollectionUITests.swift; sourceTree = "<group>"; };
+		2F803D637FE660296EC215B1 /* IdeaGridAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaGridAccessibility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +172,8 @@
 		6B8B2B5CD808F874BF4EE1BA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3AF723EC05F67B7A4D0E9A15 /* IdeaCardFixture.swift */,
+				2475A34BAF033E5A6BC3E852 /* IdeaCardStorage.swift */,
 				F3A50A4456B2AF5DAAF19A50 /* CollectionStorage.swift */,
 				FD835B05F1625D3105D7ABF0 /* LessonSession.swift */,
 				055E2254DDB3A9D1A0BC1913 /* LibraryStore.swift */,
@@ -158,6 +186,13 @@
 		6C923F6D92369A43B16924F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2F803D637FE660296EC215B1 /* IdeaGridAccessibility.swift */,
+				C96DF269888BF9A336EDFEAD /* LessonJourneyView.swift */,
+				42617E37A679533EE189C9BF /* FavoriteCardBorder.swift */,
+				A5F7D08E609A53D855FDF95E /* IdeaCardCarousel.swift */,
+				06B7124FC4DA8EC313B17F5F /* IdeaCardGrid.swift */,
+				90524A9E03A9857C3B980EE6 /* IdeaCardView.swift */,
+				11AB4BF28D4FD37C82C5A64A /* IdeaCollectionView.swift */,
 				77B535E0AD728E041117DDB6 /* TakeawayCard.swift */,
 				4F401CD2319BEF8E57BC7B91 /* SourcesView.swift */,
 				F3FE5D9E735A2497EDB38684 /* PracticeView.swift */,
@@ -179,6 +214,7 @@
 		A2A9809DAF0AEE6960B34B37 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				44608A7C347CB4E93C2C4822 /* IdeaCardRecord.swift */,
 				74E6E0E54A8396D5C027DDEC /* LessonTiming.swift */,
 				A2738E4B8B93B9561C9823BA /* LessonProgress.swift */,
 				960FE3BF4C1355FE54812F6B /* LearningDestination.swift */,
@@ -191,6 +227,8 @@
 		C4E2E7F217DE3642E7714F4E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				12192D0E8E49F7F45772B17D /* IdeaCardPresentationTests.swift */,
+				5FC3C42DD5BF08D1692D0E1F /* IdeaCardTests.swift */,
 				A200E34B03B55278067A26DA /* Example-Lesson-Package.json */,
 				3477BC317B06409A9365BF8B /* PremiumNarrationTimingTests.swift */,
 				619BE1436C7606DD98BB9948 /* ContentPolicyTests.swift */,
@@ -214,7 +252,7 @@
 			path = LifeIsLearned;
 			sourceTree = "<group>";
 		};
-		913D89A0BCA78AFA58CCD860 /* UITests */ = {isa = PBXGroup; children = (1EDB09FE97F26A647248965A,); path = UITests; sourceTree = "<group>"; };
+		913D89A0BCA78AFA58CCD860 /* UITests */ = {isa = PBXGroup; children = (7233ED48EC65F20E7DA38E68,1EDB09FE97F26A647248965A,); path = UITests; sourceTree = "<group>"; };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,6 +354,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A354F1CA1388904ED4799A0C /* IdeaGridAccessibility.swift in Sources */,
+				D2632AF2E902FC462C73BD79 /* IdeaCardFixture.swift in Sources */,
+				6AB177430AF0F10D4939D760 /* LessonJourneyView.swift in Sources */,
+				2D2CC0FA5215A71F730E0774 /* FavoriteCardBorder.swift in Sources */,
+				D2CE79EEA52F1BCA480F9332 /* IdeaCardCarousel.swift in Sources */,
+				B9731486EF261ED72825AB1C /* IdeaCardGrid.swift in Sources */,
+				079A47250AE0EB50C968FDE9 /* IdeaCardView.swift in Sources */,
+				AE3386D9C30CDD4FD9BAF029 /* IdeaCollectionView.swift in Sources */,
+				3E93BB94B3269F1F1D1F82CF /* IdeaCardStorage.swift in Sources */,
+				D370502EF64D30A8291BF3ED /* IdeaCardRecord.swift in Sources */,
 				C8AC3D4EA958A1462AECD6B0 /* LessonTiming.swift */,
 				83FF6BB06B5CBAA1F9350959 /* TakeawayCard.swift in Sources */,
 				AEEC1A35EEEF85F298599F08 /* SourcesView.swift in Sources */,
@@ -348,6 +396,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				424FD54B6DFDDF152509AA78 /* IdeaCardPresentationTests.swift in Sources */,
+				A15CFF0AEBE28467C7388448 /* IdeaCardTests.swift in Sources */,
 				686D6B17D709CD9CCD36CDF5 /* PremiumNarrationTimingTests.swift */,
 				99133B5FA67877419A88A69B /* ContentPolicyTests.swift */,
 				8AD91FB46F938B25756EB0D4 /* ResumeTests.swift in Sources */,
@@ -357,7 +407,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B163B2B27B191635FF8E9FC8 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (F2092C22456548D145E34BF3,); runOnlyForDeploymentPostprocessing = 0; };
+		B163B2B27B191635FF8E9FC8 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (4DEF3E397B5055751EEE2F0E,F2092C22456548D145E34BF3,); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */

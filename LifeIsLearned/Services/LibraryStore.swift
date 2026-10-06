@@ -3,6 +3,7 @@ import Combine
 
 @MainActor final class LibraryStore: ObservableObject {
     @Published private(set) var books: [LearningBook] = []
+    @Published private(set) var cards: [String: IdeaCardRecord] = [:]
     @Published private(set) var progress: [String: LessonProgress] = [:]
     @Published private(set) var isLoading = true
     @Published private(set) var isPreparingImport = false
@@ -28,7 +29,7 @@ import Combine
             let result = await storage.load(seed: initialPackage, seedURL: seedURL, legacyProgress: legacyProgress)
             guard let self else { return }
             self.catalog = result.catalog; self.books = result.catalog.packages.map(\.book)
-            self.progress = result.progress; self.readOnly = result.readOnly
+            self.cards = result.cards; self.progress = result.progress; self.readOnly = result.readOnly
             self.errorMessage = result.warning; self.isLoading = false
         }
     }
@@ -43,16 +44,36 @@ import Combine
         let id = key(book: book, lesson: lesson)
         var state = progress[id] ?? LessonProgress()
         change(&state); progress[id] = state
+        if state.practiceComplete {
+            IdeaCardRecord.earn(book: book, lesson: lesson, date: state.practicedAt, into: &cards)
+        }
         if !isCommitting { enqueueSave() }
     }
     private func enqueueSave() {
         let previous = saveTask
-        let snapshot = catalog; let savedProgress = progress
+        let snapshot = catalog; let savedProgress = progress; let savedCards = cards
         saveTask = Task { [weak self, storage] in
             await previous?.value
-            do { try await storage.save(catalog: snapshot, progress: savedProgress) }
+            do { try await storage.save(catalog: snapshot, progress: savedProgress, cards: savedCards) }
             catch { self?.errorMessage = "Progress could not be saved. Free some device storage and try again. Your prior saved library is intact." }
         }
+    }
+    func toggleFavorite(_ id: String) {
+        guard !isLoading, !readOnly, var card = cards[id] else { return }
+        card.isFavorite.toggle(); cards[id] = card
+        if !isCommitting { enqueueSave() }
+    }
+    func cardPresentation(_ record: IdeaCardRecord) -> IdeaCardPresentation {
+        let book = books.first { $0.id == record.bookID }
+        return IdeaCardPresentation(record: record, activeBook: book, activeLesson: book?.lessons.first { $0.id == record.lessonID })
+    }
+    func cardReview(_ record: IdeaCardRecord) async -> LessonLaunch? {
+        if let book = books.first(where: { $0.id == record.bookID }), let lesson = book.lessons.first(where: { $0.id == record.lessonID }) {
+            return LessonLaunch(book: book, lesson: lesson, review: true)
+        }
+        guard let package = await storage.archivedSource(for: record),
+              let lesson = package.book.lessons.first(where: { $0.id == record.lessonID && $0.revision == record.lastEarnedRevision }) else { return nil }
+        return LessonLaunch(book: package.book, lesson: lesson, review: true, archivedPackage: package)
     }
     func prepareImport(from url: URL) async {
         guard !isPreparingImport && !isCommitting && !readOnly else { return }
@@ -103,7 +124,7 @@ import Combine
                 var fresh = LessonProgress(); fresh.updated = true; fresh.lastEngagedAt = previous?.lastEngagedAt
                 nextProgress[LessonProgress.key(bookID: checked.package.book.id, lesson: lesson)] = fresh
             }
-            try await storage.save(catalog: next, progress: nextProgress)
+            try await storage.save(catalog: next, progress: nextProgress, cards: cards)
             // Preserve any foreground progress changes made while disk work ran.
             let revisions = checked.revised.map { LessonProgress.key(bookID: checked.package.book.id, lesson: $0) }
             for id in revisions { progress[id] = nextProgress[id] }

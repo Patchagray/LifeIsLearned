@@ -1,0 +1,6 @@
+Implementation: 7a31213bf574ba6540e663d5177ceb4f178371a7
+Signed generic iOS Debug build: BUILD SUCCEEDED
+Physical device: iPhone 15 Pro Max, iOS 27.2
+In-place install: success
+Normal foreground launch without UI fixture variables: success
+Existing signing configuration preserved. Device and signing identifiers omitted; raw logs/JSON retained locally.

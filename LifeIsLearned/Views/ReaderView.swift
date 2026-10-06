@@ -13,13 +13,15 @@ import UIKit
     @State private var showingSettings = false
     @State private var showingSources = false
     private var onCompletion: (() -> Void)?
+    private var onNext: ((LessonLaunch) -> Void)?
+    @State private var showingCard = false
 
     init(book: LearningBook, lesson: Lesson, store: LibraryStore, speech: SpeechPlayer,
-         settings: PlaybackSettings, practiceOnly: Bool = false, onCompletion: (() -> Void)? = nil) {
+         settings: PlaybackSettings, practiceOnly: Bool = false, review: Bool = false, archivedPackage: LessonPackage? = nil, onCompletion: (() -> Void)? = nil, onNext: ((LessonLaunch) -> Void)? = nil) {
         _session = StateObject(wrappedValue: LessonSession(book: book, lesson: lesson, store: store,
-                                                         speech: speech, settings: settings, practiceOnly: practiceOnly))
+                                                         speech: speech, settings: settings, practiceOnly: practiceOnly, review: review, archivedPackage: archivedPackage))
         _speech = ObservedObject(wrappedValue: speech); _settings = ObservedObject(wrappedValue: settings)
-        self.onCompletion = onCompletion
+        self.onCompletion = onCompletion; self.onNext = onNext
     }
     // Tests can host a real view with a deterministic session; production uses the
     // same session type and initializer above, without injected UI-only behavior.
@@ -33,11 +35,19 @@ import UIKit
             switch session.phase {
             case .reading: reading
             case .practice: PracticeView(session: session, speech: speech, settings: settings)
-            case .complete: LessonCompletionView(session: session) { session.stop(); onCompletion?(); dismiss() }
+            case .complete: LessonCompletionView(session: session,
+                continueBook: { session.stop(); onCompletion?(); dismiss() },
+                continueNext: { next in session.stop(); onNext?(next) },
+                viewCard: { session.stop(); showingCard = true },
+                reviewIdea: { session.stop(); onNext?(session.reviewDestination) })
             }
         }.readingCanvas()
             .sheet(isPresented: $showingSettings) { SettingsView().environmentObject(settings) }
             .sheet(isPresented: $showingSources) { SourcesView(book: session.book) }
+            .sheet(isPresented: $showingCard) {
+                NavigationStack { IdeaCollectionView(initialCardID: session.collectedCardID)
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Done") { showingCard = false } } } }
+            }
             .onAppear { session.engage() }
             .onDisappear { session.stop(); UIApplication.shared.isIdleTimerDisabled = false }
             .onChange(of: scenePhase) { _, phase in

@@ -86,3 +86,11 @@ Authored releases have exactly two meaningful application questions. Budget the 
 Show the actual selected-idea count and honest coverage before starting; do not imply an exhaustive summary or an author's ranking. Keep source limits explicit and use original, attributed content/artwork. Changed content/estimates require idea and collection revision increases. The shortened demo is an explicit reviewed full-collection update, never an automatic replacement of an installed book. Mario is curating the two companion collections externally for later import.
 
 Keep the manual Files picker. GitHub Releases plus a small catalog is a future distribution direction; cloud browsing, accounts, downloads, release publishing and bulk imports are outside this patch.
+
+## Idea cards and completion flow (Handoff 004)
+
+Completion now offers the next sequential active idea directly, or Finish book for the final idea; retain Back to book and optional card/review actions. This extends the original completion → book journey. No new autoplay, progress reset, or first-attempt-score overwrite during review.
+
+Collect a card after practiceComplete, including imperfect attempts. Identity is bookID + lessonID across revisions. Preserve original earned date, unknown historical dates, favorites, and the last earned text snapshot. New revisions show Updated until completed again; earned removed ideas remain archived. No new import fields, duplicated artwork, invented facts, or automatic content rewrites.
+
+Keep Ideas reachable from home. Provide a focused flip-card carousel and a two-column staggered grid (one readable column at accessibility text sizes), stable sort/filter behavior, and independent favorite controls. Favorite motion must be restrained, limited to visible active cards, and static with Reduce Motion. Keep VoiceOver's grid order top-to-bottom, with named open/flip/favorite/review actions. Verify rendered iPhone/iPad, light/dark and large-text layouts; distinguish simulator evidence from subjective physical animation checks.

@@ -16,11 +16,22 @@ import SwiftUI
         _library = StateObject(wrappedValue: LibraryStore())
         _settings = StateObject(wrappedValue: PlaybackSettings())
     }
+    @MainActor private func prepareTestCards() async {
+        #if DEBUG
+        let environment = ProcessInfo.processInfo.environment
+        if let id = environment["LIL_UI_TEST_RUN_ID"], UUID(uuidString: id) != nil,
+           environment["LIL_IDEA_CARD_FIXTURE"] == "1" {
+            do { try await IdeaCardFixture.install(in: library) }
+            catch { library.errorMessage = "UI fixture failed: \(error.localizedDescription)" }
+        }
+        #endif
+    }
     var body: some Scene {
         WindowGroup {
             LibraryView()
                 .environmentObject(library).environmentObject(settings).environmentObject(speech)
                 .tint(Palette.teal)
+                .task { await prepareTestCards() }
         }
     }
 }

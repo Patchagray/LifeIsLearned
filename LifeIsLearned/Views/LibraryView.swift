@@ -7,6 +7,7 @@ import UniformTypeIdentifiers
     @EnvironmentObject private var speech: SpeechPlayer
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var importing = false
+    @State private var showingIdeas = false
     @State private var showingSettings = false
     @State private var search = ""
     @State private var launch: LessonLaunch?
@@ -46,6 +47,10 @@ import UniformTypeIdentifiers
                 .navigationTitle("Life Is Learned").navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
+                        Button { speech.stop(); showingIdeas = true } label: { Image(systemName: "rectangle.stack").frame(minWidth: 44, minHeight: 44) }
+                            .accessibilityLabel("Ideas").disabled(library.isLoading)
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
                         Button { importing = true } label: { Image(systemName: "plus").frame(minWidth: 44, minHeight: 44) }
                             .accessibilityLabel("Import book").disabled(library.isLoading || library.readOnly)
                     }
@@ -54,6 +59,7 @@ import UniformTypeIdentifiers
                             .accessibilityLabel("Playback settings")
                     }
                 }
+                .navigationDestination(isPresented: $showingIdeas) { IdeaCollectionView() }
                 .navigationDestination(item: $selectedBook) { BookDetailView(book: $0) }
                 .overlay { if library.isPreparingImport { importLoading } }
         }
@@ -70,8 +76,8 @@ import UniformTypeIdentifiers
         .fullScreenCover(item: $launch, onDismiss: {
             if let book = completedBook { selectedBook = book; completedBook = nil }
         }) { selected in
-            ReaderView(book: selected.book, lesson: selected.lesson, store: library, speech: speech, settings: settings,
-                       onCompletion: { completedBook = selected.book })
+            LessonJourneyView(launch: selected, store: library, speech: speech, settings: settings,
+                              onBook: { completedBook = $0 })
         }
         .fileImporter(isPresented: $importing, allowedContentTypes: [.json]) { result in
             switch result {

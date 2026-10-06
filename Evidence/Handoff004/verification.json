@@ -1,0 +1,271 @@
+{
+  "implementationCommit": "7a31213bf574ba6540e663d5177ceb4f178371a7",
+  "results": [
+    {
+      "result": "Passed",
+      "totalTestCount": 54,
+      "passedTests": 52,
+      "failedTests": 0,
+      "skippedTests": 2,
+      "startTime": 1791248186.061,
+      "finishTime": 1791248849.363,
+      "label": "phone",
+      "implementationCommit": "7a31213bf574ba6540e663d5177ceb4f178371a7",
+      "rawResultBundle": "LifeIsLearned-h004-phone-commit.xcresult"
+    },
+    {
+      "result": "Passed",
+      "totalTestCount": 54,
+      "passedTests": 52,
+      "failedTests": 0,
+      "skippedTests": 2,
+      "startTime": 1791248186.087,
+      "finishTime": 1791248807.764,
+      "label": "ipad",
+      "implementationCommit": "7a31213bf574ba6540e663d5177ceb4f178371a7",
+      "rawResultBundle": "LifeIsLearned-h004-ipad-commit.xcresult"
+    },
+    {
+      "result": "Passed",
+      "totalTestCount": 7,
+      "passedTests": 6,
+      "failedTests": 0,
+      "skippedTests": 1,
+      "startTime": 1791248186.482,
+      "finishTime": 1791248599.675,
+      "label": "device",
+      "implementationCommit": "7a31213bf574ba6540e663d5177ceb4f178371a7",
+      "rawResultBundle": "LifeIsLearned-h004-device-commit.xcresult"
+    },
+    {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "startTime": 1791248855.845,
+      "finishTime": 1791248882.551,
+      "label": "reduce-motion-commit",
+      "implementationCommit": "7a31213bf574ba6540e663d5177ceb4f178371a7",
+      "rawResultBundle": "LifeIsLearned-h004-reduce-motion-commit.xcresult"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "Screenshots/simulator-iphone-grid-dark.png",
+      "kind": "simulator-iphone",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-iphone-grid-dark",
+      "sha256": "c00e43ab7c57e3692bf61384b1227456959ffd448fc3d73750ad325b178cf319"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-carousel-dark.png",
+      "kind": "simulator-iphone",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-iphone-carousel-dark",
+      "sha256": "f109c0ab71f27d7caf7f72ce79b1662c2696953b29bbc068d850aa7d79cca4ad"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-card-back-dark.png",
+      "kind": "simulator-iphone",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-iphone-card-back-dark",
+      "sha256": "e04b56fb52b07b1945d8ac54d8d3111710623aba7edf67d5aa1d422ca926b97b"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-grid-accessibility3.png",
+      "kind": "simulator-iphone",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-iphone-grid-accessibility3",
+      "sha256": "9581dbf6a76a6bbb7e751013c3a84ac8d4046ca1919897490462abc9c6dce942"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-grid-accessibility3-bottom.png",
+      "kind": "simulator-iphone",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-iphone-grid-accessibility3-bottom",
+      "sha256": "1b52b964947b7cb62e215b1bda6c053ac432233e76461be36b21b6c7d4743ff3"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-completion-next-dark.png",
+      "kind": "simulator-iphone",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-iphone-completion-next-dark",
+      "sha256": "9071624eccc5d28ec5214c6480cfedb667e1d104b005bc5ac7888c90eab5d857"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-grid-20.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-grid-20",
+      "sha256": "9577c99c5b5b2388e0190b03a8f426acd0724da2f7c3c699fad43376b193d9d2"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-carousel-front.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-carousel-front",
+      "sha256": "35f9b37164a63553c0fd61f976a83e6897a28843949c780f44c11f8070b49495"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-carousel-back.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-carousel-back",
+      "sha256": "c67f5daf7df057355c07bc8fda9fb6ac806583cba29eb179b50f9fd08c413bc6"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-favorite-active.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-favorite-active",
+      "sha256": "e15e88d54b105fa47154e85940d98516e42ee43858d46f4f0f7a2c08cb4d3cb5"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-favorites-back.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-favorites-back",
+      "sha256": "7925cbf89d445948cdd9e960046c2a6c5e4ae84d1ad5cf8226fdef5acb775244"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-empty.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-empty",
+      "sha256": "79bbb338f8ca9788eb12b031db055e4877ccda57e90aada34385fd3ee6c5d5ed"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-empty-favorites.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-empty-favorites",
+      "sha256": "f3605434712935d2cd523be20f4e5130a8e8025f231725bc46cb5b1af898b1ef"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-completion-next.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-completion-next",
+      "sha256": "052da647bbbabda933bdf0302c054266def55d46d47ee71d173f9290782515a7"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-book-filter-alphabetical.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-book-filter-alphabetical",
+      "sha256": "f441faa1c97a41d4b819c558a03c6bd8c0e6a8d753be552be18a99d51888eaac"
+    },
+    {
+      "file": "Screenshots/simulator-iphone-live-next-resumed.png",
+      "kind": "simulator-iphone",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-phone-commit.xcresult",
+      "testAttachment": "h004-live-next-resumed",
+      "sha256": "8c26ebbe8c3c6daef5b0bfb7b57d6ce956d72b2b07a7a64eea83290c9eda6d3e"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-grid.png",
+      "kind": "simulator-ipad",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-ipad-grid",
+      "sha256": "63cfd93e1bab2bf4e48cbbc2565339660acc167996cce6bee408dafc0602e047"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-grid-landscape.png",
+      "kind": "simulator-ipad",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-ipad-grid-landscape",
+      "sha256": "7b92c98b43324d85624aa41225ca40b1b8a4fedfd63b03e71376dd625911a26f"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-grid-dark.png",
+      "kind": "simulator-ipad",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-ipad-grid-dark",
+      "sha256": "62e2e42fa3ebd1c8b698ce4f927a3d4256ea4de548354ea44491916cd966976a"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-carousel.png",
+      "kind": "simulator-ipad",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-ipad-carousel",
+      "sha256": "d5dc0e806a5f9df7f336132103815a4c97b22417238763b5f3c8b8a8e702bf2a"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-carousel-landscape.png",
+      "kind": "simulator-ipad",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-ipad-carousel-landscape",
+      "sha256": "4b41d2ae2ff57af65347d0668679fab94ddb78b0fc77d3aaea7517ffe5eb72b5"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-carousel-dark.png",
+      "kind": "simulator-ipad",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-ipad-carousel-dark",
+      "sha256": "bbe1f61754a82b428d95bb9261f3996d9bfb5d9bb5ce69e04781973e0185d4b9"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-grid-accessibility3.png",
+      "kind": "simulator-ipad",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-ipad-grid-accessibility3",
+      "sha256": "70ed3c2e467a3fda1803f7709dc4fcbfca7e928f27d69e9db68f071a3c22700c"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-grid-accessibility3-bottom.png",
+      "kind": "simulator-ipad",
+      "method": "hosted SwiftUI presentation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-ipad-grid-accessibility3-bottom",
+      "sha256": "d3fffbc5fb752396c6dd320b0c751bf6a5a3a5286839c0f1c4f1f6dc0f54a844"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-live-collected-card.png",
+      "kind": "simulator-ipad",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-ipad-commit.xcresult",
+      "testAttachment": "h004-live-collected-card",
+      "sha256": "6e415ab40a762be2763d3b3fcee0b955ad045f8bad9bca1da7a3ef26b9417a41"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-live-reduce-motion-front.png",
+      "kind": "simulator-ipad",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-reduce-motion-commit.xcresult",
+      "testAttachment": "h004-live-reduce-motion-front",
+      "sha256": "ac16da39ea36dbe02098b750efe73a827d464e855fe028d70965f507bcf1dd91"
+    },
+    {
+      "file": "Screenshots/simulator-ipad-live-reduce-motion-back.png",
+      "kind": "simulator-ipad",
+      "method": "live UI automation",
+      "resultBundle": "LifeIsLearned-h004-reduce-motion-commit.xcresult",
+      "testAttachment": "h004-live-reduce-motion-back",
+      "sha256": "9dd583a61a154c34288994d4169e424d6310b52677cb5cf3c3501fb4c550feda"
+    }
+  ]
+}

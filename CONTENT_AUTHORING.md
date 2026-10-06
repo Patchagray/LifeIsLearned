@@ -120,3 +120,7 @@ The shorter demo keeps `influential-mind` / `priors`, increases both collection 
 Mario is preparing The Influential Mind (ten ideas) and Never Split the Difference (formerly fourteen) outside this engineering task. Earlier companion ZIPs are superseded drafts, not ready-to-import releases. Each later collection must satisfy these gates; Never Split the Difference requires an explained selection/consolidation to at most twelve. Artwork briefs require review against the shortened stories. No new book prose or bulk import is included here.
 
 Distribution remains manual Files import. GitHub Releases and a small catalog, resumable/cancellable downloads, offline installation and storage reclamation that preserves progress are deferred; no release assets or catalog are published by this patch.
+
+## Collected cards (Handoff 004)
+
+No additional import fields are required. Earned cards derive their title from `lesson.title`, takeaway from the takeaway page's `text`, application reminder from `lesson.subtitle`, and source from the book title/author. Continue to author accurate, concise, reviewed text using the existing format. The app retains a text snapshot only when the learner completes practice; importing an update does not rewrite an already earned card. Do not shorten, reword, or automatically revise reviewed lesson content just to fit a card thumbnail. Full card details remain scrollable.
