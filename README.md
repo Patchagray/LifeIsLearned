@@ -92,3 +92,11 @@ Handoff 003: both simulator builds passed 35 tests each (one hardware-only voice
 Historical Handoff 002 verification passed 29 tests on each of the iPhone 16e and iPad (A16) simulators. Commit `f4a8693645c3e97a54567f1034f4d463b6506fb3` then built, installed, and launched on an iPhone 15 Pro Max running iOS 27.2. After checking that device build, the user reported “All checks are good” and approved pushing the work. See [VALIDATION.md](VALIDATION.md) for commands, outcomes, simulator evidence, and the scope of user-reported physical-device acceptance.
 
 Handoff 003 results, premium voice settings/durations, and current import evidence are recorded in [VALIDATION.md](VALIDATION.md).
+
+## Handoff 004: your collected ideas
+
+Finish practice to collect an idea card, including after retries. Completion offers the next idea directly and resumes its saved position; the final idea offers **Finish book**. **Back to book**, **View collected card**, and **Review this idea** remain available. Reviewing preserves the original completion score and earned date and does not start audio automatically.
+
+Tap the stack icon (**Ideas**) at the top left of home. Browse the staggered grid, open a card in the carousel, tap its body to see an application reminder, or use the separate star to favorite it. Use All/Favorites, book filtering and sort controls to find cards again. Earned ideas remain available if a collection removes them. Revised ideas show Updated until you complete the new revision.
+
+The supplied brief is `LifeIsLearned_Handoff_004_Idea_Collection_and_Next_Flow.pdf`; implementation and verification evidence are in `Evidence/Handoff004/`. Card storage/migration details are in `PERSISTENCE.md`. Content import and narration formats are unchanged.

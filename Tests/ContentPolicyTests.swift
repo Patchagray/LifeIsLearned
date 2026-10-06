@@ -51,7 +51,7 @@ final class ContentPolicyTests: XCTestCase {
         var saved = LessonProgress(); saved.pageIndex = 3; saved.readComplete = true; saved.practiceComplete = true
         let keys = original.book.lessons.map { LessonProgress.key(bookID: original.book.id, lesson: $0) }
         let progress = Dictionary(uniqueKeysWithValues: keys.map { ($0, saved) })
-        try await f.store.storage.save(catalog: catalog, progress: progress)
+        try await f.store.storage.save(catalog: catalog, progress: progress, cards: [:])
         let loaded = LibraryStore(documentsURL: f.directory, defaults: f.defaults, initialPackage: f.package)
         await loaded.ready()
         XCTAssertNil(loaded.errorMessage); XCTAssertFalse(loaded.readOnly)

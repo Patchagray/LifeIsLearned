@@ -37,6 +37,8 @@ struct LessonLaunch: Identifiable {
     let book: LearningBook
     let lesson: Lesson
     var practiceOnly = false
+    var review = false
+    var archivedPackage: LessonPackage?
 }
 
 extension LibraryStore {
@@ -59,5 +61,14 @@ extension LibraryStore {
         }
         return LearningDestination(book: book, lesson: lesson, progress: state,
             action: state.lastEngagedAt != nil || state.pageIndex > 0 || state.phase == .practice || state.updated ? .resume : .start)
+    }
+}
+
+extension LibraryStore {
+    func nextIdea(after lesson: Lesson, in book: LearningBook) -> LessonLaunch? {
+        guard let active = books.first(where: { $0.id == book.id }),
+              let index = active.lessons.firstIndex(where: { $0.id == lesson.id }), index + 1 < active.lessons.count else { return nil }
+        let next = active.lessons[index + 1]
+        return LessonLaunch(book: active, lesson: next, review: status(book: active, lesson: next).practiceComplete)
     }
 }

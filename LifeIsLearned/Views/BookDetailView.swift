@@ -65,7 +65,7 @@ import SwiftUI
             }.padding(24).readingWidth(760)
         }.readingCanvas().navigationBarTitleDisplayMode(.inline)
             .fullScreenCover(item: $launch) { selected in
-                ReaderView(book: book, lesson: selected.lesson, store: library, speech: speech, settings: settings, practiceOnly: selected.practiceOnly)
+                LessonJourneyView(launch: selected, store: library, speech: speech, settings: settings)
             }.sheet(isPresented: $showingSources) { SourcesView(book: book) }
     }
     private var bookHeading: some View {

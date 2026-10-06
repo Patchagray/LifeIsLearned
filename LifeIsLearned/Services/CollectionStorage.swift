@@ -3,6 +3,9 @@ import Foundation
 struct LibrarySnapshot: Sendable {
     var catalog: CollectionCatalog
     var progress: [String: LessonProgress]
+    var cards: [String: IdeaCardRecord] = [:]
+    var needsCardMigration = false
+    var recoveredCards = false
     var warning: String?
     var readOnly = false
 }
@@ -10,7 +13,7 @@ struct LibrarySnapshot: Sendable {
 /// Serial, off-main disk boundary. A single atomic CURRENT replacement commits
 /// immutable content and progress files together. Older snapshots remain recoverable.
 actor CollectionStorage {
-    struct Pointer: Codable { var current: String; var previous: String? }
+    struct Pointer: Codable { var current: String; var previous: String?; var cardStateVersion: Int? = nil }
     let documents: URL
     private let root: URL
     private var injectedWriteFailure = false
@@ -23,6 +26,27 @@ actor CollectionStorage {
     func setWriteFailure(_ value: Bool) { injectedWriteFailure = value }
 
     func load(seed: LessonPackage?, seedURL: URL?, legacyProgress: Data?) -> LibrarySnapshot {
+        var snapshot = loadCore(seed: seed, seedURL: seedURL, legacyProgress: legacyProgress)
+        if snapshot.needsCardMigration || (snapshot.recoveredCards && !snapshot.readOnly) {
+            let earned = migrateCards(catalog: snapshot.catalog, progress: snapshot.progress, seed: seed, seedURL: seedURL)
+            for (id, record) in earned {
+                if var previous = snapshot.cards[id] {
+                    if record.lastEarnedRevision > previous.lastEarnedRevision {
+                        previous.lastEarnedRevision = record.lastEarnedRevision
+                        previous.snapshot = record.snapshot
+                        snapshot.cards[id] = previous
+                    }
+                } else { snapshot.cards[id] = record }
+            }
+            if snapshot.needsCardMigration && !snapshot.readOnly {
+                do { try save(catalog: snapshot.catalog, progress: snapshot.progress, cards: snapshot.cards) }
+                catch { snapshot.warning = "The library could not be saved: \(error.localizedDescription)" }
+            }
+        }
+        return snapshot
+    }
+
+    private func loadCore(seed: LessonPackage?, seedURL: URL?, legacyProgress: Data?) -> LibrarySnapshot {
         var warnings: [String] = []
         var progress: [String: LessonProgress] = [:]
         var progressReadable = true
@@ -43,13 +67,31 @@ actor CollectionStorage {
         if FileManager.default.fileExists(atPath: currentURL.path) {
             do {
                 let pointer = try JSONDecoder().decode(Pointer.self, from: Data(contentsOf: currentURL))
+                guard pointer.cardStateVersion == nil || pointer.cardStateVersion == 1 else {
+                    throw PackageError.invalid("This library uses a newer idea-card format.")
+                }
                 let ids = [pointer.current, pointer.previous].compactMap { $0 }
                 // Uncommitted directories are deliberately never candidates.
                 var loadedProgress = false
                 var loadedCatalog = false
+                var cards: [String: IdeaCardRecord] = [:]
+                let needsCardMigration = pointer.cardStateVersion == nil
+                var loadedCards = needsCardMigration
+                var recoveredCards = false
                 for id in ids {
                     guard UUID(uuidString: id) != nil else { continue }
                     let directory = root.appendingPathComponent(id)
+                    if !loadedCards {
+                        do {
+                            let candidate = try JSONDecoder().decode([String: IdeaCardRecord].self,
+                                from: Data(contentsOf: directory.appendingPathComponent("cards.json")))
+                            guard candidate.allSatisfy({ $0.key == $0.value.id && $0.value.lastEarnedRevision > 0 }) else {
+                                throw PackageError.invalid("Invalid idea card identity.")
+                            }
+                            cards = candidate; loadedCards = true
+                            if id != pointer.current { recoveredCards = true; warnings.append("Recovered the previous idea-card snapshot; the damaged file is preserved. Recent favorite changes may need to be repeated.") }
+                        } catch { warnings.append("An idea-card snapshot is unreadable; checking its recovery copy.") }
+                    }
                     if !loadedProgress {
                         do {
                             progress = try JSONDecoder().decode([String: LessonProgress].self,
@@ -72,8 +114,8 @@ actor CollectionStorage {
                 if !loadedProgress { progressReadable = false }
                 if !loadedCatalog { warnings.append("Showing the demo while the saved collections await recovery.") }
                 // Do not replace a partially recovered library with a new incomplete snapshot.
-                let readOnly = !loadedProgress || !loadedCatalog
-                return LibrarySnapshot(catalog: catalog, progress: progress,
+                let readOnly = !loadedProgress || !loadedCatalog || !loadedCards
+                return LibrarySnapshot(catalog: catalog, progress: progress, cards: cards, needsCardMigration: needsCardMigration, recoveredCards: recoveredCards,
                     warning: warnings.isEmpty ? nil : warnings.joined(separator: " "), readOnly: readOnly)
             } catch {
                 warnings.append("The library index is unreadable. Original files are preserved; saving is paused until recovery.")
@@ -99,15 +141,11 @@ actor CollectionStorage {
         do { for package in catalog.packages { try catalog.record(package) } }
         catch { warnings.append(error.localizedDescription); contentReadable = false }
         let readOnly = !contentReadable || !progressReadable
-        if !readOnly {
-            do { try save(catalog: catalog, progress: progress) }
-            catch { warnings.append("The library could not be saved: \(error.localizedDescription)") }
-        }
-        return LibrarySnapshot(catalog: catalog, progress: progress,
+        return LibrarySnapshot(catalog: catalog, progress: progress, needsCardMigration: true,
             warning: warnings.isEmpty ? nil : warnings.joined(separator: " "), readOnly: readOnly)
     }
 
-    func save(catalog: CollectionCatalog, progress: [String: LessonProgress]) throws {
+    func save(catalog: CollectionCatalog, progress: [String: LessonProgress], cards: [String: IdeaCardRecord]) throws {
         if injectedWriteFailure { throw CocoaError(.fileWriteNoPermission) }
         let manager = FileManager.default
         try manager.createDirectory(at: root, withIntermediateDirectories: true)
@@ -129,7 +167,8 @@ actor CollectionStorage {
             try encoder.encode(catalog).write(to: catalogURL, options: .atomic)
         }
         try encoder.encode(progress).write(to: directory.appendingPathComponent("progress.json"), options: .atomic)
-        let pointer = Pointer(current: id, previous: old?.current)
+        try encoder.encode(cards).write(to: directory.appendingPathComponent("cards.json"), options: .atomic)
+        let pointer = Pointer(current: id, previous: old?.current, cardStateVersion: 1)
         try encoder.encode(pointer).write(to: currentURL, options: .atomic)
         reusableCatalog = (catalog.version, catalogURL)
     }

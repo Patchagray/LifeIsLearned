@@ -20,16 +20,17 @@ import Combine
     private let store: LibraryStore
     let speech: any Narrating
     private let settings: PlaybackSettings
+    private let archivedPackage: LessonPackage?
 
     init(book: LearningBook, lesson: Lesson, store: LibraryStore, speech: any Narrating,
-         settings: PlaybackSettings, practiceOnly: Bool) {
+         settings: PlaybackSettings, practiceOnly: Bool, review: Bool = false, archivedPackage: LessonPackage? = nil) {
         self.book = book; self.lesson = lesson; self.store = store
-        self.speech = speech; self.settings = settings
+        self.speech = speech; self.settings = settings; self.archivedPackage = archivedPackage
         let saved = store.status(book: book, lesson: lesson)
-        index = min(max(0, saved.pageIndex), lesson.pages.count - 1)
-        phase = practiceOnly || saved.phase == .practice ? .practice : .reading
+        index = review && saved.practiceComplete ? 0 : min(max(0, saved.pageIndex), lesson.pages.count - 1)
+        phase = review && saved.practiceComplete ? .reading : (practiceOnly || saved.phase == .practice ? .practice : .reading)
         takeawayRevealed = saved.takeawayRevealed
-        if saved.phase == .practice {
+        if saved.phase == .practice && phase == .practice {
             questionIndex = min(max(0, saved.practice.questionIndex), lesson.questions.count - 1)
             let choices = lesson.questions[questionIndex].choices
             selectedID = choices.contains { $0.id == saved.practice.selectedID } ? saved.practice.selectedID : nil
@@ -42,7 +43,11 @@ import Combine
     var choice: AnswerChoice? { question.choices.first { $0.id == selectedID } }
     var answerCorrect: Bool { selectedID == question.correctChoiceID }
 
-    var assets: [String: CollectionArtwork] { store.package(for: book)?.artwork ?? [:] }
+    var assets: [String: CollectionArtwork] { archivedPackage?.artwork ?? store.package(for: book)?.artwork ?? [:] }
+    var reviewDestination: LessonLaunch { LessonLaunch(book: book, lesson: lesson, review: true, archivedPackage: archivedPackage) }
+    var nextIdea: LessonLaunch? { store.nextIdea(after: lesson, in: book) }
+    var hasCollectedCard: Bool { store.cards[collectedCardID] != nil }
+    var collectedCardID: String { LessonProgress.identity(bookID: book.id, lessonID: lesson.id) }
     func engage() { persist() }
     func persist() {
         store.update(book: book, lesson: lesson) {
@@ -141,8 +146,10 @@ import Combine
             persist()
         } else {
             store.update(book: book, lesson: lesson) {
-                $0.practiceComplete = true; $0.questionCount = lesson.questions.count
-                $0.firstTryCorrect = firstTryCorrect; $0.practicedAt = Date()
+                if !$0.practiceComplete {
+                    $0.practiceComplete = true; $0.questionCount = lesson.questions.count
+                    $0.firstTryCorrect = firstTryCorrect; $0.practicedAt = Date()
+                }
             }
             phase = .complete
             persist()

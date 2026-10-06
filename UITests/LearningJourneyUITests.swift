@@ -111,7 +111,8 @@ final class LearningJourneyUITests: XCTestCase {
         app.buttons["Finish lesson"].tap()
         XCTAssertTrue(app.staticTexts["1 of 2 correct on the first try."].waitForExistence(timeout: 5))
         snapshot(app, "live-simulator-completion")
-        app.buttons["Continue book"].tap()
+        let finishBook = app.buttons["Finish book"]
+        reveal(finishBook, in: app); finishBook.tap()
         XCTAssertTrue(app.staticTexts["book-detail-title"].waitForExistence(timeout: 5))
         let completedIdea = app.buttons["idea-priors"]
         reveal(completedIdea, in: app)
