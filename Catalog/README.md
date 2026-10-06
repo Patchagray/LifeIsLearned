@@ -26,7 +26,7 @@ This is the editorial source of truth for the first 50-book catalog. It is separ
 ## Existing authored titles
 
 - `influential-mind` — established stable ID.
-- `never-split-the-difference` — intended stable ID; Codex must reconcile it against the existing authored package before the manifest is frozen.
+- `never-split-the-difference` — established reconciled stable ID, confirmed against the existing authored package. Keep it.
 
 `authoringPriority` is a production queue, not a user-facing ranking of book quality.
 
@@ -36,7 +36,7 @@ Handoff 005 can derive a remote/discovery catalog from this identity manifest an
 
 ## Canonical manifest and validation
 
-`Catalog-001.json` is the approved schema-1, revision-1 manifest, copied unchanged from `LifeIsLearned_Catalog_001.json` in the supplied Catalog 001 handoff. SHA-256: `d99728adaab648b645915348ccba2f3c7e3ce6d4cf7c802af584e4b8ea92d7e2`.
+`Catalog-001.json` is the approved schema-1, revision-1 manifest from the supplied Catalog 001 handoff, with its Never Split reconciliation note updated to record the established ID. SHA-256: `7424b9d5deff4f1645ca112f1393bfafd84553a040593d53a6af35133826da68`.
 
 From the repository root, using Python 3 and its standard library:
 
@@ -45,7 +45,7 @@ python3 Tools/validate_catalog.py
 python3 -m unittest discover -s Tools -p 'test_catalog.py' -v
 ```
 
-The validator also accepts a path to a proposed manifest. It is read-only, fails with exit code 1 and a specific field error, and prints a deterministic count summary on success. It checks schema/revision, required fields/types/rules, duplicate JSON keys, unique book/shelf identities, shelf references/order/distribution, secondary classifications, author/tag lists, catalog order, and the 1–50 authoring queue. Schema 1 has the supplied fields and status values; unknown fields, including transport metadata, require an explicit schema decision. A future approved expansion must update the catalog revision and the corresponding validation contract.
+The validator also accepts a path to a proposed manifest. It is read-only, fails with exit code 1 and a specific field error, and prints a deterministic count summary on success. It checks schema/revision, required fields/types/rules, duplicate JSON keys, unique book/shelf identities, shelf references/order/distribution, secondary classifications, author/tag lists, catalog order, and the 1–50 authoring queue. Only catalog revision 1 is currently supported. Shelf and book array positions must match their order fields. An independent SHA-256 lock protects the exact approved ordered 50 `(catalogOrder, id)` pairs, using compact UTF-8 JSON arrays; editing the manifest cannot redefine that lock. Schema 1 has the supplied fields and status values; unknown fields, including transport metadata, require an explicit schema decision. Later revisions or identity-contract changes require explicit approval and corresponding validator changes.
 
 Validation establishes structural consistency. It does not review bibliographic facts, approve lesson content, verify narration timing, or prove package availability. The manifest is an editorial file and is not bundled into the app or connected to `CollectionCatalog` in this patch.
 

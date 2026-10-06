@@ -38,6 +38,33 @@ class CatalogTests(unittest.TestCase):
     def test_duplicate_book_id(self):
         self.rejects(lambda m: m["books"][1].update(id=m["books"][0]["id"]), r"books.id: duplicate")
 
+    def test_only_catalog_revision_one_is_supported(self):
+        for revision in (2, 99):
+            with self.subTest(revision=revision):
+                self.rejects(lambda m: m.update(catalogRevision=revision), "only revision 1 is supported")
+
+    def test_every_approved_book_id_is_locked(self):
+        for index, book in enumerate(self.canonical["books"]):
+            with self.subTest(catalogOrder=book["catalogOrder"], id=book["id"]):
+                self.rejects(lambda m: m["books"][index].update(id=f"accidental-renamed-book-{index}"),
+                             "catalogOrder \\+ id sequence differs")
+
+    def test_swapped_ids_with_unchanged_order_fields_are_rejected(self):
+        def swap_ids(m):
+            a, b = m["books"][20:22]
+            a["id"], b["id"] = b["id"], a["id"]
+        self.rejects(swap_ids, "catalogOrder \\+ id sequence differs")
+
+    def test_shelf_array_swaps_without_order_changes_are_rejected(self):
+        def swap_shelves(m):
+            m["shelves"][0], m["shelves"][1] = m["shelves"][1], m["shelves"][0]
+        self.rejects(swap_shelves, "physical array order must match order")
+
+    def test_book_array_swaps_without_order_changes_are_rejected(self):
+        def swap_books(m):
+            m["books"][25], m["books"][26] = m["books"][26], m["books"][25]
+        self.rejects(swap_books, "physical array order must match catalogOrder")
+
     def test_unknown_primary_and_secondary_shelves(self):
         self.rejects(lambda m: m["books"][0].update(primaryShelfID="unknown"), "primaryShelfID: unknown")
         self.rejects(lambda m: m["books"][0].update(secondaryShelfIDs=["unknown"]), "secondaryShelfIDs: unknown")

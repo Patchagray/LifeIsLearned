@@ -279,7 +279,7 @@
       "authoringPriority": 2,
       "editorialStatus": "authored",
       "packageStatus": "authored-local",
-      "notes": "Intended stable ID; reconcile against the already-authored package before freeze."
+      "notes": "Established reconciled stable ID, confirmed against the already-authored package. Keep it."
     },
     {
       "catalogOrder": 12,

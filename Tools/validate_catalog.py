@@ -1,12 +1,16 @@
 """Read-only validation of the static Catalog 001 editorial identity manifest."""
 import argparse
 from collections import Counter
+import hashlib
 import json
 from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "Catalog" / "Catalog-001.json"
+# Approved revision-1 (catalogOrder, id) pairs, encoded as compact UTF-8 JSON.
+# Keep this independent of the input manifest; later contracts require approval.
+APPROVED_IDENTITIES_SHA256 = "81033ce2044bfc6fda88015f12ef339135784aa3ca067ace8b3b1870462f4b88"
 PRIMARY_COUNTS = {
     "psychology-human-behavior": 10,
     "communication-negotiation": 7,
@@ -76,6 +80,7 @@ def validate_catalog(manifest):
     require(manifest["schemaVersion"] == 1, "schemaVersion: only schema 1 is supported")
     require(manifest["catalogID"] == "catalog-001", "catalogID: expected catalog-001")
     integer(manifest["catalogRevision"], "catalogRevision")
+    require(manifest["catalogRevision"] == 1, "catalogRevision: only revision 1 is supported")
     require(manifest["status"] == "editorial-source-of-truth", "status: expected editorial-source-of-truth")
     text(manifest["title"], "title")
     integer(manifest["bookCount"], "bookCount")
@@ -96,6 +101,8 @@ def validate_catalog(manifest):
     unique(shelf_ids, "shelves.id")
     unique([s["order"] for s in shelves], "shelves.order")
     require({s["order"] for s in shelves} == set(range(1, 9)), "shelves.order: expected 1–8 exactly once")
+    require(all(s["order"] == i + 1 for i, s in enumerate(shelves)),
+            "shelves: physical array order must match order 1–8")
     require(set(shelf_ids) == set(PRIMARY_COUNTS), "shelves.id: expected the eight approved Catalog 001 shelf IDs")
 
     books = manifest["books"]
@@ -125,6 +132,12 @@ def validate_catalog(manifest):
         values = [b[key] for b in books]
         unique(values, "books." + key)
         require(set(values) == set(range(1, 51)), f"books.{key}: expected 1–50 exactly once")
+    require(all(b["catalogOrder"] == i + 1 for i, b in enumerate(books)),
+            "books: physical array order must match catalogOrder 1–50")
+    identities = [[b["catalogOrder"], b["id"]] for b in books]
+    identity_bytes = json.dumps(identities, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    require(hashlib.sha256(identity_bytes).hexdigest() == APPROVED_IDENTITIES_SHA256,
+            "books: catalogOrder + id sequence differs from approved revision-1 identities")
     counts = Counter(b["primaryShelfID"] for b in books)
     for shelf_id, expected in PRIMARY_COUNTS.items():
         require(counts[shelf_id] == expected, f"{shelf_id}: expected {expected} primary books, found {counts[shelf_id]}")
