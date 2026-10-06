@@ -1,0 +1,44 @@
+{
+  "implementationCommit": "dd193108db97166fdcd07cd047ae42ed4f030c3c",
+  "xcode": "26.5 (17F42)",
+  "simulatorOS": "iOS 26.3.1",
+  "runs": [
+    {
+      "result": "Passed",
+      "passedTests": 58,
+      "failedTests": 0,
+      "skippedTests": 2,
+      "totalTestCount": 60,
+      "startTime": 1791323409.249,
+      "finishTime": 1791323997.89,
+      "run": "iphone-final"
+    },
+    {
+      "result": "Passed",
+      "passedTests": 48,
+      "failedTests": 0,
+      "skippedTests": 1,
+      "totalTestCount": 49,
+      "startTime": 1791323579.351,
+      "finishTime": 1791323718.946,
+      "run": "ipad-native"
+    },
+    {
+      "result": "Passed",
+      "passedTests": 10,
+      "failedTests": 0,
+      "skippedTests": 1,
+      "totalTestCount": 11,
+      "startTime": 1791323746.004,
+      "finishTime": 1791324176.996,
+      "run": "ipad-ui"
+    }
+  ],
+  "pythonAuthoringPassed": 18,
+  "pythonCatalogPassed": 18,
+  "portableChecksPassed": 384,
+  "skips": [
+    "Physical premium-voice measurement requires hardware; scripts unchanged",
+    "Existing H004 static-favorite check requires system Reduce Motion enabled; deterministic H004.6 follow-motion guard test passed"
+  ]
+}

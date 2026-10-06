@@ -1,0 +1,38 @@
+Test Suite 'All tests' started at 2026-10-06 17:55:51.667.
+Test Suite 'LifeIsLearnedUITests.xctest' started at 2026-10-06 17:55:51.669.
+Test Suite 'IdeaCollectionUITests' started at 2026-10-06 17:55:51.669.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testAccessibilityTextUsesOneColumnAndReadableCarousel]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testAccessibilityTextUsesOneColumnAndReadableCarousel]' passed (23.401 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testCompletionGoesDirectlyToSavedNextIdea]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testCompletionGoesDirectlyToSavedNextIdea]' passed (44.080 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testEmptyCollectionAndEmptyFavorites]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testEmptyCollectionAndEmptyFavorites]' passed (14.411 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testFilterSortAndAccessibleGridOrder]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testFilterSortAndAccessibleGridOrder]' passed (42.541 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' skipped (0.252 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testTwentyCardsGridCarouselFlipFavoriteRelaunchAndReview]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testTwentyCardsGridCarouselFlipFavoriteRelaunchAndReview]' passed (113.844 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testVisibleFavoriteShimmersWhileUnfavoritedCardStaysStill]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testVisibleFavoriteShimmersWhileUnfavoritedCardStaysStill]' passed (22.752 seconds).
+Test Suite 'IdeaCollectionUITests' passed at 2026-10-06 18:00:12.965.
+	 Executed 7 tests, with 1 test skipped and 0 failures (0 unexpected) in 261.281 (261.295) seconds
+Test Suite 'LearningJourneyUITests' started at 2026-10-06 18:00:12.966.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testBookReadingRetryResumeAndCompletionJourney]' started.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testBookReadingRetryResumeAndCompletionJourney]' passed (43.699 seconds).
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testFirstStartShowsSelectionAndDurationHelp]' started.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testFirstStartShowsSelectionAndDurationHelp]' passed (10.696 seconds).
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testManualFilesImportOfShortDemoAndJourney]' started.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testManualFilesImportOfShortDemoAndJourney]' passed (60.302 seconds).
+Test Suite 'LearningJourneyUITests' passed at 2026-10-06 18:02:07.667.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 114.697 (114.701) seconds
+Test Suite 'SixStageReaderUITests' started at 2026-10-06 18:02:07.668.
+Test Case '-[LifeIsLearnedUITests.SixStageReaderUITests testCanonicalReaderLabelsArtworkAndPracticeBoundary]' started.
+Test Case '-[LifeIsLearnedUITests.SixStageReaderUITests testCanonicalReaderLabelsArtworkAndPracticeBoundary]' passed (19.304 seconds).
+Test Suite 'SixStageReaderUITests' passed at 2026-10-06 18:02:26.973.
+	 Executed 1 test, with 0 failures (0 unexpected) in 19.304 (19.305) seconds
+Test Suite 'LifeIsLearnedUITests.xctest' passed at 2026-10-06 18:02:26.974.
+	 Executed 11 tests, with 1 test skipped and 0 failures (0 unexpected) in 395.282 (395.306) seconds
+Test Suite 'All tests' passed at 2026-10-06 18:02:26.976.
+	 Executed 11 tests, with 1 test skipped and 0 failures (0 unexpected) in 395.282 (395.309) seconds
+** TEST EXECUTE SUCCEEDED **

@@ -1,0 +1,9 @@
+{
+  "checksPassed": 71,
+  "errors": [],
+  "warnings": [],
+  "authoringGate": "passed",
+  "releaseApproval": "not-approved",
+  "scope": "Portable structural/header checks and explicit planning estimates. Native decoding, compilation and measured playback are separate."
+}
+synthetic-canonical.json / idea-0: 413 spoken words, 240.62s planned, pending-premium-voices
