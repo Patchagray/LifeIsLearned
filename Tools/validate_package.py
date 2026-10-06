@@ -1,5 +1,5 @@
 """Read-only portable validation of whole collections. Native image decoding is checked by the app."""
-import argparse,base64,json,re,struct,sys,xml.etree.ElementTree as ET
+import argparse,base64,hashlib,json,re,struct,sys,xml.etree.ElementTree as ET
 from lesson_timing import package_report, planning_errors, apply_measurements
 from pathlib import Path
 from urllib.parse import urlparse
@@ -56,7 +56,7 @@ def content(p):
         check(2<=len(pages)<=40 and unique([x['id'] for x in pages]),'Use 2–40 unique screens')
         check(pages[0]['kind']=='intro' and pages[-1]['kind']=='takeaway','Begin with intro and end with takeaway')
         for page in pages:
-            check(page['kind'] in ['intro','story','explanation','takeaway'] and page['role'] in ['guide','storyteller'],'Valid screen kind and voice required')
+            check(page['kind'] in ['intro','story','explanation','application','takeaway'] and page['role'] in ['guide','storyteller'],'Valid screen kind and voice required')
             check(clean(page['title']) and clean(page['text']) and len(page['text'])<=6000,'Screen needs title and 1–6000 text characters')
             check(set(page['sourceIDs'])<=known and (page['kind']=='story' or bool(page['sourceIDs'])),'Teaching screens need valid source references')
             check(not page.get('imageAsset') and not page.get('imageBase64'),'Format 2 uses shared imageID references')
@@ -67,6 +67,43 @@ def content(p):
             check(clean(question['prompt']) and 2<=len(choices)<=6 and unique([c['id'] for c in choices]),'Question prompt and unique choices required')
             check(question['correctChoiceID'] in [c['id'] for c in choices] and all(clean(c['text']) and clean(c['feedback']) for c in choices),'Correct answer and explanatory feedback required')
     return len(lessons)
+def authoring_art_and_stages(package):
+    """Release-only editorial structure; runtime/import content() stays compatible."""
+    errors, warnings, seen = [], [], {}
+    kinds = ['intro', 'explanation', 'story', 'story', 'application', 'takeaway']
+    roles = ['guide', 'guide', 'storyteller', 'storyteller', 'guide', 'guide']
+    assets = package.get('assets', {})
+    for lesson in package['book']['lessons']:
+        prefix = lesson['id'] + ': '
+        pages = lesson['pages']
+        if len(pages) != 6:
+            errors.append(prefix + 'new authored ideas require exactly six content pages')
+        if [p['kind'] for p in pages] != kinds:
+            errors.append(prefix + 'required stage sequence: ' + ', '.join(kinds))
+        if [p['role'] for p in pages] != roles:
+            errors.append(prefix + 'required voice-role sequence: ' + ', '.join(roles))
+        ids, digests = [], []
+        for page in pages:
+            key = page.get('imageID')
+            if not clean(key) or key not in assets:
+                errors.append(prefix + page['id'] + ': every page requires a valid imageID')
+                continue
+            if not clean(page.get('imageDescription')):
+                errors.append(prefix + page['id'] + ': every page requires imageDescription')
+            ids.append(key)
+            digest = hashlib.sha256(base64.b64decode(assets[key]['data'], validate=True)).hexdigest()
+            digests.append(digest)
+            other = seen.setdefault(digest, lesson['id'])
+            if other != lesson['id']:
+                warning = f"{lesson['id']}: exact artwork bytes also used by {other}; review instructional purpose"
+                if warning not in warnings:
+                    warnings.append(warning)
+        if len(set(ids)) != len(ids):
+            errors.append(prefix + 'six distinct page image IDs required')
+        if len(set(digests)) != len(digests):
+            errors.append(prefix + 'duplicate resolved image bytes within an idea are not allowed')
+    return errors, warnings
+
 # Minimal OpenStep parser validates project syntax and every object reference.
 def parse_pbx(text):
     text=re.sub(r'/\*.*?\*/','',text,flags=re.S)
@@ -143,20 +180,22 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('packages',type=Path,nargs='*')
     parser.add_argument('--report',type=Path)
-    parser.add_argument('--authoring-gate',action='store_true',help='Fail over-budget plans, non-two-question releases and inconsistent whole-idea estimates.')
+    parser.add_argument('--authoring-gate',action='store_true',help='Require six canonical illustrated stages, two questions and a consistent plan at or below 300 seconds.')
     parser.add_argument('--measurements',type=Path,help='Premium-voice speech-completion timing JSON for one collection.')
     parser.add_argument('--approve-release',action='store_true',help='Also require matching measured premium-voice timing at or below 300 seconds.')
     args=parser.parse_args()
     paths=args.packages or [ROOT/'LifeIsLearned/Resources/starter.json',ROOT/'Example-Lesson-Package.json']
     if args.measurements and len(paths)!=1:
         parser.error('Supply exactly one collection with --measurements.')
-    results=[];errors=[]
+    results=[];errors=[];warnings=[]
     try:
         for path in paths:
             package,size=read_package(path);ideas=content(package)
             timing=package_report(package)
             if args.authoring_gate or args.approve_release:
                 errors.extend(planning_errors(package,timing))
+                stage_errors, art_warnings = authoring_art_and_stages(package)
+                errors.extend(stage_errors); warnings.extend(art_warnings)
             if args.measurements:
                 errors.extend(apply_measurements(timing,json.loads(args.measurements.read_text())))
             elif args.approve_release:
@@ -166,7 +205,7 @@ def main():
             validate_project()
     except (ValueError,KeyError,TypeError,IndexError,struct.error) as error:
         errors.append(str(error))
-    report=dict(checksPassed=len(checks),packages=results,errors=errors,
+    report=dict(checksPassed=len(checks),packages=results,errors=errors,warnings=warnings,
                 authoringGate='failed' if errors else 'passed' if args.authoring_gate or args.approve_release else 'not-requested',
                 releaseApproval='approved' if args.approve_release and not errors else 'not-approved',
                 scope='Portable structural/header checks and explicit planning estimates. Native decoding, compilation and measured playback are separate.')

@@ -4,13 +4,15 @@ import copy
 import json
 import subprocess
 import sys
+import struct
+import zlib
 import tempfile
 import unittest
 from pathlib import Path
 
 from convert_package import convert
 from lesson_timing import apply_measurements, package_report, plan, planning_errors, word_count
-from validate_package import content, read_package
+from validate_package import content, read_package, authoring_art_and_stages
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -25,6 +27,60 @@ class AuthoringTests(unittest.TestCase):
         p['book']['lessons'] = [dict(copy.deepcopy(p['book']['lessons'][0]), id=f'idea-{i}') for i in range(count)]
         p['manifest'] = [dict(id=l['id'], revision=l['revision']) for l in p['book']['lessons']]
         return p
+
+    def canonical(self, count=1):
+        # Synthetic distinct PNG frames; these verify structure, not editorial art quality.
+        p = self.package(count)
+        def chunk(kind, data):
+            return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data))
+        for i in range(6):
+            raw = b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', 1, 1, 8, 2, 0, 0, 0))
+            raw += chunk(b'IDAT', zlib.compress(bytes([0, i * 30, 100, 120]))) + chunk(b'IEND', b'')
+            p['assets'][f'synthetic-{i}'] = dict(mediaType='image/png', data=base64.b64encode(raw).decode())
+        for lesson in p['book']['lessons']:
+            for i, (page, kind, role) in enumerate(zip(lesson['pages'],
+                    ['intro', 'explanation', 'story', 'story', 'application', 'takeaway'],
+                    ['guide', 'guide', 'storyteller', 'storyteller', 'guide', 'guide'])):
+                page.update(kind=kind, role=role, imageID=f'synthetic-{i}',
+                            imageDescription=f'Synthetic frame {i}', sourceIDs=[p['book']['sources'][0]['id']])
+        return p
+
+    def test_canonical_stages_pass_and_legacy_import_stays_valid(self):
+        p = self.canonical()
+        self.assertEqual(content(p), 1)
+        self.assertEqual(authoring_art_and_stages(p), ([], []))
+        self.assertEqual(content(self.demo), 1)
+        self.assertTrue(authoring_art_and_stages(self.demo)[0])
+
+    def test_five_and_seven_pages_rejected(self):
+        for count in (5, 7):
+            p = self.canonical(); pages = p['book']['lessons'][0]['pages']
+            if count == 5: pages.pop(2)
+            else: pages.insert(2, dict(pages[2], id='extra'))
+            self.assertTrue(any('exactly six' in e for e in authoring_art_and_stages(p)[0]))
+
+    def test_wrong_stage_and_role_orders_rejected(self):
+        for key, message in [('kind', 'stage sequence'), ('role', 'voice-role sequence')]:
+            p = self.canonical(); pages = p['book']['lessons'][0]['pages']
+            pages[1][key], pages[2][key] = pages[2][key], pages[1][key]
+            self.assertTrue(any(message in e for e in authoring_art_and_stages(p)[0]))
+
+    def test_every_page_requires_art_and_description(self):
+        for i in range(6):
+            for field in ('imageID', 'imageDescription'):
+                p = self.canonical(); p['book']['lessons'][0]['pages'][i][field] = ' '
+                self.assertTrue(any(field in e for e in authoring_art_and_stages(p)[0]))
+
+    def test_duplicate_ids_and_resolved_bytes_rejected(self):
+        p = self.canonical(); p['book']['lessons'][0]['pages'][1]['imageID'] = 'synthetic-0'
+        self.assertTrue(any('distinct page image IDs' in e for e in authoring_art_and_stages(p)[0]))
+        p = self.canonical(); p['assets']['synthetic-1'] = copy.deepcopy(p['assets']['synthetic-0'])
+        self.assertTrue(any('duplicate resolved image bytes' in e for e in authoring_art_and_stages(p)[0]))
+
+    def test_cross_idea_reuse_warns_without_failing(self):
+        errors, warnings = authoring_art_and_stages(self.canonical(2))
+        self.assertEqual(errors, [])
+        self.assertTrue(any('exact artwork bytes' in w for w in warnings))
 
     def measured(self, report, total=300):
         # Synthetic data tests validation math only; never publish as measured audio.
@@ -116,7 +172,7 @@ class AuthoringTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)/'boundary.json'; report_path = Path(directory)/'report.json'
             for words, expected in ((541, 0), (542, 1)):
-                p = copy.deepcopy(self.demo); lesson = p['book']['lessons'][0]
+                p = self.canonical(); lesson = p['book']['lessons'][0]
                 lesson['pages'][0]['text'] += ' word' * (words - plan(lesson)['spokenWords'])
                 lesson['estimatedMinutes'] = plan(lesson)['approximateMinutes']
                 path.write_text(json.dumps(p))
@@ -128,8 +184,11 @@ class AuthoringTests(unittest.TestCase):
                 print(f'AUTHORING_GATE words={words} plannedSeconds={seconds:.6f} exit={result.returncode}')
 
     def test_exactly_two_questions_and_consistent_estimate(self):
-        p = self.package(); p['book']['lessons'][0]['questions'].pop()
-        self.assertTrue(any('exactly two' in e for e in planning_errors(p, package_report(p))))
+        for count in (1, 3):
+            p = self.canonical(); questions = p['book']['lessons'][0]['questions']
+            if count == 1: questions.pop()
+            else: questions.append(dict(copy.deepcopy(questions[0]), id='extra-question'))
+            self.assertTrue(any('exactly two' in e for e in planning_errors(p, package_report(p))))
         p = self.package(); p['book']['lessons'][0]['estimatedMinutes'] = 1
         self.assertTrue(any('estimatedMinutes' in e for e in planning_errors(p, package_report(p))))
 

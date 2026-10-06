@@ -4,6 +4,37 @@ import Foundation
 /// Synthetic UI/performance fixture. Invoked only from an explicitly isolated
 /// UUID test installation; never populates a person's normal library.
 @MainActor enum IdeaCardFixture {
+    static func installSixStages(in store: LibraryStore) async throws {
+        await store.ready()
+        guard !store.books.contains(where: { $0.id == "six-stage-fixture" }),
+              let url = Bundle.main.url(forResource: "starter", withExtension: "json") else { return }
+        var package = try JSONDecoder().decode(LessonPackage.self, from: Data(contentsOf: url))
+        let original = package.book.lessons[0].pages[0]
+        package.book.id = "six-stage-fixture"
+        package.book.title = "Six-stage interface fixture"
+        package.book.author = "Synthetic verification only"
+        package.book.isDemo = nil
+        package.book.synopsis = "A synthetic reader journey."
+        package.book.coverageNote = "Existing illustration reused for UI verification only. Not an authored release or book summary."
+        package.book.lessons[0].id = "six-stage-idea"
+        package.book.lessons[0].title = "Six-stage reader"
+        package.book.lessons[0].pages = (0..<6).map { index in
+            var page = original
+            page.id = "stage-\(index)"; page.kind = SixStageLesson.kinds[index]
+            page.role = (index == 2 || index == 3) ? .storyteller : .guide
+            page.title = SixStageLesson.readerLabels[index]
+            page.text = "Synthetic screen for interface verification. Existing artwork is reused here solely to check layout and accessibility. This is not an authored lesson."
+            page.imageDescription = "Synthetic illustration for stage \(index + 1)"
+            return page
+        }
+        package.manifest = package.book.lessons.map { IdeaManifestEntry(id: $0.id, revision: $0.revision) }
+        let review = try await store.storage.review(package: package, catalog: store.catalog)
+        await store.commitImport(review)
+        store.importedBook = nil
+        guard store.errorMessage == nil else { throw PackageError.invalid(store.errorMessage!) }
+        await store.flush()
+    }
+
     static func install(in store: LibraryStore) async throws {
         await store.ready()
         guard !store.books.contains(where: { $0.id == "card-fixture-a" }) else { return }

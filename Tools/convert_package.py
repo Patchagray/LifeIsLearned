@@ -2,7 +2,7 @@
 import argparse, base64, copy, hashlib, json, subprocess, tempfile
 from pathlib import Path
 
-from validate_package import content
+from validate_package import content, authoring_art_and_stages
 from lesson_timing import package_report, planning_errors
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,6 +43,7 @@ def convert(package, revision=1):
                   removedLessonIDs=[],assets=assets)
     content(result)
     errors = planning_errors(result, package_report(result))
+    errors.extend(authoring_art_and_stages(result)[0])
     if errors:
         raise ValueError('Draft export blocked: ' + '; '.join(errors))
     return result

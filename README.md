@@ -45,7 +45,7 @@ One learning home now combines Continue learning and your book library. Prepared
 - Three original scene illustrations (setup, disagreement, collaboration) reused where appropriate.
 - Guide and storyteller voice choices, previews, speed and screen-pause controls.
 - Auto-advance on actual speech completion, pause/resume, replay, back/next, spoken-word emphasis.
-- Narration follows long lesson text by scrolling the spoken line into view when needed. Manual drags take priority; following resumes as narration continues after the drag settles. Reduce Motion is respected, and automatic following is disabled while VoiceOver is running.
+- Narration follows long Story text by scrolling the spoken line into view when needed. Manual drags take priority; following resumes as narration continues after the drag settles. Reduce Motion is respected, and automatic following is disabled while VoiceOver is running.
 - A revealable idea card. Playback stops here. Practice requires your action.
 - Two practice questions, feedback for every answer, retries, first-attempt score, completion.
 - Reading position and practice progress saved on device. You can revisit screens freely.
@@ -104,3 +104,9 @@ Finish practice to collect an idea card, including after retries. Completion off
 Tap the stack icon (**Ideas**) at the top left of home. Browse the staggered grid, open a card in the carousel, tap its body to see an application reminder, or use the separate star to favorite it. Use All/Favorites, book filtering and sort controls to find cards again. Earned ideas remain available if a collection removes them. Revised ideas show Updated until you complete the new revision.
 
 The supplied brief is `LifeIsLearned_Handoff_004_Idea_Collection_and_Next_Flow.pdf`; implementation and verification evidence are in `Evidence/Handoff004/`. Card storage/migration details are in `PERSISTENCE.md`. Content import and narration formats are unchanged.
+
+## Handoff 004.6: six-stage lesson support
+
+New authored lessons use Hook → Explanation → Story A → Story B → Practical Application → Takeaway, with six distinct instructional illustrations. Canonical lessons show five labeled progress stages; Story takes two segments of width and fills halfway, then fully. Existing books retain their original per-screen indicator. Takeaway artwork now appears alongside the reveal interaction, and automatic narration scrolling is limited to Story pages.
+
+The strict six-stage contract applies to authoring/release approval. Runtime format-2 imports and stored lessons retain 2–40-page compatibility. No installed content, demo/example, cards or progress is rewritten. The first content rebuild is a separate step after engineering review; therefore the current example remains a legacy compatibility example. See [authoring rules](CONTENT_AUTHORING.md) and [verification evidence](Evidence/Handoff004_6/README.md). Handoff 005 offload requirements are pinned in AGENTS.md and the root PDF; offload is not implemented here.

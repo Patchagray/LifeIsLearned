@@ -7,7 +7,7 @@ enum NarrationRole: String, Codable, CaseIterable, Identifiable, Sendable {
     var label: String { self == .guide ? "Guide · intro & takeaway" : "Storyteller · lesson body" }
 }
 
-enum PageKind: String, Codable, Sendable { case intro, story, explanation, takeaway }
+enum PageKind: String, Codable, Sendable { case intro, story, explanation, application, takeaway }
 
 struct ContentSource: Codable, Identifiable, Sendable {
     var id: String

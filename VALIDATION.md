@@ -1,5 +1,20 @@
 # Validation report
 
+## Handoff 004.6 — October 6, 2026
+
+Implemented on `feature/handoff-004-6-six-stage-lessons` from baseline `11742da7aa896ffb4ea77c5f2117d49fd93b5254`. Tested implementation: `dd193108db97166fdcd07cd047ae42ed4f030c3c`. See [exact commands, results, source hashes and 22 screenshots](Evidence/Handoff004_6/README.md).
+
+Added the six-stage authoring/artwork contract, additive `application` page kind, semantic weighted progress, Story-only narration following and visible takeaway artwork. Existing packages, Catalog 001 identities, playback/session logic and learner-state storage were preserved; 21 protected files match the baseline byte-for-byte. Existing lessons retain the per-page fallback. No content rebuild or offload implementation is included.
+
+- iPhone 16e, iOS 26.3.1: build succeeded; **58 passed, 0 failed, 2 explicit skips**.
+- iPad (A16), iOS 26.3.1: same compiled simulator products; **58 passed, 0 failed, 2 explicit skips** across native/UI runs.
+- Python authoring: **18 passed**. Python catalog: **18 passed**. Portable validation: **384 checks passed**. Catalog revision 1 validation passed.
+
+Skips are hardware premium-voice timing and the existing H004 UI check requiring system Reduce Motion enabled. New deterministic scrolling tests verify gesture priority, injected VoiceOver state and animated/nonanimated requests. Actual-app tests verify stage accessibility labels, visible takeaway artwork and reveal/practice boundaries. H004 card, favorite, completion/next-idea and manual Files-import journeys pass on both simulators.
+
+No physical-device audio/timing or subjective accessibility audition was newly performed; narration scripts are unchanged. Synthetic layout fixtures reuse existing artwork and are not authored releases. The first rebuilt six-screen book still requires source/artwork review and matching premium-voice release timing. Awaiting reviewer approval; do not merge automatically.
+
+
 ## Catalog 001 reviewer remediation — awaiting approval
 
 On `feature/catalog-001-foundation`, the metadata integrity patch supports only catalog revision 1, locks the approved ordered 50 `(catalogOrder, id)` pairs independently of the manifest, and enforces physical shelf/book array order. Negative tests cover revision 2, every stable ID, swapped IDs, and swapped shelf/book entries. The Never Split reconciliation note now records its established ID. Canonical manifest SHA-256 is `7424b9d5deff4f1645ca112f1393bfafd84553a040593d53a6af35133826da68`.

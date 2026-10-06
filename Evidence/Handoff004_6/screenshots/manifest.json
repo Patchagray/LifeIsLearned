@@ -1,0 +1,222 @@
+[
+  {
+    "file": "h0046-ipad-application-large-dark.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "be21cdf760181957f6d1599385a433383b65072ead2b4e7ff3a1d9173aed8c87",
+    "publishedSHA256": "da65763eb58a669876fc4d73f8cbd27dcab01cd49462ce7eb95d75d851236aa6",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-ipad-application.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "a110ea0551d64576cb85525fa22f568d4704409c14c38d89c5d50a42c942c4d3",
+    "publishedSHA256": "7d769cbefe45b57feb97a2c8baf4f01fe84eb6a4367719ced72d0de945423bde",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-ipad-explanation.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "2ab372d5c854a5217e81a8dd94a571fdc887284a62f5b05b28a92d7815f36906",
+    "publishedSHA256": "2c1dfa78e7c859dd3457ce0c5bf0c38f5c85f341cb6cb3146fbd5025fd684358",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-ipad-hook.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "9c136b760cf6f0eb361480499194872a464892ce520c3f17f76b9ce3e914b634",
+    "publishedSHA256": "b4f5d9cd5dd4cfdaf67857fb6dfcca3ef71e8dae71b46787a96305789b3d631f",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-ipad-live-takeaway-art.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-ui.xcresult",
+    "test": "SixStageReaderUITests/testCanonicalReaderLabelsArtworkAndPracticeBoundary()",
+    "capture": "Actual app UI automation",
+    "originalSHA256": "c9c351ab60872ca9bf37db0f909b40c7e4e54c41f026e1759e8ad3d60f6c491c",
+    "publishedSHA256": "cf7955220763914394ec442e0206723b1a344f3f56b11d878eaec5f92b5c1397",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-ipad-story-a.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "ff9de820e7f266642b4bf1caf81d506846c4bcd1ea4213d25164d1354b431c5b",
+    "publishedSHA256": "65be1e4f1f8943c7a8024e006685d5be9ebae7d54a6272a74e1a8cefc185c278",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-ipad-story-b.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "98ce5c8759265ebcc045872671f09f44b42114981e0cf563bddf11dbb7a0edaa",
+    "publishedSHA256": "4727014b93b20cd6d26934d11d4bcd38c3113c0f8b07076a164bc2ca2327fbc6",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-ipad-story-long-follow.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "3ca8c094fc81f669680aec824d04b57739bd37e1d48166a45f5ba86aa6aaef55",
+    "publishedSHA256": "e79b821e5f2b22ae314da98bea68d346191a97c616e024f074d971540fd8b1d9",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-ipad-takeaway-art.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "3cd3205b3086b04ebfb2c8d6551bb7fe54a052778ca5cb2a5af853b1d823ea2d",
+    "publishedSHA256": "45b93adfbbf768b91067dec3b924342c21e20e7972d975e4e328e7e3c1efe4f5",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-application-large-dark.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "e04c0753ee39266dc886d083bcf49a1f01e2307963af90128095275c5dbfa5ff",
+    "publishedSHA256": "08fe390cb12b247f139f604ba7269bac40dc4363c9e88ec05f1e17212e6c9096",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-application.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "f63ed0d62fedd3c40e706e4a0116af46813ebbe748256bd66b1e848c9ca9382b",
+    "publishedSHA256": "46647bb1b0f8557b1ea75b7f0b459c3a36e944ca2d36fcc5f6e47c636e8aa350",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-explanation.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "f905759bc372f45aebb13c7013ec89256cc08aadd07d3a9777bc879ea85a678f",
+    "publishedSHA256": "97d44899757e066836ebe9aa95568384e9cc09f36fb706d31e8ab21f9b7a9380",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-hook.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "c1de654e813af7ba0968a3f24ad87f65425452f6639c1ea48ee8cab835d4d309",
+    "publishedSHA256": "e2036c5eb5c41c0d921972908a3ddd64bc9c5f6f8947a94eae4f45d8cae13176",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-live-takeaway-art.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageReaderUITests/testCanonicalReaderLabelsArtworkAndPracticeBoundary()",
+    "capture": "Actual app UI automation",
+    "originalSHA256": "fb66bd8d83221a7f3a784f3b28a7fef32b313795d041f3c5926afc863df03d9d",
+    "publishedSHA256": "83a4bc72f853a3fc644d3375b09ad40275b77ca9588f0fdf5cb7f92adf6f8394",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-story-a.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "3dfb72e57e7a41d7c946b7600bf4917dc57dfc74e2a0e36d325fcfe155c6d3bd",
+    "publishedSHA256": "c81bae1f77a9c7567f32b5ba81c772958debc2c241c43b0e07c95f7cd01bdfd9",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-story-b.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "617b10cd406e0b077fb6c84573035163fe1d8fd4670dc7f8ae77d067832e0404",
+    "publishedSHA256": "8310e06abef058e7ba49dedae2c028e103349a2175ef1456aaceba0f4d196722",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-story-long-follow.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "aa850f4060284fac9084bca5663a7819f13d4c4ac4ca213315c9f8dc0a5577d7",
+    "publishedSHA256": "db2330cfd794270a089a877a49871ac0b5c8b0137cf8e56de279d2fbfd35d08b",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "h0046-iphone-takeaway-art.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "SixStageLessonTests/testSixStageReaderRenderedEvidence()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "674a704dd1812a908bbf908e9c5a96798b2e5f30c9bd71a29794928b9400e8d9",
+    "publishedSHA256": "6f0458b3e1599e306aa640b126ec75714c192130c5eade2610a0863b5aca2075",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "ipad-reader-dark.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "017f2b4c65ed3e17f945f22c01931110bff9c3aee880692965d1d545a5b648eb",
+    "publishedSHA256": "767c6f934b51a3c725cda2dd9e384908dff5d76cfb9a21abc22da21c2be4f1f2",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "ipad-reader.jpg",
+    "simulator": "ipad",
+    "sourceBundle": "LIL0046-ipad-native.xcresult",
+    "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "02c91a10b0463d31c564f2b27bfeacdc70018e37b2ff9c09c56e9ab2a30cfb7a",
+    "publishedSHA256": "aa1082c3d90a1cfd534db5c9b5cb13649a04361f12bce5e8dc2ceac5b83725b2",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "iphone-reader-dark.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "1193e2a53986260b067c6f7c3c35e4004137f0b207daf629c6e2d9121d3af638",
+    "publishedSHA256": "3dbc18dd64cf40d7ad48c252e1356d61669ba8fa479bc6c29fe8e6277c8da449",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  },
+  {
+    "file": "iphone-reader.jpg",
+    "simulator": "iphone",
+    "sourceBundle": "LIL0046-iphone-final.xcresult",
+    "test": "PresentationTests/testLearningJourneyRenderedScreens()",
+    "capture": "Native-hosted production SwiftUI view with injected fixture state",
+    "originalSHA256": "9e5c342223fd07662bf773801910908d502366f5d1d8dd9ef301565dac44ca1d",
+    "publishedSHA256": "ad1aada527bcd54ade112fb3ae07a705a93ae33ca74d915b757856da033a13ac",
+    "encoding": "JPEG quality 85, maximum dimension 1600; no content edits"
+  }
+]

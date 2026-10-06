@@ -10,7 +10,7 @@ Run `python3 Tools/validate_catalog.py` for catalog changes and follow `Catalog/
 
 Start by reviewing actual source material. Keep the book/article's meaningful idea order; do not assume every chapter is exactly one idea. If only a prologue or excerpt is available, state that and limit coverage accordingly. The player is format-flexible: story, analogy, scenario, explanation and thought experiment can all fit the small-screen structure.
 
-Use Example-Lesson-Package.json as the exact Codable shape. There is one book per package with 1–12 selected ideas, delivered together on every release. Twelve is a ceiling, never a quota. Handoff 003 supersedes older count and duration guidance.
+Use Example-Lesson-Package.json as a legacy-compatible Codable shape reference, not a release-ready example of the new six-stage standard. There is one book per package with 1–12 selected ideas, delivered together on every release. Twelve is a ceiling, never a quota. Handoff 003 supersedes older count and duration guidance.
 
 ## Lesson and book fields
 
@@ -19,14 +19,37 @@ Use Example-Lesson-Package.json as the exact Codable shape. There is one book pe
 | Package | `formatVersion: 2`, `collectionRevision`, `fullCollection`, ordered `manifest`, `removedLessonIDs`, shared `assets`, and `book` |
 | Book | stable `id`, `title`, `author`, `synopsis`, `coverageNote`, `sources`, `lessons` |
 | Source | unique `id`, `title`, valid HTTPS `url`, precise `locator`, `scope` describing what it supports and limits |
-| Lesson | stable `id`, positive `revision`, `title`, `subtitle`, positive `estimatedMinutes`, `scopeNote`, 2–40 `pages`, exactly 2 `questions` for authored releases (runtime compatibility accepts 2–10) |
-| Page | unique `id`, `kind`, `role`, `title`, `text`, optional `imageID`, optional `imageDescription`, `sourceIDs` |
+| Lesson | stable `id`, positive `revision`, `title`, `subtitle`, positive `estimatedMinutes`, `scopeNote`, exactly 6 `pages` for new authoring (runtime accepts 2–40), exactly 2 `questions` for authored releases (runtime compatibility accepts 2–10) |
+| Page | unique `id`, `kind`, `role`, `title`, `text`, required `imageID` and `imageDescription` for new authoring, `sourceIDs` |
 | Question | unique `id`, `prompt`, 2–6 `choices`, `correctChoiceID` |
 | Choice | unique `id`, `text`, `feedback` explaining why this answer is correct or tempting but wrong |
 
-`kind` is `intro`, `story`, `explanation`, or `takeaway`. The first page must be `intro`, and the last must be `takeaway`. Intermediate teaching pages can be explanations; the app doesn't force fiction. `role` is `guide` or `storyteller`: normally guide for intro/explanation/takeaway and storyteller for the body. Every teaching screen needs at least one source ID; an original fictional story can use an empty array but must be explicitly labeled as fiction in lesson scope and introduction. A source reference is not automatic verification.
+`kind` is `intro`, `explanation`, `story`, `application`, or `takeaway`. New authored/re-authored material follows the exact stages and roles below. Existing runtime imports/storage still accept valid 2–40-page format-2 lessons without `application`; the additive enum case does not change `formatVersion`.
 
-Optional fields can be null or omitted. `sourceIDs` is always present. Supply `imageDescription` when a page references artwork through `imageID`. Store each PNG/JPEG once in the package's shared `assets` table; repeated pages use the same ID. Optional `book.coverAssetID` requires `book.coverDescription`. Keep source limitations explicit and use original, licensed artwork. See the contract and size limits below.
+`sourceIDs` is always present. Every teaching screen needs at least one valid source ID; original fictional Story screens may use an empty array but must be explicitly identified as fiction. A source reference does not establish factual verification. Store PNG/JPEG bytes in the shared `assets` table; new lessons require six distinct page image IDs and six distinct resolved images. Optional `book.coverAssetID` requires `book.coverDescription` and remains separate from the six page references.
+
+## Handoff 004.6: six stages and instructional artwork
+
+| Screen | Stage / kind | Voice | Suggested body words |
+| --- | --- | --- | --- |
+| 1 | Hook / `intro` | `guide` | 25–40 |
+| 2 | Explanation / `explanation` | `guide` | 40–55 |
+| 3 | Story A / `story` | `storyteller` | 60–85 |
+| 4 | Story B / `story` | `storyteller` | 60–85 |
+| 5 | Practical Application / `application` | `guide` | 35–50 |
+| 6 | Takeaway / `takeaway` | `guide` | 18–30 |
+
+Hook creates curiosity or tension. Explanation establishes the mental model and separates the author's claims, evidence, uncertainty and our explanation. Story A establishes a concrete fictional situation; Story B advances it through a decision, consequence or realization. Application transfers the principle to a usable new context. Takeaway states the specific bottom line that becomes the collected card. Exactly two meaningful application questions follow.
+
+The word ranges are drafting guidance, not quotas. Aim for 3.5–4.5 minutes when useful; shorter is welcome. The entire reference experience must still be ≤300 seconds, including titles, options, feedback, five actual transition pauses and the answer allowance. Never increase playback speed to rescue a draft. New narrated scripts need fresh measured premium-voice release verification.
+
+At default reading size, Hook, Explanation, Application and Takeaway should fit the visible reader area. Only Story is intended to overflow. Inspect actual iPhone/iPad layouts; all pages remain manually scrollable for smaller screens, localization and accessibility. Canonical Hook source/scope information remains accessible in its disclosure. Story-only narration following respects gestures, VoiceOver and Reduce Motion; it is not a remedy for overlong teaching screens.
+
+Every screen requires `imageID` plus nonempty `imageDescription`. All six references within an idea must differ; renaming identical image bytes does not pass the gate. Exact bytes shared across different ideas produce an editorial warning for review, not an automatic collection failure. A cover does not count as a seventh content stage or substitute for a page image.
+
+Art must explain what is happening, what changed, or what to remember. Hook establishes tension; Explanation clarifies a model; Story A/B show a consistent character/environment at visibly different moments; Application shows transfer to another context; Takeaway can be symbolic but must remain specific. Recurring characters, wardrobe, rooms and palette are encouraged; repeating the same frame is not. Avoid decorative filler, generated text, pseudo-cover typography, watermarks and unnecessary logos. Structural checks cannot judge these qualities: review the actual pictures and their descriptions.
+
+`--authoring-gate` and `--approve-release` enforce the new stage, role and art requirements in addition to all existing timing/question/source/manifest/resource checks. Draft conversion also blocks export that violates the standard. The frozen startup seed, existing example and externally curated books are not automatically rewritten. The first rebuilt reference book follows reviewer approval of this engineering patch.
 
 ## Editorial checks before import
 
@@ -42,7 +65,7 @@ Optional fields can be null or omitted. `sourceIDs` is always present. Supply `i
 
 ## Reusable content-authoring request
 
-“Prepare one complete formatVersion-2 collection with 1–12 selected ideas and an honest coverage preface. Teach one clear idea per lesson with concise original examples, guide/storyteller roles, and exactly two application questions with individual feedback. Keep the entire reference first-pass idea at or below five minutes, including all narration, transitions, quiz choices, feedback and an answer allowance. Shorter is welcome. Include a timing report, stable IDs/revisions, shared original artwork, source references and the complete ordered manifest. Never invent unavailable book content or imply the author ranked our selection. Show the source material reviewed, and give me the content for review before import.”
+“Prepare one complete formatVersion-2 collection with 1–12 selected ideas and an honest coverage preface. Teach one clear idea in exactly six illustrated screens: Hook, Explanation, Story A, Story B, Practical Application and Takeaway, with guide/guide/storyteller/storyteller/guide/guide roles and exactly two application questions with individual feedback. Keep the entire reference first-pass idea at or below five minutes, including all narration, transitions, quiz choices, feedback and an answer allowance. Shorter is welcome. Include a timing report, stable IDs/revisions, shared original artwork, source references and the complete ordered manifest. Never invent unavailable book content or imply the author ranked our selection. Show the source material reviewed, and give me the content for review before import.”
 
 ## Handoff 002: complete collection contract (formatVersion 2)
 
@@ -64,13 +87,13 @@ Required package fields:
 }
 ```
 
-This fragment illustrates the new fields; `book` still needs every documented metadata/source field and complete valid lessons. Use `Example-Lesson-Package.json` as the runnable example. Its one-idea demo is explicitly introductory coverage.
+This fragment illustrates the new fields; `book` still needs every documented metadata/source field and complete valid lessons. Use `Example-Lesson-Package.json` as a runnable legacy example. It intentionally fails the newer six-stage authoring gate until a separately reviewed content rebuild. Its one-idea demo is explicitly introductory coverage.
 
 - `collectionRevision` is a positive integer, incremented for every changed release, including book metadata, ordering, and asset-table changes.
 - `manifest` must exactly match every `book.lessons` ID/revision in order. IDs must be unique; ideas retain stable IDs across revisions.
 - Pages reference `imageID` in `assets` and provide `imageDescription`. A shared illustration is encoded once. An optional `book.coverAssetID` references the same table and requires `book.coverDescription`. Omit both for the designed placeholder. `book.isDemo: true` labels demonstration content.
 - `removedLessonIDs` explicitly identifies intentional omissions from the previously installed release. The learner sees their titles and must acknowledge removals. Removed progress remains archived; the app never silently discards it.
-- Limits: 64 MiB encoded JSON, 1–12 ideas for new imports and updates, 2–40 pages/idea, exactly two questions per authored idea (runtime compatibility accepts 2–10), 2–6 choices/question, no asset-count ceiling, 2 MiB per image and 24 MiB total image-file bytes after base64 decoding, maximum 2048 × 2048 pixels, one frame per PNG/JPEG. The cover shares these budgets. PNG/JPEG signatures, dimensions, and native decoding are checked. No remote artwork is downloaded. Optimize to the actual reader size; the supplied converter exports JPEG at up to 1440 px and quality 82.
+- Limits: 64 MiB encoded JSON, 1–12 ideas for new imports and updates, six pages for new authoring (runtime compatibility: 2–40), exactly two questions per authored idea (runtime compatibility accepts 2–10), 2–6 choices/question, no asset-count ceiling, 2 MiB per image and 24 MiB total image-file bytes after base64 decoding, maximum 2048 × 2048 pixels, one frame per PNG/JPEG. The cover shares these budgets. PNG/JPEG signatures, dimensions, and native decoding are checked. No remote artwork is downloaded. Optimize to the actual reader size; the supplied converter exports JPEG at up to 1440 px and quality 82.
 
 ### Revision rules and deterministic comparison
 
@@ -89,7 +112,7 @@ python3 Tools/convert_package.py old-package.json complete-collection-v2.json --
 python3 Tools/validate_package.py complete-collection-v2.json
 ```
 
-The converter preserves the original file, refuses an existing output path, and blocks over-cap or over-budget draft exports. Shorten the reviewed source first; the converter never truncates ideas or prose. It requires macOS `sips`, uses no backend, and optimizes/deduplicates images. Inspect all idea revisions, declared removals, coverage, sources, and answer keys before import. Conversion and structural validation do not establish factual correctness or completeness. The current app keeps installed legacy content readable but rejects a newly selected legacy file with conversion guidance.
+The converter preserves the original file, refuses an existing output path, and blocks over-cap, over-budget or noncanonical draft exports. It cannot author missing stages or illustrations. Shorten the reviewed source first; the converter never truncates ideas or prose. It requires macOS `sips`, uses no backend, and optimizes/deduplicates images. Inspect all idea revisions, declared removals, coverage, sources, and answer keys before import. Conversion and structural validation do not establish factual correctness or completeness. The current app keeps installed legacy content readable but rejects a newly selected legacy file with conversion guidance.
 
 `Tools/make_starter.py` prepares the shortened revision-2 demo as a separate explicit update. It refuses to overwrite the frozen revision-1 startup seed. `Example-Lesson-Package.json` is the shorter review/update file; it is intentionally different from `Resources/starter.json`. `Tools/validate_package.py` is read-only and reports portable structural/image-header checks; it never replaces the verification report. Native image decoding and Swift compilation are separate checks.
 
@@ -109,10 +132,10 @@ Do not auto-truncate thirteen ideas or split a book into disguised volumes. When
 Reference plan: spoken words × 60 / 130, plus **(page count − 1) × 2 seconds** of actual automatic page transitions, plus **40 seconds** of answering time (20 per question). No automatic pause is added after the takeaway, feedback, or completion because the player stops for learner control there. Use `ceil(totalSeconds / 60)` for `estimatedMinutes`; the UI calculates the same approximate whole-idea value independently. Slower voices, user-selected speed/pauses, longer deliberation, replays and retries may exceed five minutes. Nothing is interrupted to enforce an editorial budget.
 
 ```bash
-python3 Tools/validate_package.py Example-Lesson-Package.json --authoring-gate --report /tmp/short-demo-plan.json
+python3 Tools/validate_package.py /path/to/rebuilt-six-stage-collection.json --authoring-gate --report /tmp/short-demo-plan.json
 python3 Tools/test_authoring.py
 # After the exact script is measured with installed premium voices:
-python3 Tools/validate_package.py Example-Lesson-Package.json --approve-release --measurements /path/to/premium-reference-timing.json --report /tmp/short-demo-release.json
+python3 Tools/validate_package.py /path/to/rebuilt-six-stage-collection.json --approve-release --measurements /path/to/premium-reference-timing.json --report /tmp/short-demo-release.json
 ```
 
 The planning gate fails totals above 300 seconds, authored question counts other than two, and inconsistent estimates. Structural validation alone intentionally accepts longer legacy content; runtime imports cannot prove elapsed learning time. `--approve-release` additionally requires one measured record per idea at normal speed, a 2-second pause, and actual premium guide/storyteller IDs and names. Measurements must match every narrated segment's text, order, role, idea revision and collection revision. Changed narration invalidates the old measurements. Positive speech-completion callback durations are summed with the pauses and answer allowance; totals above 300 seconds fail. A word-count estimate cannot approve a release.

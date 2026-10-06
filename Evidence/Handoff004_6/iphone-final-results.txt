@@ -1,0 +1,172 @@
+Test Suite 'All tests' started at 2026-10-06 17:50:22.995.
+Test Suite 'LifeIsLearnedTests.xctest' started at 2026-10-06 17:50:22.996.
+Test Suite 'CollectionTests' started at 2026-10-06 17:50:22.996.
+Test Case '-[LifeIsLearnedTests.CollectionTests testFailedWriteLeavesCollectionAndProgressUsableAfterRelaunch]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testFailedWriteLeavesCollectionAndProgressUsableAfterRelaunch]' passed (0.532 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testInstalledLegacyCollectionReadableButFreshLegacyImportRejected]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testInstalledLegacyCollectionReadableButFreshLegacyImportRejected]' passed (0.214 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testLegacyMigrationKeepsProgressAndCorruptContentDoesNotEraseIt]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testLegacyMigrationKeepsProgressAndCorruptContentDoesNotEraseIt]' passed (0.370 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testMaximumRepresentativeCollectionImportKeepsMainActorResponsive]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testMaximumRepresentativeCollectionImportKeepsMainActorResponsive]' passed (4.843 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testRevisionRulesAndDeterministicContentComparison]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testRevisionRulesAndDeterministicContentComparison]' passed (0.583 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testSnapshotProgressRecoversIndependentlyAndUncommittedDirectoryIsIgnored]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testSnapshotProgressRecoversIndependentlyAndUncommittedDirectoryIsIgnored]' passed (0.304 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testUnreadableProgressIsPreservedAndNeverOverwrittenWithEmptyState]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testUnreadableProgressIsPreservedAndNeverOverwrittenWithEmptyState]' passed (0.306 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testUpdateReordersPreservesUnchangedAndArchivesRevisedAndRemoved]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testUpdateReordersPreservesUnchangedAndArchivesRevisedAndRemoved]' passed (1.329 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testValidatorRejectsIncompleteDuplicateMissingAndOversizedAssets]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testValidatorRejectsIncompleteDuplicateMissingAndOversizedAssets]' passed (0.189 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testWholeCollectionPreviewCancelImportAndIdenticalNoOp]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testWholeCollectionPreviewCancelImportAndIdenticalNoOp]' passed (0.678 seconds).
+Test Suite 'CollectionTests' passed at 2026-10-06 17:50:32.355.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 9.347 (9.359) seconds
+Test Suite 'ContentPolicyTests' started at 2026-10-06 17:50:32.355.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testNewImportIdeaBoundariesAndAssetResourceBudgets]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testNewImportIdeaBoundariesAndAssetResourceBudgets]' passed (0.818 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testShortDemoIsExplicitRevisionUpdateAndDoesNotReplaceInstalledSeed]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testShortDemoIsExplicitRevisionUpdateAndDoesNotReplaceInstalledSeed]' passed (0.378 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testStoredHundredIdeaCollectionSurvivesAndCompliantUpdateRequiresRemovals]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testStoredHundredIdeaCollectionSurvivesAndCompliantUpdateRequiresRemovals]' passed (8.413 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testWholeIdeaTimingIncludesTitlesChoicesFeedbackAndPauses]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testWholeIdeaTimingIncludesTitlesChoicesFeedbackAndPauses]' passed (0.040 seconds).
+Test Suite 'ContentPolicyTests' passed at 2026-10-06 17:50:42.008.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 9.649 (9.652) seconds
+Test Suite 'IdeaCardPresentationTests' started at 2026-10-06 17:50:42.009.
+Test Case '-[LifeIsLearnedTests.IdeaCardPresentationTests testGridAccessibilityActionsKeepIdentityAndSeparateOpenFromDetails]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardPresentationTests testGridAccessibilityActionsKeepIdentityAndSeparateOpenFromDetails]' passed (1.155 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardPresentationTests testRenderedCollectionStates]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardPresentationTests testRenderedCollectionStates]' passed (27.326 seconds).
+Test Suite 'IdeaCardPresentationTests' passed at 2026-10-06 17:51:10.491.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 28.481 (28.483) seconds
+Test Suite 'IdeaCardTests' started at 2026-10-06 17:51:10.492.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testCardCorruptionRecoversIndependentlyAndTotalFailurePreservesFiles]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testCardCorruptionRecoversIndependentlyAndTotalFailurePreservesFiles]' passed (0.366 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testFailedFavoriteSaveDoesNotPublishPartialState]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testFailedFavoriteSaveDoesNotPublishPartialState]' passed (0.202 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testImperfectCompletionEarnsOnceAndReviewPreservesOriginalScoreAndDate]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testImperfectCompletionEarnsOnceAndReviewPreservesOriginalScoreAndDate]' passed (0.272 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testLegacyMigrationUsesCommittedCompletionAndUnknownDatesRemainUnknown]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testLegacyMigrationUsesCommittedCompletionAndUnknownDatesRemainUnknown]' passed (0.345 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testOrderingIdentityAndMotionPolicy]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testOrderingIdentityAndMotionPolicy]' passed (0.369 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRecoveredCardsBackfillNewOwnershipFromCommittedProgress]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRecoveredCardsBackfillNewOwnershipFromCommittedProgress]' passed (0.347 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRevisionMetadataReorderAndRemovalPreserveOwnedCards]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRevisionMetadataReorderAndRemovalPreserveOwnedCards]' passed (1.123 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testSequentialNextResumesPracticeReviewsCompletedAndStopsAtFinalIdea]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testSequentialNextResumesPracticeReviewsCompletedAndStopsAtFinalIdea]' passed (0.358 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testTwentyCardFilteringRetainsIdentityAndFavoriteState]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testTwentyCardFilteringRetainsIdentityAndFavoriteState]' passed (1.153 seconds).
+Test Suite 'IdeaCardTests' passed at 2026-10-06 17:51:15.036.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 4.535 (4.544) seconds
+Test Suite 'LessonSessionTests' started at 2026-10-06 17:51:15.036.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testAutomaticPlaybackChangesVoiceAfterIntro]' started.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testAutomaticPlaybackChangesVoiceAfterIntro]' passed (0.237 seconds).
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testInvalidImportLeavesExistingBookUntouched]' started.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testInvalidImportLeavesExistingBookUntouched]' passed (0.128 seconds).
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testOldFinishCannotAdvanceAfterManualNavigation]' started.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testOldFinishCannotAdvanceAfterManualNavigation]' passed (0.230 seconds).
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testPauseResumePreservesAutomaticProgression]' started.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testPauseResumePreservesAutomaticProgression]' passed (0.234 seconds).
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testProgressSurvivesStoreReload]' started.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testProgressSurvivesStoreReload]' passed (0.187 seconds).
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testTakeawayNeverAutomaticallyStartsQuiz]' started.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testTakeawayNeverAutomaticallyStartsQuiz]' passed (0.231 seconds).
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testValidatorRejectsUnknownSourceAndInvalidAnswerKey]' started.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testValidatorRejectsUnknownSourceAndInvalidAnswerKey]' passed (0.238 seconds).
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testWrongAnswerAndRetryDoNotCountAsFirstTrySuccess]' started.
+Test Case '-[LifeIsLearnedTests.LessonSessionTests testWrongAnswerAndRetryDoNotCountAsFirstTrySuccess]' passed (0.151 seconds).
+Test Suite 'LessonSessionTests' passed at 2026-10-06 17:51:16.680.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 1.637 (1.643) seconds
+Test Suite 'NarrationScrollingTests' started at 2026-10-06 17:51:16.680.
+Test Case '-[LifeIsLearnedTests.NarrationScrollingTests testRenderedTextScrollsOnlyWhenNeededAndHandlesPauseAndReplay]' started.
+Test Case '-[LifeIsLearnedTests.NarrationScrollingTests testRenderedTextScrollsOnlyWhenNeededAndHandlesPauseAndReplay]' passed (0.110 seconds).
+Test Case '-[LifeIsLearnedTests.NarrationScrollingTests testSpeechRangeAccountsForUnicodeTitleAndRejectsStaleOrInvalidRanges]' started.
+Test Case '-[LifeIsLearnedTests.NarrationScrollingTests testSpeechRangeAccountsForUnicodeTitleAndRejectsStaleOrInvalidRanges]' passed (0.003 seconds).
+Test Case '-[LifeIsLearnedTests.NarrationScrollingTests testSwiftUIReaderIntegrationWrapsAndFollowsAtLargeTextSize]' started.
+Test Case '-[LifeIsLearnedTests.NarrationScrollingTests testSwiftUIReaderIntegrationWrapsAndFollowsAtLargeTextSize]' passed (2.851 seconds).
+Test Suite 'NarrationScrollingTests' passed at 2026-10-06 17:51:19.647.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 2.964 (2.967) seconds
+Test Suite 'PremiumNarrationTimingTests' started at 2026-10-06 17:51:19.648.
+Test Case '-[LifeIsLearnedTests.PremiumNarrationTimingTests testShortDemoWithInstalledPremiumVoices]' started.
+Test Case '-[LifeIsLearnedTests.PremiumNarrationTimingTests testShortDemoWithInstalledPremiumVoices]' skipped (0.026 seconds).
+Test Suite 'PremiumNarrationTimingTests' passed at 2026-10-06 17:51:19.675.
+	 Executed 1 test, with 1 test skipped and 0 failures (0 unexpected) in 0.026 (0.028) seconds
+Test Suite 'PresentationTests' started at 2026-10-06 17:51:19.676.
+Test Case '-[LifeIsLearnedTests.PresentationTests testEmptyLibraryAndSemanticContrast]' started.
+Test Case '-[LifeIsLearnedTests.PresentationTests testEmptyLibraryAndSemanticContrast]' passed (0.769 seconds).
+Test Case '-[LifeIsLearnedTests.PresentationTests testLearningJourneyRenderedScreens]' started.
+Test Case '-[LifeIsLearnedTests.PresentationTests testLearningJourneyRenderedScreens]' passed (40.187 seconds).
+Test Suite 'PresentationTests' passed at 2026-10-06 17:52:00.635.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 40.957 (40.959) seconds
+Test Suite 'ResumeTests' started at 2026-10-06 17:52:00.636.
+Test Case '-[LifeIsLearnedTests.ResumeTests testClosureInterruptionAndNavigationInvalidateDelayedAdvance]' started.
+Test Case '-[LifeIsLearnedTests.ResumeTests testClosureInterruptionAndNavigationInvalidateDelayedAdvance]' passed (0.772 seconds).
+Test Case '-[LifeIsLearnedTests.ResumeTests testHomeStatesAndSavedReflectionPreference]' started.
+Test Case '-[LifeIsLearnedTests.ResumeTests testHomeStatesAndSavedReflectionPreference]' passed (0.284 seconds).
+Test Case '-[LifeIsLearnedTests.ResumeTests testInterruptedRetryRestoresQuestionFeedbackAttemptAndScoreWithoutAudio]' started.
+Test Case '-[LifeIsLearnedTests.ResumeTests testInterruptedRetryRestoresQuestionFeedbackAttemptAndScoreWithoutAudio]' passed (0.237 seconds).
+Test Case '-[LifeIsLearnedTests.ResumeTests testManualPlaybackNavigationChangesRolesAndRejectsOldCompletion]' started.
+Test Case '-[LifeIsLearnedTests.ResumeTests testManualPlaybackNavigationChangesRolesAndRejectsOldCompletion]' passed (0.347 seconds).
+Test Case '-[LifeIsLearnedTests.ResumeTests testPauseDuringReflectionResumesNextScreenWithoutReplaying]' started.
+Test Case '-[LifeIsLearnedTests.ResumeTests testPauseDuringReflectionResumesNextScreenWithoutReplaying]' passed (0.870 seconds).
+Test Suite 'ResumeTests' passed at 2026-10-06 17:52:03.151.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 2.510 (2.515) seconds
+Test Suite 'SixStageLessonTests' started at 2026-10-06 17:52:03.151.
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testApplicationAndLegacyCountsDecodeValidateAndPersist]' started.
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testApplicationAndLegacyCountsDecodeValidateAndPersist]' passed (0.777 seconds).
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testNarrationFollowRespectsGestureVoiceOverAndReduceMotion]' started.
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testNarrationFollowRespectsGestureVoiceOverAndReduceMotion]' passed (0.023 seconds).
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testNarrationRepresentableOnlyFollowsStories]' started.
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testNarrationRepresentableOnlyFollowsStories]' passed (1.416 seconds).
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testSemanticProgressAndLegacyFallback]' started.
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testSemanticProgressAndLegacyFallback]' passed (0.120 seconds).
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testSixStageReaderRenderedEvidence]' started.
+Test Case '-[LifeIsLearnedTests.SixStageLessonTests testSixStageReaderRenderedEvidence]' passed (10.355 seconds).
+Test Suite 'SixStageLessonTests' passed at 2026-10-06 17:52:15.846.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 12.690 (12.695) seconds
+Test Suite 'LifeIsLearnedTests.xctest' passed at 2026-10-06 17:52:15.847.
+	 Executed 49 tests, with 1 test skipped and 0 failures (0 unexpected) in 112.797 (112.851) seconds
+Test Suite 'All tests' passed at 2026-10-06 17:52:15.848.
+	 Executed 49 tests, with 1 test skipped and 0 failures (0 unexpected) in 112.797 (112.853) seconds
+Test Suite 'All tests' started at 2026-10-06 17:52:20.083.
+Test Suite 'LifeIsLearnedUITests.xctest' started at 2026-10-06 17:52:20.084.
+Test Suite 'IdeaCollectionUITests' started at 2026-10-06 17:52:20.085.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testAccessibilityTextUsesOneColumnAndReadableCarousel]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testAccessibilityTextUsesOneColumnAndReadableCarousel]' passed (63.418 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testCompletionGoesDirectlyToSavedNextIdea]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testCompletionGoesDirectlyToSavedNextIdea]' passed (40.056 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testEmptyCollectionAndEmptyFavorites]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testEmptyCollectionAndEmptyFavorites]' passed (10.889 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testFilterSortAndAccessibleGridOrder]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testFilterSortAndAccessibleGridOrder]' passed (26.450 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testSystemReduceMotionStaticFavoriteAndFlip]' skipped (0.197 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testTwentyCardsGridCarouselFlipFavoriteRelaunchAndReview]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testTwentyCardsGridCarouselFlipFavoriteRelaunchAndReview]' passed (74.308 seconds).
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testVisibleFavoriteShimmersWhileUnfavoritedCardStaysStill]' started.
+Test Case '-[LifeIsLearnedUITests.IdeaCollectionUITests testVisibleFavoriteShimmersWhileUnfavoritedCardStaysStill]' passed (23.143 seconds).
+Test Suite 'IdeaCollectionUITests' passed at 2026-10-06 17:56:18.563.
+	 Executed 7 tests, with 1 test skipped and 0 failures (0 unexpected) in 238.462 (238.479) seconds
+Test Suite 'LearningJourneyUITests' started at 2026-10-06 17:56:18.565.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testBookReadingRetryResumeAndCompletionJourney]' started.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testBookReadingRetryResumeAndCompletionJourney]' passed (52.945 seconds).
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testFirstStartShowsSelectionAndDurationHelp]' started.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testFirstStartShowsSelectionAndDurationHelp]' passed (14.058 seconds).
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testManualFilesImportOfShortDemoAndJourney]' started.
+Test Case '-[LifeIsLearnedUITests.LearningJourneyUITests testManualFilesImportOfShortDemoAndJourney]' passed (92.300 seconds).
+Test Suite 'LearningJourneyUITests' passed at 2026-10-06 17:58:57.875.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 159.303 (159.309) seconds
+Test Suite 'SixStageReaderUITests' started at 2026-10-06 17:58:57.876.
+Test Case '-[LifeIsLearnedUITests.SixStageReaderUITests testCanonicalReaderLabelsArtworkAndPracticeBoundary]' started.
+Test Case '-[LifeIsLearnedUITests.SixStageReaderUITests testCanonicalReaderLabelsArtworkAndPracticeBoundary]' passed (23.187 seconds).
+Test Suite 'SixStageReaderUITests' passed at 2026-10-06 17:59:21.065.
+	 Executed 1 test, with 0 failures (0 unexpected) in 23.187 (23.189) seconds
+Test Suite 'LifeIsLearnedUITests.xctest' passed at 2026-10-06 17:59:21.067.
+	 Executed 11 tests, with 1 test skipped and 0 failures (0 unexpected) in 420.952 (420.982) seconds
+Test Suite 'All tests' passed at 2026-10-06 17:59:21.068.
+	 Executed 11 tests, with 1 test skipped and 0 failures (0 unexpected) in 420.952 (420.986) seconds
+** TEST SUCCEEDED **

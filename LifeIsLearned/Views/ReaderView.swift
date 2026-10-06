@@ -66,11 +66,7 @@ import UIKit
                 Button { session.stop(); dismiss() } label: { Image(systemName: "xmark").frame(width: 44, height: 44) }.accessibilityLabel("Close lesson")
             }.buttonStyle(EditorialButtonStyle())
             if session.phase == .reading {
-                HStack(spacing: 5) {
-                    ForEach(session.lesson.pages.indices, id: \.self) { index in
-                        Capsule().fill(index <= session.index ? Palette.teal : Palette.rule).frame(height: 3)
-                    }
-                }.accessibilityElement(children: .ignore).accessibilityLabel("Screen \(session.index + 1) of \(session.lesson.pages.count)")
+                LessonProgressIndicator(lesson: session.lesson, index: session.index)
             }
         }.padding(.horizontal, 20).padding(.top, 6).padding(.bottom, 14).readingWidth(820)
     }
@@ -78,36 +74,43 @@ import UIKit
         VStack(spacing: 0) {
             ScrollViewReader { proxy in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 22) {
+                    VStack(alignment: .leading, spacing: session.lesson.usesSixStageProgress ? 12 : 22) {
                         Color.clear.frame(height: 1).id("top")
-                        HStack(alignment: .firstTextBaseline) {
-                            Eyebrow(text: session.page.role == .guide ? "A moment with your guide" : "An original story")
-                            Spacer()
-                            Text("\(session.index + 1) / \(session.lesson.pages.count)").font(.caption.monospacedDigit()).foregroundStyle(Palette.secondary)
+                        if !(session.lesson.usesSixStageProgress && session.page.kind == .takeaway) {
+                            HStack(alignment: .firstTextBaseline) {
+                                Eyebrow(text: session.lesson.usesSixStageProgress ? SixStageLesson.readerLabels[session.index] :
+                                    (session.page.role == .guide ? "A moment with your guide" : "An original story"))
+                                Spacer()
+                                Text("\(session.index + 1) / \(session.lesson.pages.count)").font(.caption.monospacedDigit()).foregroundStyle(Palette.secondary)
+                            }
                         }
                         if session.page.kind == .takeaway {
                             TakeawayCard(session: session, speech: speech, settings: settings)
                         } else {
-                            Text(session.page.title).font(.system(.largeTitle, design: .serif)).tracking(-0.5)
+                            Text(session.page.title).font(.system(session.lesson.usesSixStageProgress ? .title2 : .largeTitle, design: .serif)).tracking(-0.5)
                                 .fixedSize(horizontal: false, vertical: true)
                             LessonIllustration(page: session.page, assets: session.assets)
+                                .frame(maxHeight: session.lesson.usesSixStageProgress && session.page.kind != .story ? 110 : nil)
                             NarrationText(text: session.page.text, title: session.page.title,
                                           spokenText: speech.spokenText, spokenRange: speech.spokenRange,
-                                          isPlaying: speech.isPlaying, textSize: settings.textSize)
+                                          isPlaying: speech.isPlaying, textSize: settings.textSize,
+                                          followNarration: session.page.kind == .story)
                         }
                         if session.page.kind == .intro {
-                            FineRule()
-                            Text(session.lesson.scopeNote).font(.footnote).foregroundStyle(Palette.secondary)
-                            Label("Play to listen, or turn the pages at your pace.", systemImage: "headphones")
-                                .font(.footnote).foregroundStyle(Palette.secondary)
+                            if session.lesson.usesSixStageProgress {
+                                DisclosureGroup("Lesson scope and source limits") {
+                                    Text(session.lesson.scopeNote).font(.footnote).foregroundStyle(Palette.secondary)
+                                }.font(.footnote)
+                            } else {
+                                FineRule()
+                                Text(session.lesson.scopeNote).font(.footnote).foregroundStyle(Palette.secondary)
+                                Label("Play to listen, or turn the pages at your pace.", systemImage: "headphones")
+                                    .font(.footnote).foregroundStyle(Palette.secondary)
+                            }
                         }
                         if let error = speech.errorMessage { Text(error).font(.footnote).foregroundStyle(Palette.amber) }
                     }.padding(.horizontal, 24).padding(.bottom, 28).readingWidth()
                 }.onChange(of: session.index) { _, _ in proxy.scrollTo("top", anchor: .top) }
-                    .onChange(of: speech.spokenRange) { _, range in
-                        if speech.isPlaying, range?.location == 0,
-                           speech.spokenText == session.page.title + ". " + session.page.text { proxy.scrollTo("top", anchor: .top) }
-                    }
             }
             controls
         }
