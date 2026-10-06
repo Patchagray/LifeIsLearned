@@ -1,0 +1,1092 @@
+{
+  "schemaVersion": 1,
+  "catalogID": "catalog-001",
+  "catalogRevision": 1,
+  "status": "editorial-source-of-truth",
+  "title": "Life Is Learned — Catalog 001",
+  "bookCount": 50,
+  "rules": {
+    "onePrimaryShelfPerBook": true,
+    "secondaryShelvesAllowed": true,
+    "stableBookIDsMustNotChangeAfterFreeze": true,
+    "wholeBookPackageIsAtomicDistributionUnit": true,
+    "maximumIdeasPerAuthoredBook": 12,
+    "coreIdeaExperienceMaximumSeconds": 300,
+    "catalogDoesNotImplyPackageAvailability": true
+  },
+  "shelves": [
+    {
+      "id": "psychology-human-behavior",
+      "name": "Psychology & Human Behavior",
+      "order": 1
+    },
+    {
+      "id": "communication-negotiation",
+      "name": "Communication & Negotiation",
+      "order": 2
+    },
+    {
+      "id": "habits-personal-growth",
+      "name": "Habits & Personal Growth",
+      "order": 3
+    },
+    {
+      "id": "money-personal-finance",
+      "name": "Money & Personal Finance",
+      "order": 4
+    },
+    {
+      "id": "leadership-strategy",
+      "name": "Leadership & Strategy",
+      "order": 5
+    },
+    {
+      "id": "productivity-focus",
+      "name": "Productivity & Focus",
+      "order": 6
+    },
+    {
+      "id": "relationships-emotional-intelligence",
+      "name": "Relationships & Emotional Intelligence",
+      "order": 7
+    },
+    {
+      "id": "meaning-philosophy-resilience",
+      "name": "Meaning, Philosophy & Resilience",
+      "order": 8
+    }
+  ],
+  "books": [
+    {
+      "catalogOrder": 1,
+      "id": "influential-mind",
+      "title": "The Influential Mind",
+      "authors": [
+        "Tali Sharot"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [
+        "communication-negotiation"
+      ],
+      "tags": [
+        "psychology",
+        "human behavior",
+        "influence",
+        "neuroscience",
+        "persuasion",
+        "decision-making"
+      ],
+      "authoringPriority": 1,
+      "editorialStatus": "authored",
+      "packageStatus": "authored-local",
+      "notes": "Existing stable ID is established. Keep it."
+    },
+    {
+      "catalogOrder": 2,
+      "id": "thinking-fast-and-slow",
+      "title": "Thinking, Fast and Slow",
+      "authors": [
+        "Daniel Kahneman"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "psychology",
+        "human behavior"
+      ],
+      "authoringPriority": 8,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 3,
+      "id": "influence-the-psychology-of-persuasion",
+      "title": "Influence: The Psychology of Persuasion",
+      "authors": [
+        "Robert B. Cialdini"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [
+        "communication-negotiation"
+      ],
+      "tags": [
+        "psychology",
+        "human behavior"
+      ],
+      "authoringPriority": 9,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 4,
+      "id": "predictably-irrational",
+      "title": "Predictably Irrational",
+      "authors": [
+        "Dan Ariely"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [
+        "money-personal-finance"
+      ],
+      "tags": [
+        "psychology",
+        "human behavior"
+      ],
+      "authoringPriority": 28,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 5,
+      "id": "the-righteous-mind",
+      "title": "The Righteous Mind",
+      "authors": [
+        "Jonathan Haidt"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "psychology",
+        "human behavior"
+      ],
+      "authoringPriority": 29,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 6,
+      "id": "the-paradox-of-choice",
+      "title": "The Paradox of Choice",
+      "authors": [
+        "Barry Schwartz"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "psychology",
+        "human behavior"
+      ],
+      "authoringPriority": 33,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 7,
+      "id": "emotional-intelligence",
+      "title": "Emotional Intelligence",
+      "authors": [
+        "Daniel Goleman"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [
+        "relationships-emotional-intelligence"
+      ],
+      "tags": [
+        "psychology",
+        "human behavior",
+        "self-awareness",
+        "self-regulation",
+        "empathy",
+        "social skill"
+      ],
+      "authoringPriority": 15,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 8,
+      "id": "mistakes-were-made-but-not-by-me",
+      "title": "Mistakes Were Made (But Not by Me)",
+      "authors": [
+        "Carol Tavris",
+        "Elliot Aronson"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "psychology",
+        "human behavior"
+      ],
+      "authoringPriority": 34,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 9,
+      "id": "the-scout-mindset",
+      "title": "The Scout Mindset",
+      "authors": [
+        "Julia Galef"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [
+        "leadership-strategy"
+      ],
+      "tags": [
+        "psychology",
+        "human behavior"
+      ],
+      "authoringPriority": 23,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 10,
+      "id": "behave",
+      "title": "Behave",
+      "authors": [
+        "Robert M. Sapolsky"
+      ],
+      "primaryShelfID": "psychology-human-behavior",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "psychology",
+        "human behavior"
+      ],
+      "authoringPriority": 38,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 11,
+      "id": "never-split-the-difference",
+      "title": "Never Split the Difference",
+      "authors": [
+        "Chris Voss",
+        "Tahl Raz"
+      ],
+      "primaryShelfID": "communication-negotiation",
+      "secondaryShelfIDs": [
+        "psychology-human-behavior"
+      ],
+      "tags": [
+        "communication",
+        "negotiation",
+        "tactical empathy",
+        "mirroring",
+        "labeling",
+        "calibrated questions"
+      ],
+      "authoringPriority": 2,
+      "editorialStatus": "authored",
+      "packageStatus": "authored-local",
+      "notes": "Intended stable ID; reconcile against the already-authored package before freeze."
+    },
+    {
+      "catalogOrder": 12,
+      "id": "how-to-win-friends-and-influence-people",
+      "title": "How to Win Friends and Influence People",
+      "authors": [
+        "Dale Carnegie"
+      ],
+      "primaryShelfID": "communication-negotiation",
+      "secondaryShelfIDs": [
+        "relationships-emotional-intelligence"
+      ],
+      "tags": [
+        "communication",
+        "negotiation"
+      ],
+      "authoringPriority": 5,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 13,
+      "id": "crucial-conversations",
+      "title": "Crucial Conversations",
+      "authors": [
+        "Kerry Patterson",
+        "Joseph Grenny",
+        "Ron McMillan",
+        "Al Switzler"
+      ],
+      "primaryShelfID": "communication-negotiation",
+      "secondaryShelfIDs": [
+        "relationships-emotional-intelligence",
+        "leadership-strategy"
+      ],
+      "tags": [
+        "communication",
+        "negotiation"
+      ],
+      "authoringPriority": 14,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 14,
+      "id": "difficult-conversations",
+      "title": "Difficult Conversations",
+      "authors": [
+        "Douglas Stone",
+        "Bruce Patton",
+        "Sheila Heen"
+      ],
+      "primaryShelfID": "communication-negotiation",
+      "secondaryShelfIDs": [
+        "relationships-emotional-intelligence"
+      ],
+      "tags": [
+        "communication",
+        "negotiation"
+      ],
+      "authoringPriority": 39,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 15,
+      "id": "thanks-for-the-feedback",
+      "title": "Thanks for the Feedback",
+      "authors": [
+        "Douglas Stone",
+        "Sheila Heen"
+      ],
+      "primaryShelfID": "communication-negotiation",
+      "secondaryShelfIDs": [
+        "relationships-emotional-intelligence",
+        "leadership-strategy"
+      ],
+      "tags": [
+        "communication",
+        "negotiation"
+      ],
+      "authoringPriority": 40,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 16,
+      "id": "what-every-body-is-saying",
+      "title": "What Every BODY Is Saying",
+      "authors": [
+        "Joe Navarro",
+        "Marvin Karlins"
+      ],
+      "primaryShelfID": "communication-negotiation",
+      "secondaryShelfIDs": [
+        "psychology-human-behavior"
+      ],
+      "tags": [
+        "communication",
+        "negotiation"
+      ],
+      "authoringPriority": 49,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 17,
+      "id": "supercommunicators",
+      "title": "Supercommunicators",
+      "authors": [
+        "Charles Duhigg"
+      ],
+      "primaryShelfID": "communication-negotiation",
+      "secondaryShelfIDs": [
+        "relationships-emotional-intelligence"
+      ],
+      "tags": [
+        "communication",
+        "negotiation"
+      ],
+      "authoringPriority": 24,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 18,
+      "id": "atomic-habits",
+      "title": "Atomic Habits",
+      "authors": [
+        "James Clear"
+      ],
+      "primaryShelfID": "habits-personal-growth",
+      "secondaryShelfIDs": [
+        "productivity-focus"
+      ],
+      "tags": [
+        "habits",
+        "personal growth",
+        "systems",
+        "identity",
+        "behavior change",
+        "environment design"
+      ],
+      "authoringPriority": 3,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 19,
+      "id": "the-power-of-habit",
+      "title": "The Power of Habit",
+      "authors": [
+        "Charles Duhigg"
+      ],
+      "primaryShelfID": "habits-personal-growth",
+      "secondaryShelfIDs": [
+        "psychology-human-behavior",
+        "productivity-focus"
+      ],
+      "tags": [
+        "habits",
+        "personal growth"
+      ],
+      "authoringPriority": 18,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 20,
+      "id": "the-7-habits-of-highly-effective-people",
+      "title": "The 7 Habits of Highly Effective People",
+      "authors": [
+        "Stephen R. Covey"
+      ],
+      "primaryShelfID": "habits-personal-growth",
+      "secondaryShelfIDs": [
+        "productivity-focus",
+        "leadership-strategy"
+      ],
+      "tags": [
+        "habits",
+        "personal growth"
+      ],
+      "authoringPriority": 13,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 21,
+      "id": "12-rules-for-life",
+      "title": "12 Rules for Life",
+      "authors": [
+        "Jordan B. Peterson"
+      ],
+      "primaryShelfID": "habits-personal-growth",
+      "secondaryShelfIDs": [
+        "meaning-philosophy-resilience"
+      ],
+      "tags": [
+        "habits",
+        "personal growth"
+      ],
+      "authoringPriority": 43,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 22,
+      "id": "the-subtle-art-of-not-giving-a-fck",
+      "title": "The Subtle Art of Not Giving a F*ck",
+      "authors": [
+        "Mark Manson"
+      ],
+      "primaryShelfID": "habits-personal-growth",
+      "secondaryShelfIDs": [
+        "meaning-philosophy-resilience"
+      ],
+      "tags": [
+        "habits",
+        "personal growth"
+      ],
+      "authoringPriority": 44,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 23,
+      "id": "can-t-hurt-me",
+      "title": "Can't Hurt Me",
+      "authors": [
+        "David Goggins"
+      ],
+      "primaryShelfID": "habits-personal-growth",
+      "secondaryShelfIDs": [
+        "meaning-philosophy-resilience"
+      ],
+      "tags": [
+        "habits",
+        "personal growth"
+      ],
+      "authoringPriority": 45,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 24,
+      "id": "essentialism",
+      "title": "Essentialism",
+      "authors": [
+        "Greg McKeown"
+      ],
+      "primaryShelfID": "habits-personal-growth",
+      "secondaryShelfIDs": [
+        "productivity-focus"
+      ],
+      "tags": [
+        "habits",
+        "personal growth"
+      ],
+      "authoringPriority": 16,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 25,
+      "id": "four-thousand-weeks",
+      "title": "Four Thousand Weeks",
+      "authors": [
+        "Oliver Burkeman"
+      ],
+      "primaryShelfID": "habits-personal-growth",
+      "secondaryShelfIDs": [
+        "productivity-focus",
+        "meaning-philosophy-resilience"
+      ],
+      "tags": [
+        "habits",
+        "personal growth"
+      ],
+      "authoringPriority": 19,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 26,
+      "id": "the-psychology-of-money",
+      "title": "The Psychology of Money",
+      "authors": [
+        "Morgan Housel"
+      ],
+      "primaryShelfID": "money-personal-finance",
+      "secondaryShelfIDs": [
+        "psychology-human-behavior"
+      ],
+      "tags": [
+        "money",
+        "personal finance",
+        "risk",
+        "compounding",
+        "wealth behavior",
+        "decision-making"
+      ],
+      "authoringPriority": 4,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 27,
+      "id": "i-will-teach-you-to-be-rich",
+      "title": "I Will Teach You to Be Rich",
+      "authors": [
+        "Ramit Sethi"
+      ],
+      "primaryShelfID": "money-personal-finance",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "money",
+        "personal finance"
+      ],
+      "authoringPriority": 25,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 28,
+      "id": "the-simple-path-to-wealth",
+      "title": "The Simple Path to Wealth",
+      "authors": [
+        "JL Collins"
+      ],
+      "primaryShelfID": "money-personal-finance",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "money",
+        "personal finance"
+      ],
+      "authoringPriority": 35,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 29,
+      "id": "the-millionaire-next-door",
+      "title": "The Millionaire Next Door",
+      "authors": [
+        "Thomas J. Stanley",
+        "William D. Danko"
+      ],
+      "primaryShelfID": "money-personal-finance",
+      "secondaryShelfIDs": [
+        "psychology-human-behavior"
+      ],
+      "tags": [
+        "money",
+        "personal finance"
+      ],
+      "authoringPriority": 41,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 30,
+      "id": "rich-dad-poor-dad",
+      "title": "Rich Dad Poor Dad",
+      "authors": [
+        "Robert T. Kiyosaki"
+      ],
+      "primaryShelfID": "money-personal-finance",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "money",
+        "personal finance"
+      ],
+      "authoringPriority": 20,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 31,
+      "id": "think-and-grow-rich",
+      "title": "Think and Grow Rich",
+      "authors": [
+        "Napoleon Hill"
+      ],
+      "primaryShelfID": "money-personal-finance",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "money",
+        "personal finance"
+      ],
+      "authoringPriority": 48,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 32,
+      "id": "your-money-or-your-life",
+      "title": "Your Money or Your Life",
+      "authors": [
+        "Vicki Robin",
+        "Joe Dominguez"
+      ],
+      "primaryShelfID": "money-personal-finance",
+      "secondaryShelfIDs": [
+        "meaning-philosophy-resilience"
+      ],
+      "tags": [
+        "money",
+        "personal finance"
+      ],
+      "authoringPriority": 30,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 33,
+      "id": "principles",
+      "title": "Principles",
+      "authors": [
+        "Ray Dalio"
+      ],
+      "primaryShelfID": "leadership-strategy",
+      "secondaryShelfIDs": [
+        "productivity-focus"
+      ],
+      "tags": [
+        "leadership",
+        "strategy",
+        "systems thinking",
+        "teams",
+        "management",
+        "decision-making",
+        "process improvement"
+      ],
+      "authoringPriority": 10,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 34,
+      "id": "the-48-laws-of-power",
+      "title": "The 48 Laws of Power",
+      "authors": [
+        "Robert Greene"
+      ],
+      "primaryShelfID": "leadership-strategy",
+      "secondaryShelfIDs": [
+        "psychology-human-behavior"
+      ],
+      "tags": [
+        "leadership",
+        "strategy"
+      ],
+      "authoringPriority": 21,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 35,
+      "id": "good-to-great",
+      "title": "Good to Great",
+      "authors": [
+        "Jim Collins"
+      ],
+      "primaryShelfID": "leadership-strategy",
+      "secondaryShelfIDs": [
+        "productivity-focus"
+      ],
+      "tags": [
+        "leadership",
+        "strategy"
+      ],
+      "authoringPriority": 36,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 36,
+      "id": "extreme-ownership",
+      "title": "Extreme Ownership",
+      "authors": [
+        "Jocko Willink",
+        "Leif Babin"
+      ],
+      "primaryShelfID": "leadership-strategy",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "leadership",
+        "strategy"
+      ],
+      "authoringPriority": 26,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 37,
+      "id": "the-art-of-war",
+      "title": "The Art of War",
+      "authors": [
+        "Sun Tzu"
+      ],
+      "primaryShelfID": "leadership-strategy",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "leadership",
+        "strategy"
+      ],
+      "authoringPriority": 17,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 38,
+      "id": "start-with-why",
+      "title": "Start With Why",
+      "authors": [
+        "Simon Sinek"
+      ],
+      "primaryShelfID": "leadership-strategy",
+      "secondaryShelfIDs": [
+        "meaning-philosophy-resilience"
+      ],
+      "tags": [
+        "leadership",
+        "strategy"
+      ],
+      "authoringPriority": 46,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 39,
+      "id": "the-hard-thing-about-hard-things",
+      "title": "The Hard Thing About Hard Things",
+      "authors": [
+        "Ben Horowitz"
+      ],
+      "primaryShelfID": "leadership-strategy",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "leadership",
+        "strategy"
+      ],
+      "authoringPriority": 47,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 40,
+      "id": "deep-work",
+      "title": "Deep Work",
+      "authors": [
+        "Cal Newport"
+      ],
+      "primaryShelfID": "productivity-focus",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "productivity",
+        "focus",
+        "attention",
+        "concentration",
+        "distraction",
+        "knowledge work"
+      ],
+      "authoringPriority": 6,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 41,
+      "id": "getting-things-done",
+      "title": "Getting Things Done",
+      "authors": [
+        "David Allen"
+      ],
+      "primaryShelfID": "productivity-focus",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "productivity",
+        "focus"
+      ],
+      "authoringPriority": 31,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 42,
+      "id": "make-time",
+      "title": "Make Time",
+      "authors": [
+        "Jake Knapp",
+        "John Zeratsky"
+      ],
+      "primaryShelfID": "productivity-focus",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "productivity",
+        "focus"
+      ],
+      "authoringPriority": 42,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 43,
+      "id": "slow-productivity",
+      "title": "Slow Productivity",
+      "authors": [
+        "Cal Newport"
+      ],
+      "primaryShelfID": "productivity-focus",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "productivity",
+        "focus"
+      ],
+      "authoringPriority": 50,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 44,
+      "id": "attached",
+      "title": "Attached",
+      "authors": [
+        "Amir Levine",
+        "Rachel Heller"
+      ],
+      "primaryShelfID": "relationships-emotional-intelligence",
+      "secondaryShelfIDs": [
+        "psychology-human-behavior"
+      ],
+      "tags": [
+        "relationships",
+        "emotional intelligence"
+      ],
+      "authoringPriority": 11,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 45,
+      "id": "nonviolent-communication",
+      "title": "Nonviolent Communication",
+      "authors": [
+        "Marshall B. Rosenberg"
+      ],
+      "primaryShelfID": "relationships-emotional-intelligence",
+      "secondaryShelfIDs": [
+        "communication-negotiation"
+      ],
+      "tags": [
+        "relationships",
+        "emotional intelligence"
+      ],
+      "authoringPriority": 22,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 46,
+      "id": "the-seven-principles-for-making-marriage-work",
+      "title": "The Seven Principles for Making Marriage Work",
+      "authors": [
+        "John Gottman",
+        "Nan Silver"
+      ],
+      "primaryShelfID": "relationships-emotional-intelligence",
+      "secondaryShelfIDs": [
+        "communication-negotiation"
+      ],
+      "tags": [
+        "relationships",
+        "emotional intelligence"
+      ],
+      "authoringPriority": 27,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 47,
+      "id": "man-s-search-for-meaning",
+      "title": "Man's Search for Meaning",
+      "authors": [
+        "Viktor E. Frankl"
+      ],
+      "primaryShelfID": "meaning-philosophy-resilience",
+      "secondaryShelfIDs": [],
+      "tags": [
+        "meaning",
+        "philosophy",
+        "resilience"
+      ],
+      "authoringPriority": 7,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 48,
+      "id": "meditations",
+      "title": "Meditations",
+      "authors": [
+        "Marcus Aurelius"
+      ],
+      "primaryShelfID": "meaning-philosophy-resilience",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "meaning",
+        "philosophy",
+        "resilience"
+      ],
+      "authoringPriority": 12,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 49,
+      "id": "the-obstacle-is-the-way",
+      "title": "The Obstacle Is the Way",
+      "authors": [
+        "Ryan Holiday"
+      ],
+      "primaryShelfID": "meaning-philosophy-resilience",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "meaning",
+        "philosophy",
+        "resilience"
+      ],
+      "authoringPriority": 32,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    },
+    {
+      "catalogOrder": 50,
+      "id": "the-seasons-of-life",
+      "title": "The Seasons of Life",
+      "authors": [
+        "Jim Rohn"
+      ],
+      "primaryShelfID": "meaning-philosophy-resilience",
+      "secondaryShelfIDs": [
+        "habits-personal-growth"
+      ],
+      "tags": [
+        "meaning",
+        "philosophy",
+        "resilience"
+      ],
+      "authoringPriority": 37,
+      "editorialStatus": "planned",
+      "packageStatus": "not-authored",
+      "notes": ""
+    }
+  ]
+}
