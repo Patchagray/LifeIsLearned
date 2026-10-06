@@ -1,0 +1,30 @@
+{
+  "baseline": "7f0146ae065d2e75917af88726be30484171fb5b",
+  "manifestSHA256": "7424b9d5deff4f1645ca112f1393bfafd84553a040593d53a6af35133826da68",
+  "bookCount": 50,
+  "shelfCount": 8,
+  "primaryShelfCounts": [
+    10,
+    7,
+    8,
+    7,
+    7,
+    4,
+    3,
+    4
+  ],
+  "neverSplitBookID": "never-split-the-difference",
+  "neverSplitPackageSHA256": "e8679c91da42f3e709f1568d5cb91f7bb45038ff65b54e676e727cdd7c8ce928",
+  "unchangedPaths": [
+    "LifeIsLearned",
+    "LifeIsLearned.xcodeproj",
+    "Tests",
+    "UITests",
+    "Example-Lesson-Package.json"
+  ],
+  "foundationImplementationCommit": "fb735c0f1bffb2f92f9c0cb6850624f3160771cc",
+  "remediationBaselineCommit": "02dea3f2667a5037188499a8dfe5870ec2fe1198",
+  "originalSuppliedManifestSHA256": "d99728adaab648b645915348ccba2f3c7e3ce6d4cf7c802af584e4b8ea92d7e2",
+  "approvedOrderedBookIdentitiesSHA256": "81033ce2044bfc6fda88015f12ef339135784aa3ca067ace8b3b1870462f4b88",
+  "neverSplitReconciliationStatus": "established-reconciled"
+}

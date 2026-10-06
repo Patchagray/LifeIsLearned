@@ -1,0 +1,42 @@
+{
+  "baselineCommit": "02dea3f2667a5037188499a8dfe5870ec2fe1198",
+  "supportedCatalogRevision": 1,
+  "canonicalManifestSHA256": "7424b9d5deff4f1645ca112f1393bfafd84553a040593d53a6af35133826da68",
+  "approvedOrderedBookIdentitiesSHA256": "81033ce2044bfc6fda88015f12ef339135784aa3ca067ace8b3b1870462f4b88",
+  "testedSourceSHA256": {
+    "Catalog/Catalog-001.json": "7424b9d5deff4f1645ca112f1393bfafd84553a040593d53a6af35133826da68",
+    "Tools/validate_catalog.py": "949fffa3829962bae288aa6ad454241c958d3a8905cc07f0419cd71d5e1f0bf5",
+    "Tools/test_catalog.py": "70fc32cbc5838fa276eccd201ce56e40c66e437e41f0675ef36e2c493d7e2c77"
+  },
+  "catalogTestsPassed": 18,
+  "authoringTestsPassed": 12,
+  "manifestDelta": "Only never-split-the-difference notes changed to record the established reconciled ID.",
+  "protectedPaths": {
+    "LifeIsLearned": {
+      "fileCount": 43,
+      "filesUnchanged": true,
+      "orderedFileHashesSHA256": "9b083c8efe45c4fd4dbf0df9078a2410abe894b0b4ac7b7e803987cd21b93ae0"
+    },
+    "Tests": {
+      "fileCount": 8,
+      "filesUnchanged": true,
+      "orderedFileHashesSHA256": "b972eb4bf948ba7a31469c306ba0fe76a13fd06953a8ef0e85a4664650d1de07"
+    },
+    "UITests": {
+      "fileCount": 2,
+      "filesUnchanged": true,
+      "orderedFileHashesSHA256": "e465f91c846a8ae1e0004661ba5a6dc7fa419deaef90f1f79ff302426090e3d5"
+    },
+    "LifeIsLearned.xcodeproj": {
+      "fileCount": 2,
+      "filesUnchanged": true,
+      "orderedFileHashesSHA256": "2eed4744ee44a4e0af8480758421b147741d981f24a53b2faa499376e769fb88"
+    },
+    "Example-Lesson-Package.json": {
+      "fileCount": 1,
+      "filesUnchanged": true,
+      "orderedFileHashesSHA256": "5adaf75d6bdf6c4ce40ca92260e3245b3aa9791ac4110c3f25dd0cb83bd18659"
+    }
+  },
+  "simulatorUIRerun": "Not performed; requested protected paths verified byte-for-byte unchanged."
+}

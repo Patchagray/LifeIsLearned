@@ -1,5 +1,13 @@
 # Authoring lesson packages
 
+## Catalog 001 identity before authoring
+
+For every Catalog 001 title, look it up in `Catalog/Catalog-001.json` and reuse its exact stable `id` as the package's `book.id` before writing lessons. Never invent a new slug, rename an established ID, or use the production queue position as identity. `influential-mind` and `never-split-the-difference` match the supplied authored packages. Keep the same book ID across all complete collection updates so installed progress and collected-card identity remain attached to the same book.
+
+Do not silently author/add a title outside the approved 50-book manifest; it requires a separately approved later catalog revision. `authoringPriority` is a production queue, not a user-facing ranking. Catalog presence, `authored-local` status and structural validation do not establish package availability, factual review, source coverage or release approval.
+
+Run `python3 Tools/validate_catalog.py` for catalog changes and follow `Catalog/README.md`. Continue using the existing format-2 whole-collection contract, 1–12 selected ideas, and ≤300-second complete reference experience gate below. Shelf/tag metadata stays in the editorial manifest; it adds no fields to a lesson package.
+
 Start by reviewing actual source material. Keep the book/article's meaningful idea order; do not assume every chapter is exactly one idea. If only a prologue or excerpt is available, state that and limit coverage accordingly. The player is format-flexible: story, analogy, scenario, explanation and thought experiment can all fit the small-screen structure.
 
 Use Example-Lesson-Package.json as the exact Codable shape. There is one book per package with 1–12 selected ideas, delivered together on every release. Twelve is a ceiling, never a quota. Handoff 003 supersedes older count and duration guidance.

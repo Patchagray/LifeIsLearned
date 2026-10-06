@@ -73,6 +73,8 @@ The app is intentionally a lesson player. Automatic book/PDF extraction, live AI
 
 ## Files
 
+- `Catalog/Catalog-001.json`: approved static identities for 50 books across eight shelves; separate from installed packages. See `Catalog/README.md` and run `python3 Tools/validate_catalog.py` before editing/authoring catalog titles. Handoff 004.5 adds no app screen or networking; Handoff 005 will consume this foundation later.
+
 - `LifeIsLearned/Models/`: collection contract/comparison, lesson models, and resumable progress.
 - `LifeIsLearned/Services/LibraryStore.swift` and `CollectionStorage.swift`: import staging, atomic snapshot publication, migration, and progress.
 - `LifeIsLearned/Services/PlaybackSettings.swift`: settings and installed voice selection.

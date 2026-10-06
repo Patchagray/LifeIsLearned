@@ -1,0 +1,23 @@
+test_approved_manifest_counts_and_established_ids (test_catalog.CatalogTests.test_approved_manifest_counts_and_established_ids) ... ok
+test_book_array_swaps_without_order_changes_are_rejected (test_catalog.CatalogTests.test_book_array_swaps_without_order_changes_are_rejected) ... ok
+test_cli_is_deterministic_read_only_and_fails_cleanly (test_catalog.CatalogTests.test_cli_is_deterministic_read_only_and_fails_cleanly) ... ok
+test_duplicate_and_out_of_range_priorities (test_catalog.CatalogTests.test_duplicate_and_out_of_range_priorities) ... ok
+test_duplicate_book_id (test_catalog.CatalogTests.test_duplicate_book_id) ... ok
+test_duplicate_json_keys_and_non_json_constants (test_catalog.CatalogTests.test_duplicate_json_keys_and_non_json_constants) ... ok
+test_duplicate_shelf_identity_and_order (test_catalog.CatalogTests.test_duplicate_shelf_identity_and_order) ... ok
+test_empty_ids_authors_and_deduplicated_tags (test_catalog.CatalogTests.test_empty_ids_authors_and_deduplicated_tags) ... ok
+test_every_approved_book_id_is_locked (test_catalog.CatalogTests.test_every_approved_book_id_is_locked) ... ok
+test_missing_wrong_type_and_transport_fields (test_catalog.CatalogTests.test_missing_wrong_type_and_transport_fields) ... ok
+test_only_catalog_revision_one_is_supported (test_catalog.CatalogTests.test_only_catalog_revision_one_is_supported) ... ok
+test_primary_distribution_and_catalog_order (test_catalog.CatalogTests.test_primary_distribution_and_catalog_order) ... ok
+test_schema_revision_and_boolean_integer_confusion (test_catalog.CatalogTests.test_schema_revision_and_boolean_integer_confusion) ... ok
+test_self_secondary_and_duplicate_secondary (test_catalog.CatalogTests.test_self_secondary_and_duplicate_secondary) ... ok
+test_shelf_array_swaps_without_order_changes_are_rejected (test_catalog.CatalogTests.test_shelf_array_swaps_without_order_changes_are_rejected) ... ok
+test_swapped_ids_with_unchanged_order_fields_are_rejected (test_catalog.CatalogTests.test_swapped_ids_with_unchanged_order_fields_are_rejected) ... ok
+test_unknown_primary_and_secondary_shelves (test_catalog.CatalogTests.test_unknown_primary_and_secondary_shelves) ... ok
+test_wrong_declared_and_actual_counts (test_catalog.CatalogTests.test_wrong_declared_and_actual_counts) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.520s
+
+OK
