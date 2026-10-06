@@ -203,3 +203,42 @@ final class IdeaCollectionUITests: XCTestCase {
         let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
     }
 }
+
+final class SixStageReaderUITests: XCTestCase {
+    func testCanonicalReaderLabelsArtworkAndPracticeBoundary() {
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_SIX_STAGE_FIXTURE"] = "1"
+        app.launch()
+        let book = app.buttons["book-six-stage-fixture"]
+        reveal(book, app); book.tap()
+        let idea = app.buttons["idea-six-stage-idea"]
+        reveal(idea, app); idea.tap()
+        let indicator = app.descendants(matching: .any)["semantic-lesson-progress"].firstMatch
+        XCTAssertTrue(indicator.waitForExistence(timeout: 10))
+        let labels = ["Hook", "Explanation", "Story 1 of 2", "Story 2 of 2", "Practical Application", "Takeaway"]
+        for index in 0..<6 {
+            XCTAssertEqual(indicator.label, "Screen \(index + 1) of 6 · " + labels[index])
+            XCTAssertFalse(app.buttons["Pause narration"].exists)
+            if index < 5 { app.buttons["Next screen"].tap() }
+        }
+        let art = app.images["takeaway-artwork"]
+        XCTAssertTrue(art.exists)
+        XCTAssertEqual(art.label, "Synthetic illustration for stage 6")
+        XCTAssertTrue(art.isHittable, "Artwork is visible before revealing the takeaway")
+        XCTAssertFalse(app.buttons["Practice this idea"].isEnabled)
+        let revealButton = app.buttons["Reveal the idea"]
+        reveal(revealButton, app); revealButton.tap()
+        XCTAssertTrue(app.buttons["Practice this idea"].isEnabled)
+        XCTAssertTrue(art.exists, "Revealing the text retains its artwork")
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        attachment.name = "h0046-live-takeaway-art"; attachment.lifetime = .keepAlways; add(attachment)
+        app.buttons["Practice this idea"].tap()
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Option 1.'")).firstMatch.waitForExistence(timeout: 5))
+    }
+    private func reveal(_ element: XCUIElement, _ app: XCUIApplication) {
+        XCTAssertTrue(element.waitForExistence(timeout: 30))
+        for _ in 0..<12 { if element.isHittable { return }; app.swipeUp() }
+        XCTAssertTrue(element.isHittable)
+    }
+}

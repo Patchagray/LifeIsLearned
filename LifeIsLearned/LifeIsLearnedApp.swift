@@ -24,6 +24,11 @@ import SwiftUI
             do { try await IdeaCardFixture.install(in: library) }
             catch { library.errorMessage = "UI fixture failed: \(error.localizedDescription)" }
         }
+        if let id = environment["LIL_UI_TEST_RUN_ID"], UUID(uuidString: id) != nil,
+           environment["LIL_SIX_STAGE_FIXTURE"] == "1" {
+            do { try await IdeaCardFixture.installSixStages(in: library) }
+            catch { library.errorMessage = "UI fixture failed: \(error.localizedDescription)" }
+        }
         #endif
     }
     var body: some Scene {

@@ -98,3 +98,11 @@ Keep Ideas reachable from home. Provide a focused flip-card carousel and a two-c
 ## Catalog 001 identity foundation (Handoff 004.5)
 
 `Catalog/Catalog-001.json` is the separate static editorial identity source for the approved 50 books and eight shelves. Do not repurpose the installed `CollectionCatalog` or infer package availability from catalog presence. Reuse the exact catalog book ID before authoring; preserve established `influential-mind` and `never-split-the-difference` IDs across revisions. New titles outside Catalog 001 require an approved later catalog revision. Validate changes with `Tools/validate_catalog.py` and its negative tests. Keep the whole-collection import, 1–12 idea and ≤300-second reference contracts. Handoff 004.5 is metadata/validation only; Handoff 005 will address remote discovery/distribution separately.
+
+## Six-stage authoring and reader (Handoff 004.6)
+
+New/re-authored ideas require exactly six illustrated pages: intro, explanation, story, story, application, takeaway; roles guide, guide, storyteller, storyteller, guide, guide. Require six distinct image IDs and resolved image bytes with descriptions, exactly two questions and the existing ≤300-second complete experience gate. Cross-idea byte reuse is an editorial warning. Keep runtime 2–40-page compatibility, stable identities, revisions, stored progress and collected cards. Never auto-rewrite old packages to meet the new authoring standard. See CONTENT_AUTHORING.md and the root Handoff 004.6 PDF.
+
+Canonical progress has five weighted stages (1:1:2:1:1), with physical Story halves and accessible physical screen counts. Legacy sequences use per-page capsules. Only Story pages auto-follow narration; manual scrolling, VoiceOver and Reduce Motion retain priority. Takeaway artwork is visible without changing card snapshots or reveal/practice boundaries.
+
+Handoff 005 must implement real book offload by separating removable prose/art/package snapshots from durable cards, favorites, progress and lightweight book history. Removing only the active catalog entry cannot reclaim historical payload snapshots. Preserve stable identities and reconnect compatible progress upon reinstall. Offload, downloads and History UI remain outside 004.6; do not ship offload before reclamation and state-preservation tests pass.

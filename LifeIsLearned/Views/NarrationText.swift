@@ -10,6 +10,7 @@ struct NarrationText: UIViewRepresentable {
     let spokenRange: NSRange?
     let isPlaying: Bool
     let textSize: Double
+    var followNarration = false
     @ScaledMetric(relativeTo: .body) private var fontScale = 1.0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -27,7 +28,7 @@ struct NarrationText: UIViewRepresentable {
     func updateUIView(_ view: NarrationTextView, context: Context) {
         view.configure(text: text, fontSize: textSize * fontScale,
                        range: Self.bodyRange(text: text, title: title, spokenText: spokenText, spokenRange: spokenRange),
-                       following: isPlaying, reduceMotion: reduceMotion)
+                       following: isPlaying && followNarration, reduceMotion: reduceMotion)
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: NarrationTextView, context: Context) -> CGSize? {
@@ -38,12 +39,14 @@ struct NarrationText: UIViewRepresentable {
 
 final class NarrationTextView: UITextView {
     private var spokenRange: NSRange?
-    private var following = false
+    private(set) var following = false
+    private let voiceOverRunning: () -> Bool
     private var reduceMotion = false
     private var updateGeneration = 0
     private var previousSize = CGSize.zero
 
-    init() {
+    init(voiceOverRunning: @escaping () -> Bool = { UIAccessibility.isVoiceOverRunning }) {
+        self.voiceOverRunning = voiceOverRunning
         // Use TextKit's actual line geometry instead of estimating from character counts.
         let storage = NSTextStorage()
         let layout = NSLayoutManager()
@@ -108,7 +111,7 @@ final class NarrationTextView: UITextView {
 
     func followSpokenLine() {
         guard following, let range = spokenRange, window != nil,
-              !UIAccessibility.isVoiceOverRunning else { return }
+              !voiceOverRunning() else { return }
         var ancestor = superview
         while let view = ancestor, !(view is UIScrollView) { ancestor = view.superview }
         guard let scroll = ancestor as? UIScrollView,
