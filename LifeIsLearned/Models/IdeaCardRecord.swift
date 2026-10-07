@@ -8,7 +8,9 @@ struct IdeaCardRecord: Codable, Identifiable, Equatable, Sendable {
         var application: String
         var bookTitle: String
         var author: String
+        var hasDiveDeeper: Bool? = nil
         init(book: LearningBook, lesson: Lesson) {
+            hasDiveDeeper = lesson.diveDeeper == nil ? nil : true
             title = lesson.title
             takeaway = lesson.pages.first { $0.kind == .takeaway }?.text ?? lesson.subtitle
             application = lesson.subtitle; bookTitle = book.title; author = book.author

@@ -52,3 +52,7 @@ Card recovery is independent of catalog/progress recovery and considers only CUR
 The sections above describe the v2 compatibility/migration source. Handoff 005 moves normal operation to `Library-v3` with separate removable package files and durable lightweight state snapshots. It intentionally ends permanent historical package retention and normal archived-source reconstruction. Earned card text/favorites and all revision progress remain durable. See [the v3 transaction, migration and byte-reclamation evidence](Evidence/Handoff005/005B-storage-offload/README.md).
 
 V2 is untouched before verified v3 publication, then cleaned after a verified v3 launch. An explicit offload verifies v3 before cleanup and uses a recovery journal plus atomic single-file deletion. First-completion events survive later updates, including an unknown historical date without fabrication. Reinstall must pass retained collection and idea revision checks and any required removal acknowledgement. There is no UI-only offload.
+
+### Handoff 005E optional reading
+
+Dive Deeper stays in the removable package. A newly earned card snapshot can record `hasDiveDeeper: true`, a lightweight availability hint, with no deeper prose/source payload. Old snapshots omit it unchanged. Offloaded hints route to source-specific restoration; current updated content stays locked until its revision is practiced. Reinstallation reconnects the existing progress and card identity.

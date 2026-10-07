@@ -10,6 +10,7 @@ struct LessonCompletionView: View {
     // Native view tests can render both paths without changing the device preference.
     var reduceMotionOverride: Bool? = nil
     @State private var bloomID: UUID?
+    @State private var deeper = false
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 26) {
@@ -39,10 +40,18 @@ struct LessonCompletionView: View {
                     }
                     Button("Back to book", action: continueBook).frame(minHeight: 44)
                     if let viewCard, session.hasCollectedCard { Button("View collected card", action: viewCard).frame(minHeight: 44) }
+                    if session.canDiveDeeper {
+                        Button("Dive deeper") { session.speech.stop(); deeper = true }.frame(minHeight: 44).accessibilityIdentifier("completion-dive-deeper")
+                    }
                     if let reviewIdea { Button("Review this idea", action: reviewIdea).frame(minHeight: 44) }
                 }.buttonStyle(EditorialButtonStyle())
             }.padding(28).readingWidth()
         }.onAppear { bloomID = session.takeCompletionBloom() }
             .onDisappear { bloomID = nil }
+            .sheet(isPresented: $deeper) {
+                if let content = session.lesson.diveDeeper, session.canDiveDeeper {
+                    DiveDeeperView(destination: DiveDeeperDestination(content: content, sources: session.book.sources, lessonTitle: session.lesson.title))
+                }
+            }
     }
 }

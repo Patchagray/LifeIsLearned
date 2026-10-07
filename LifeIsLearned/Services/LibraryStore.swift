@@ -76,6 +76,21 @@ import Combine
         let book = books.first { $0.id == record.bookID }
         return IdeaCardPresentation(record: record, activeBook: book, activeLesson: book?.lessons.first { $0.id == record.lessonID })
     }
+    func deeperAccess(_ record: IdeaCardRecord) -> DiveDeeperAccess {
+        guard let book = books.first(where: { $0.id == record.bookID }),
+              let lesson = book.lessons.first(where: { $0.id == record.lessonID }) else {
+            guard record.snapshot.hasDiveDeeper == true else { return .unavailable }
+            return source(for: record.bookID).kind == .remoteCatalog ? .restoreRemote : .restoreManual
+        }
+        guard lesson.diveDeeper != nil else { return .unavailable }
+        return status(book: book, lesson: lesson).practiceComplete ? .available : .locked
+    }
+    func deeperDestination(_ record: IdeaCardRecord) -> DiveDeeperDestination? {
+        guard deeperAccess(record) == .available,
+              let book = books.first(where: { $0.id == record.bookID }),
+              let lesson = book.lessons.first(where: { $0.id == record.lessonID }), let content = lesson.diveDeeper else { return nil }
+        return DiveDeeperDestination(content: content, sources: book.sources, lessonTitle: lesson.title)
+    }
     func cardReview(_ record: IdeaCardRecord) async -> LessonLaunch? {
         if let book = books.first(where: { $0.id == record.bookID }), let lesson = book.lessons.first(where: { $0.id == record.lessonID }) {
             return LessonLaunch(book: book, lesson: lesson, review: true)

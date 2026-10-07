@@ -80,6 +80,9 @@
 		180F86A74DF5FDF7EB830EF3 /* BookRequestView.swift */ = {isa = PBXBuildFile; fileRef = 9B28CDD4C1A5486BDD81E036; };
 		49F103FFB5A89431E09C99EF /* BookScannerView.swift */ = {isa = PBXBuildFile; fileRef = E7A3C06930E2D74552DE0268; };
 		432C206233D31C063BA255CA /* BookDiscoveryRequestTests.swift */ = {isa = PBXBuildFile; fileRef = 6A252050D121069DB895333B; };
+		2BE4038CE88B9712F5C0C7E0 /* DiveDeeper.swift */ = {isa = PBXBuildFile; fileRef = 735950B392AEB122F195DAD5; };
+		BF91ECDCA03BB0BC96AD1CCF /* DiveDeeperView.swift */ = {isa = PBXBuildFile; fileRef = DCA9D9F09E5C7F41FDA810C4; };
+		E1AE3D2CE0C34B3B961F7FAA /* DiveDeeperTests.swift */ = {isa = PBXBuildFile; fileRef = BD46DD523486AF8275430DAF; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +172,9 @@
 		9B28CDD4C1A5486BDD81E036 /* BookRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookRequestView.swift"; sourceTree = "<group>"; };
 		E7A3C06930E2D74552DE0268 /* BookScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookScannerView.swift"; sourceTree = "<group>"; };
 		6A252050D121069DB895333B /* BookDiscoveryRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookDiscoveryRequestTests.swift"; sourceTree = "<group>"; };
+		735950B392AEB122F195DAD5 /* DiveDeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiveDeeper.swift"; sourceTree = "<group>"; };
+		DCA9D9F09E5C7F41FDA810C4 /* DiveDeeperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiveDeeperView.swift"; sourceTree = "<group>"; };
+		BD46DD523486AF8275430DAF /* DiveDeeperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiveDeeperTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +252,7 @@
 		6C923F6D92369A43B16924F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DCA9D9F09E5C7F41FDA810C4 /* DiveDeeperView.swift */,
 				E7A3C06930E2D74552DE0268 /* BookScannerView.swift */,
 				9B28CDD4C1A5486BDD81E036 /* BookRequestView.swift */,
 				6D80DA146ECE5967D6540A43 /* DiscoveryView.swift */,
@@ -280,6 +287,7 @@
 		A2A9809DAF0AEE6960B34B37 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				735950B392AEB122F195DAD5 /* DiveDeeper.swift */,
 				AE34C1AD1C96471526045479 /* BookRecognition.swift */,
 				527F8C6A868325F28B713B75 /* DiscoveryCatalog.swift */,
 				CF2A18B3CEF443026D780402 /* LibraryState.swift */,
@@ -297,6 +305,7 @@
 		C4E2E7F217DE3642E7714F4E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BD46DD523486AF8275430DAF /* DiveDeeperTests.swift */,
 				6A252050D121069DB895333B /* BookDiscoveryRequestTests.swift */,
 				0ECAB63461C6224B4C04EE08 /* DiscoveryTests.swift */,
 				6F31254E17700220FB9DB8C5 /* LibraryV3Tests.swift */,
@@ -432,6 +441,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF91ECDCA03BB0BC96AD1CCF /* DiveDeeperView.swift */,
+				2BE4038CE88B9712F5C0C7E0 /* DiveDeeper.swift */,
 				49F103FFB5A89431E09C99EF /* BookScannerView.swift */,
 				180F86A74DF5FDF7EB830EF3 /* BookRequestView.swift */,
 				3C0AD83F5814204E88BA60B0 /* BookRequestClient.swift */,
@@ -491,6 +502,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1AE3D2CE0C34B3B961F7FAA /* DiveDeeperTests.swift */,
 				432C206233D31C063BA255CA /* BookDiscoveryRequestTests.swift */,
 				AAFD282596ED272DC37AB758 /* DiscoveryTests.swift */,
 				348C5C4A5CA548CC7A899893 /* LibraryV3Tests.swift */,

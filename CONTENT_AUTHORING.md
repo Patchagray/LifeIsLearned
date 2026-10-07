@@ -157,3 +157,11 @@ Distribution remains manual Files import. GitHub Releases and a small catalog, r
 ## Collected cards (Handoff 004)
 
 No additional import fields are required. Earned cards derive their title from `lesson.title`, takeaway from the takeaway page's `text`, application reminder from `lesson.subtitle`, and source from the book title/author. Continue to author accurate, concise, reviewed text using the existing format. The app retains a text snapshot only when the learner completes practice; importing an update does not rewrite an already earned card. Do not shorten, reword, or automatically revise reviewed lesson content just to fit a card thumbnail. Full card details remain scrollable.
+
+## Optional Dive Deeper (Handoff 005E)
+
+A lesson may add `diveDeeper: { title, summary?, sections: [{ id, title, text, sourceIDs }] }`. Omit it when no reviewed extension is useful. Sections have unique nonempty IDs, titles and text; **every section requires valid reviewed source IDs**. Use it for worked examples, limits, connections and applications after the core idea is earned. The summary is editorial framing, not a place for unsupported factual claims.
+
+Dive Deeper is not a seventh core stage and is excluded from the existing 300-second planning/release script. It cannot be used to move required core explanation or either application question out of the core gate. Changing its content or referenced source definitions requires the same idea/collection revision increases as other lesson content. Nil/absent fields preserve legacy decoding and fingerprints. There is no requirement to author it for every idea.
+
+Only a lightweight `hasDiveDeeper` flag is retained in newly earned card snapshots; deeper prose/sources remain removable package payload. Offloading offers remote download/manual re-import. An updated revision's deeper reading unlocks after that current core revision is practiced. Earned card text is not rewritten by an uncompleted update.

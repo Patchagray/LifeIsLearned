@@ -4,6 +4,22 @@ import Foundation
 /// Synthetic UI/performance fixture. Invoked only from an explicitly isolated
 /// UUID test installation; never populates a person's normal library.
 @MainActor enum IdeaCardFixture {
+    static func installDeeper(in store: LibraryStore) async throws {
+        await store.ready()
+        guard !store.books.contains(where: { $0.id == "deeper-fixture" }), let url = Bundle.main.url(forResource: "starter", withExtension: "json") else { return }
+        var package = try LessonPackage.decodeImport(Data(contentsOf: url))
+        package.book.id = "deeper-fixture"; package.book.title = "Dive Deeper verification"
+        package.book.author = "Synthetic interface fixture"; package.book.isDemo = nil
+        package.book.lessons[0].id = "deeper-idea"
+        package.book.lessons[0].diveDeeper = DiveDeeperContent(title: "Room for a closer look", summary: "An optional reading space. Synthetic interface verification only.", sections: [
+            DiveDeeperSection(id: "example", title: "A worked example", text: "This is an interface fixture, not a new claim about the book. It demonstrates a longer, scrollable section after the core idea has been practiced.\n\nThe learner can pause here, return to a source, or close this reading space at any time.", sourceIDs: [package.book.sources[0].id]),
+            DiveDeeperSection(id: "limits", title: "Where the idea needs care", text: "Synthetic section for source links, spacing and accessibility checks. Production deeper content requires editorial review and a revision increase when changed.", sourceIDs: [package.book.sources[0].id])])
+        package.manifest = package.book.lessons.map { IdeaManifestEntry(id: $0.id, revision: $0.revision) }
+        let review = try await store.storage.review(package: package, catalog: store.catalog)
+        await store.commitImport(review); store.importedBook = nil
+        store.update(book: package.book, lesson: package.book.lessons[0]) { $0.phase = .practice }
+        await store.flush()
+    }
     static func installSixStages(in store: LibraryStore) async throws {
         await store.ready()
         guard !store.books.contains(where: { $0.id == "six-stage-fixture" }),

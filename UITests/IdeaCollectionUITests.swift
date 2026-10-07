@@ -382,3 +382,42 @@ final class ScannerRequestUITests: XCTestCase {
         let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
     }
 }
+
+final class DiveDeeperUITests: XCTestCase {
+    private var largeText = false
+    func testCompletionAndCollectedCardEntryPoints() { exerciseDeeper() }
+    func testCompletionAndCollectedCardAtLargeText() { largeText = true; exerciseDeeper() }
+    private func exerciseDeeper() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_DEEPER_FIXTURE"] = "1"
+        if largeText { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
+        app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25))
+        let book = app.buttons["book-deeper-fixture"]; reveal(book, app); book.tap()
+        let idea = app.buttons["idea-deeper-idea"]; reveal(idea, app); idea.tap()
+        XCTAssertFalse(app.buttons["completion-dive-deeper"].exists)
+        let first = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Option 1.'")).firstMatch
+        reveal(first, app); first.tap(); app.buttons["Continue"].tap()
+        let second = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Option 3.'")).firstMatch
+        reveal(second, app); second.tap(); app.buttons["Finish lesson"].tap()
+        let deep = app.buttons["completion-dive-deeper"]; reveal(deep, app)
+        snapshot("h005e-completion-entry"); deep.tap()
+        reveal(app.staticTexts["A worked example"], app)
+        snapshot("h005e-section-view")
+        app.buttons["Done"].tap()
+        let card = app.buttons["View collected card"]; reveal(card, app); card.tap()
+        let cardDeep = app.buttons["card-dive-deeper"]; reveal(cardDeep, app)
+        snapshot("h005e-card-entry"); cardDeep.tap()
+        reveal(app.staticTexts["A worked example"], app)
+        snapshot("h005e-from-card")
+    }
+    private func reveal(_ element: XCUIElement, _ app: XCUIApplication) {
+        for _ in 0..<16 { if element.exists && element.isHittable { return }; app.swipeUp() }
+        XCTAssertTrue(element.isHittable)
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = largeText ? name + "-large-text" : name; a.lifetime = .keepAlways; add(a)
+    }
+}

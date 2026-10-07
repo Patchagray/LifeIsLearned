@@ -22,6 +22,18 @@ class AuthoringTests(unittest.TestCase):
     def setUpClass(cls):
         cls.demo = json.loads((ROOT/'Example-Lesson-Package.json').read_text())
 
+    def test_dive_deeper_sources_and_core_timing_exclusion(self):
+        package = self.canonical()
+        before = package_report(package)
+        lesson = package['book']['lessons'][0]
+        lesson['diveDeeper'] = dict(title='Deeper reading', sections=[dict(id='example', title='Example', text='Optional reading. '*1000, sourceIDs=[package['book']['sources'][0]['id']])])
+        content(package)
+        self.assertEqual(package_report(package), before)
+        self.assertEqual(authoring_art_and_stages(package), ([], []))
+        for ids in [[], ['missing-source']]:
+            lesson['diveDeeper']['sections'][0]['sourceIDs'] = ids
+            with self.assertRaises(ValueError): content(package)
+
     def package(self, count=1):
         p = copy.deepcopy(self.demo)
         p['book']['lessons'] = [dict(copy.deepcopy(p['book']['lessons'][0]), id=f'idea-{i}') for i in range(count)]

@@ -51,6 +51,14 @@ def content(p):
         check(url.scheme=='https' and bool(url.netloc) and all(clean(source[k]) for k in ['title','locator','scope']),'Source title, HTTPS URL, locator and scope required')
     known={s['id'] for s in sources}
     for lesson in lessons:
+        deeper=lesson.get('diveDeeper')
+        if deeper is not None:
+            check(isinstance(deeper,dict) and clean(deeper.get('title')), 'Dive Deeper needs a title')
+            sections=deeper.get('sections',[])
+            check(bool(sections) and unique([s.get('id') for s in sections]), 'Dive Deeper sections need unique IDs')
+            for section in sections:
+                check(clean(section.get('title')) and clean(section.get('text')), 'Dive Deeper sections need title and text')
+                check(bool(section.get('sourceIDs')) and set(section['sourceIDs'])<=known, 'Dive Deeper needs reviewed source references')
         check(type(lesson['revision']) is int and lesson['revision']>0 and lesson['estimatedMinutes']>0 and clean(lesson['title']) and clean(lesson['scopeNote']),'Idea title, revision, estimate and scope required')
         pages=lesson['pages'];questions=lesson['questions']
         check(2<=len(pages)<=40 and unique([x['id'] for x in pages]),'Use 2–40 unique screens')

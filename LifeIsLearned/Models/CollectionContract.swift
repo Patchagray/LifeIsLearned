@@ -89,7 +89,7 @@ extension LessonPackage {
             normalized.pages[index].imageAsset = nil
             normalized.pages[index].imageBase64 = nil
         }
-        let usedSources = Set(lesson.pages.flatMap(\.sourceIDs))
+        let usedSources = Set(lesson.pages.flatMap(\.sourceIDs) + (lesson.diveDeeper?.sections.flatMap(\.sourceIDs) ?? []))
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         let data = try encoder.encode(LessonContent(lesson: normalized, images: images,
                     sources: book.sources.filter { usedSources.contains($0.id) }.sorted { $0.id < $1.id }))

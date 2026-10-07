@@ -55,6 +55,7 @@ struct Lesson: Codable, Identifiable, Sendable {
     var scopeNote: String
     var pages: [LessonPage]
     var questions: [PracticeQuestion]
+    var diveDeeper: DiveDeeperContent? = nil
 }
 
 struct LearningBook: Codable, Identifiable, Sendable {
@@ -118,6 +119,7 @@ struct LessonPackage: Codable, Sendable {
         }
         let sourceIDs = Set(book.sources.map(\.id))
         for lesson in book.lessons {
+            try lesson.diveDeeper?.validate(sourceIDs: sourceIDs)
             try require(lesson.revision > 0 && clean(lesson.title) && clean(lesson.scopeNote), "Lesson \(lesson.id) needs title, positive revision and scopeNote.")
             try require(lesson.estimatedMinutes > 0, "Lesson \(lesson.id) needs a positive time estimate.")
             try require((2...40).contains(lesson.pages.count) && unique(lesson.pages.map(\.id)), "Lesson \(lesson.id) needs 2–40 unique screens.")

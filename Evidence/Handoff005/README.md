@@ -34,3 +34,7 @@ Separate discovery metadata, offline cache, Add Books navigation and integrity-c
 ## 005D
 
 Native book recognition, explicit metadata requests and an undeployed credential-safe backend reference are implemented. See [test commands, scanner boundaries and screenshots](005D-scanner-request/README.md). Camera recognition quality remains a physical-device check.
+
+## 005E
+
+Optional earned Dive Deeper content is revision-tracked, source-validated and excluded from core timing. See [tests, source/offload behavior and simulator captures](005E-dive-deeper/README.md).

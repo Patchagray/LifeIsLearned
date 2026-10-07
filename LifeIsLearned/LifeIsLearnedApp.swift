@@ -25,6 +25,11 @@ import SwiftUI
             catch { library.errorMessage = "UI fixture failed: \(error.localizedDescription)" }
         }
         if let id = environment["LIL_UI_TEST_RUN_ID"], UUID(uuidString: id) != nil,
+           environment["LIL_DEEPER_FIXTURE"] == "1" {
+            do { try await IdeaCardFixture.installDeeper(in: library) }
+            catch { library.errorMessage = "UI fixture failed: \(error.localizedDescription)" }
+        }
+        if let id = environment["LIL_UI_TEST_RUN_ID"], UUID(uuidString: id) != nil,
            environment["LIL_SIX_STAGE_FIXTURE"] == "1" {
             do { try await IdeaCardFixture.installSixStages(in: library) }
             catch { library.errorMessage = "UI fixture failed: \(error.localizedDescription)" }

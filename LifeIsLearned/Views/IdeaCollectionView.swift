@@ -15,6 +15,7 @@ import SwiftUI
     @State private var unavailableSource = false
     @State private var unavailableRecord: IdeaCardRecord?
     @State private var openingSource = false
+    @State private var deeper: DiveDeeperDestination?
     init(initialCardID: String? = nil) {
         _selectedID = State(initialValue: initialCardID)
         _carousel = State(initialValue: initialCardID != nil)
@@ -62,6 +63,20 @@ import SwiftUI
                     }
                 }.padding(.vertical, 24)
             }.accessibilityIdentifier("ideas-scroll")
+        }.safeAreaInset(edge: .bottom) {
+            if carousel, let card = cards.first(where: { $0.id == selectedID }) ?? cards.first {
+                let access = library.deeperAccess(card.record)
+                if access != .unavailable {
+                    VStack(spacing: 8) {
+                        FineRule()
+                        if access == .locked { Text("Practice the updated idea to unlock Dive Deeper.").font(.footnote).foregroundStyle(Palette.secondary).padding(.vertical, 10) }
+                        else {
+                            Button { openDeeper(card.record) } label: { Label("Dive deeper", systemImage: "book.pages").frame(minHeight: 44) }
+                                .accessibilityIdentifier("card-dive-deeper")
+                        }
+                    }.padding(.horizontal, 24).readingWidth().background(Palette.paper)
+                }
+            }
         }.readingCanvas().navigationTitle("Ideas").navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -80,6 +95,7 @@ import SwiftUI
                     selectedBook = library.books.first { $0.id == book.id }
                 })
             }
+            .sheet(item: $deeper) { DiveDeeperView(destination: $0) }
             .navigationDestination(item: $selectedBook) { BookDetailView(book: $0) }
             .alert("Your collected idea", isPresented: $unavailableSource) {
                 if let record = unavailableRecord {
@@ -116,6 +132,13 @@ import SwiftUI
             Label(bookID == nil ? "Sort & book" : "Book selected", systemImage: "line.3.horizontal.decrease")
                 .font(.subheadline).frame(minHeight: 44)
         }.accessibilityLabel("Filter and sort ideas")
+    }
+    private func openDeeper(_ record: IdeaCardRecord) {
+        speech.stop()
+        if let destination = library.deeperDestination(record) { deeper = destination }
+        else if library.deeperAccess(record) == .restoreManual || library.deeperAccess(record) == .restoreRemote {
+            unavailableRecord = record; unavailableSource = true
+        }
     }
     private func review(_ record: IdeaCardRecord) {
         guard !openingSource else { return }

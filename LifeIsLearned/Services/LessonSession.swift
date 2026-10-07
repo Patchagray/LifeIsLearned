@@ -50,6 +50,7 @@ import Combine
     var assets: [String: CollectionArtwork] { archivedPackage?.artwork ?? store.package(for: book)?.artwork ?? [:] }
     var reviewDestination: LessonLaunch { LessonLaunch(book: book, lesson: lesson, review: true, archivedPackage: archivedPackage) }
     var nextIdea: LessonLaunch? { store.nextIdea(after: lesson, in: book) }
+    var canDiveDeeper: Bool { lesson.diveDeeper != nil && store.status(book: book, lesson: lesson).practiceComplete }
     var hasCollectedCard: Bool { store.cards[collectedCardID] != nil }
     var collectedCardID: String { LessonProgress.identity(bookID: book.id, lessonID: lesson.id) }
     func takeCompletionBloom() -> UUID? {
