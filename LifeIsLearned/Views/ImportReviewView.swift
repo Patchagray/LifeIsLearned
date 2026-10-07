@@ -30,10 +30,10 @@ struct ImportReviewView: View {
                     } else if review.isUpdate {
                         FineRule()
                         Text("What will change").font(.system(.title2, design: .serif))
-                        changeGroup("Unchanged", lessons: review.unchanged, explanation: "Reading and practice progress stays exactly where it is.")
-                        changeGroup("Added", lessons: review.added, explanation: "New ideas begin fresh. Reinstated ideas keep their matching revision history.")
-                        changeGroup("Revised", lessons: review.revised, explanation: "These ideas are marked Updated · review again. Earlier progress is archived; old answers won't apply to new questions.")
-                        changeGroup("Removed", lessons: review.removed, explanation: "These ideas leave the active list. Their progress and previous collection snapshots are retained for recovery.")
+                        changeGroup("Unchanged", lessons: review.unchanged.map(BookIdeaIdentity.init), explanation: "Reading and practice progress stays exactly where it is.")
+                        changeGroup("Added", lessons: review.added.map(BookIdeaIdentity.init), explanation: "New ideas begin fresh. Reinstated ideas keep their matching revision history.")
+                        changeGroup("Revised", lessons: review.revised.map(BookIdeaIdentity.init), explanation: "These ideas are marked Updated · review again. Earlier progress is archived; old answers won't apply to new questions.")
+                        changeGroup("Removed", lessons: review.removed, explanation: "These ideas leave the active list. Their progress and collected cards remain. Superseded lesson and artwork payloads can be reclaimed.")
                         if !review.removed.isEmpty {
                             Toggle("I understand these \(review.removed.count) ideas will be removed from the active collection", isOn: $acknowledgeRemovals)
                                 .font(.subheadline).padding(16).background(Palette.reflection, in: RoundedRectangle(cornerRadius: 14))
@@ -54,7 +54,7 @@ struct ImportReviewView: View {
                 .toolbar { Button("Cancel") { library.cancelImport() }.disabled(library.isCommitting).frame(minHeight: 44) }
         }.interactiveDismissDisabled(library.isCommitting)
     }
-    private func changeGroup(_ title: String, lessons: [Lesson], explanation: String) -> some View {
+    private func changeGroup(_ title: String, lessons: [BookIdeaIdentity], explanation: String) -> some View {
         DisclosureGroup {
             VStack(alignment: .leading, spacing: 12) {
                 Text(explanation).font(.footnote).foregroundStyle(Palette.secondary)

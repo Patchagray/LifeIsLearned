@@ -19,6 +19,10 @@ Native compilation, deterministic tests, simulator rendering and physical-device
 
 Before screenshots are the existing [004.6 simulator evidence](../Handoff004_6/screenshots/); no new before-device capture was performed. New screenshots are explicitly simulator captures. Physical before/after comparison remains a reviewer check.
 
+## 005B
+
+Library-v3, migration, History, real offload and retained revision checks are implemented. See [transaction details, state dumps, byte counts, exact commands and screenshots](005B-storage-offload/README.md). The art-heavy fixture measures 1,666,926 bytes installed, zero after offload, and 1,666,926 after reinstall, with learner state preserved.
+
 ## Release gates
 
 Reviewer selects an icon direction before final source production. Production catalog/assets/request endpoint and real-network smoke remain reviewer-controlled; fixture passes do not imply deployed services.

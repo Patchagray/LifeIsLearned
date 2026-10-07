@@ -255,3 +255,59 @@ final class SixStageReaderUITests: XCTestCase {
         XCTAssertTrue(element.isHittable)
     }
 }
+
+final class LibraryHistoryUITests: XCTestCase {
+    func testOffloadConfirmationHistoryAndCardsSurviveRelaunch() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_IDEA_CARD_FIXTURE"] = "1"
+        app.launch()
+        let book = app.buttons["book-card-fixture-a"]
+        reveal(book, app); book.tap()
+        app.buttons["Book options"].tap()
+        app.buttons["Offload Book"].tap()
+        let explanation = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Idea Cards, favorites, progress and History stay'")).firstMatch
+        XCTAssertTrue(explanation.waitForExistence(timeout: 5))
+        XCTAssertTrue(explanation.label.contains("re-import"))
+        snapshot("h005b-offload-confirmation")
+        app.buttons["Offload Book"].tap()
+        let history = app.buttons["library-history"]
+        reveal(history, app); history.tap()
+        let restore = app.buttons["restore-book-card-fixture-a"]
+        reveal(restore, app)
+        XCTAssertEqual(restore.label, "Re-import book")
+        XCTAssertTrue(app.staticTexts["Offloaded"].exists)
+        snapshot("h005b-history-offloaded")
+        app.terminate()
+        app.launchEnvironment.removeValue(forKey: "LIL_IDEA_CARD_FIXTURE")
+        app.launch()
+        XCTAssertTrue(app.buttons["Ideas"].waitForExistence(timeout: 20))
+        XCTAssertFalse(app.buttons["book-card-fixture-a"].exists)
+        app.buttons["Ideas"].tap()
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH '20 collected'")).firstMatch.waitForExistence(timeout: 10))
+        snapshot("h005b-cards-after-offload")
+    }
+    func testHistoryAtAccessibilityTextSize() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_IDEA_CARD_FIXTURE"] = "1"
+        app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let history = app.buttons["library-history"]
+        reveal(history, app); history.tap()
+        let open = app.buttons["Open book"].firstMatch
+        reveal(open, app)
+        XCTAssertTrue(open.isHittable)
+        snapshot("h005b-history-accessibility-text")
+    }
+    private func reveal(_ element: XCUIElement, _ app: XCUIApplication) {
+        XCTAssertTrue(element.waitForExistence(timeout: 30))
+        for _ in 0..<12 { if element.isHittable { return }; app.swipeUp() }
+        XCTAssertTrue(element.isHittable)
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
+    }
+}

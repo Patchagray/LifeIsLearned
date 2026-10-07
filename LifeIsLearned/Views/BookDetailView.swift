@@ -6,6 +6,9 @@ import SwiftUI
     @EnvironmentObject private var settings: PlaybackSettings
     @EnvironmentObject private var speech: SpeechPlayer
     @Environment(\.dynamicTypeSize) private var typeSize
+    @Environment(\.dismiss) private var dismiss
+    @State private var confirmingOffload = false
+    @State private var payloadBytes = 0
     @State private var launch: LessonLaunch?
     @State private var showingSources = false
     private var practiced: Int { book.lessons.filter { library.status(book: book, lesson: $0).practiceComplete }.count }
@@ -64,6 +67,30 @@ import SwiftUI
                 }
             }.padding(24).readingWidth(760)
         }.readingCanvas().navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Button("Offload Book", systemImage: "arrow.down.doc") {
+                            speech.stop()
+                            Task {
+                                do { payloadBytes = try await library.storage.packageBytes(bookID: book.id); confirmingOffload = true }
+                                catch { library.errorMessage = "Storage size could not be read. \(error.localizedDescription)" }
+                            }
+                        }.disabled(library.readOnly || library.isCommitting)
+                    } label: { Image(systemName: "ellipsis.circle").frame(width: 44, height: 44) }
+                        .accessibilityLabel("Book options")
+                }
+            }
+            .confirmationDialog("Offload \(book.title)?", isPresented: $confirmingOffload, titleVisibility: .visible) {
+                Button("Offload Book", role: .destructive) {
+                    Task { if await library.offload(book) { dismiss() } }
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("Reclaim approximately \(ByteCountFormatter.string(fromByteCount: Int64(payloadBytes), countStyle: .file)). Idea Cards, favorites, progress and History stay. " +
+                     (library.source(for: book.id).kind == .remoteCatalog ? "You can download this book again." : "You will need to re-import this book from its file."))
+            }
+            .overlay { if library.isCommitting { ProgressView("Saving library…").padding(24).background(Palette.surface, in: RoundedRectangle(cornerRadius: 16)) } }
             .fullScreenCover(item: $launch) { selected in
                 LessonJourneyView(launch: selected, store: library, speech: speech, settings: settings)
             }.sheet(isPresented: $showingSources) { SourcesView(book: book) }

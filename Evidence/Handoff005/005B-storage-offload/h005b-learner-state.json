@@ -1,0 +1,176 @@
+{
+  "afterOffload" : {
+    "cards" : {
+      "16:influential-mind6:priors" : {
+        "bookID" : "influential-mind",
+        "earnedAt" : 801692800,
+        "isFavorite" : true,
+        "lastEarnedRevision" : 1,
+        "lessonID" : "priors",
+        "snapshot" : {
+          "application" : "Why evidence does not enter an empty mind",
+          "author" : "Tali Sharot",
+          "bookTitle" : "The Influential Mind",
+          "takeaway" : "Before defending a conclusion, name what you already believe. Ask what evidence could change your mind. Then examine the strongest support and challenge with the same care.\n\nWhen listening to someone else, understand their starting point too. Common ground can open a conversation; it does not decide what is true.",
+          "title" : "The Prior Problem"
+        }
+      }
+    },
+    "history" : [
+      {
+        "author" : "Tali Sharot",
+        "bookID" : "influential-mind",
+        "firstCompletedAt" : 801692800,
+        "hasCompletedBefore" : true,
+        "ideas" : [
+          {
+            "id" : "priors",
+            "revision" : 1,
+            "title" : "The Prior Problem"
+          }
+        ],
+        "lastKnownCollectionRevision" : 1,
+        "lastKnownIdeaCount" : 1,
+        "lastKnownPracticedCount" : 1,
+        "source" : {
+          "kind" : "manualImport"
+        },
+        "title" : "The Influential Mind"
+      }
+    ],
+    "progress" : {
+      "16:influential-mind6:priors:1" : {
+        "firstTryCorrect" : 1,
+        "pageIndex" : 0,
+        "phase" : "complete",
+        "practice" : {
+          "attempted" : false,
+          "firstTryCorrect" : 0,
+          "questionIndex" : 0
+        },
+        "practiceComplete" : true,
+        "practicedAt" : 801692800,
+        "questionCount" : 2,
+        "readComplete" : true,
+        "takeawayRevealed" : false,
+        "updated" : false
+      }
+    }
+  },
+  "afterReinstall" : {
+    "cards" : {
+      "16:influential-mind6:priors" : {
+        "bookID" : "influential-mind",
+        "earnedAt" : 801692800,
+        "isFavorite" : true,
+        "lastEarnedRevision" : 1,
+        "lessonID" : "priors",
+        "snapshot" : {
+          "application" : "Why evidence does not enter an empty mind",
+          "author" : "Tali Sharot",
+          "bookTitle" : "The Influential Mind",
+          "takeaway" : "Before defending a conclusion, name what you already believe. Ask what evidence could change your mind. Then examine the strongest support and challenge with the same care.\n\nWhen listening to someone else, understand their starting point too. Common ground can open a conversation; it does not decide what is true.",
+          "title" : "The Prior Problem"
+        }
+      }
+    },
+    "history" : [
+      {
+        "author" : "Tali Sharot",
+        "bookID" : "influential-mind",
+        "firstCompletedAt" : 801692800,
+        "hasCompletedBefore" : true,
+        "ideas" : [
+          {
+            "id" : "priors",
+            "revision" : 1,
+            "title" : "The Prior Problem"
+          }
+        ],
+        "lastKnownCollectionRevision" : 1,
+        "lastKnownIdeaCount" : 1,
+        "lastKnownPracticedCount" : 1,
+        "source" : {
+          "kind" : "manualImport"
+        },
+        "title" : "The Influential Mind"
+      }
+    ],
+    "progress" : {
+      "16:influential-mind6:priors:1" : {
+        "firstTryCorrect" : 1,
+        "pageIndex" : 0,
+        "phase" : "complete",
+        "practice" : {
+          "attempted" : false,
+          "firstTryCorrect" : 0,
+          "questionIndex" : 0
+        },
+        "practiceComplete" : true,
+        "practicedAt" : 801692800,
+        "questionCount" : 2,
+        "readComplete" : true,
+        "takeawayRevealed" : false,
+        "updated" : false
+      }
+    }
+  },
+  "before" : {
+    "cards" : {
+      "16:influential-mind6:priors" : {
+        "bookID" : "influential-mind",
+        "earnedAt" : 801692800,
+        "isFavorite" : true,
+        "lastEarnedRevision" : 1,
+        "lessonID" : "priors",
+        "snapshot" : {
+          "application" : "Why evidence does not enter an empty mind",
+          "author" : "Tali Sharot",
+          "bookTitle" : "The Influential Mind",
+          "takeaway" : "Before defending a conclusion, name what you already believe. Ask what evidence could change your mind. Then examine the strongest support and challenge with the same care.\n\nWhen listening to someone else, understand their starting point too. Common ground can open a conversation; it does not decide what is true.",
+          "title" : "The Prior Problem"
+        }
+      }
+    },
+    "history" : [
+      {
+        "author" : "Tali Sharot",
+        "bookID" : "influential-mind",
+        "firstCompletedAt" : 801692800,
+        "hasCompletedBefore" : true,
+        "ideas" : [
+          {
+            "id" : "priors",
+            "revision" : 1,
+            "title" : "The Prior Problem"
+          }
+        ],
+        "lastKnownCollectionRevision" : 1,
+        "lastKnownIdeaCount" : 1,
+        "lastKnownPracticedCount" : 1,
+        "source" : {
+          "kind" : "manualImport"
+        },
+        "title" : "The Influential Mind"
+      }
+    ],
+    "progress" : {
+      "16:influential-mind6:priors:1" : {
+        "firstTryCorrect" : 1,
+        "pageIndex" : 0,
+        "phase" : "complete",
+        "practice" : {
+          "attempted" : false,
+          "firstTryCorrect" : 0,
+          "questionIndex" : 0
+        },
+        "practiceComplete" : true,
+        "practicedAt" : 801692800,
+        "questionCount" : 2,
+        "readComplete" : true,
+        "takeawayRevealed" : false,
+        "updated" : false
+      }
+    }
+  }
+}

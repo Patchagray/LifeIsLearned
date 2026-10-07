@@ -40,11 +40,86 @@
       ],
       "authoringTestsPassed": 21,
       "portableChecksPassed": 400,
+      "physicalChecks": "pending",
+      "implementationCommit": "c3128c3c68177b9661ab4c8726b03f17b30a2380"
+    },
+    "005B": {
+      "status": "passed",
+      "runs": [
+        {
+          "run": "005B-native-final",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 29,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        },
+        {
+          "run": "005B-ui",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 2,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        },
+        {
+          "run": "005B-final",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "os": "26.3.1",
+              "passed": 6,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        },
+        {
+          "run": "005B-large",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "os": "26.3.1",
+              "passed": 1,
+              "failed": 0,
+              "skipped": 0
+            },
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 1,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        }
+      ],
+      "storageProof": {
+        "cardCountAfterReinstall": 1,
+        "cardsSHA256": "345d86fac610d660b1d84af4ba4074ea24f7e3e8b4505980e14395f63bbebe12",
+        "fixture": "bundled starter artwork, isolated temporary installation",
+        "historySHA256": "80c2f302f2640d49f85656690b21b10f6b99d35f334a6326f608e4fa2fa88ebe",
+        "installedPayloadBytes": 1666926,
+        "offloadedPayloadBytes": 0,
+        "progressSHA256": "29bb04c39988cbddb7b0dd6ae7d127a28c819e51bc3ff2c5e79070058ec7160a",
+        "reinstalledPayloadBytes": 1666926
+      },
       "physicalChecks": "pending"
     }
   },
   "remaining": [
-    "005B",
     "005C",
     "005D",
     "005E",

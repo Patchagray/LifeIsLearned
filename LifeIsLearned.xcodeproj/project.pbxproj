@@ -62,6 +62,10 @@
 		F88275A7B1AA9F5F298B2464 /* InsightBloom.swift */ = {isa = PBXBuildFile; fileRef = CC850CCD7785A63ECF839B8C; };
 		288EB5E26040EC0401807DFA /* Handoff005ATests.swift */ = {isa = PBXBuildFile; fileRef = 08090B25E3A3BB79DC973747; };
 		D929833BF5DAF2008D529684 /* insight-bloom.wav */ = {isa = PBXBuildFile; fileRef = C2E1D6168CE014EBB26D13A1; };
+		88C46ED34292F32BC9EEF0A9 /* LibraryState.swift */ = {isa = PBXBuildFile; fileRef = CF2A18B3CEF443026D780402; };
+		5EB553586FF4C7DFD4D09627 /* LibraryStorage.swift */ = {isa = PBXBuildFile; fileRef = B0255A47477991DB51156AB9; };
+		348C5C4A5CA548CC7A899893 /* LibraryV3Tests.swift */ = {isa = PBXBuildFile; fileRef = 6F31254E17700220FB9DB8C5; };
+		8B5A4411F966910E18A9AF0B /* BookHistoryView.swift */ = {isa = PBXBuildFile; fileRef = 2DF3F4D494B0497633A35172; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +137,10 @@
 		CC850CCD7785A63ECF839B8C /* InsightBloom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InsightBloom.swift"; sourceTree = "<group>"; };
 		08090B25E3A3BB79DC973747 /* Handoff005ATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Handoff005ATests.swift"; sourceTree = "<group>"; };
 		C2E1D6168CE014EBB26D13A1 /* insight-bloom.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "insight-bloom.wav"; sourceTree = "<group>"; };
+		CF2A18B3CEF443026D780402 /* LibraryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryState.swift"; sourceTree = "<group>"; };
+		B0255A47477991DB51156AB9 /* LibraryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryStorage.swift"; sourceTree = "<group>"; };
+		6F31254E17700220FB9DB8C5 /* LibraryV3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryV3Tests.swift"; sourceTree = "<group>"; };
+		2DF3F4D494B0497633A35172 /* BookHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookHistoryView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +195,7 @@
 		6B8B2B5CD808F874BF4EE1BA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				B0255A47477991DB51156AB9 /* LibraryStorage.swift */,
 				7143A3C84854FF8DF75D205E /* CompletionFeedback.swift */,
 				3AF723EC05F67B7A4D0E9A15 /* IdeaCardFixture.swift */,
 				2475A34BAF033E5A6BC3E852 /* IdeaCardStorage.swift */,
@@ -202,6 +211,7 @@
 		6C923F6D92369A43B16924F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2DF3F4D494B0497633A35172 /* BookHistoryView.swift */,
 				CC850CCD7785A63ECF839B8C /* InsightBloom.swift */,
 				D79EE5C872371B2170E9D59D,
 				2F803D637FE660296EC215B1 /* IdeaGridAccessibility.swift */,
@@ -232,6 +242,7 @@
 		A2A9809DAF0AEE6960B34B37 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CF2A18B3CEF443026D780402 /* LibraryState.swift */,
 				F74E90B096CB57B043588A68,
 				44608A7C347CB4E93C2C4822 /* IdeaCardRecord.swift */,
 				74E6E0E54A8396D5C027DDEC /* LessonTiming.swift */,
@@ -246,6 +257,7 @@
 		C4E2E7F217DE3642E7714F4E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				6F31254E17700220FB9DB8C5 /* LibraryV3Tests.swift */,
 				08090B25E3A3BB79DC973747 /* Handoff005ATests.swift */,
 				7ACDEE7CCB936F1F8A1EE425,
 				12192D0E8E49F7F45772B17D /* IdeaCardPresentationTests.swift */,
@@ -376,6 +388,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B5A4411F966910E18A9AF0B /* BookHistoryView.swift */,
+				5EB553586FF4C7DFD4D09627 /* LibraryStorage.swift */,
+				88C46ED34292F32BC9EEF0A9 /* LibraryState.swift */,
 				F88275A7B1AA9F5F298B2464 /* InsightBloom.swift */,
 				B68C1435ECBE219F01839756 /* CompletionFeedback.swift */,
 				B5B9D68559991A40238FAF13,
@@ -422,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				348C5C4A5CA548CC7A899893 /* LibraryV3Tests.swift */,
 				288EB5E26040EC0401807DFA /* Handoff005ATests.swift */,
 				421121DEAD2E50083FC72484,
 				424FD54B6DFDDF152509AA78 /* IdeaCardPresentationTests.swift in Sources */,

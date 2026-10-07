@@ -1,5 +1,9 @@
 # Validation report
 
+## Handoff 005 — in progress
+
+Branch `feature/handoff-005-library-platform`, baseline `74a18997dbf8931366ae5acd18f5a4a23ed8699d`. Epic 005A is committed at `c3128c3c68177b9661ab4c8726b03f17b30a2380`. Per-epic commands, simulator captures, state/byte evidence and remaining gates are in [Evidence/Handoff005](Evidence/Handoff005/README.md). This does not upgrade prior physical-device checks to verification of the new platform. No production releases or endpoints have been deployed.
+
 ## Handoff 004.6 — October 6, 2026
 
 Implemented on `feature/handoff-004-6-six-stage-lessons` from baseline `11742da7aa896ffb4ea77c5f2117d49fd93b5254`. Tested implementation: `dd193108db97166fdcd07cd047ae42ed4f030c3c`. See [exact commands, results, source hashes and 22 screenshots](Evidence/Handoff004_6/README.md).

@@ -13,13 +13,14 @@ import SwiftUI
     @State private var launch: LessonLaunch?
     @State private var selectedBook: LearningBook?
     @State private var unavailableSource = false
+    @State private var unavailableRecord: IdeaCardRecord?
     @State private var openingSource = false
     init(initialCardID: String? = nil) {
         _selectedID = State(initialValue: initialCardID)
         _carousel = State(initialValue: initialCardID != nil)
     }
     private var orderedCards: [IdeaCardRecord] {
-        IdeaCardCollection.ordered(Array(library.cards.values), books: library.books, sort: sort)
+        IdeaCardCollection.ordered(Array(library.cards.values), books: library.books, sort: sort, history: library.history)
     }
     private var cards: [IdeaCardPresentation] {
         IdeaCardCollection.select(from: orderedCards, favoritesOnly: favoritesOnly, bookID: bookID).map(library.cardPresentation)
@@ -81,8 +82,11 @@ import SwiftUI
             }
             .navigationDestination(item: $selectedBook) { BookDetailView(book: $0) }
             .alert("Your collected idea", isPresented: $unavailableSource) {
-                Button("OK", role: .cancel) { }
-            } message: { Text("The original lesson is no longer available in saved content. Your collected card and favorite are preserved.") }
+                if let record = unavailableRecord {
+                    Button(library.source(for: record.bookID).restoreTitle) { library.restoreBookID = record.bookID }
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: { Text(unavailableRecord.map { library.source(for: $0.bookID).restoreMessage } ?? "Your collected card and favorite remain available.") }
     }
     private var controls: some View {
         ViewThatFits(in: .horizontal) {
@@ -119,7 +123,7 @@ import SwiftUI
         Task {
             let destination = await library.cardReview(record)
             openingSource = false
-            if let destination { launch = destination } else { unavailableSource = true }
+            if let destination { launch = destination } else { unavailableRecord = record; unavailableSource = true }
         }
     }
 }

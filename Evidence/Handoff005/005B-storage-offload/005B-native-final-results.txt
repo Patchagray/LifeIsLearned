@@ -1,0 +1,77 @@
+Test Suite 'Selected tests' started at 2026-10-07 00:21:12.546.
+Test Suite 'LifeIsLearnedTests.xctest' started at 2026-10-07 00:21:12.548.
+Test Suite 'CollectionTests' started at 2026-10-07 00:21:12.548.
+Test Case '-[LifeIsLearnedTests.CollectionTests testFailedWriteLeavesCollectionAndProgressUsableAfterRelaunch]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testFailedWriteLeavesCollectionAndProgressUsableAfterRelaunch]' passed (0.798 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testInstalledLegacyCollectionReadableButFreshLegacyImportRejected]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testInstalledLegacyCollectionReadableButFreshLegacyImportRejected]' passed (0.483 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testLegacyMigrationKeepsProgressAndCorruptContentDoesNotEraseIt]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testLegacyMigrationKeepsProgressAndCorruptContentDoesNotEraseIt]' passed (0.586 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testMaximumRepresentativeCollectionImportKeepsMainActorResponsive]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testMaximumRepresentativeCollectionImportKeepsMainActorResponsive]' passed (5.717 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testRevisionRulesAndDeterministicContentComparison]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testRevisionRulesAndDeterministicContentComparison]' passed (0.740 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testSnapshotProgressRecoversIndependentlyAndUncommittedDirectoryIsIgnored]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testSnapshotProgressRecoversIndependentlyAndUncommittedDirectoryIsIgnored]' passed (0.400 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testUnreadableProgressIsPreservedAndNeverOverwrittenWithEmptyState]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testUnreadableProgressIsPreservedAndNeverOverwrittenWithEmptyState]' passed (0.267 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testUpdateReordersPreservesUnchangedAndArchivesRevisedAndRemoved]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testUpdateReordersPreservesUnchangedAndArchivesRevisedAndRemoved]' passed (1.440 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testValidatorRejectsIncompleteDuplicateMissingAndOversizedAssets]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testValidatorRejectsIncompleteDuplicateMissingAndOversizedAssets]' passed (0.408 seconds).
+Test Case '-[LifeIsLearnedTests.CollectionTests testWholeCollectionPreviewCancelImportAndIdenticalNoOp]' started.
+Test Case '-[LifeIsLearnedTests.CollectionTests testWholeCollectionPreviewCancelImportAndIdenticalNoOp]' passed (0.879 seconds).
+Test Suite 'CollectionTests' passed at 2026-10-07 00:21:24.277.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 11.718 (11.729) seconds
+Test Suite 'ContentPolicyTests' started at 2026-10-07 00:21:24.278.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testNewImportIdeaBoundariesAndAssetResourceBudgets]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testNewImportIdeaBoundariesAndAssetResourceBudgets]' passed (0.874 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testShortDemoIsExplicitRevisionUpdateAndDoesNotReplaceInstalledSeed]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testShortDemoIsExplicitRevisionUpdateAndDoesNotReplaceInstalledSeed]' passed (0.560 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testStoredHundredIdeaCollectionSurvivesAndCompliantUpdateRequiresRemovals]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testStoredHundredIdeaCollectionSurvivesAndCompliantUpdateRequiresRemovals]' passed (12.325 seconds).
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testWholeIdeaTimingIncludesTitlesChoicesFeedbackAndPauses]' started.
+Test Case '-[LifeIsLearnedTests.ContentPolicyTests testWholeIdeaTimingIncludesTitlesChoicesFeedbackAndPauses]' passed (0.040 seconds).
+Test Suite 'ContentPolicyTests' passed at 2026-10-07 00:21:38.081.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 13.800 (13.804) seconds
+Test Suite 'IdeaCardTests' started at 2026-10-07 00:21:38.082.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testCardCorruptionRecoversIndependentlyAndTotalFailurePreservesFiles]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testCardCorruptionRecoversIndependentlyAndTotalFailurePreservesFiles]' passed (0.519 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testFailedFavoriteSaveDoesNotPublishPartialState]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testFailedFavoriteSaveDoesNotPublishPartialState]' passed (0.466 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testImperfectCompletionEarnsOnceAndReviewPreservesOriginalScoreAndDate]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testImperfectCompletionEarnsOnceAndReviewPreservesOriginalScoreAndDate]' passed (0.469 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testLegacyMigrationUsesCommittedCompletionAndUnknownDatesRemainUnknown]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testLegacyMigrationUsesCommittedCompletionAndUnknownDatesRemainUnknown]' passed (0.525 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testOrderingIdentityAndMotionPolicy]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testOrderingIdentityAndMotionPolicy]' passed (0.551 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRecoveredCardsBackfillNewOwnershipFromCommittedProgress]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRecoveredCardsBackfillNewOwnershipFromCommittedProgress]' passed (0.394 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRevisionMetadataReorderAndRemovalPreserveOwnedCards]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testRevisionMetadataReorderAndRemovalPreserveOwnedCards]' passed (1.035 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testSequentialNextResumesPracticeReviewsCompletedAndStopsAtFinalIdea]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testSequentialNextResumesPracticeReviewsCompletedAndStopsAtFinalIdea]' passed (0.420 seconds).
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testTwentyCardFilteringRetainsIdentityAndFavoriteState]' started.
+Test Case '-[LifeIsLearnedTests.IdeaCardTests testTwentyCardFilteringRetainsIdentityAndFavoriteState]' passed (1.400 seconds).
+Test Suite 'IdeaCardTests' passed at 2026-10-07 00:21:43.869.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 5.779 (5.787) seconds
+Test Suite 'LibraryV3Tests' started at 2026-10-07 00:21:43.869.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testFailedOffloadAndInterruptedOffloadRecoverAtomically]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testFailedOffloadAndInterruptedOffloadRecoverAtomically]' passed (1.939 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testHistoryOrderingCompletionDatesAndSourceRecovery]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testHistoryOrderingCompletionDatesAndSourceRecovery]' passed (1.155 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testOffloadCannotBypassRevisionOrRemovalRulesAndGCProtectsInstalledFiles]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testOffloadCannotBypassRevisionOrRemovalRulesAndGCProtectsInstalledFiles]' passed (0.881 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testOffloadReclaimsPayloadAndReinstallPreservesState]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testOffloadReclaimsPayloadAndReinstallPreservesState]' passed (0.659 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testUnknownHistoricalCompletionDateSurvivesLaterRevision]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testUnknownHistoricalCompletionDateSurvivesLaterRevision]' passed (0.252 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testV2MigrationInterruptionRoundTripAndVerifiedCleanup]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testV2MigrationInterruptionRoundTripAndVerifiedCleanup]' passed (0.886 seconds).
+Test Suite 'LibraryV3Tests' passed at 2026-10-07 00:21:49.646.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 5.771 (5.777) seconds
+Test Suite 'LifeIsLearnedTests.xctest' passed at 2026-10-07 00:21:49.646.
+	 Executed 29 tests, with 0 failures (0 unexpected) in 37.068 (37.099) seconds
+Test Suite 'Selected tests' passed at 2026-10-07 00:21:49.647.
+	 Executed 29 tests, with 0 failures (0 unexpected) in 37.068 (37.101) seconds
+** TEST SUCCEEDED **

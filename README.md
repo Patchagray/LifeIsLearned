@@ -2,6 +2,10 @@
 
 An independent native SwiftUI iPhone/iPad app for Mario: learn one idea at a time through illustrated screens, two narration roles, automatic progression, and feedback. The name is provisional.
 
+## Handoff 005 implementation branch
+
+Reader artwork/authoring cleanup and completion feedback are implemented. Library-v3 separates removable packages from cards, progress and History; **Book options → Offload Book** reclaims package/art storage, and **History** retains offloaded books. Manual books require re-import; remote source metadata is retained for the discovery/download epic. Older sections below document prior milestones and their original verification boundaries. See [current Handoff 005 evidence](Evidence/Handoff005/README.md).
+
 ## Run it
 
 1. Open the local project folder, or clone this repository on your Mac.

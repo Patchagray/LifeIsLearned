@@ -8,6 +8,8 @@ import UniformTypeIdentifiers
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var importing = false
     @State private var showingIdeas = false
+    @State private var showingHistory = false
+    @State private var remoteRestoreUnavailable = false
     @State private var showingSettings = false
     @State private var search = ""
     @State private var launch: LessonLaunch?
@@ -42,6 +44,11 @@ import UniformTypeIdentifiers
                         FineRule()
                         librarySection
                     }
+                    if !library.history.isEmpty {
+                        Button { speech.stop(); showingHistory = true } label: {
+                            Label("History", systemImage: "clock.arrow.circlepath").font(.subheadline).frame(minHeight: 44)
+                        }.accessibilityIdentifier("library-history")
+                    }
                 }.padding(24).readingWidth(Layout.homeWidth)
             }.readingCanvas()
                 .navigationTitle("Life Is Learned").navigationBarTitleDisplayMode(.inline)
@@ -59,10 +66,20 @@ import UniformTypeIdentifiers
                             .accessibilityLabel("Playback settings")
                     }
                 }
+                .navigationDestination(isPresented: $showingHistory) { BookHistoryView() }
                 .navigationDestination(isPresented: $showingIdeas) { IdeaCollectionView() }
                 .navigationDestination(item: $selectedBook) { BookDetailView(book: $0) }
                 .overlay { if library.isPreparingImport { importLoading } }
         }
+        .onChange(of: library.restoreBookID) { _, bookID in
+            guard let bookID else { return }
+            if library.source(for: bookID).kind == .manualImport { importing = true }
+            else { remoteRestoreUnavailable = true }
+            library.restoreBookID = nil
+        }
+        .alert("Download current book", isPresented: $remoteRestoreUnavailable) {
+            Button("OK", role: .cancel) { }
+        } message: { Text("The remote library is not configured yet. Your collected cards and history remain available.") }
         .sheet(isPresented: $showingSettings) { SettingsView() }
         .sheet(isPresented: Binding(get: { library.importReview != nil || library.importedBook != nil }, set: {
             if !$0 { library.cancelImport(); library.importedBook = nil }

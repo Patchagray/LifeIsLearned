@@ -195,7 +195,7 @@ final class CollectionTests: XCTestCase {
         let migrated = LibraryStore(documentsURL: cleanDirectory, defaults: f.defaults, initialPackage: f.package)
         await migrated.ready()
         XCTAssertEqual(migrated.progress[key]?.pageIndex, 4); XCTAssertFalse(migrated.readOnly)
-        XCTAssertTrue(FileManager.default.fileExists(atPath: cleanDirectory.appendingPathComponent("Library-v2/CURRENT.json").path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: cleanDirectory.appendingPathComponent("Library-v3/CURRENT.json").path))
     }
 
     @MainActor func testSnapshotProgressRecoversIndependentlyAndUncommittedDirectoryIsIgnored() async throws {
@@ -203,11 +203,11 @@ final class CollectionTests: XCTestCase {
         let lesson = f.package.book.lessons[0]
         f.store.update(book: f.package.book, lesson: lesson) { $0.pageIndex = 5 }
         await f.store.flush()
-        let root = f.directory.appendingPathComponent("Library-v2")
-        let pointer = try JSONDecoder().decode(CollectionStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json")))
+        let root = f.directory.appendingPathComponent("Library-v3")
+        let pointer = try JSONDecoder().decode(LibraryStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json")))
         // Replace rather than edit a shared hard link; only this committed copy is damaged.
-        try Data("broken".utf8).write(to: root.appendingPathComponent(pointer.current).appendingPathComponent("collections.json"), options: .atomic)
-        let orphan = root.appendingPathComponent(UUID().uuidString)
+        try Data("broken".utf8).write(to: root.appendingPathComponent("StateSnapshots/" + pointer.current).appendingPathComponent("library-state.json"), options: .atomic)
+        let orphan = root.appendingPathComponent("StateSnapshots/" + UUID().uuidString)
         try FileManager.default.createDirectory(at: orphan, withIntermediateDirectories: true)
         try Data("{}".utf8).write(to: orphan.appendingPathComponent("progress.json"))
         let reload = LibraryStore(documentsURL: f.directory, defaults: f.defaults, initialPackage: f.package)
@@ -215,13 +215,13 @@ final class CollectionTests: XCTestCase {
         XCTAssertEqual(reload.status(book: f.package.book, lesson: lesson).pageIndex, 5)
         XCTAssertEqual(reload.books.count, 1); XCTAssertFalse(reload.readOnly)
         XCTAssertNotNil(reload.errorMessage)
-        XCTAssertEqual(try String(contentsOf: root.appendingPathComponent(pointer.current).appendingPathComponent("collections.json")), "broken")
+        XCTAssertEqual(try String(contentsOf: root.appendingPathComponent("StateSnapshots/" + pointer.current).appendingPathComponent("library-state.json")), "broken")
         reload.update(book: f.package.book, lesson: lesson) { $0.pageIndex = 6 }
         await reload.flush()
         let savedAgain = LibraryStore(documentsURL: f.directory, defaults: f.defaults, initialPackage: f.package)
         await savedAgain.ready()
         XCTAssertEqual(savedAgain.status(book: f.package.book, lesson: lesson).pageIndex, 6)
-        XCTAssertEqual(try String(contentsOf: root.appendingPathComponent(pointer.current).appendingPathComponent("collections.json")), "broken")
+        XCTAssertEqual(try String(contentsOf: root.appendingPathComponent("StateSnapshots/" + pointer.current).appendingPathComponent("library-state.json")), "broken")
     }
 
     @MainActor func testMaximumRepresentativeCollectionImportKeepsMainActorResponsive() async throws {
@@ -302,9 +302,9 @@ extension CollectionTests {
 
     @MainActor func testUnreadableProgressIsPreservedAndNeverOverwrittenWithEmptyState() async throws {
         let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
-        let root = f.directory.appendingPathComponent("Library-v2")
-        let pointer = try JSONDecoder().decode(CollectionStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json")))
-        let file = root.appendingPathComponent(pointer.current).appendingPathComponent("progress.json")
+        let root = f.directory.appendingPathComponent("Library-v3")
+        let pointer = try JSONDecoder().decode(LibraryStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json")))
+        let file = root.appendingPathComponent("StateSnapshots/" + pointer.current).appendingPathComponent("progress.json")
         try Data("unreadable progress".utf8).write(to: file, options: .atomic)
         let reloaded = LibraryStore(documentsURL: f.directory, defaults: f.defaults, initialPackage: f.package)
         await reloaded.ready()
@@ -312,7 +312,7 @@ extension CollectionTests {
         reloaded.update(book: f.package.book, lesson: f.package.book.lessons[0]) { $0.pageIndex = 2 }
         await reloaded.flush()
         XCTAssertEqual(try String(contentsOf: file), "unreadable progress")
-        XCTAssertEqual(try JSONDecoder().decode(CollectionStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json"))).current, pointer.current)
+        XCTAssertEqual(try JSONDecoder().decode(LibraryStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json"))).current, pointer.current)
     }
 }
 

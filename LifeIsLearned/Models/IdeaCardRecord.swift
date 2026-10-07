@@ -61,8 +61,10 @@ enum IdeaCardCollection {
         ordered.filter { (!favoritesOnly || $0.isFavorite) && (bookID == nil || $0.bookID == bookID) }
     }
 
-    static func ordered(_ records: [IdeaCardRecord], books: [LearningBook], sort: IdeaCardSort) -> [IdeaCardRecord] {
-        let orderedIDs = books.flatMap { b in b.lessons.map { LessonProgress.identity(bookID: b.id, lessonID: $0.id) } }
+    static func ordered(_ records: [IdeaCardRecord], books: [LearningBook], sort: IdeaCardSort, history: [BookHistoryRecord] = []) -> [IdeaCardRecord] {
+        let retainedIDs = Set(history.map(\.bookID))
+        let orderedIDs = history.flatMap { b in b.ideas.map { LessonProgress.identity(bookID: b.bookID, lessonID: $0.id) } }
+            + books.filter { !retainedIDs.contains($0.id) }.flatMap { b in b.lessons.map { LessonProgress.identity(bookID: b.id, lessonID: $0.id) } }
         let positions = Dictionary(uniqueKeysWithValues: orderedIDs.enumerated().map { ($0.element, $0.offset) })
         return records.sorted { a, b in
             switch sort {
