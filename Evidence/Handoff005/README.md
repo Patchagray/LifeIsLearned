@@ -26,3 +26,7 @@ Library-v3, migration, History, real offload and retained revision checks are im
 ## Release gates
 
 Reviewer selects an icon direction before final source production. Production catalog/assets/request endpoint and real-network smoke remain reviewer-controlled; fixture passes do not imply deployed services.
+
+## 005C
+
+Separate discovery metadata, offline cache, Add Books navigation and integrity-checked whole-book downloads are implemented. See [commands, test boundaries and simulator captures](005C-discovery-download/README.md). The shipped preview marks all 50 titles planned; no public release is claimed or published.

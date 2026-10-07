@@ -311,3 +311,35 @@ final class LibraryHistoryUITests: XCTestCase {
         let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
     }
 }
+
+final class DiscoveryUITests: XCTestCase {
+    func testBrowseDownloadUpdateAndOfflineCache() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
+        app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
+        app.buttons["Browse Library"].tap()
+        let download = app.buttons["download-influence-the-psychology-of-persuasion"]
+        XCTAssertTrue(download.waitForExistence(timeout: 20))
+        snapshot("h005c-browse-synthetic")
+        if !download.isHittable { app.swipeUp() }
+        download.tap()
+        XCTAssertTrue(app.buttons["Cancel download"].waitForExistence(timeout: 5))
+        snapshot("h005c-download-progress")
+        let done = app.buttons["Done"]
+        XCTAssertTrue(done.waitForExistence(timeout: 20)); done.tap()
+        XCTAssertTrue(app.staticTexts["In Library"].firstMatch.waitForExistence(timeout: 10))
+        snapshot("h005c-in-library")
+        app.buttons["Refresh catalog"].tap()
+        XCTAssertTrue(app.buttons["Update"].waitForExistence(timeout: 10))
+        snapshot("h005c-update-available")
+        app.buttons["Refresh catalog"].tap()
+        XCTAssertTrue(app.staticTexts["Showing saved catalog · refresh unavailable"].waitForExistence(timeout: 10))
+        snapshot("h005c-offline-cache")
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
+    }
+}
