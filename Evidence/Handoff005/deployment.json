@@ -14,5 +14,6 @@
   "assetCatalogSHA256": "874ae5685ad9963208dbec348ca159e7807241285517945ad57daa3662ff7542",
   "launchEnvironment": "DEVICECTL_CHILD_ variables removed; no test fixtures passed",
   "physicalFeatureChecks": "pending user verification",
-  "rawLogs": "LocalVerification/Handoff005/patcha-* (ignored; identifiers omitted from public evidence)"
+  "rawLogs": "LocalVerification/Handoff005/patcha-* (ignored; identifiers omitted from public evidence)",
+  "sourceCommit": "94707700805d79198156a685e6b4ea4911a1b673"
 }
