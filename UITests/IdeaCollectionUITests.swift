@@ -343,3 +343,42 @@ final class DiscoveryUITests: XCTestCase {
         let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
     }
 }
+
+final class ScannerRequestUITests: XCTestCase {
+    func testISBNTextFallbackAndReviewedRequest() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
+        app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
+        app.buttons["Scan a Book"].tap()
+        XCTAssertTrue(app.buttons["Open camera"].waitForExistence(timeout: 10)); app.buttons["Open camera"].tap()
+        XCTAssertTrue(app.staticTexts["scanner-fallback"].waitForExistence(timeout: 5))
+        snapshot("h005d-camera-unavailable-text-fallback")
+        let isbn = app.textFields["scan-isbn"]
+        isbn.tap(); isbn.typeText("9780141033570")
+        app.buttons["Find matches"].tap()
+        app.swipeUp()
+        XCTAssertTrue(app.staticTexts["Exact ISBN match"].waitForExistence(timeout: 10))
+        snapshot("h005d-isbn-match-synthetic")
+        // A separate isolated launch verifies title recognition fallback without an ISBN.
+        app.terminate(); app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString; app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
+        app.buttons["Scan a Book"].tap()
+        let title = app.textFields["scan-title"]
+        title.tap(); title.typeText("Thinking, Fast and Slow")
+        app.buttons["Find matches"].tap(); app.swipeUp()
+        XCTAssertTrue(app.staticTexts["Title / author match"].firstMatch.waitForExistence(timeout: 10))
+        snapshot("h005d-title-match")
+        app.buttons["Request this book"].firstMatch.tap()
+        XCTAssertTrue(app.buttons["Request this book"].waitForExistence(timeout: 10))
+        snapshot("h005d-review-before-request")
+        app.buttons["Request this book"].tap()
+        XCTAssertTrue(app.staticTexts["request-success"].waitForExistence(timeout: 10))
+        snapshot("h005d-request-accepted-fixture")
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
+    }
+}

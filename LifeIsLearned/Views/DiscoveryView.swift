@@ -94,6 +94,9 @@ private struct DiscoveryBookRow: View {
                 Button(resumable && progress != nil ? "Resume download" : state.rawValue, action: start)
                     .buttonStyle(.borderedProminent).foregroundStyle(Palette.onTeal).disabled(busy).accessibilityIdentifier("download-" + book.id)
             }
+            if state == .comingSoon || state == .request {
+                NavigationLink("Request this book") { BookRequestView(book: RecognizedBook(title: book.title, author: book.author, isbn13: book.isbn13.first ?? ""), catalogBookID: book.id, source: "library") }.frame(minHeight: 44)
+            }
             if let message, message != "In Library" { Text(message).font(.footnote).foregroundStyle(Palette.secondary).accessibilityIdentifier("download-message") }
         }.accessibilityElement(children: .contain).accessibilityIdentifier("discovery-" + book.id)
             .task(id: book.thumbnail) {

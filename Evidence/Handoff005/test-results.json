@@ -145,7 +145,34 @@
       ],
       "pythonTestsPassed": 41,
       "portableChecksPassed": 452,
-      "productionNetwork": "pending reviewer publication/configuration"
+      "productionNetwork": "pending reviewer publication/configuration",
+      "implementationCommit": "87e3f870b88ece2a0ea858dcddc233f454438c18"
+    },
+    "005D": {
+      "status": "Passed",
+      "runs": [
+        {
+          "run": "005D-final",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "passed": 12,
+              "failed": 0,
+              "skipped": 0
+            },
+            {
+              "name": "iPhone 16e",
+              "passed": 12,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        }
+      ],
+      "backendTestsPassed": 4,
+      "physicalCamera": "pending",
+      "deployedBackend": "not deployed, reviewer controlled"
     }
   },
   "remaining": [

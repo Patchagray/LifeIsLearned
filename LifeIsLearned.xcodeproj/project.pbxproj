@@ -75,6 +75,11 @@
 		FC5825D71C165A8CE8A95181 /* DiscoveryView.swift */ = {isa = PBXBuildFile; fileRef = 6D80DA146ECE5967D6540A43; };
 		AAFD282596ED272DC37AB758 /* DiscoveryTests.swift */ = {isa = PBXBuildFile; fileRef = 0ECAB63461C6224B4C04EE08; };
 		9EDDBB67BDB7E7C92BD7CDD9 /* DiscoveryFixture.swift */ = {isa = PBXBuildFile; fileRef = DFFBFE7F007AD1ADCD4551A1; };
+		F254E476FACD78DACE99DFC1 /* BookRecognition.swift */ = {isa = PBXBuildFile; fileRef = AE34C1AD1C96471526045479; };
+		3C0AD83F5814204E88BA60B0 /* BookRequestClient.swift */ = {isa = PBXBuildFile; fileRef = 2A39CC195BCF071700D678C7; };
+		180F86A74DF5FDF7EB830EF3 /* BookRequestView.swift */ = {isa = PBXBuildFile; fileRef = 9B28CDD4C1A5486BDD81E036; };
+		49F103FFB5A89431E09C99EF /* BookScannerView.swift */ = {isa = PBXBuildFile; fileRef = E7A3C06930E2D74552DE0268; };
+		432C206233D31C063BA255CA /* BookDiscoveryRequestTests.swift */ = {isa = PBXBuildFile; fileRef = 6A252050D121069DB895333B; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +164,11 @@
 		6D80DA146ECE5967D6540A43 /* DiscoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiscoveryView.swift"; sourceTree = "<group>"; };
 		0ECAB63461C6224B4C04EE08 /* DiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiscoveryTests.swift"; sourceTree = "<group>"; };
 		DFFBFE7F007AD1ADCD4551A1 /* DiscoveryFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiscoveryFixture.swift"; sourceTree = "<group>"; };
+		AE34C1AD1C96471526045479 /* BookRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookRecognition.swift"; sourceTree = "<group>"; };
+		2A39CC195BCF071700D678C7 /* BookRequestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookRequestClient.swift"; sourceTree = "<group>"; };
+		9B28CDD4C1A5486BDD81E036 /* BookRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookRequestView.swift"; sourceTree = "<group>"; };
+		E7A3C06930E2D74552DE0268 /* BookScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookScannerView.swift"; sourceTree = "<group>"; };
+		6A252050D121069DB895333B /* BookDiscoveryRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookDiscoveryRequestTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +225,7 @@
 		6B8B2B5CD808F874BF4EE1BA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				2A39CC195BCF071700D678C7 /* BookRequestClient.swift */,
 				DFFBFE7F007AD1ADCD4551A1 /* DiscoveryFixture.swift */,
 				580DBCA082C92AA87EA455B5 /* PackageDownloadService.swift */,
 				F7C7B5E19FB1BE66CD7EFD2D /* DiscoveryService.swift */,
@@ -235,6 +246,8 @@
 		6C923F6D92369A43B16924F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E7A3C06930E2D74552DE0268 /* BookScannerView.swift */,
+				9B28CDD4C1A5486BDD81E036 /* BookRequestView.swift */,
 				6D80DA146ECE5967D6540A43 /* DiscoveryView.swift */,
 				2DF3F4D494B0497633A35172 /* BookHistoryView.swift */,
 				CC850CCD7785A63ECF839B8C /* InsightBloom.swift */,
@@ -267,6 +280,7 @@
 		A2A9809DAF0AEE6960B34B37 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AE34C1AD1C96471526045479 /* BookRecognition.swift */,
 				527F8C6A868325F28B713B75 /* DiscoveryCatalog.swift */,
 				CF2A18B3CEF443026D780402 /* LibraryState.swift */,
 				F74E90B096CB57B043588A68,
@@ -283,6 +297,7 @@
 		C4E2E7F217DE3642E7714F4E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				6A252050D121069DB895333B /* BookDiscoveryRequestTests.swift */,
 				0ECAB63461C6224B4C04EE08 /* DiscoveryTests.swift */,
 				6F31254E17700220FB9DB8C5 /* LibraryV3Tests.swift */,
 				08090B25E3A3BB79DC973747 /* Handoff005ATests.swift */,
@@ -417,6 +432,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49F103FFB5A89431E09C99EF /* BookScannerView.swift */,
+				180F86A74DF5FDF7EB830EF3 /* BookRequestView.swift */,
+				3C0AD83F5814204E88BA60B0 /* BookRequestClient.swift */,
+				F254E476FACD78DACE99DFC1 /* BookRecognition.swift */,
 				9EDDBB67BDB7E7C92BD7CDD9 /* DiscoveryFixture.swift */,
 				FC5825D71C165A8CE8A95181 /* DiscoveryView.swift */,
 				E73188FB06048AF1E91EE089 /* PackageDownloadService.swift */,
@@ -472,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				432C206233D31C063BA255CA /* BookDiscoveryRequestTests.swift */,
 				AAFD282596ED272DC37AB758 /* DiscoveryTests.swift */,
 				348C5C4A5CA548CC7A899893 /* LibraryV3Tests.swift */,
 				288EB5E26040EC0401807DFA /* Handoff005ATests.swift */,

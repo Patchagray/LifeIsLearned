@@ -24,13 +24,16 @@ final class DiscoveryFixtureProtocol: URLProtocol, @unchecked Sendable {
                 package.book.author = "Synthetic interface fixture"
                 let bytes = try package.canonicalData()
                 let data: Data
-                if request.url?.lastPathComponent == "catalog.json" {
+                if request.url?.lastPathComponent == "requests" {
+                    data = try JSONEncoder().encode(BookRequestReceipt(status: "accepted", requestKey: "synthetic-fixture", requestCount: 1))
+                } else if request.url?.lastPathComponent == "catalog.json" {
                     let count = Self.nextRefresh()
                     if count > 2 { throw URLError(.notConnectedToInternet) }
                     let identity = try CatalogIdentity.bundled()
                     let original = try DiscoveryCatalog.decode(Data(contentsOf: Bundle.main.url(forResource: "Remote-Catalog-001", withExtension: "json")!), identity: identity)
                     var book = original.books.first { $0.id == package.book.id }!
                     book.title = "Discovery verification fixture"; book.authors = ["Synthetic interface fixture"]
+                    book.isbn13 = ["9780141033570"] // Synthetic ISBN association for matcher UI testing only
                     book.availability = .available
                     book.package = RemotePackage(collectionRevision: count, url: URL(string: "https://h005-fixture.invalid/book.json")!, sha256: LibraryDigest.sha256(bytes), bytes: bytes.count)
                     data = try JSONEncoder().encode(DiscoveryCatalog(schemaVersion: 1, catalogID: "catalog-001", catalogRevision: 1, books: [book] + original.books.filter { $0.id != book.id }))

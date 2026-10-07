@@ -11,6 +11,7 @@ import UniformTypeIdentifiers
     @State private var showingHistory = false
     @State private var addingBooks = false
     @State private var browsing = false
+    @State private var scanning = false
     @State private var discoveryEndpoint = RemoteConfiguration.bundled().catalogURL
     @State private var discoveryFocus: String?
     @State private var showingSettings = false
@@ -69,6 +70,7 @@ import UniformTypeIdentifiers
                             .accessibilityLabel("Playback settings")
                     }
                 }
+                .navigationDestination(isPresented: $scanning) { BookScannerView() }
                 .navigationDestination(isPresented: $browsing) { DiscoveryView(endpoint: discoveryEndpoint, focusID: discoveryFocus) }
                 .navigationDestination(isPresented: $showingHistory) { BookHistoryView() }
                 .navigationDestination(isPresented: $showingIdeas) { IdeaCollectionView() }
@@ -86,7 +88,7 @@ import UniformTypeIdentifiers
         }
         .confirmationDialog("Add Books", isPresented: $addingBooks, titleVisibility: .visible) {
             Button("Browse Library") { discoveryFocus = nil; browsing = true }
-            Button("Scan a Book (coming next)") { }.disabled(true)
+            Button("Scan a Book") { scanning = true }
             Button("Import File") { importing = true }
             Button("Cancel", role: .cancel) { }
         }

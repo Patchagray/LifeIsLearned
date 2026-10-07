@@ -30,3 +30,7 @@ Reviewer selects an icon direction before final source production. Production ca
 ## 005C
 
 Separate discovery metadata, offline cache, Add Books navigation and integrity-checked whole-book downloads are implemented. See [commands, test boundaries and simulator captures](005C-discovery-download/README.md). The shipped preview marks all 50 titles planned; no public release is claimed or published.
+
+## 005D
+
+Native book recognition, explicit metadata requests and an undeployed credential-safe backend reference are implemented. See [test commands, scanner boundaries and screenshots](005D-scanner-request/README.md). Camera recognition quality remains a physical-device check.

@@ -1,0 +1,12 @@
+✔ metadata normalization and strict privacy/identity boundary (5.373464ms)
+✔ same title/ISBN aliases dedupe; later alias bridge preserves counts and first time (20.912026ms)
+✔ HTTP success, duplicate, rate limit and no public admin queue (59.696391ms)
+✔ size, method, unconfigured and DB failure fail closed (4.788536ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 257.822185

@@ -35,3 +35,8 @@ __pycache__/
 
 # Private local verification archive (raw logs, device identifiers, result bundles)
 LocalVerification/
+
+# Reviewer-local request API deployment configuration and tooling state
+Backend/RequestAPI/wrangler.toml
+Backend/RequestAPI/.dev.vars*
+Backend/RequestAPI/.wrangler/
