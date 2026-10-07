@@ -89,12 +89,15 @@ import UIKit
                         } else {
                             Text(session.page.title).font(.system(session.lesson.usesSixStageProgress ? .title2 : .largeTitle, design: .serif)).tracking(-0.5)
                                 .fixedSize(horizontal: false, vertical: true)
-                            LessonIllustration(page: session.page, assets: session.assets)
-                                .frame(maxHeight: session.lesson.usesSixStageProgress && session.page.kind != .story ? 110 : nil)
+                            LessonIllustration(page: session.page, assets: session.assets,
+                                               editorial: session.lesson.usesSixStageProgress && session.page.kind != .story)
                             NarrationText(text: session.page.text, title: session.page.title,
                                           spokenText: speech.spokenText, spokenRange: speech.spokenRange,
                                           isPlaying: speech.isPlaying, textSize: settings.textSize,
                                           followNarration: session.page.kind == .story)
+                            if session.page.kind == .story, session.page.secondaryImageID != nil {
+                                LessonIllustration(page: session.page, assets: session.assets, secondary: true)
+                            }
                         }
                         if session.page.kind == .intro {
                             if session.lesson.usesSixStageProgress {

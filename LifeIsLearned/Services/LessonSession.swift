@@ -20,10 +20,14 @@ import Combine
     private let store: LibraryStore
     let speech: any Narrating
     private let settings: PlaybackSettings
+    private let completionFeedback: any CompletionFeedbackPlaying
+    @Published private(set) var completionBloomID: UUID?
     private let archivedPackage: LessonPackage?
 
     init(book: LearningBook, lesson: Lesson, store: LibraryStore, speech: any Narrating,
-         settings: PlaybackSettings, practiceOnly: Bool, review: Bool = false, archivedPackage: LessonPackage? = nil) {
+         settings: PlaybackSettings, practiceOnly: Bool, review: Bool = false, archivedPackage: LessonPackage? = nil,
+         completionFeedback: (any CompletionFeedbackPlaying)? = nil) {
+        self.completionFeedback = completionFeedback ?? SystemCompletionFeedback()
         self.book = book; self.lesson = lesson; self.store = store
         self.speech = speech; self.settings = settings; self.archivedPackage = archivedPackage
         let saved = store.status(book: book, lesson: lesson)
@@ -48,6 +52,10 @@ import Combine
     var nextIdea: LessonLaunch? { store.nextIdea(after: lesson, in: book) }
     var hasCollectedCard: Bool { store.cards[collectedCardID] != nil }
     var collectedCardID: String { LessonProgress.identity(bookID: book.id, lessonID: lesson.id) }
+    func takeCompletionBloom() -> UUID? {
+        defer { completionBloomID = nil }
+        return completionBloomID
+    }
     func engage() { persist() }
     func persist() {
         store.update(book: book, lesson: lesson) {
@@ -145,6 +153,7 @@ import Combine
             questionIndex += 1; selectedID = nil; attempted = false
             persist()
         } else {
+            let wasComplete = store.status(book: book, lesson: lesson).practiceComplete
             store.update(book: book, lesson: lesson) {
                 if !$0.practiceComplete {
                     $0.practiceComplete = true; $0.questionCount = lesson.questions.count
@@ -153,6 +162,10 @@ import Combine
             }
             phase = .complete
             persist()
+            if !wasComplete && store.status(book: book, lesson: lesson).practiceComplete {
+                completionBloomID = UUID()
+                CompletionFeedback.deliver(using: completionFeedback, settings: settings)
+            }
             speech.speak(LessonNarration.completion(correct: firstTryCorrect, total: lesson.questions.count), role: .guide, settings: settings, finished: nil)
         }
     }

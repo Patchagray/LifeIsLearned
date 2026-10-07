@@ -82,6 +82,9 @@ extension LessonPackage {
                 // the corresponding optimized bytes in v2; installations keep v1 readable.
                 images.append(Data(("bundled:" + name).utf8))
             } else { images.append(nil) }
+            // Omit absent secondary images to preserve pre-005 fingerprints.
+            if let id = page.secondaryImageID { images.append(artwork[id]?.data) }
+            normalized.pages[index].secondaryImageID = nil
             normalized.pages[index].imageID = nil
             normalized.pages[index].imageAsset = nil
             normalized.pages[index].imageBase64 = nil

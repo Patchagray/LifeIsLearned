@@ -21,6 +21,8 @@ final class SixStageLessonTests: XCTestCase {
             page.role = (i == 2 || i == 3) ? .storyteller : .guide
             page.title = titles[i]; page.text = texts[i]
             page.imageDescription = "Synthetic layout fixture using existing reviewed illustration, stage \(i + 1)"
+            if i == 5 { page.imageID = nil; page.imageAsset = nil; page.imageBase64 = nil; page.imageDescription = nil }
+            if i == 2 { page.secondaryImageID = original.book.lessons[0].pages[1].imageID ?? page.imageID; page.secondaryImageDescription = "Second fictional scene, synthetic layout fixture" }
             return page
         }
         return package
@@ -62,6 +64,8 @@ final class SixStageLessonTests: XCTestCase {
         XCTAssertEqual(lesson.progressDescription(at: 3), "Screen 4 of 6 · Story 2 of 2")
         XCTAssertEqual(lesson.progressDescription(at: 4), "Screen 5 of 6 · Practical Application")
         XCTAssertEqual(SixStageLesson.readerLabels[4], "Practical application")
+        var wrongRole = lesson; wrongRole.pages[1].role = .storyteller
+        XCTAssertFalse(wrongRole.usesSixStageProgress)
         var reordered = lesson; reordered.pages.swapAt(1, 2)
         XCTAssertFalse(reordered.usesSixStageProgress)
     }
@@ -156,9 +160,9 @@ final class SixStageLessonTests: XCTestCase {
                 try await Task.sleep(nanoseconds: 100_000_000)
             }
             let image = UIGraphicsImageRenderer(bounds: host.view.bounds).image { _ in host.view.drawHierarchy(in: host.view.bounds, afterScreenUpdates: true) }
-            let attachment = XCTAttachment(image: image); attachment.name = "h0046-\(prefix)-\(name)"; attachment.lifetime = .keepAlways; add(attachment)
+            let attachment = XCTAttachment(image: image); attachment.name = "h005a-\(prefix)-\(name)"; attachment.lifetime = .keepAlways; add(attachment)
         }
-        for (i, name) in ["hook", "explanation", "story-a", "story-b", "application", "takeaway-art"].enumerated() {
+        for (i, name) in ["hook", "explanation", "story-a", "story-b", "application", "takeaway-card"].enumerated() {
             try await capture(name, index: i)
         }
         try await capture("story-long-follow", index: 2, large: true, follow: true)

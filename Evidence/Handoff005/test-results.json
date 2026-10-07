@@ -1,0 +1,53 @@
+{
+  "baseline": "74a18997dbf8931366ae5acd18f5a4a23ed8699d",
+  "epics": {
+    "005A": {
+      "status": "passed",
+      "runs": [
+        {
+          "run": "005A-iphone",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 28,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        },
+        {
+          "run": "005A-reader-native",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "os": "26.3.1",
+              "passed": 6,
+              "failed": 0,
+              "skipped": 0
+            },
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 6,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        }
+      ],
+      "authoringTestsPassed": 21,
+      "portableChecksPassed": 400,
+      "physicalChecks": "pending"
+    }
+  },
+  "remaining": [
+    "005B",
+    "005C",
+    "005D",
+    "005E",
+    "005F"
+  ]
+}

@@ -3,6 +3,7 @@ import Foundation
 /// Presentation recognition only. This never changes runtime package acceptance.
 enum SixStageLesson {
     static let kinds: [PageKind] = [.intro, .explanation, .story, .story, .application, .takeaway]
+    static let roles: [NarrationRole] = [.guide, .guide, .storyteller, .storyteller, .guide, .guide]
     static let readerLabels = ["Hook", "Explanation", "Story · 1 of 2", "Story · 2 of 2", "Practical application", "An idea to keep"]
     static let accessibilityLabels = ["Hook", "Explanation", "Story 1 of 2", "Story 2 of 2", "Practical Application", "Takeaway"]
     static let labels = ["Hook", "Explanation", "Story", "Prac. App.", "Takeaway"]
@@ -15,7 +16,7 @@ enum SixStageLesson {
 }
 
 extension Lesson {
-    var usesSixStageProgress: Bool { pages.map(\.kind) == SixStageLesson.kinds }
+    var usesSixStageProgress: Bool { pages.map(\.kind) == SixStageLesson.kinds && pages.map(\.role) == SixStageLesson.roles }
     func progressDescription(at index: Int) -> String {
         let physical = "Screen \(index + 1) of \(pages.count)"
         return usesSixStageProgress ? physical + " · " + SixStageLesson.accessibilityLabels[index] : physical

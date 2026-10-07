@@ -61,6 +61,10 @@ def content(p):
             check(set(page['sourceIDs'])<=known and (page['kind']=='story' or bool(page['sourceIDs'])),'Teaching screens need valid source references')
             check(not page.get('imageAsset') and not page.get('imageBase64'),'Format 2 uses shared imageID references')
             if page.get('imageID'):check(page['imageID'] in assets and clean(page.get('imageDescription')),'Image ID and accessible description required')
+            if page.get('secondaryImageID') is not None:
+                check(page['secondaryImageID'] in assets and clean(page.get('secondaryImageDescription')), 'Secondary image ID and accessible description required')
+            if page.get('isOriginalFiction') is not None:
+                check(type(page['isOriginalFiction']) is bool, 'isOriginalFiction must be a boolean')
         check(2<=len(questions)<=10 and unique([q['id'] for q in questions]),'Use 2–10 unique questions')
         for question in questions:
             choices=question['choices']
@@ -84,22 +88,32 @@ def authoring_art_and_stages(package):
             errors.append(prefix + 'required voice-role sequence: ' + ', '.join(roles))
         ids, digests = [], []
         for page in pages:
-            key = page.get('imageID')
-            if not clean(key) or key not in assets:
-                errors.append(prefix + page['id'] + ': every page requires a valid imageID')
-                continue
-            if not clean(page.get('imageDescription')):
-                errors.append(prefix + page['id'] + ': every page requires imageDescription')
-            ids.append(key)
-            digest = hashlib.sha256(base64.b64decode(assets[key]['data'], validate=True)).hexdigest()
-            digests.append(digest)
-            other = seen.setdefault(digest, lesson['id'])
-            if other != lesson['id']:
-                warning = f"{lesson['id']}: exact artwork bytes also used by {other}; review instructional purpose"
-                if warning not in warnings:
-                    warnings.append(warning)
+            if page['kind'] == 'story' and not page['sourceIDs'] and page.get('isOriginalFiction') is not True:
+                errors.append(prefix + page['id'] + ': unsourced Story requires isOriginalFiction: true')
+            if page.get('secondaryImageID') is not None and page['kind'] != 'story':
+                errors.append(prefix + page['id'] + ': secondaryImageID is only allowed on Story pages')
+            if page['kind'] == 'takeaway' and page.get('imageID') is not None:
+                warnings.append(prefix + 'Takeaway normally uses the Idea Card; review whether separate art is necessary')
+            for field, description in [('imageID', 'imageDescription'), ('secondaryImageID', 'secondaryImageDescription')]:
+                key = page.get(field)
+                required = field == 'imageID' and page['kind'] != 'takeaway'
+                if key is None and not required:
+                    continue
+                if not clean(key) or key not in assets:
+                    errors.append(prefix + page['id'] + ': requires a valid ' + field)
+                    continue
+                if not clean(page.get(description)):
+                    errors.append(prefix + page['id'] + ': requires ' + description)
+                ids.append(key)
+                digest = hashlib.sha256(base64.b64decode(assets[key]['data'], validate=True)).hexdigest()
+                digests.append(digest)
+                other = seen.setdefault(digest, lesson['id'])
+                if other != lesson['id']:
+                    warning = f"{lesson['id']}: exact artwork bytes also used by {other}; review instructional purpose"
+                    if warning not in warnings:
+                        warnings.append(warning)
         if len(set(ids)) != len(ids):
-            errors.append(prefix + 'six distinct page image IDs required')
+            errors.append(prefix + 'distinct page image IDs required')
         if len(set(digests)) != len(digests):
             errors.append(prefix + 'duplicate resolved image bytes within an idea are not allowed')
     return errors, warnings

@@ -25,6 +25,11 @@ import Foundation
             page.title = SixStageLesson.readerLabels[index]
             page.text = "Synthetic screen for interface verification. Existing artwork is reused here solely to check layout and accessibility. This is not an authored lesson."
             page.imageDescription = "Synthetic illustration for stage \(index + 1)"
+            if index == 2 {
+                page.secondaryImageID = package.book.lessons[0].pages[1].imageID ?? original.imageID
+                page.secondaryImageDescription = "Second synthetic Story scene"
+            }
+            if index == 5 { page.imageID = nil; page.imageAsset = nil; page.imageBase64 = nil; page.imageDescription = nil }
             return page
         }
         package.manifest = package.book.lessons.map { IdeaManifestEntry(id: $0.id, revision: $0.revision) }

@@ -220,19 +220,32 @@ final class SixStageReaderUITests: XCTestCase {
         for index in 0..<6 {
             XCTAssertEqual(indicator.label, "Screen \(index + 1) of 6 · " + labels[index])
             XCTAssertFalse(app.buttons["Pause narration"].exists)
+            if [0, 1, 4].contains(index) {
+                let artwork = app.descendants(matching: .any)["editorial-artwork"].firstMatch
+                XCTAssertTrue(artwork.exists)
+                XCTAssertGreaterThanOrEqual(artwork.frame.height, 180)
+                XCTAssertLessThanOrEqual(artwork.frame.height, 231)
+            }
+            let stage = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            stage.name = "h005a-live-stage-\(index)"; stage.lifetime = .keepAlways; add(stage)
+            if index == 2 {
+                let secondary = app.descendants(matching: .any)["story-secondary-artwork"].firstMatch
+                reveal(secondary, app)
+                XCTAssertTrue(secondary.isHittable)
+                let image = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+                image.name = "h005a-live-second-story-image"; image.lifetime = .keepAlways; add(image)
+            }
             if index < 5 { app.buttons["Next screen"].tap() }
         }
         let art = app.images["takeaway-artwork"]
-        XCTAssertTrue(art.exists)
-        XCTAssertEqual(art.label, "Synthetic illustration for stage 6")
-        XCTAssertTrue(art.isHittable, "Artwork is visible before revealing the takeaway")
+        XCTAssertFalse(art.exists, "The Idea Card is the production Takeaway visual")
         XCTAssertFalse(app.buttons["Practice this idea"].isEnabled)
         let revealButton = app.buttons["Reveal the idea"]
         reveal(revealButton, app); revealButton.tap()
         XCTAssertTrue(app.buttons["Practice this idea"].isEnabled)
-        XCTAssertTrue(art.exists, "Revealing the text retains its artwork")
+        XCTAssertFalse(art.exists)
         let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-        attachment.name = "h0046-live-takeaway-art"; attachment.lifetime = .keepAlways; add(attachment)
+        attachment.name = "h005a-live-takeaway-card"; attachment.lifetime = .keepAlways; add(attachment)
         app.buttons["Practice this idea"].tap()
         XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Option 1.'")).firstMatch.waitForExistence(timeout: 5))
     }

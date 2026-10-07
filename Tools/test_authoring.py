@@ -43,6 +43,8 @@ class AuthoringTests(unittest.TestCase):
                     ['guide', 'guide', 'storyteller', 'storyteller', 'guide', 'guide'])):
                 page.update(kind=kind, role=role, imageID=f'synthetic-{i}',
                             imageDescription=f'Synthetic frame {i}', sourceIDs=[p['book']['sources'][0]['id']])
+            lesson['pages'][-1].pop('imageID', None)
+            lesson['pages'][-1].pop('imageDescription', None)
         return p
 
     def test_canonical_stages_pass_and_legacy_import_stays_valid(self):
@@ -65,11 +67,46 @@ class AuthoringTests(unittest.TestCase):
             pages[1][key], pages[2][key] = pages[2][key], pages[1][key]
             self.assertTrue(any(message in e for e in authoring_art_and_stages(p)[0]))
 
-    def test_every_page_requires_art_and_description(self):
-        for i in range(6):
+    def test_first_five_pages_require_art_and_description(self):
+        for i in range(5):
             for field in ('imageID', 'imageDescription'):
                 p = self.canonical(); p['book']['lessons'][0]['pages'][i][field] = ' '
                 self.assertTrue(any(field in e for e in authoring_art_and_stages(p)[0]))
+
+    def test_optional_takeaway_art_warns_and_two_story_images_pass(self):
+        p = self.canonical(); page = p['book']['lessons'][0]['pages'][2]
+        page.update(secondaryImageID='synthetic-5', secondaryImageDescription='Second scene')
+        self.assertEqual(content(p), 1)
+        self.assertEqual(authoring_art_and_stages(p), ([], []))
+        p = self.canonical(); page = p['book']['lessons'][0]['pages'][-1]
+        page.update(imageID='synthetic-5', imageDescription='Optional legacy artwork')
+        errors, warnings = authoring_art_and_stages(p)
+        self.assertFalse(errors)
+        self.assertTrue(any('Takeaway' in w for w in warnings))
+
+    def test_secondary_art_reference_description_kind_and_duplicate_bytes(self):
+        for issue in ('missing', 'description', 'kind', 'duplicate'):
+            p = self.canonical(); pages = p['book']['lessons'][0]['pages']
+            page = pages[0 if issue == 'kind' else 2]
+            page.update(secondaryImageID='synthetic-5', secondaryImageDescription='Second scene')
+            if issue == 'missing': page['secondaryImageID'] = 'missing'
+            if issue == 'description': page['secondaryImageDescription'] = ' '
+            if issue == 'duplicate': p['assets']['synthetic-5'] = copy.deepcopy(p['assets']['synthetic-0'])
+            self.assertTrue(authoring_art_and_stages(p)[0], issue)
+            if issue in ('missing', 'description'):
+                with self.assertRaises(ValueError): content(p)
+
+    def test_original_fiction_marker_required_only_for_new_unsourced_story(self):
+        p = self.canonical(); page = p['book']['lessons'][0]['pages'][2]
+        page['sourceIDs'] = []
+        self.assertEqual(content(p), 1)  # Stored/reviewed legacy content remains readable.
+        self.assertTrue(any('isOriginalFiction' in e for e in authoring_art_and_stages(p)[0]))
+        page['isOriginalFiction'] = False
+        self.assertTrue(authoring_art_and_stages(p)[0])
+        page['isOriginalFiction'] = True
+        self.assertEqual(authoring_art_and_stages(p), ([], []))
+        page['isOriginalFiction'] = 'true'
+        with self.assertRaises(ValueError): content(p)
 
     def test_duplicate_ids_and_resolved_bytes_rejected(self):
         p = self.canonical(); p['book']['lessons'][0]['pages'][1]['imageID'] = 'synthetic-0'

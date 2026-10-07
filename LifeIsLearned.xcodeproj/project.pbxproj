@@ -58,6 +58,10 @@
 		500987EE53944517951EE5C4 = {isa = PBXBuildFile; fileRef = F74E90B096CB57B043588A68; };
 		B5B9D68559991A40238FAF13 = {isa = PBXBuildFile; fileRef = D79EE5C872371B2170E9D59D; };
 		421121DEAD2E50083FC72484 = {isa = PBXBuildFile; fileRef = 7ACDEE7CCB936F1F8A1EE425; };
+		B68C1435ECBE219F01839756 /* CompletionFeedback.swift */ = {isa = PBXBuildFile; fileRef = 7143A3C84854FF8DF75D205E; };
+		F88275A7B1AA9F5F298B2464 /* InsightBloom.swift */ = {isa = PBXBuildFile; fileRef = CC850CCD7785A63ECF839B8C; };
+		288EB5E26040EC0401807DFA /* Handoff005ATests.swift */ = {isa = PBXBuildFile; fileRef = 08090B25E3A3BB79DC973747; };
+		D929833BF5DAF2008D529684 /* insight-bloom.wav */ = {isa = PBXBuildFile; fileRef = C2E1D6168CE014EBB26D13A1; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +129,10 @@
 		F74E90B096CB57B043588A68 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixStageLesson.swift; sourceTree = "<group>"; };
 		D79EE5C872371B2170E9D59D = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgressIndicator.swift; sourceTree = "<group>"; };
 		7ACDEE7CCB936F1F8A1EE425 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixStageLessonTests.swift; sourceTree = "<group>"; };
+		7143A3C84854FF8DF75D205E /* CompletionFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompletionFeedback.swift"; sourceTree = "<group>"; };
+		CC850CCD7785A63ECF839B8C /* InsightBloom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InsightBloom.swift"; sourceTree = "<group>"; };
+		08090B25E3A3BB79DC973747 /* Handoff005ATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Handoff005ATests.swift"; sourceTree = "<group>"; };
+		C2E1D6168CE014EBB26D13A1 /* insight-bloom.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "insight-bloom.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +177,7 @@
 		369366657F0CC118760331FE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2E1D6168CE014EBB26D13A1 /* insight-bloom.wav */,
 				2E74DFDCF724C90D20F7B247 /* starter.json */,
 				B13607AED7C3F6DF7150EB08 /* Assets.xcassets */,
 			);
@@ -178,6 +187,7 @@
 		6B8B2B5CD808F874BF4EE1BA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				7143A3C84854FF8DF75D205E /* CompletionFeedback.swift */,
 				3AF723EC05F67B7A4D0E9A15 /* IdeaCardFixture.swift */,
 				2475A34BAF033E5A6BC3E852 /* IdeaCardStorage.swift */,
 				F3A50A4456B2AF5DAAF19A50 /* CollectionStorage.swift */,
@@ -192,6 +202,7 @@
 		6C923F6D92369A43B16924F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CC850CCD7785A63ECF839B8C /* InsightBloom.swift */,
 				D79EE5C872371B2170E9D59D,
 				2F803D637FE660296EC215B1 /* IdeaGridAccessibility.swift */,
 				C96DF269888BF9A336EDFEAD /* LessonJourneyView.swift */,
@@ -235,6 +246,7 @@
 		C4E2E7F217DE3642E7714F4E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				08090B25E3A3BB79DC973747 /* Handoff005ATests.swift */,
 				7ACDEE7CCB936F1F8A1EE425,
 				12192D0E8E49F7F45772B17D /* IdeaCardPresentationTests.swift */,
 				5FC3C42DD5BF08D1692D0E1F /* IdeaCardTests.swift */,
@@ -351,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D929833BF5DAF2008D529684 /* insight-bloom.wav */,
 				57EBFDFA3C95028B1582FB6F /* starter.json in Resources */,
 				4DBA062F642CCA22512E160A /* Assets.xcassets in Resources */,
 			);
@@ -363,6 +376,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F88275A7B1AA9F5F298B2464 /* InsightBloom.swift */,
+				B68C1435ECBE219F01839756 /* CompletionFeedback.swift */,
 				B5B9D68559991A40238FAF13,
 				500987EE53944517951EE5C4,
 				A354F1CA1388904ED4799A0C /* IdeaGridAccessibility.swift in Sources */,
@@ -407,6 +422,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				288EB5E26040EC0401807DFA /* Handoff005ATests.swift */,
 				421121DEAD2E50083FC72484,
 				424FD54B6DFDDF152509AA78 /* IdeaCardPresentationTests.swift in Sources */,
 				A15CFF0AEBE28467C7388448 /* IdeaCardTests.swift in Sources */,

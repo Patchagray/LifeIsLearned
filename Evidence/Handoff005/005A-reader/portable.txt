@@ -1,0 +1,10 @@
+{
+  "checksPassed": 400,
+  "errors": [],
+  "warnings": [],
+  "authoringGate": "not-requested",
+  "releaseApproval": "not-approved",
+  "scope": "Portable structural/header checks and explicit planning estimates. Native decoding, compilation and measured playback are separate."
+}
+starter.json / priors: 885 spoken words, 462.46s planned, pending-premium-voices
+Example-Lesson-Package.json / priors: 413 spoken words, 240.62s planned, pending-premium-voices

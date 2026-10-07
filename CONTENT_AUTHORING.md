@@ -20,15 +20,15 @@ Use Example-Lesson-Package.json as a legacy-compatible Codable shape reference, 
 | Book | stable `id`, `title`, `author`, `synopsis`, `coverageNote`, `sources`, `lessons` |
 | Source | unique `id`, `title`, valid HTTPS `url`, precise `locator`, `scope` describing what it supports and limits |
 | Lesson | stable `id`, positive `revision`, `title`, `subtitle`, positive `estimatedMinutes`, `scopeNote`, exactly 6 `pages` for new authoring (runtime accepts 2–40), exactly 2 `questions` for authored releases (runtime compatibility accepts 2–10) |
-| Page | unique `id`, `kind`, `role`, `title`, `text`, required `imageID` and `imageDescription` for new authoring, `sourceIDs` |
+| Page | unique `id`, `kind`, `role`, `title`, `text`, primary `imageID` / `imageDescription` (required except Takeaway), optional Story `secondaryImageID` / `secondaryImageDescription`, `sourceIDs`, optional `isOriginalFiction` |
 | Question | unique `id`, `prompt`, 2–6 `choices`, `correctChoiceID` |
 | Choice | unique `id`, `text`, `feedback` explaining why this answer is correct or tempting but wrong |
 
 `kind` is `intro`, `explanation`, `story`, `application`, or `takeaway`. New authored/re-authored material follows the exact stages and roles below. Existing runtime imports/storage still accept valid 2–40-page format-2 lessons without `application`; the additive enum case does not change `formatVersion`.
 
-`sourceIDs` is always present. Every teaching screen needs at least one valid source ID; original fictional Story screens may use an empty array but must be explicitly identified as fiction. A source reference does not establish factual verification. Store PNG/JPEG bytes in the shared `assets` table; new lessons require six distinct page image IDs and six distinct resolved images. Optional `book.coverAssetID` requires `book.coverDescription` and remains separate from the six page references.
+`sourceIDs` is always present. Every teaching screen needs at least one valid source ID; original fictional Story screens may use an empty array but new authoring must explicitly set `isOriginalFiction: true`. A sourced Story may omit the marker or set false. Legacy content without the marker remains readable. A source reference does not establish factual verification. Store PNG/JPEG bytes in the shared `assets` table; new lessons require five primary illustrations with distinct resolved image bytes. Optional `book.coverAssetID` requires `book.coverDescription` and remains separate from interior art.
 
-## Handoff 004.6: six stages and instructional artwork
+## Handoff 005: six stages and instructional artwork
 
 | Screen | Stage / kind | Voice | Suggested body words |
 | --- | --- | --- | --- |
@@ -45,9 +45,11 @@ The word ranges are drafting guidance, not quotas. Aim for 3.5–4.5 minutes whe
 
 At default reading size, Hook, Explanation, Application and Takeaway should fit the visible reader area. Only Story is intended to overflow. Inspect actual iPhone/iPad layouts; all pages remain manually scrollable for smaller screens, localization and accessibility. Canonical Hook source/scope information remains accessible in its disclosure. Story-only narration following respects gestures, VoiceOver and Reduce Motion; it is not a remedy for overlong teaching screens.
 
-Every screen requires `imageID` plus nonempty `imageDescription`. All six references within an idea must differ; renaming identical image bytes does not pass the gate. Exact bytes shared across different ideas produce an editorial warning for review, not an automatic collection failure. A cover does not count as a seventh content stage or substitute for a page image.
+Five interior illustrations are the normal minimum per idea. Takeaway uses the collectible Idea Card. A Story page may carry a second illustration when the story length or change of scene genuinely benefits from it.
 
-Art must explain what is happening, what changed, or what to remember. Hook establishes tension; Explanation clarifies a model; Story A/B show a consistent character/environment at visibly different moments; Application shows transfer to another context; Takeaway can be symbolic but must remain specific. Recurring characters, wardrobe, rooms and palette are encouraged; repeating the same frame is not. Avoid decorative filler, generated text, pseudo-cover typography, watermarks and unnecessary logos. Structural checks cannot judge these qualities: review the actual pictures and their descriptions.
+Hook, Explanation, both Story pages and Application require `imageID` plus nonempty `imageDescription`. Only Story may supply `secondaryImageID`, with a valid shared asset reference and nonempty `secondaryImageDescription`; it renders after the narrated body. Takeaway accepts zero or one primary illustration; supplied Takeaway art produces an editorial warning, not rejection. All primary and secondary references within an idea must differ; renaming identical image bytes does not pass the gate. Exact bytes shared across different ideas produce an editorial warning for review, not an automatic collection failure. A cover does not count as a seventh content stage or substitute for a page image.
+
+Art must explain what is happening, what changed, or what to remember. Hook establishes tension; Explanation clarifies a model; Story A/B show a consistent character/environment at visibly different moments; Application shows transfer to another context; Takeaway normally needs no separate art because the collectible card is its visual treatment. Recurring characters, wardrobe, rooms and palette are encouraged; repeating the same frame is not. Avoid decorative filler, generated text, pseudo-cover typography, watermarks and unnecessary logos. Structural checks cannot judge these qualities: review the actual pictures and their descriptions.
 
 `--authoring-gate` and `--approve-release` enforce the new stage, role and art requirements in addition to all existing timing/question/source/manifest/resource checks. Draft conversion also blocks export that violates the standard. The frozen startup seed, existing example and externally curated books are not automatically rewritten. The first rebuilt reference book follows reviewer approval of this engineering patch.
 
@@ -65,7 +67,7 @@ Art must explain what is happening, what changed, or what to remember. Hook esta
 
 ## Reusable content-authoring request
 
-“Prepare one complete formatVersion-2 collection with 1–12 selected ideas and an honest coverage preface. Teach one clear idea in exactly six illustrated screens: Hook, Explanation, Story A, Story B, Practical Application and Takeaway, with guide/guide/storyteller/storyteller/guide/guide roles and exactly two application questions with individual feedback. Keep the entire reference first-pass idea at or below five minutes, including all narration, transitions, quiz choices, feedback and an answer allowance. Shorter is welcome. Include a timing report, stable IDs/revisions, shared original artwork, source references and the complete ordered manifest. Never invent unavailable book content or imply the author ranked our selection. Show the source material reviewed, and give me the content for review before import.”
+“Prepare one complete formatVersion-2 collection with 1–12 selected ideas and an honest coverage preface. Teach one clear idea in exactly six screens: Hook, Explanation, Story A, Story B, Practical Application and Takeaway, with guide/guide/storyteller/storyteller/guide/guide roles and exactly two application questions with individual feedback. Keep the entire reference first-pass idea at or below five minutes, including all narration, transitions, quiz choices, feedback and an answer allowance. Shorter is welcome. Include a timing report, stable IDs/revisions, shared original artwork, source references and the complete ordered manifest. Never invent unavailable book content or imply the author ranked our selection. Show the source material reviewed, and give me the content for review before import.”
 
 ## Handoff 002: complete collection contract (formatVersion 2)
 

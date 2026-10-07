@@ -4,7 +4,7 @@ import ImageIO
 enum NarrationRole: String, Codable, CaseIterable, Identifiable, Sendable {
     case guide, storyteller
     var id: String { rawValue }
-    var label: String { self == .guide ? "Guide · intro & takeaway" : "Storyteller · lesson body" }
+    var label: String { self == .guide ? "Guide voice" : "Storyteller voice" }
 }
 
 enum PageKind: String, Codable, Sendable { case intro, story, explanation, application, takeaway }
@@ -28,6 +28,9 @@ struct LessonPage: Codable, Identifiable, Sendable {
     var imageBase64: String?
     var imageDescription: String?
     var sourceIDs: [String]
+    var secondaryImageID: String? = nil
+    var secondaryImageDescription: String? = nil
+    var isOriginalFiction: Bool? = nil
 }
 
 struct AnswerChoice: Codable, Identifiable, Sendable {
@@ -126,6 +129,10 @@ struct LessonPackage: Codable, Sendable {
                 if formatVersion == 2 {
                     try require(page.imageAsset == nil && page.imageBase64 == nil, "Format 2 pages use imageID and the shared assets table; remove legacy inline images.")
                     if let id = page.imageID { try require(artwork[id] != nil, "Screen \(page.id) refers to missing artwork \(id).") }
+                }
+                if let id = page.secondaryImageID {
+                    try require(artwork[id] != nil && page.secondaryImageDescription.map(clean) == true,
+                                "Screen \(page.id) needs valid secondary artwork and its accessible description.")
                 }
                 if let asset = page.imageAsset {
                     try require(["priors-setup", "priors-conflict", "priors-resolution"].contains(asset), "Unknown bundled image \(asset). Use imageBase64 for your own illustration.")
