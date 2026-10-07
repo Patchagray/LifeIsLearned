@@ -83,3 +83,12 @@ enum IdeaCardCollection {
         }
     }
 }
+
+/// A changing collection must not turn "no selection yet" into an implicit choice.
+/// Choose the current first card only when the learner opens the carousel.
+enum IdeaCardSelection {
+    static func reconcile(_ selectedID: String?, availableIDs: [String]) -> String? {
+        guard let selectedID else { return nil }
+        return availableIDs.contains(selectedID) ? selectedID : availableIDs.first
+    }
+}

@@ -40,6 +40,8 @@ test('same title/ISBN aliases dedupe; later alias bridge preserves counts and fi
   const joined = await record(db, validate({ ...body, title: 'Separate title' }), 5000);
   assert.equal(joined.requestCount, 5);
   assert.equal((await db.prepare('SELECT * FROM book_requests').all()).results.length, 1);
+  await record(db, validate(body), 4500);
+  assert.equal((await db.prepare('SELECT last_requested_at FROM book_requests').first()).last_requested_at, new Date(5000).toISOString());
 });
 test('HTTP success, duplicate, rate limit and no public admin queue', async () => {
   const env = { DB: new D1Fixture(), RATE_LIMIT_SALT: 'test-only-not-a-production-secret' };

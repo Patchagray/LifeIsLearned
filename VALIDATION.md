@@ -1,8 +1,8 @@
 # Validation report
 
-## Handoff 005 — in progress
+## Handoff 005 — implementation verified, awaiting review
 
-Branch `feature/handoff-005-library-platform`, baseline `74a18997dbf8931366ae5acd18f5a4a23ed8699d`. Epic 005A is committed at `c3128c3c68177b9661ab4c8726b03f17b30a2380`. Per-epic commands, simulator captures, state/byte evidence and remaining gates are in [Evidence/Handoff005](Evidence/Handoff005/README.md). This does not upgrade prior physical-device checks to verification of the new platform. No production releases or endpoints have been deployed.
+Branch `feature/handoff-005-library-platform`, baseline `74a18997dbf8931366ae5acd18f5a4a23ed8699d`. Epics 005A–E are implemented in separate commits through `972401e1089f98e56cab8727b26a8346ae2ce4f2`. Final full regression passed on iPhone 16e and iPad (A16), iOS 26.3.1: **94 passed, zero failed, two intentional skips per destination**. The skips require physical premium voices or the actual system Reduce Motion setting; deterministic motion tests passed. **44 Python tests, four backend tests, 484 portable checks and catalog validation passed**. Signed Patcha compilation and strict signature verification passed. Exact commands, source hashes and all test outcomes are in the evidence index. **005F uses reviewer-selected A — Idea Fold**, selected before production asset creation as required by section 12.2. Any/Dark/Tinted assets and their verification are recorded in the evidence index. Per-epic commands, simulator captures, state/byte evidence and remaining gates are in [Evidence/Handoff005](Evidence/Handoff005/README.md). This does not upgrade prior physical-device checks to verification of the new platform. No production releases or endpoints have been deployed.
 
 ## Handoff 004.6 — October 6, 2026
 

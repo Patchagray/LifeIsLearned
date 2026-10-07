@@ -14,7 +14,7 @@ Implementation: the commit containing this file, recorded by exact SHA in the fo
 
 URLProtocol fixtures never contact public GitHub. Cancellation may supply no resume data; that path is tested as safe cancellation/retry. Actual server interruption/resume remains a production-network release gate, not claimed here.
 
-`DiscoveryUITests`: browse → visible progress → whole-book install → In Library → newer catalog Update → malformed/offline cached catalog, on iPhone 16e and iPad (A16), iOS 26.3.1. Screenshots use a clearly named synthetic interface fixture. The synthetic Update entry tests availability presentation; it is not an approved release package.
+`DiscoveryUITests`: browse → visible progress → whole-book install → In Library → newer catalog Update → malformed/offline cached catalog, on iPhone 16e and iPad (A16), iOS 26.3.1. Screenshots use a clearly named synthetic interface fixture. The initial epic test checked Update presentation. Final integration also downloads and installs the synthetic newer collection revision; neither fixture is an approved public release.
 
 Two Python metadata-helper tests and all existing authoring/catalog tests are run. No public release or backend deployment occurred.
 
@@ -32,3 +32,5 @@ python3 Tools/validate_catalog.py
 ```
 
 Raw logs: ignored `LocalVerification/Handoff005/005C-*`. First development run exposed a test fixture raw/canonical byte mismatch; the fixture was corrected to hash the exact bytes served. No integrity checks were weakened. Screenshot inspection found low-contrast button text; the final run uses the explicit on-teal text color. App endpoint values expand through the supplied Info.plist; defaults are empty. See `Catalog/REMOTE_LIBRARY.md` for reviewer configuration and publication steps.
+
+Final complete regression capture: [iPhone after the revision-2 fixture update was installed](iphone-update-installed-final.jpg). This is simulator evidence, not a public release.

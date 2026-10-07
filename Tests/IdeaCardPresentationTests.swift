@@ -3,6 +3,17 @@ import SwiftUI
 @testable import LifeIsLearned
 
 final class IdeaCardPresentationTests: XCTestCase {
+    func testArrivingCardsDoNotCreateAnUnrequestedSelection() {
+        var selected: String?
+        selected = IdeaCardSelection.reconcile(selected, availableIDs: ["older-book-card"])
+        XCTAssertNil(selected)
+        selected = IdeaCardSelection.reconcile(selected, availableIDs: ["newest-card", "older-book-card"])
+        XCTAssertNil(selected, "Opening the carousel can now choose the actual current first card")
+        XCTAssertEqual(IdeaCardSelection.reconcile("older-book-card", availableIDs: ["newest-card", "older-book-card"]), "older-book-card", "A real previous choice is retained")
+        XCTAssertEqual(IdeaCardSelection.reconcile("removed-card", availableIDs: ["newest-card"]), "newest-card")
+        XCTAssertNil(IdeaCardSelection.reconcile("removed-card", availableIDs: []))
+    }
+
     @MainActor func testGridAccessibilityActionsKeepIdentityAndSeparateOpenFromDetails() async throws {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
         try await IdeaCardFixture.install(in: f.store)

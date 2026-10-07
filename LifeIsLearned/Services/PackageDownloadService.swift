@@ -123,22 +123,27 @@ actor PackageDownloadService {
     @Published private(set) var message: String?
     @Published private(set) var resumable = false
     @Published private(set) var busy = false
+    @Published private(set) var canCancel = false
     private let service: PackageDownloadService
     private var task: Task<Void, Never>?
     private var asset: RemoteAsset?
     init(directory: URL, configuration: URLSessionConfiguration = .ephemeral) { service = PackageDownloadService(directory: directory, configuration: configuration) }
     func start(_ book: DiscoveryBook, source: BookSourceRecord, library: LibraryStore) {
         guard !busy else { return }
-        bookID = book.id; asset = book.package?.asset; progress = 0; message = "Downloading…"; busy = true; resumable = false
+        bookID = book.id; asset = book.package?.asset; progress = 0; message = "Downloading…"; busy = true; canCancel = true; resumable = false
         task = Task {
-            defer { busy = false }
+            defer { busy = false; canCancel = false }
             do {
                 let package = try await service.download(book) { value in Task { @MainActor [weak self] in self?.progress = value } }
                 try Task.checkCancellation()
                 var review = try await library.storage.review(package: package, catalog: library.catalog)
+                try Task.checkCancellation()
+                try CollectionLimits.require(!library.isCommitting && !library.isLoading && !library.readOnly, "The library cannot install right now. Finish its current change or resolve its recovery warning, then try again.")
+                canCancel = false
                 review.source = source
                 if !review.removed.isEmpty { library.importReview = review; message = "Review removed ideas before installing." }
                 else {
+                    message = "Installing…"
                     await library.commitImport(review)
                     message = library.errorMessage == nil ? "In Library" : library.errorMessage
                 }
@@ -150,6 +155,9 @@ actor PackageDownloadService {
         }
     }
     func cancel() {
+        guard canCancel else { return }
+        // Also cancel verification/install preparation after the network task finishes.
+        task?.cancel()
         let expected = asset
         Task {
             await service.cancel()

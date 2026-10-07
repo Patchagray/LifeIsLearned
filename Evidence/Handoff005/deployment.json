@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-07",
+  "deviceName": "Patcha",
+  "model": "iPhone 15 Pro Max",
+  "os": "27.2",
+  "build": "passed using existing signing",
+  "signatureVerification": "passed",
+  "installation": "succeeded",
+  "launch": "succeeded",
+  "bundleID": "com.mariosinclair.lifeislearned",
+  "version": "1.0",
+  "buildNumber": "1",
+  "executableSHA256": "3a2d3d0c94b41c3d932ef64b05b5748a269494fe47998e69ee0cbafab45fd4ec",
+  "assetCatalogSHA256": "874ae5685ad9963208dbec348ca159e7807241285517945ad57daa3662ff7542",
+  "launchEnvironment": "DEVICECTL_CHILD_ variables removed; no test fixtures passed",
+  "physicalFeatureChecks": "pending user verification",
+  "rawLogs": "LocalVerification/Handoff005/patcha-* (ignored; identifiers omitted from public evidence)"
+}

@@ -124,3 +124,14 @@ final class PresentationTests: XCTestCase {
         }
     }
 }
+
+final class BrandTests: XCTestCase {
+    @MainActor func testProductionIconIsCompiledIntoAppBundle() throws {
+        let icons = try XCTUnwrap(Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any])
+        let primary = try XCTUnwrap(icons["CFBundlePrimaryIcon"] as? [String: Any])
+        XCTAssertEqual(primary["CFBundleIconName"] as? String, "AppIcon")
+        let files = try XCTUnwrap(primary["CFBundleIconFiles"] as? [String])
+        XCTAssertFalse(files.isEmpty)
+        for file in files { XCTAssertNotNil(UIImage(named: file), "Compiled icon must load: \(file)") }
+    }
+}

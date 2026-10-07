@@ -22,20 +22,23 @@ final class DiscoveryFixtureProtocol: URLProtocol, @unchecked Sendable {
                 package.book.id = "influence-the-psychology-of-persuasion"
                 package.book.title = "Discovery verification fixture"
                 package.book.author = "Synthetic interface fixture"
-                let bytes = try package.canonicalData()
+                let filename = request.url?.lastPathComponent ?? ""
+                if filename.hasPrefix("book-"), let revision = Int(filename.dropFirst(5).dropLast(5)) { package.collectionRevision = revision }
+                var bytes = try package.canonicalData()
                 let data: Data
                 if request.url?.lastPathComponent == "requests" {
                     data = try JSONEncoder().encode(BookRequestReceipt(status: "accepted", requestKey: "synthetic-fixture", requestCount: 1))
                 } else if request.url?.lastPathComponent == "catalog.json" {
                     let count = Self.nextRefresh()
                     if count > 2 { throw URLError(.notConnectedToInternet) }
+                    package.collectionRevision = count; bytes = try package.canonicalData()
                     let identity = try CatalogIdentity.bundled()
                     let original = try DiscoveryCatalog.decode(Data(contentsOf: Bundle.main.url(forResource: "Remote-Catalog-001", withExtension: "json")!), identity: identity)
                     var book = original.books.first { $0.id == package.book.id }!
                     book.title = "Discovery verification fixture"; book.authors = ["Synthetic interface fixture"]
                     book.isbn13 = ["9780141033570"] // Synthetic ISBN association for matcher UI testing only
                     book.availability = .available
-                    book.package = RemotePackage(collectionRevision: count, url: URL(string: "https://h005-fixture.invalid/book.json")!, sha256: LibraryDigest.sha256(bytes), bytes: bytes.count)
+                    book.package = RemotePackage(collectionRevision: count, url: URL(string: "https://h005-fixture.invalid/book-\(count).json")!, sha256: LibraryDigest.sha256(bytes), bytes: bytes.count)
                     data = try JSONEncoder().encode(DiscoveryCatalog(schemaVersion: 1, catalogID: "catalog-001", catalogRevision: 1, books: [book] + original.books.filter { $0.id != book.id }))
                 } else { data = bytes }
                 let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Length": String(data.count)])!
@@ -43,7 +46,7 @@ final class DiscoveryFixtureProtocol: URLProtocol, @unchecked Sendable {
                 let step = max(1, data.count / 20)
                 for start in stride(from: 0, to: data.count, by: step) {
                     try Task.checkCancellation()
-                    if request.url?.lastPathComponent == "book.json" { try await Task.sleep(for: .milliseconds(180)) }
+                    if filename.hasPrefix("book-") { try await Task.sleep(for: .milliseconds(180)) }
                     client?.urlProtocol(self, didLoad: data.subdata(in: start..<min(start + step, data.count)))
                 }
                 client?.urlProtocolDidFinishLoading(self)

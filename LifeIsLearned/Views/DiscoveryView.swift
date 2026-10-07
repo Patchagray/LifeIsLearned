@@ -6,9 +6,9 @@ import SwiftUI
     @StateObject private var download: BookDownloadManager
     @State private var query = ""
     @State private var shelfID: String?
-    let focusID: String?
+    @State private var focusedID: String?
     init(endpoint: URL? = RemoteConfiguration.bundled().catalogURL, focusID: String? = nil) {
-        self.focusID = focusID
+        _focusedID = State(initialValue: focusID)
         var endpoint = endpoint
         var directory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         var configuration = URLSessionConfiguration.ephemeral
@@ -30,6 +30,7 @@ import SwiftUI
                 Text("Find your next idea.").font(.system(.largeTitle, design: .serif))
                 Text("Explore thoughtfully prepared collections. Each download includes the whole book collection.")
                     .foregroundStyle(Palette.secondary)
+                if focusedID != nil { Button("Show all books") { focusedID = nil } }
                 if let status = discovery.status { Label(status, systemImage: "info.circle").font(.footnote).foregroundStyle(Palette.secondary).accessibilityIdentifier("discovery-status") }
                 Picker("Shelf", selection: $shelfID) {
                     Text("All shelves").tag(String?.none)
@@ -37,13 +38,13 @@ import SwiftUI
                 }.pickerStyle(.menu).accessibilityIdentifier("discovery-shelf")
                 if discovery.refreshing { HStack { ProgressView("Refreshing catalog"); Spacer(); Button("Cancel") { discovery.cancelRefresh() } } }
                 if let catalog = discovery.catalog {
-                    let books = catalog.filtered(query: query, shelfID: shelfID)
+                    let books = focusedID.map { id in catalog.books.filter { $0.id == id } } ?? catalog.filtered(query: query, shelfID: shelfID)
                     if books.isEmpty { EmptyLearningView(title: "No matching books.", message: "Try another title, author or shelf.") }
                     LazyVStack(alignment: .leading, spacing: 24) {
                         ForEach(books) { book in
                             DiscoveryBookRow(book: book, service: discovery.service,
                                 state: book.state(installed: library.installed.first { $0.bookID == book.id }, history: library.history.first { $0.bookID == book.id }),
-                                busy: download.busy, progress: download.bookID == book.id ? download.progress : nil,
+                                busy: download.busy, canCancel: download.canCancel, progress: download.bookID == book.id ? download.progress : nil,
                                 message: download.bookID == book.id ? download.message : nil, resumable: download.resumable,
                                 start: { download.start(book, source: BookSourceRecord(kind: .remoteCatalog, catalogID: catalog.catalogID, catalogURL: discovery.endpoint), library: library) },
                                 cancel: { download.cancel() })
@@ -55,10 +56,9 @@ import SwiftUI
         }.readingCanvas().navigationTitle("Browse Library").navigationBarTitleDisplayMode(.inline)
             .searchable(text: $query, prompt: "Title or author")
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button { discovery.refresh() } label: { Image(systemName: "arrow.clockwise") }.accessibilityLabel("Refresh catalog").disabled(discovery.refreshing || discovery.endpoint == nil) } }
-            .onAppear {
-                if let focusID, query.isEmpty { query = discovery.catalog?.books.first { $0.id == focusID }?.title ?? "" }
-                discovery.open()
-            }
+            .onAppear { discovery.open() }
+            .onChange(of: query) { _, _ in focusedID = nil }
+            .onChange(of: shelfID) { _, _ in focusedID = nil }
             .onDisappear { discovery.cancelRefresh(); download.cancel() }
     }
 }
@@ -68,6 +68,7 @@ private struct DiscoveryBookRow: View {
     let service: DiscoveryService
     let state: DiscoveryBookState
     let busy: Bool
+    let canCancel: Bool
     let progress: Double?
     let message: String?
     let resumable: Bool
@@ -89,7 +90,7 @@ private struct DiscoveryBookRow: View {
             }
             if let progress, busy {
                 ProgressView(value: progress).accessibilityLabel("Download progress").accessibilityValue("\(Int(progress * 100)) percent")
-                Button("Cancel download", action: cancel).frame(minHeight: 44)
+                if canCancel { Button("Cancel download", action: cancel).frame(minHeight: 44) }
             } else if state.canDownload {
                 Button(resumable && progress != nil ? "Resume download" : state.rawValue, action: start)
                     .buttonStyle(.borderedProminent).foregroundStyle(Palette.onTeal).disabled(busy).accessibilityIdentifier("download-" + book.id)

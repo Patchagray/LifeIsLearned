@@ -5,7 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 from urllib.parse import urlparse
-from validate_package import content, read_package
+from validate_package import content, read_package, dimensions
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -13,6 +13,8 @@ def asset(path, url, limit):
     parsed = urlparse(url)
     if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
         raise ValueError('Asset URL must use HTTPS without credentials')
+    if not 0 < Path(path).stat().st_size <= limit:
+        raise ValueError('Asset exceeds its byte budget')
     data = Path(path).read_bytes()
     if not 0 < len(data) <= limit:
         raise ValueError('Asset exceeds its byte budget')
@@ -32,7 +34,11 @@ def metadata(path, url, thumbnail=None, thumbnail_url=None):
     if bool(thumbnail) != bool(thumbnail_url):
         raise ValueError('Supply both thumbnail file and URL')
     if thumbnail:
-        result['thumbnail'] = asset(thumbnail, thumbnail_url, 512 * 1024)
+        thumbnail_metadata = asset(thumbnail, thumbnail_url, 512 * 1024)
+        _, (width, height) = dimensions(Path(thumbnail).read_bytes())
+        if not (0 < width <= 2048 and 0 < height <= 2048):
+            raise ValueError('Thumbnail dimensions must be at most 2048 by 2048')
+        result['thumbnail'] = thumbnail_metadata
     return result
 
 if __name__ == '__main__':

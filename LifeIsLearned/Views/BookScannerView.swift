@@ -56,7 +56,15 @@ import AVFoundation
                         .frame(minHeight: 44)
                 }
             }.padding(24).readingWidth()
-        }.readingCanvas().navigationTitle("Scan a Book").navigationBarTitleDisplayMode(.inline)
+        }.scrollDismissesKeyboard(.interactively).readingCanvas().navigationTitle("Scan a Book").navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    if editing {
+                        Spacer()
+                        Button("Done") { editing = false }.accessibilityIdentifier("scanner-keyboard-done")
+                    }
+                }
+            }
             .onAppear { discovery.open() }.onDisappear { discovery.cancelRefresh() }
             .sheet(isPresented: $camera) { BookCameraView { recognized = $0; searched = false; camera = false } }
     }

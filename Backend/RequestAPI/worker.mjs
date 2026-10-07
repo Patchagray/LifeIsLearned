@@ -83,7 +83,7 @@ export async function record(db, value, now) {
       // Existing aliases to this record are fine. A conflicting owner aborts the batch.
       statements.push(db.prepare(`INSERT INTO request_aliases(alias,request_key) SELECT ?,? WHERE NOT EXISTS (SELECT 1 FROM request_aliases WHERE alias=? AND request_key=?)`).bind(alias, key, alias, key));
     }
-    statements.push(db.prepare(`UPDATE book_requests SET request_count=request_count+1,last_requested_at=?,
+    statements.push(db.prepare(`UPDATE book_requests SET request_count=request_count+1,last_requested_at=MAX(last_requested_at,?),
       isbn13=COALESCE(isbn13,?),catalog_book_id=COALESCE(catalog_book_id,?) WHERE request_key=?`).bind(timestamp, value.isbn13, value.catalogBookID, key));
     try {
       await db.batch(statements);

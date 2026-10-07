@@ -198,13 +198,96 @@
         }
       ],
       "pythonTestsPassed": 42,
-      "portableChecksPassed": 484
+      "portableChecksPassed": 484,
+      "implementationCommit": "972401e1089f98e56cab8727b26a8346ae2ce4f2"
+    },
+    "005F": {
+      "status": "Passed",
+      "selectedDirection": "A \u2014 Idea Fold",
+      "reviewerSelectedBeforeProduction": true,
+      "productionIconIntegrated": true,
+      "variants": [
+        "Any",
+        "Dark",
+        "Tinted"
+      ],
+      "resultBundle": "/tmp/LIL005F-brand.xcresult",
+      "runs": [
+        {
+          "destination": "iPhone 16e",
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "destination": "iPad (A16)",
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        }
+      ]
     }
   },
   "remaining": [
-    "005C",
-    "005D",
-    "005E",
-    "005F"
-  ]
+    "Physical-device camera, premium narration, feedback and layout checks",
+    "Reviewer-controlled production publication/configuration and real-network smoke"
+  ],
+  "integrationRepeat": {
+    "resultBundle": "/tmp/LIL005-measured-cards.xcresult",
+    "destination": "iPad (A16), iOS 26.3.1 Simulator",
+    "tests": [
+      "IdeaCollectionUITests/testAccessibilityTextUsesOneColumnAndReadableCarousel",
+      "IdeaCollectionUITests/testCompletionGoesDirectlyToSavedNextIdea"
+    ],
+    "iterationsPerTest": 3,
+    "passedRuns": 6,
+    "failedRuns": 0,
+    "note": "Intermediate investigation run; not a complete final regression. See final-commands.md."
+  },
+  "integrationViewportChecks": {
+    "resultBundle": "/tmp/LIL005-card-width.xcresult",
+    "destination": "iPad (A16), iOS 26.3.1 Simulator",
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "note": "Intermediate investigation run; not a complete final regression. See final-commands.md."
+  },
+  "finalTargetedCardChecks": {
+    "resultBundle": "/tmp/LIL005-selection-alignment.xcresult",
+    "destination": "iPad (A16), iOS 26.3.1 Simulator",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "finalRegression": {
+    "resultBundle": "/tmp/LIL005-release-review.xcresult",
+    "result": "Passed",
+    "testsPerDestination": 96,
+    "destinations": [
+      {
+        "name": "iPad (A16)",
+        "os": "26.3.1",
+        "platform": "iOS Simulator",
+        "passed": 94,
+        "failed": 0,
+        "skipped": 2
+      },
+      {
+        "name": "iPhone 16e",
+        "os": "26.3.1",
+        "platform": "iOS Simulator",
+        "passed": 94,
+        "failed": 0,
+        "skipped": 2
+      }
+    ],
+    "pythonTestsPassed": 44,
+    "backendTestsPassed": 4,
+    "portableChecksPassed": 484,
+    "catalogValidation": "passed",
+    "signedPatchaBuild": "passed (existing signing)",
+    "physicalDeviceChecks": "pending",
+    "productionNetwork": "not performed; reviewer-controlled publication/configuration",
+    "deviceDeployment": "Patcha installation and launch succeeded; physical feature checks pending"
+  }
 }

@@ -86,7 +86,7 @@ import SwiftUI
                 }
             }
             .onChange(of: cards.map(\.id)) { _, ids in
-                if !ids.contains(selectedID ?? "") { selectedID = ids.first }
+                selectedID = IdeaCardSelection.reconcile(selectedID, availableIDs: ids)
             }
             .onAppear { speech.stop() }
             .overlay { if openingSource { ProgressView("Opening the lesson…").padding(24).background(Palette.surface, in: RoundedRectangle(cornerRadius: 16)) } }

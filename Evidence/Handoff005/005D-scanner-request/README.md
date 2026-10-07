@@ -24,3 +24,9 @@ node --test Backend/RequestAPI/worker.test.mjs
 Raw logs: ignored `LocalVerification/Handoff005/005D-*`. Simulator captures demonstrate manual ISBN input and title-text fallback, match review, metadata review, and accepted fixture response. The ISBN association is explicitly synthetic in the DEBUG-only fixture; it is not published metadata. No camera recognition performance is inferred from typed input. The first UI capture exposed a keyboard obscuring the match; Find matches now dismisses editing before showing results.
 
 **Pending hardware:** real cover OCR/barcode accuracy, camera permission dialog/denial on a device, movement/lighting behavior. **Pending release:** actual backend deployment and real-network request smoke. Local SQL tests cover the reference contract, not Cloudflare production behavior.
+
+## Final accessibility correction
+
+The full regression exposed an iPhone accessibility-XXXL keyboard/navigation failure. Scanner and request forms now provide an explicit Done keyboard accessory and interactive keyboard dismissal. The UI regression edits unknown metadata before requesting and asserts the search/request controls remain reachable. Stable-ID navigation is also exercised when the prepared catalog title differs from the bundled display title. Failed attempts remain local; the final result is recorded in the parent test summary.
+
+Final simulator captures: [prepared stable-ID destination](iphone-prepared-book-final.jpg), [iPhone request at accessibility XXXL](iphone-request-large-final.jpg), [iPad request at accessibility XXXL](ipad-request-large-final.jpg). The forms scroll; tests edited metadata, dismissed the keyboard and successfully submitted the explicit fixture request.

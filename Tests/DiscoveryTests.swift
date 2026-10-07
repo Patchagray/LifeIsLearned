@@ -66,6 +66,20 @@ final class RemoteFixtureProtocol: URLProtocol, @unchecked Sendable {
         let cached = await service.cached(); XCTAssertEqual(cached?.catalog.books.count, 50)
         XCTAssertEqual(cached?.fetchedAt, fresh.fetchedAt)
     }
+    func testThumbnailIntegrityAndNativeImageBudgets() async throws {
+        let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
+        let image = try XCTUnwrap(f.package.assets?.values.first { $0.data.count < 512 * 1024 }).data
+        let service = DiscoveryService(endpoint: nil, directory: f.directory, identity: try CatalogIdentity.bundled(), session: URLSession(configuration: RemoteFixtureProtocol.configuration()))
+        var asset = RemoteAsset(url: URL(string: "https://fixture.invalid/cover.png")!, sha256: LibraryDigest.sha256(image), bytes: image.count)
+        RemoteFixtureProtocol.response = { _ in (200, image) }
+        let valid = try await service.thumbnail(asset); XCTAssertEqual(valid, image)
+        asset.sha256 = String(repeating: "0", count: 64)
+        do { _ = try await service.thumbnail(asset); XCTFail("Bad checksum accepted") } catch { }
+        let invalid = Data("not an image".utf8)
+        asset.sha256 = LibraryDigest.sha256(invalid); asset.bytes = invalid.count
+        RemoteFixtureProtocol.response = { _ in (200, invalid) }
+        do { _ = try await service.thumbnail(asset); XCTFail("Invalid image accepted") } catch { }
+    }
     func testDownloadIntegrityBeforeDecodeAndInstallSource() async throws {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
         let package = f.package; var book = try remote(package)
@@ -113,6 +127,20 @@ final class RemoteFixtureProtocol: URLProtocol, @unchecked Sendable {
         manager.start(mismatch, source: .manual, library: f.store)
         while manager.busy { try await Task.sleep(for: .milliseconds(20)) }
         XCTAssertTrue(f.store.books.isEmpty); XCTAssertTrue(manager.message?.contains("SHA-256") == true)
+    }
+    func testManagerCancellationCannotReachInstall() async throws {
+        let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
+        let bytes = try f.package.canonicalData(), book = try remote(f.package)
+        RemoteFixtureProtocol.response = { _ in (200, bytes) }; RemoteFixtureProtocol.delayChunks = true
+        defer { RemoteFixtureProtocol.delayChunks = false }
+        let manager = BookDownloadManager(directory: f.directory, configuration: RemoteFixtureProtocol.configuration())
+        manager.start(book, source: .manual, library: f.store)
+        for _ in 0..<100 { if manager.progress > 0 { break }; try await Task.sleep(for: .milliseconds(20)) }
+        XCTAssertGreaterThan(manager.progress, 0)
+        manager.cancel()
+        while manager.busy { try await Task.sleep(for: .milliseconds(20)) }
+        XCTAssertTrue(f.store.books.isEmpty); XCTAssertNil(f.store.importReview)
+        XCTAssertTrue(manager.message?.contains("cancelled") == true)
     }
     func testRemoteUpdatePreservesRemovalAcknowledgement() async throws {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }

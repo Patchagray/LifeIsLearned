@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import ImageIO
 
 actor DiscoveryService {
     struct Cache: Codable { var fetchedAt: Date; var catalog: DiscoveryCatalog }
@@ -33,6 +34,11 @@ actor DiscoveryService {
         try asset.validate(limit: 512 * 1_024)
         let data = try await fetch(asset.url, limit: asset.bytes)
         try CollectionLimits.require(data.count == asset.bytes && LibraryDigest.sha256(data) == asset.sha256, "Thumbnail integrity check failed.")
+        guard let source = CGImageSourceCreateWithData(data as CFData, [kCGImageSourceShouldCache: false] as CFDictionary),
+              let type = CGImageSourceGetType(source) as String?, ["public.png", "public.jpeg"].contains(type) else {
+            throw PackageError.invalid("Library thumbnails must be PNG or JPEG.")
+        }
+        try CollectionLimits.validateImage(CollectionArtwork(mediaType: type == "public.png" ? "image/png" : "image/jpeg", data: data))
         return data
     }
     private func fetch(_ url: URL, limit: Int) async throws -> Data {
