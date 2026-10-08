@@ -17,6 +17,90 @@ import XCTest
         await store.flush()
     }
 
+    func testSymlinkedDocumentsCleanupPreservesInstalledAndPreviousPayloadsAcrossLaunches() async throws {
+        let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
+        let actual = f.directory.appendingPathComponent("actual-documents-with-a-long-name")
+        let alias = f.directory.appendingPathComponent("docs")
+        try FileManager.default.createDirectory(at: actual, withIntermediateDirectories: true)
+        try FileManager.default.createSymbolicLink(at: alias, withDestinationURL: actual)
+        let storage = LibraryStorage(documents: alias)
+        let initial = await storage.load(seed: f.package, seedURL: nil, legacyProgress: nil)
+        XCTAssertFalse(initial.readOnly)
+        let original = try XCTUnwrap(initial.installed.first)
+        var updated = f.package; updated.collectionRevision = 2
+        updated.book.lessons[0].revision += 1; updated.book.lessons[0].title += " updated"
+        updated.manifest = updated.book.lessons.map { IdeaManifestEntry(id: $0.id, revision: $0.revision) }
+        var catalog = initial.catalog; catalog.packages = [updated]; catalog.version = UUID(); try catalog.record(updated)
+        let history = [BookHistoryRecord.refresh(updated, progress: initial.progress, source: .manual, previous: initial.history.first)]
+        let installed = try await storage.save(catalog: catalog, progress: initial.progress, cards: initial.cards, history: history)
+        let current = try XCTUnwrap(installed.first)
+        let root = actual.appendingPathComponent("Library-v3")
+        let currentURL = root.appendingPathComponent(current.packageFile)
+        let previousURL = root.appendingPathComponent(original.packageFile)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: currentURL.path), "Cleanup must retain the installed file through a symlinked Documents path")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: previousURL.path), "Previous committed state remains recoverable")
+        let orphan = currentURL.deletingLastPathComponent().appendingPathComponent("unreferenced.json")
+        try Data("orphan".utf8).write(to: orphan)
+        try await storage.garbageCollect()
+        XCTAssertFalse(FileManager.default.fileExists(atPath: orphan.path))
+        XCTAssertEqual(LibraryDigest.sha256(try Data(contentsOf: currentURL)), current.packageSHA256)
+        XCTAssertEqual(LibraryDigest.sha256(try Data(contentsOf: previousURL)), original.packageSHA256)
+        for _ in 0..<4 {
+            let next = LibraryStorage(documents: alias)
+            let loaded = await next.load(seed: nil, seedURL: nil, legacyProgress: nil)
+            XCTAssertFalse(loaded.readOnly, loaded.warning ?? "")
+            XCTAssertNil(loaded.warning); XCTAssertEqual(loaded.catalog.packages.count, 1)
+            XCTAssertEqual(try data(loaded.progress), try data(initial.progress))
+            XCTAssertEqual(try data(loaded.cards), try data(initial.cards))
+            try await next.confirmLaunch()
+            _ = try await next.save(catalog: loaded.catalog, progress: loaded.progress, cards: loaded.cards, history: loaded.history)
+        }
+        let final = await LibraryStorage(documents: alias).load(seed: nil, seedURL: nil, legacyProgress: nil)
+        XCTAssertFalse(final.readOnly); XCTAssertEqual(final.installed.first?.packageSHA256, current.packageSHA256)
+    }
+
+    func testSymlinkedDocumentsFailedOffloadKeepsActivePayloadAndSuccessReclaimsIt() async throws {
+        let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
+        let actual = f.directory.appendingPathComponent("offload-real-documents")
+        let alias = f.directory.appendingPathComponent("alias")
+        try FileManager.default.createDirectory(at: actual, withIntermediateDirectories: true)
+        try FileManager.default.createSymbolicLink(at: alias, withDestinationURL: actual)
+        let storage = LibraryStorage(documents: alias)
+        let initial = await storage.load(seed: f.package, seedURL: nil, legacyProgress: nil)
+        let record = try XCTUnwrap(initial.installed.first)
+        let payload = actual.appendingPathComponent("Library-v3/" + record.packageFile)
+        await storage.setFault(.deletion)
+        do {
+            _ = try await storage.offload(bookID: f.package.book.id, catalog: initial.catalog,
+                progress: initial.progress, cards: initial.cards, history: initial.history)
+            XCTFail("Injected deletion failure")
+        } catch { }
+        XCTAssertEqual(LibraryDigest.sha256(try Data(contentsOf: payload)), record.packageSHA256)
+        let reloaded = await LibraryStorage(documents: alias).load(seed: nil, seedURL: nil, legacyProgress: nil)
+        XCTAssertFalse(reloaded.readOnly); XCTAssertEqual(reloaded.installed.count, 1)
+        await storage.setFault(nil)
+        _ = try await storage.offload(bookID: f.package.book.id, catalog: initial.catalog,
+            progress: initial.progress, cards: initial.cards, history: initial.history)
+        let bytes = try await storage.packageBytes(bookID: f.package.book.id)
+        XCTAssertEqual(bytes, 0)
+    }
+
+    func testGarbageCollectionFailsClosedForInvalidReferenceBeforeDeletingAnything() async throws {
+        let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
+        let root = f.directory.appendingPathComponent("Library-v3")
+        let pointer = try JSONDecoder().decode(LibraryStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json")))
+        let stateURL = root.appendingPathComponent("StateSnapshots/\(pointer.current)/library-state.json")
+        var state = try JSONDecoder().decode(LibraryState.self, from: Data(contentsOf: stateURL))
+        let installed = root.appendingPathComponent(try XCTUnwrap(state.installed.first).packageFile)
+        let orphan = installed.deletingLastPathComponent().appendingPathComponent("unreferenced.json")
+        try Data("keep until references validate".utf8).write(to: orphan)
+        state.installed[0].packageFile = "../../outside.json"
+        try data(state).write(to: stateURL)
+        do { try await f.store.storage.garbageCollect(); XCTFail("Invalid references must stop cleanup") } catch { }
+        XCTAssertTrue(FileManager.default.fileExists(atPath: installed.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: orphan.path))
+    }
+
     func testOffloadReclaimsPayloadAndReinstallPreservesState() async throws {
         let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
         await complete(f.package, in: f.store)

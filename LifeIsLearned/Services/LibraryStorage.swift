@@ -243,7 +243,9 @@ actor LibraryStorage {
         var next = catalog; next.packages.removeAll { $0.book.id == bookID }; next.version = UUID()
         // Old revisions may be reclaimed first: current installed content stays intact
         // if deleting any of these obsolete payloads fails.
-        for other in try manager.contentsOfDirectory(at: url.deletingLastPathComponent(), includingPropertiesForKeys: nil) where other != url {
+        let activePayload = url.standardizedFileURL.resolvingSymlinksInPath()
+        for other in try manager.contentsOfDirectory(at: url.deletingLastPathComponent(), includingPropertiesForKeys: nil)
+            where other.standardizedFileURL.resolvingSymlinksInPath() != activePayload {
             try manager.removeItem(at: other)
         }
         let prepared = try prepareSnapshot(catalog: next, progress: progress, cards: cards, history: history)
@@ -283,19 +285,33 @@ actor LibraryStorage {
     func garbageCollect() throws {
         guard !manager.fileExists(atPath: journalURL.path) else { return }
         let p = try pointer()
-        var referenced = Set<String>()
+        // Foundation's enumerator resolves /var -> /private/var (and other
+        // symlinks). Never derive identity by dropping characters from a path
+        // with a different spelling: that can classify every installed file as
+        // garbage on a physical device while simulator-only tests stay green.
+        let packages = root.appendingPathComponent("Packages").standardizedFileURL.resolvingSymlinksInPath()
+        var referenced = Set<URL>()
         for id in [p.current, p.previous].compactMap({ $0 }) {
             let state = try read(LibraryState.self, snapshotDirectory(id).appendingPathComponent("library-state.json"))
-            referenced.formUnion(state.installed.map(\.packageFile))
+            try CollectionLimits.require(state.schemaVersion == 3, "Cannot clean an unsupported library state.")
+            for record in state.installed {
+                referenced.insert(try payloadURL(record.packageFile).standardizedFileURL.resolvingSymlinksInPath())
+            }
         }
-        let packages = root.appendingPathComponent("Packages")
-        guard let enumerator = manager.enumerator(at: packages, includingPropertiesForKeys: [.isRegularFileKey]) else { return }
+        guard let enumerator = manager.enumerator(at: packages, includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey]) else { return }
+        var unused: [URL] = []
         for case let url as URL in enumerator {
-            guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { continue }
-            let relative = "Packages/" + url.path.dropFirst(packages.path.count + 1)
-            if !referenced.contains(relative) { try manager.removeItem(at: url) }
+            let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+            guard values.isRegularFile == true, values.isSymbolicLink != true else { continue }
+            let canonical = url.standardizedFileURL.resolvingSymlinksInPath()
+            try CollectionLimits.require(canonical.pathComponents.count > packages.pathComponents.count &&
+                canonical.pathComponents.starts(with: packages.pathComponents), "Cannot clean a file outside the package store.")
+            if !referenced.contains(canonical) { unused.append(canonical) }
         }
+        // Resolve and validate all references before the first deletion.
+        for url in unused { try manager.removeItem(at: url) }
     }
+
     func packageBytes(bookID: String) throws -> Int {
         let folder = root.appendingPathComponent("Packages/" + LibraryDigest.bookDirectory(bookID))
         guard manager.fileExists(atPath: folder.path) else { return 0 }

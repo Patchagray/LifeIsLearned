@@ -528,3 +528,36 @@ final class PackagedNarrationUITests: XCTestCase {
         let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
     }
 }
+
+/// Explicit opt-in inspection of an existing physical-device library. No fixture,
+/// imports, progress interactions, reset flags or user-data screenshots are used.
+final class ExistingLibraryRecoveryUITests: XCTestCase {
+    func testExistingLibrarySurvivesThreeColdLaunches() throws {
+        guard ProcessInfo.processInfo.environment["LIL_VERIFY_EXISTING_LIBRARY"] == "1" else {
+            throw XCTSkip("Opt in only after backing up the device's existing library.")
+        }
+        #if targetEnvironment(simulator)
+        throw XCTSkip("This inspection is for the backed-up physical-device library.")
+        #else
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        for _ in 0..<3 {
+            app.launchEnvironment = [:]; app.launchArguments = []; app.launch()
+            let add = app.buttons["Add Books"]
+            XCTAssertTrue(add.waitForExistence(timeout: 30))
+            XCTAssertTrue(NSPredicate(format: "enabled == true").evaluate(with: add) ||
+                XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: add)], timeout: 30) == .completed)
+            XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Recovery mode:'")).firstMatch.exists)
+            XCTAssertFalse(app.alerts.firstMatch.exists)
+            XCTAssertTrue(app.staticTexts["2 collections"].exists)
+            add.tap()
+            XCTAssertTrue(app.buttons["Import File"].waitForExistence(timeout: 5))
+            XCTAssertTrue(app.buttons["Import File"].isEnabled)
+            app.buttons["Cancel"].tap()
+            app.terminate()
+        }
+        app.launch() // Leave the ordinary library open for the owner.
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 30))
+        #endif
+    }
+}
