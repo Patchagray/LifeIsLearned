@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<rect width="1200" height="1200" fill="#f7f3e8"/>
+<text x="55" y="55" font-family="Helvetica" font-size="20" fill="#203438" letter-spacing="3">LIFE IS LEARNED / ICON DIRECTIONS</text>
+<text x="55" y="88" font-family="Helvetica" font-size="15" fill="#62706b">Concept studies for reviewer choice. No production icon selected.</text>
+<g transform="translate(55 125)">
+<rect width="300" height="300" fill="#174e4b"/>
+<path d="M84 64 H173 L220 111 V232 H84 Z" fill="#f7f3e8"/>
+<path d="M173 64 V111 H220 Z" fill="#c7a76b"/>
+<path d="M118 110 V197 H187" fill="none" stroke="#174e4b" stroke-width="22"/>
+<text y="343" font-family="Helvetica" font-size="23" fill="#203438">A · Idea Fold</text>
+<text y="373" font-family="Helvetica" font-size="16" fill="#62706b">An architectural page and quiet L.</text>
+<text y="399" font-family="Helvetica" font-size="16" fill="#62706b">Distinctive, spare, editorial.</text>
+</g>
+<g transform="translate(450 125)">
+<rect width="300" height="300" fill="#174e4b"/>
+<rect x="70" y="91" width="133" height="157" rx="12" fill="#527a6d" transform="rotate(-14 136 170)"/>
+<rect x="101" y="69" width="133" height="157" rx="12" fill="#c7a76b" transform="rotate(8 166 147)"/>
+<rect x="85" y="56" width="133" height="164" rx="12" fill="#f7f3e8"/>
+<path d="M111 172 V103 H153" fill="none" stroke="#174e4b" stroke-width="13" stroke-linejoin="round"/>
+<circle cx="175" cy="102" r="13" fill="#ad7f39"/>
+<text y="343" font-family="Helvetica" font-size="23" fill="#203438">B · Collected Insight</text>
+<text y="373" font-family="Helvetica" font-size="16" fill="#62706b">Layered idea cards; one insight node.</text>
+<text y="399" font-family="Helvetica" font-size="16" fill="#62706b">Warm, tactile, collection-led.</text>
+</g>
+<g transform="translate(845 125)">
+<rect width="300" height="300" fill="#174e4b"/>
+<rect x="109" y="73" width="91" height="157" rx="8" fill="#f7f3e8" transform="rotate(12 154 151)"/>
+<ellipse cx="150" cy="150" rx="107" ry="63" fill="none" stroke="#c7a76b" stroke-width="13" transform="rotate(-35 150 150)"/>
+<path d="M126 105 L118 147 L160 156" fill="none" stroke="#174e4b" stroke-width="12"/>
+<circle cx="236" cy="89" r="13" fill="#f7f3e8"/>
+<text y="343" font-family="Helvetica" font-size="23" fill="#203438">C · Learning Orbit</text>
+<text y="373" font-family="Helvetica" font-size="16" fill="#62706b">A page held by a continuous path.</text>
+<text y="399" font-family="Helvetica" font-size="16" fill="#62706b">Connected, calm, forward-looking.</text>
+</g>
+<text x="55" y="580" font-family="Helvetica" font-size="13" fill="#62706b">Shared palette: deep teal · warm ivory · restrained gold. Square source; the system applies the icon mask.</text>
+</svg>

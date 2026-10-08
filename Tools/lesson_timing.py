@@ -17,19 +17,30 @@ def feedback(choice, correct):
     return ("That's right. " if correct else "Let's reconsider. ") + choice['feedback']
 
 
+def page_text(page):
+    return page['title'] + '. ' + page['text']
+
+
+def question_text(question):
+    return question['prompt'] + '\n' + '\n'.join(f"Option {i + 1}. {c['text']}" for i, c in enumerate(question['choices']))
+
+
+def completion_text(correct, total):
+    return f"Lesson complete. You've practiced a new idea. {correct} of {total} correct on the first try."
+
+
 def narration_segments(lesson):
     segments = [dict(id='page:' + p['id'], kind=p['kind'], role=p['role'],
-                     text=p['title'] + '. ' + p['text']) for p in lesson['pages']]
+                     text=page_text(p)) for p in lesson['pages']]
     for q in lesson['questions']:
-        text = q['prompt'] + '\n' + '\n'.join(
-            f"Option {i + 1}. {c['text']}" for i, c in enumerate(q['choices']))
+        text = question_text(q)
         segments.append(dict(id='question:' + q['id'], kind='question', role='guide', text=text))
         responses = [feedback(c, c['id'] == q['correctChoiceID']) for c in q['choices']]
         segments.append(dict(id='feedback:' + q['id'], kind='feedback', role='guide',
                              text=max(responses, key=word_count)))
     n = len(lesson['questions'])
     segments.append(dict(id='completion', kind='completion', role='guide',
-                         text=f"Lesson complete. You've practiced a new idea. {n} of {n} correct on the first try."))
+                         text=completion_text(n, n)))
     return segments
 
 

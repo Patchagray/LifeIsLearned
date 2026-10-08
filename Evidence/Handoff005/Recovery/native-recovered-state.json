@@ -1,0 +1,20 @@
+[
+  {
+    "bookCount" : 2,
+    "hasWarning" : false,
+    "readOnly" : false,
+    "run" : 1
+  },
+  {
+    "bookCount" : 2,
+    "hasWarning" : false,
+    "readOnly" : false,
+    "run" : 2
+  },
+  {
+    "bookCount" : 2,
+    "hasWarning" : false,
+    "readOnly" : false,
+    "run" : 3
+  }
+]

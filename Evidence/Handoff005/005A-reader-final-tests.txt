@@ -1,0 +1,27 @@
+** TEST SUCCEEDED **
+Test suite 'Selected tests' started on 'iPhone 16e - LifeIsLearned (28092)'
+Test suite 'LifeIsLearnedTests.xctest' started on 'iPhone 16e - LifeIsLearned (28092)'
+Test suite 'SixStageLessonTests' started on 'iPhone 16e - LifeIsLearned (28092)'
+Test suite 'Selected tests' started on 'iPad (A16) - LifeIsLearned (28093)'
+Test suite 'LifeIsLearnedTests.xctest' started on 'iPad (A16) - LifeIsLearned (28093)'
+Test suite 'SixStageLessonTests' started on 'iPad (A16) - LifeIsLearned (28093)'
+Test case 'SixStageLessonTests.testApplicationAndLegacyCountsDecodeValidateAndPersist()' passed on 'iPhone 16e - LifeIsLearned (28092)' (1.197 seconds)
+Test case 'SixStageLessonTests.testNarrationFollowRespectsGestureVoiceOverAndReduceMotion()' passed on 'iPhone 16e - LifeIsLearned (28092)' (0.058 seconds)
+Test case 'SixStageLessonTests.testApplicationAndLegacyCountsDecodeValidateAndPersist()' passed on 'iPad (A16) - LifeIsLearned (28093)' (1.261 seconds)
+Test case 'SixStageLessonTests.testNarrationFollowRespectsGestureVoiceOverAndReduceMotion()' passed on 'iPad (A16) - LifeIsLearned (28093)' (0.055 seconds)
+Test case 'SixStageLessonTests.testNarrationRepresentableOnlyFollowsStories()' passed on 'iPhone 16e - LifeIsLearned (28092)' (1.401 seconds)
+Test case 'SixStageLessonTests.testNarrationRepresentableOnlyFollowsStories()' passed on 'iPad (A16) - LifeIsLearned (28093)' (1.437 seconds)
+Test case 'SixStageLessonTests.testSemanticProgressAndLegacyFallback()' passed on 'iPhone 16e - LifeIsLearned (28092)' (0.138 seconds)
+Test case 'SixStageLessonTests.testSemanticProgressAndLegacyFallback()' passed on 'iPad (A16) - LifeIsLearned (28093)' (0.136 seconds)
+Test case 'SixStageLessonTests.testSixStageReaderRenderedEvidence()' passed on 'iPhone 16e - LifeIsLearned (28092)' (12.124 seconds)
+Test case 'SixStageLessonTests.testSixStageReaderRenderedEvidence()' passed on 'iPad (A16) - LifeIsLearned (28093)' (13.892 seconds)
+Test suite 'Selected tests' started on 'iPhone 16e - LifeIsLearnedUITests-Runner (28144)'
+Test suite 'LifeIsLearnedUITests.xctest' started on 'iPhone 16e - LifeIsLearnedUITests-Runner (28144)'
+Test suite 'SixStageReaderUITests' started on 'iPhone 16e - LifeIsLearnedUITests-Runner (28144)'
+Test suite 'Selected tests' started on 'iPad (A16) - LifeIsLearnedUITests-Runner (28146)'
+Test suite 'LifeIsLearnedUITests.xctest' started on 'iPad (A16) - LifeIsLearnedUITests-Runner (28146)'
+Test suite 'SixStageReaderUITests' started on 'iPad (A16) - LifeIsLearnedUITests-Runner (28146)'
+Test case 'SixStageReaderUITests.testCanonicalReaderLabelsArtworkAndPracticeBoundary()' passed on 'iPhone 16e - LifeIsLearnedUITests-Runner (28144)' (26.798 seconds)
+Testing passed on 'iPhone 16e'
+Test case 'SixStageReaderUITests.testCanonicalReaderLabelsArtworkAndPracticeBoundary()' passed on 'iPad (A16) - LifeIsLearnedUITests-Runner (28146)' (27.745 seconds)
+Testing passed on 'iPad (A16)'

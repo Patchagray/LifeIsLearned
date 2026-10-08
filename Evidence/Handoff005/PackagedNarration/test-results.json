@@ -1,0 +1,94 @@
+{
+  "sourceCommit": "60882b3807f8e91476bbe7f39bce3661ef53d950",
+  "nativeImplementationCommit": "ba619fbd4efaf99bd51119e37456983d4a24d47a",
+  "branch": "feature/handoff-005-library-platform",
+  "xcode": "26.5 (17F42)",
+  "runs": [
+    {
+      "scope": "All native tests and import/reader/audio journeys",
+      "result": "Passed",
+      "destinations": [
+        {
+          "name": "iPad (A16)",
+          "platform": "iOS Simulator",
+          "os": "26.3.1",
+          "passed": 90,
+          "failed": 0,
+          "skipped": 1
+        },
+        {
+          "name": "iPhone 16e",
+          "platform": "iOS Simulator",
+          "os": "26.3.1",
+          "passed": 90,
+          "failed": 0,
+          "skipped": 1
+        }
+      ]
+    },
+    {
+      "scope": "Affected cards, next idea, Dive Deeper and accessibility UI",
+      "result": "Passed",
+      "destinations": [
+        {
+          "name": "iPad (A16)",
+          "platform": "iOS Simulator",
+          "os": "26.3.1",
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "name": "iPhone 16e",
+          "platform": "iOS Simulator",
+          "os": "26.3.1",
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0
+        }
+      ]
+    },
+    {
+      "scope": "Final cue-decoder audio rerun",
+      "result": "Passed",
+      "destinations": [
+        {
+          "name": "iPad (A16)",
+          "platform": "iOS Simulator",
+          "os": "26.3.1",
+          "passed": 10,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "name": "iPhone 16e",
+          "platform": "iOS Simulator",
+          "os": "26.3.1",
+          "passed": 10,
+          "failed": 0,
+          "skipped": 0
+        }
+      ]
+    }
+  ],
+  "distinctResultsPerSimulator": {
+    "passed": 95,
+    "failed": 0,
+    "skipped": 1,
+    "skip": "Physical installed-premium-voice timing; simulator has no premium reference voices"
+  },
+  "python": {
+    "passed": 53,
+    "failed": 0,
+    "skipped": 0
+  },
+  "portableChecks": 512,
+  "catalog": "catalog-001 revision 1 passed",
+  "audioFixtureGate": "complete, 15 exact-script segments; synthetic tone, not speech",
+  "nativePythonScriptParity": "all 15 segments exact",
+  "sourceHashesMatchedCommit": 98,
+  "scopeNote": "Affected regression for audio addendum; earlier full H005A\u2013F suite is historical evidence. Final audio rerun covers tolerant optional cue decoding added after broader regression. No semantic changes followed the final run.",
+  "physicalAudioChecks": "pending",
+  "productionVoiceAuditionAndGeneration": "pending",
+  "publicReleasesAndEndpoints": "not published/deployed"
+}

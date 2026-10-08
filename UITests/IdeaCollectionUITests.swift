@@ -55,8 +55,13 @@ final class IdeaCollectionUITests: XCTestCase {
         app.buttons["Favorites"].tap(); app.buttons["Show carousel"].tap()
         XCTAssertTrue(first.waitForExistence(timeout: 5)); XCTAssertFalse(first.label.contains("Not a favorite"))
         let carousel = app.scrollViews["idea-carousel"]
-        carousel.swipeLeft(); carousel.swipeRight()
+        carousel.swipeLeft(velocity: .slow)
+        XCTAssertGreaterThan(abs(first.frame.midX - app.frame.midX), 20, "Manual scrolling must leave the first card")
+        XCTAssertFalse(app.staticTexts["1 of 7"].exists, "The selected-card footer follows the centered card")
+        carousel.swipeRight(velocity: .slow)
         XCTAssertTrue(first.exists)
+        XCTAssertEqual(first.frame.midX, app.frame.midX, accuracy: 3)
+        XCTAssertTrue(app.staticTexts["1 of 7"].exists)
         first.tap()
         waitForFace(first, "Details")
         Thread.sleep(forTimeInterval: 0.6)
@@ -220,19 +225,32 @@ final class SixStageReaderUITests: XCTestCase {
         for index in 0..<6 {
             XCTAssertEqual(indicator.label, "Screen \(index + 1) of 6 · " + labels[index])
             XCTAssertFalse(app.buttons["Pause narration"].exists)
+            if [0, 1, 4].contains(index) {
+                let artwork = app.descendants(matching: .any)["editorial-artwork"].firstMatch
+                XCTAssertTrue(artwork.exists)
+                XCTAssertGreaterThanOrEqual(artwork.frame.height, 180)
+                XCTAssertLessThanOrEqual(artwork.frame.height, 231)
+            }
+            let stage = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            stage.name = "h005a-live-stage-\(index)"; stage.lifetime = .keepAlways; add(stage)
+            if index == 2 {
+                let secondary = app.descendants(matching: .any)["story-secondary-artwork"].firstMatch
+                reveal(secondary, app)
+                XCTAssertTrue(secondary.isHittable)
+                let image = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+                image.name = "h005a-live-second-story-image"; image.lifetime = .keepAlways; add(image)
+            }
             if index < 5 { app.buttons["Next screen"].tap() }
         }
         let art = app.images["takeaway-artwork"]
-        XCTAssertTrue(art.exists)
-        XCTAssertEqual(art.label, "Synthetic illustration for stage 6")
-        XCTAssertTrue(art.isHittable, "Artwork is visible before revealing the takeaway")
+        XCTAssertFalse(art.exists, "The Idea Card is the production Takeaway visual")
         XCTAssertFalse(app.buttons["Practice this idea"].isEnabled)
         let revealButton = app.buttons["Reveal the idea"]
         reveal(revealButton, app); revealButton.tap()
         XCTAssertTrue(app.buttons["Practice this idea"].isEnabled)
-        XCTAssertTrue(art.exists, "Revealing the text retains its artwork")
+        XCTAssertFalse(art.exists)
         let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-        attachment.name = "h0046-live-takeaway-art"; attachment.lifetime = .keepAlways; add(attachment)
+        attachment.name = "h005a-live-takeaway-card"; attachment.lifetime = .keepAlways; add(attachment)
         app.buttons["Practice this idea"].tap()
         XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Option 1.'")).firstMatch.waitForExistence(timeout: 5))
     }
@@ -240,5 +258,306 @@ final class SixStageReaderUITests: XCTestCase {
         XCTAssertTrue(element.waitForExistence(timeout: 30))
         for _ in 0..<12 { if element.isHittable { return }; app.swipeUp() }
         XCTAssertTrue(element.isHittable)
+    }
+}
+
+final class LibraryHistoryUITests: XCTestCase {
+    func testOffloadConfirmationHistoryAndCardsSurviveRelaunch() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_IDEA_CARD_FIXTURE"] = "1"
+        app.launch()
+        let book = app.buttons["book-card-fixture-a"]
+        reveal(book, app); book.tap()
+        app.buttons["Book options"].tap()
+        app.buttons["Offload Book"].tap()
+        let explanation = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Idea Cards, favorites, progress and History stay'")).firstMatch
+        XCTAssertTrue(explanation.waitForExistence(timeout: 5))
+        XCTAssertTrue(explanation.label.contains("re-import"))
+        snapshot("h005b-offload-confirmation")
+        app.buttons["Offload Book"].tap()
+        let history = app.buttons["library-history"]
+        reveal(history, app); history.tap()
+        let restore = app.buttons["restore-book-card-fixture-a"]
+        reveal(restore, app)
+        XCTAssertEqual(restore.label, "Re-import book")
+        XCTAssertTrue(app.staticTexts["Offloaded"].exists)
+        snapshot("h005b-history-offloaded")
+        app.terminate()
+        app.launchEnvironment.removeValue(forKey: "LIL_IDEA_CARD_FIXTURE")
+        app.launch()
+        XCTAssertTrue(app.buttons["Ideas"].waitForExistence(timeout: 20))
+        XCTAssertFalse(app.buttons["book-card-fixture-a"].exists)
+        app.buttons["Ideas"].tap()
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH '20 collected'")).firstMatch.waitForExistence(timeout: 10))
+        snapshot("h005b-cards-after-offload")
+    }
+    func testHistoryAtAccessibilityTextSize() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_IDEA_CARD_FIXTURE"] = "1"
+        app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let history = app.buttons["library-history"]
+        reveal(history, app); history.tap()
+        let open = app.buttons["Open book"].firstMatch
+        reveal(open, app)
+        XCTAssertTrue(open.isHittable)
+        snapshot("h005b-history-accessibility-text")
+    }
+    private func reveal(_ element: XCUIElement, _ app: XCUIApplication) {
+        XCTAssertTrue(element.waitForExistence(timeout: 30))
+        for _ in 0..<12 { if element.isHittable { return }; app.swipeUp() }
+        XCTAssertTrue(element.isHittable)
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
+    }
+}
+
+final class DiscoveryUITests: XCTestCase {
+    func testBrowseDownloadUpdateAndOfflineCache() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
+        app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
+        app.buttons["Browse Library"].tap()
+        let download = app.buttons["download-influence-the-psychology-of-persuasion"]
+        XCTAssertTrue(download.waitForExistence(timeout: 20))
+        snapshot("h005c-browse-synthetic")
+        if !download.isHittable { app.swipeUp() }
+        download.tap()
+        XCTAssertTrue(app.buttons["Cancel download"].waitForExistence(timeout: 5))
+        snapshot("h005c-download-progress")
+        let done = app.buttons["Done"]
+        XCTAssertTrue(done.waitForExistence(timeout: 20)); done.tap()
+        XCTAssertTrue(app.staticTexts["In Library"].firstMatch.waitForExistence(timeout: 10))
+        snapshot("h005c-in-library")
+        app.buttons["Refresh catalog"].tap()
+        XCTAssertTrue(app.buttons["Update"].waitForExistence(timeout: 10))
+        snapshot("h005c-update-available")
+        app.buttons["Update"].tap()
+        XCTAssertTrue(done.waitForExistence(timeout: 20)); done.tap()
+        XCTAssertTrue(app.staticTexts["In Library"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["Update"].exists)
+        snapshot("h005c-update-installed")
+        app.buttons["Refresh catalog"].tap()
+        XCTAssertTrue(app.staticTexts["Showing saved catalog · refresh unavailable"].waitForExistence(timeout: 10))
+        snapshot("h005c-offline-cache")
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
+    }
+}
+
+final class ScannerRequestUITests: XCTestCase {
+    func testAddBooksAndRequestAtLargeText() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
+        app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
+        app.buttons["Browse Library"].tap()
+        func reveal(_ element: XCUIElement) {
+            for _ in 0..<16 { if element.exists && element.isHittable { return }; app.swipeUp() }
+            XCTAssertTrue(element.isHittable)
+        }
+        let download = app.buttons["download-influence-the-psychology-of-persuasion"]
+        reveal(download); snapshot("h005c-browse-large-text")
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["Add Books"].tap(); app.buttons["Scan a Book"].tap()
+        let title = app.textFields["scan-title"]; reveal(title); title.tap(); title.typeText("An unlisted book")
+        let keyboardDone = app.buttons["scanner-keyboard-done"]
+        XCTAssertTrue(keyboardDone.waitForExistence(timeout: 5)); keyboardDone.tap()
+        let find = app.buttons["Find matches"]; reveal(find); find.tap()
+        let review = app.buttons["Review details & request"]; reveal(review); snapshot("h005d-unknown-large-text"); review.tap()
+        let requestTitle = app.textFields["request-title"]; reveal(requestTitle); requestTitle.tap(); requestTitle.typeText(" revised")
+        let requestDone = app.buttons["request-keyboard-done"]
+        XCTAssertTrue(requestDone.waitForExistence(timeout: 5)); requestDone.tap()
+        let send = app.buttons["Request this book"]; reveal(send); snapshot("h005d-request-large-text"); send.tap()
+        XCTAssertTrue(app.staticTexts["request-success"].waitForExistence(timeout: 10))
+    }
+
+    func testISBNTextFallbackAndReviewedRequest() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
+        app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
+        app.buttons["Scan a Book"].tap()
+        XCTAssertTrue(app.buttons["Open camera"].waitForExistence(timeout: 10)); app.buttons["Open camera"].tap()
+        XCTAssertTrue(app.staticTexts["scanner-fallback"].waitForExistence(timeout: 5))
+        snapshot("h005d-camera-unavailable-text-fallback")
+        let isbn = app.textFields["scan-isbn"]
+        isbn.tap(); isbn.typeText("9780141033570")
+        let keyboardDone = app.buttons["scanner-keyboard-done"]
+        XCTAssertTrue(keyboardDone.waitForExistence(timeout: 5)); keyboardDone.tap()
+        app.buttons["Find matches"].tap()
+        app.swipeUp()
+        XCTAssertTrue(app.staticTexts["Exact ISBN match"].waitForExistence(timeout: 10))
+        snapshot("h005d-isbn-match-synthetic")
+        app.buttons["View prepared book"].tap()
+        XCTAssertTrue(app.buttons["download-influence-the-psychology-of-persuasion"].waitForExistence(timeout: 15), "A stable-ID match must survive a different catalog display title")
+        snapshot("h005d-prepared-book-from-scan")
+        // A separate isolated launch verifies title recognition fallback without an ISBN.
+        app.terminate(); app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString; app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
+        app.buttons["Scan a Book"].tap()
+        let title = app.textFields["scan-title"]
+        title.tap(); title.typeText("Thinking, Fast and Slow")
+        XCTAssertTrue(keyboardDone.waitForExistence(timeout: 5)); keyboardDone.tap()
+        app.buttons["Find matches"].tap(); app.swipeUp()
+        XCTAssertTrue(app.staticTexts["Title / author match"].firstMatch.waitForExistence(timeout: 10))
+        snapshot("h005d-title-match")
+        app.buttons["Request this book"].firstMatch.tap()
+        XCTAssertTrue(app.buttons["Request this book"].waitForExistence(timeout: 10))
+        snapshot("h005d-review-before-request")
+        app.buttons["Request this book"].tap()
+        XCTAssertTrue(app.staticTexts["request-success"].waitForExistence(timeout: 10))
+        snapshot("h005d-request-accepted-fixture")
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
+    }
+}
+
+final class DiveDeeperUITests: XCTestCase {
+    private var largeText = false
+    func testCompletionAndCollectedCardEntryPoints() { exerciseDeeper() }
+    func testCompletionAndCollectedCardAtLargeText() { largeText = true; exerciseDeeper() }
+    private func exerciseDeeper() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_DEEPER_FIXTURE"] = "1"
+        if largeText { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
+        app.launch()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25))
+        let book = app.buttons["book-deeper-fixture"]; reveal(book, app); book.tap()
+        let idea = app.buttons["idea-deeper-idea"]; reveal(idea, app); idea.tap()
+        XCTAssertFalse(app.buttons["completion-dive-deeper"].exists)
+        let first = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Option 1.'")).firstMatch
+        reveal(first, app); first.tap(); app.buttons["Continue"].tap()
+        let second = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Option 3.'")).firstMatch
+        reveal(second, app); second.tap(); app.buttons["Finish lesson"].tap()
+        let deep = app.buttons["completion-dive-deeper"]; reveal(deep, app)
+        snapshot("h005e-completion-entry"); deep.tap()
+        reveal(app.staticTexts["A worked example"], app)
+        snapshot("h005e-section-view")
+        app.buttons["Done"].tap()
+        let card = app.buttons["View collected card"]; reveal(card, app); card.tap()
+        let cardDeep = app.buttons["card-dive-deeper"]; reveal(cardDeep, app)
+        snapshot("h005e-card-entry"); cardDeep.tap()
+        reveal(app.staticTexts["A worked example"], app)
+        snapshot("h005e-from-card")
+    }
+    private func reveal(_ element: XCUIElement, _ app: XCUIApplication) {
+        for _ in 0..<16 { if element.exists && element.isHittable { return }; app.swipeUp() }
+        XCTAssertTrue(element.isHittable)
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = largeText ? name + "-large-text" : name; a.lifetime = .keepAlways; add(a)
+    }
+}
+
+final class BrandUITests: XCTestCase {
+    func testSelectedIconOnHomeScreenLaunchesApp() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launch()
+        XCTAssertTrue(app.buttons["Ideas"].waitForExistence(timeout: 20))
+        XCUIDevice.shared.press(.home)
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let icon = springboard.icons["Life Is Learned"].firstMatch
+        for _ in 0..<5 {
+            if icon.exists && icon.isHittable { break }
+            springboard.swipeLeft()
+        }
+        XCTAssertTrue(icon.waitForExistence(timeout: 5))
+        XCTAssertTrue(icon.isHittable)
+        // Capture the actual installed icon and label, excluding unrelated apps.
+        let attachment = XCTAttachment(screenshot: icon.screenshot())
+        attachment.name = "h005f-selected-icon-home-screen"
+        attachment.lifetime = .keepAlways; add(attachment)
+        icon.tap()
+        XCTAssertTrue(app.buttons["Ideas"].waitForExistence(timeout: 10))
+    }
+}
+
+final class PackagedNarrationUITests: XCTestCase {
+    func testOfflineStudioModeBackgroundReturnAndFallbackSettings() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_AUDIO_FIXTURE"] = "1"
+        app.launch()
+        let book = app.buttons["book-audio-verification-fixture"]
+        XCTAssertTrue(book.waitForExistence(timeout: 30))
+        for _ in 0..<8 { if book.isHittable { break }; app.swipeUp() }
+        book.tap()
+        let idea = app.buttons["idea-audio-check"]
+        for _ in 0..<10 { if idea.exists && idea.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(idea.isHittable); idea.tap()
+        XCTAssertTrue(app.staticTexts["Studio narration · available offline"].waitForExistence(timeout: 15))
+        snapshot("audio-studio-mode")
+        app.buttons["Play narration"].tap()
+        XCUIDevice.shared.press(.home)
+        Thread.sleep(forTimeInterval: 4)
+        app.activate()
+        XCTAssertTrue(app.staticTexts["Studio narration · available offline"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["Device fallback voices"].exists)
+        XCTAssertFalse(app.staticTexts["Audio check 1"].exists, "Packaged auto-run should advance the reading stage while backgrounded")
+        snapshot("audio-foreground-return-simulator")
+        if app.buttons["Pause narration"].exists { app.buttons["Pause narration"].tap() }
+        app.buttons["Playback settings"].tap()
+        XCTAssertTrue(app.staticTexts["Device fallback voices"].waitForExistence(timeout: 5))
+        snapshot("audio-fallback-voice-settings")
+        app.buttons["Done"].tap()
+        app.buttons["Close lesson"].tap()
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
+    }
+}
+
+/// Explicit opt-in inspection of an existing physical-device library. No fixture,
+/// imports, progress interactions, reset flags or user-data screenshots are used.
+final class ExistingLibraryRecoveryUITests: XCTestCase {
+    func testExistingLibrarySurvivesThreeColdLaunches() throws {
+        guard ProcessInfo.processInfo.environment["LIL_VERIFY_EXISTING_LIBRARY"] == "1" else {
+            throw XCTSkip("Opt in only after backing up the device's existing library.")
+        }
+        #if targetEnvironment(simulator)
+        throw XCTSkip("This inspection is for the backed-up physical-device library.")
+        #else
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        for _ in 0..<3 {
+            app.launchEnvironment = [:]; app.launchArguments = []; app.launch()
+            let add = app.buttons["Add Books"]
+            XCTAssertTrue(add.waitForExistence(timeout: 30))
+            XCTAssertTrue(NSPredicate(format: "enabled == true").evaluate(with: add) ||
+                XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: add)], timeout: 30) == .completed)
+            XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Recovery mode:'")).firstMatch.exists)
+            XCTAssertFalse(app.alerts.firstMatch.exists)
+            XCTAssertTrue(app.staticTexts["2 collections"].exists)
+            add.tap()
+            XCTAssertTrue(app.buttons["Import File"].waitForExistence(timeout: 5))
+            XCTAssertTrue(app.buttons["Import File"].isEnabled)
+            app.buttons["Cancel"].tap()
+            app.terminate()
+        }
+        app.launch() // Leave the ordinary library open for the owner.
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 30))
+        #endif
     }
 }

@@ -225,7 +225,7 @@ final class NarrationScrollingTests: XCTestCase {
         store.update(book: package.book, lesson: lesson) { $0.pageIndex = pageIndex }
         let settings = PlaybackSettings(defaults: defaults)
         let content = ReaderView(book: package.book, lesson: lesson, store: store,
-                                 speech: SpeechPlayer(), settings: settings)
+                                 speech: NarrationController(), settings: settings)
             .environment(\.dynamicTypeSize, .accessibility3)
         let isPad = UIDevice.current.userInterfaceIdiom == .pad
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: isPad ? 820 : 390, height: isPad ? 1180 : 844))

@@ -8,7 +8,9 @@ struct IdeaCardRecord: Codable, Identifiable, Equatable, Sendable {
         var application: String
         var bookTitle: String
         var author: String
+        var hasDiveDeeper: Bool? = nil
         init(book: LearningBook, lesson: Lesson) {
+            hasDiveDeeper = lesson.diveDeeper == nil ? nil : true
             title = lesson.title
             takeaway = lesson.pages.first { $0.kind == .takeaway }?.text ?? lesson.subtitle
             application = lesson.subtitle; bookTitle = book.title; author = book.author
@@ -61,8 +63,10 @@ enum IdeaCardCollection {
         ordered.filter { (!favoritesOnly || $0.isFavorite) && (bookID == nil || $0.bookID == bookID) }
     }
 
-    static func ordered(_ records: [IdeaCardRecord], books: [LearningBook], sort: IdeaCardSort) -> [IdeaCardRecord] {
-        let orderedIDs = books.flatMap { b in b.lessons.map { LessonProgress.identity(bookID: b.id, lessonID: $0.id) } }
+    static func ordered(_ records: [IdeaCardRecord], books: [LearningBook], sort: IdeaCardSort, history: [BookHistoryRecord] = []) -> [IdeaCardRecord] {
+        let retainedIDs = Set(history.map(\.bookID))
+        let orderedIDs = history.flatMap { b in b.ideas.map { LessonProgress.identity(bookID: b.bookID, lessonID: $0.id) } }
+            + books.filter { !retainedIDs.contains($0.id) }.flatMap { b in b.lessons.map { LessonProgress.identity(bookID: b.id, lessonID: $0.id) } }
         let positions = Dictionary(uniqueKeysWithValues: orderedIDs.enumerated().map { ($0.element, $0.offset) })
         return records.sorted { a, b in
             switch sort {
@@ -77,5 +81,14 @@ enum IdeaCardCollection {
             }
             return a.id < b.id
         }
+    }
+}
+
+/// A changing collection must not turn "no selection yet" into an implicit choice.
+/// Choose the current first card only when the learner opens the carousel.
+enum IdeaCardSelection {
+    static func reconcile(_ selectedID: String?, availableIDs: [String]) -> String? {
+        guard let selectedID else { return nil }
+        return availableIDs.contains(selectedID) ? selectedID : availableIDs.first
     }
 }

@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "bookID": "audio-verification-fixture",
+  "collectionRevision": 1,
+  "ideas": [
+    {
+      "id": "audio-check",
+      "revision": 1,
+      "segments": [
+        {
+          "id": "page:screen-0",
+          "role": "guide",
+          "text": "Audio check 1. A synthetic tone checks offline playback. This is verification content.",
+          "stage": "Audio check 1",
+          "scriptSHA256": "37e37b704855f9e54ac091cf93bbad032caa16bbd4a083d8838e9c61f3cf4cfd",
+          "file": "140c7fb429f488887c65d57a458a5a6b4b00f7e4aa8cbc121825a41aab18d4e8.mp3"
+        },
+        {
+          "id": "page:screen-1",
+          "role": "guide",
+          "text": "Audio check 2. A synthetic tone checks offline playback. This is verification content.",
+          "stage": "Audio check 2",
+          "scriptSHA256": "41d364ca322602b07fa603245f5f68ea0bfb6b1642787b4ce841d9e50aaab3f7",
+          "file": "20644a2eee4cb8bcb27d9ed0c22bf8286d4592f724b7238635bd1deb8d506a14.mp3"
+        },
+        {
+          "id": "page:screen-2",
+          "role": "storyteller",
+          "text": "Audio check 3. A synthetic tone checks offline playback. This is verification content.",
+          "stage": "Audio check 3",
+          "scriptSHA256": "75b6022a5037dce55982a8b0441b4046fbce2891180416d43cb95331d898fbaa",
+          "file": "e7bb2de6c23fe3da9c811507d054bfec74a76752324c2fdb80a5abcf75178077.mp3"
+        },
+        {
+          "id": "page:screen-3",
+          "role": "storyteller",
+          "text": "Audio check 4. A synthetic tone checks offline playback. This is verification content.",
+          "stage": "Audio check 4",
+          "scriptSHA256": "009beb1d2870112d443060762807607744646bf5f4f7b0e446ef91601c7dee2e",
+          "file": "47acfb0fe937c894a737ae3c2995191b0261c803e0a0c7cf26138f5448d362f5.mp3"
+        },
+        {
+          "id": "page:screen-4",
+          "role": "guide",
+          "text": "Audio check 5. A synthetic tone checks offline playback. This is verification content.",
+          "stage": "Audio check 5",
+          "scriptSHA256": "8ad59983dea86f3466868edee81725634233d11afd239384f262d78a47465de3",
+          "file": "8f485c88c002128789bbf72db6eac6ede114cf7af420cb6b4f15463bd645284e.mp3"
+        },
+        {
+          "id": "page:screen-5",
+          "role": "guide",
+          "text": "Audio check 6. A synthetic tone checks offline playback. This is verification content.",
+          "stage": "Audio check 6",
+          "scriptSHA256": "e9571a915da82fc738786e43a4e85bb5156620409842f63c4ac1a003515389db",
+          "file": "26ff56fc425c125f1b1617373c6f465c7732f4a653a3a2abaa67d48600057cfb.mp3"
+        },
+        {
+          "id": "question:question-0",
+          "role": "guide",
+          "text": "Which option completes this test?\nOption 1. Complete the check\nOption 2. Try the retry path",
+          "stage": "Practice",
+          "scriptSHA256": "72408225b11f463404be5280b067a0864a7c4320ca42743e911ef1f246ff0802",
+          "file": "31ff9f8b861f3749f4a74c44b8168246234e397e73c9bf07fec0cf12733d848f.mp3"
+        },
+        {
+          "id": "feedback:question-0:yes",
+          "role": "guide",
+          "text": "That's right. This is the correct verification choice.",
+          "stage": "Feedback",
+          "scriptSHA256": "b4713e99a29d0bd02b23f8e02adae6b5753842b3f69df22d9274886aa202c142",
+          "file": "cc03672944ac02b289c720131b227a09c33630e7a1d3803f31b31eeb9d9b809e.mp3"
+        },
+        {
+          "id": "feedback:question-0:no",
+          "role": "guide",
+          "text": "Let's reconsider. You can retry this verification question.",
+          "stage": "Feedback",
+          "scriptSHA256": "2e6fe78b976757105734fb0de75d79872bde72c621a71bc3a9b80386e5a38d8e",
+          "file": "724f2f8558e4026fa5ef0aa6d5dba86eca8509735efd1b7cbc415268a6d5ef71.mp3"
+        },
+        {
+          "id": "question:question-1",
+          "role": "guide",
+          "text": "Which option completes this test?\nOption 1. Complete the check\nOption 2. Try the retry path",
+          "stage": "Practice",
+          "scriptSHA256": "72408225b11f463404be5280b067a0864a7c4320ca42743e911ef1f246ff0802",
+          "file": "1e6141e1a9eabfeee33a5c7b99dcc6a48d96f99aea5a3392d15ac007310ce526.mp3"
+        },
+        {
+          "id": "feedback:question-1:yes",
+          "role": "guide",
+          "text": "That's right. This is the correct verification choice.",
+          "stage": "Feedback",
+          "scriptSHA256": "b4713e99a29d0bd02b23f8e02adae6b5753842b3f69df22d9274886aa202c142",
+          "file": "dd4b9297aef0f067f7d21208c8c8ed68f5dda609e4e1386ba50e8bf2fe908973.mp3"
+        },
+        {
+          "id": "feedback:question-1:no",
+          "role": "guide",
+          "text": "Let's reconsider. You can retry this verification question.",
+          "stage": "Feedback",
+          "scriptSHA256": "2e6fe78b976757105734fb0de75d79872bde72c621a71bc3a9b80386e5a38d8e",
+          "file": "1fa25b30cdb4968528b82aa9be16c626e83fe8c1a65c73e096bba01c27369b4f.mp3"
+        },
+        {
+          "id": "completion:0",
+          "role": "guide",
+          "text": "Lesson complete. You've practiced a new idea. 0 of 2 correct on the first try.",
+          "stage": "Complete",
+          "scriptSHA256": "363f349195c57e88459d37d54e1b513a92453d473863aaa2efba3983d98b8551",
+          "file": "aacd85f6dfd50f9ebd01b7009c95949997cc41dc3e6ee71561682654115669ac.mp3"
+        },
+        {
+          "id": "completion:1",
+          "role": "guide",
+          "text": "Lesson complete. You've practiced a new idea. 1 of 2 correct on the first try.",
+          "stage": "Complete",
+          "scriptSHA256": "cfb10f3b92416ad58bbe3b7b3da066e861a8570c8531f6261686bac679dbed7f",
+          "file": "9989d6097ab75770d4aaa1fe0b431eac91bfc7feaceecad71ffa5194215147a6.mp3"
+        },
+        {
+          "id": "completion:2",
+          "role": "guide",
+          "text": "Lesson complete. You've practiced a new idea. 2 of 2 correct on the first try.",
+          "stage": "Complete",
+          "scriptSHA256": "e0f8adab1071242c3dd8201ca9b9c0657e9443c81bf6f1c388adf665c3b98304",
+          "file": "8d6315423ed20e7a9decf9ce0be3215272ee5ded357f4074d589d6cb24a17cea.mp3"
+        }
+      ]
+    }
+  ]
+}

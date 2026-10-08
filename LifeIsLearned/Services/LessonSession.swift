@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import UIKit
 
 @MainActor final class LessonSession: ObservableObject {
     typealias Phase = LearningPhase
@@ -16,14 +17,19 @@ import Combine
     @Published private(set) var reflectionRemaining: TimeInterval?
     private var reflectionDeadline: Date?
     private var transition: Task<Void, Never>?
+    private var backgroundTransition: UIBackgroundTaskIdentifier = .invalid
     private var generation = UUID()
     private let store: LibraryStore
     let speech: any Narrating
     private let settings: PlaybackSettings
+    private let completionFeedback: any CompletionFeedbackPlaying
+    @Published private(set) var completionBloomID: UUID?
     private let archivedPackage: LessonPackage?
 
     init(book: LearningBook, lesson: Lesson, store: LibraryStore, speech: any Narrating,
-         settings: PlaybackSettings, practiceOnly: Bool, review: Bool = false, archivedPackage: LessonPackage? = nil) {
+         settings: PlaybackSettings, practiceOnly: Bool, review: Bool = false, archivedPackage: LessonPackage? = nil,
+         completionFeedback: (any CompletionFeedbackPlaying)? = nil) {
+        self.completionFeedback = completionFeedback ?? SystemCompletionFeedback()
         self.book = book; self.lesson = lesson; self.store = store
         self.speech = speech; self.settings = settings; self.archivedPackage = archivedPackage
         let saved = store.status(book: book, lesson: lesson)
@@ -46,9 +52,30 @@ import Combine
     var assets: [String: CollectionArtwork] { archivedPackage?.artwork ?? store.package(for: book)?.artwork ?? [:] }
     var reviewDestination: LessonLaunch { LessonLaunch(book: book, lesson: lesson, review: true, archivedPackage: archivedPackage) }
     var nextIdea: LessonLaunch? { store.nextIdea(after: lesson, in: book) }
+    var canDiveDeeper: Bool { lesson.diveDeeper != nil && store.status(book: book, lesson: lesson).practiceComplete }
     var hasCollectedCard: Bool { store.cards[collectedCardID] != nil }
     var collectedCardID: String { LessonProgress.identity(bookID: book.id, lessonID: lesson.id) }
+    func takeCompletionBloom() -> UUID? {
+        defer { completionBloomID = nil }
+        return completionBloomID
+    }
     func engage() { persist() }
+    func prepareNarration() async {
+        guard let controller = speech as? NarrationController else { return }
+        await controller.prepare(lesson: lesson, package: archivedPackage ?? store.package(for: book))
+        controller.bind(settings: settings)
+        controller.remotePause = { [weak self] in self?.suspend() }
+        controller.remoteToggle = { [weak self] in self?.togglePlayback() }
+        controller.remotePlay = { [weak self] in
+            guard let self, !self.autoRunning, !self.speech.isPlaying else { return }
+            self.togglePlayback()
+        }
+    }
+    func sceneBecameInactive() { if !speech.supportsBackground { suspend() }; persist() }
+    func close() { stop(); (speech as? NarrationController)?.endSession() }
+    private func finishBackgroundTransition() {
+        if backgroundTransition != .invalid { UIApplication.shared.endBackgroundTask(backgroundTransition); backgroundTransition = .invalid }
+    }
     func persist() {
         store.update(book: book, lesson: lesson) {
             $0.pageIndex = index; $0.phase = phase; $0.takeawayRevealed = takeawayRevealed
@@ -60,6 +87,7 @@ import Combine
     func toggleTakeaway() { takeawayRevealed.toggle(); persist() }
 
     func togglePlayback() {
+        guard speech.ready else { return }
         if autoRunning || speech.isPlaying { suspend(); return }
         if reflectionRemaining != nil { autoRunning = true; scheduleReflection(); return }
         if speech.isPaused { autoRunning = settings.autoAdvance && phase == .reading; speech.resume(); return }
@@ -73,11 +101,11 @@ import Combine
         if phase == .practice {
             let text = choice.map { LessonNarration.feedback($0, correct: answerCorrect) }
                 ?? LessonNarration.question(question)
-            speech.speak(text, role: .guide, settings: settings, finished: nil)
+            speech.speakSegment(choice.map { "feedback:\(question.id):\($0.id)" } ?? "question:\(question.id)", text: text, role: .guide, settings: settings, finished: nil)
             return
         }
         if page.kind == .takeaway { takeawayRevealed = true; persist() }
-        speech.speak(LessonNarration.page(page), role: page.role, settings: settings) { [weak self] in
+        speech.speakSegment("page:" + page.id, text: LessonNarration.page(page), role: page.role, settings: settings) { [weak self] in
             guard let self, self.generation == token else { return }
             guard self.autoRunning, self.page.kind != .takeaway, self.index < self.lesson.pages.count - 1 else {
                 self.autoRunning = false; return
@@ -89,6 +117,12 @@ import Combine
     private func scheduleReflection() {
         let token = generation
         let remaining = reflectionRemaining ?? settings.pagePause
+        if speech.supportsBackground {
+            finishBackgroundTransition()
+            backgroundTransition = UIApplication.shared.beginBackgroundTask(withName: "Narration page pause") { [weak self] in
+                Task { @MainActor in self?.suspend() }
+            }
+        }
         reflectionDeadline = Date().addingTimeInterval(remaining)
         transition?.cancel()
         transition = Task { @MainActor [weak self] in
@@ -99,12 +133,14 @@ import Combine
     }
     private func cancelTransition() {
         generation = UUID(); transition?.cancel(); transition = nil
+        finishBackgroundTransition()
         reflectionRemaining = nil; reflectionDeadline = nil
     }
     func suspend() {
         // Keep the active utterance's token valid so a real pause can resume mid-sentence.
         if let deadline = reflectionDeadline { reflectionRemaining = max(0, deadline.timeIntervalSinceNow); reflectionDeadline = nil }
         transition?.cancel(); transition = nil; autoRunning = false
+        finishBackgroundTransition()
         speech.pause()
     }
     func stop() {
@@ -133,7 +169,7 @@ import Combine
         attempted = true; selectedID = id
         persist()
         if let choice {
-            speech.speak(LessonNarration.feedback(choice, correct: answerCorrect),
+            speech.speakSegment("feedback:\(question.id):\(choice.id)", text: LessonNarration.feedback(choice, correct: answerCorrect),
                          role: .guide, settings: settings, finished: nil)
         }
     }
@@ -145,6 +181,7 @@ import Combine
             questionIndex += 1; selectedID = nil; attempted = false
             persist()
         } else {
+            let wasComplete = store.status(book: book, lesson: lesson).practiceComplete
             store.update(book: book, lesson: lesson) {
                 if !$0.practiceComplete {
                     $0.practiceComplete = true; $0.questionCount = lesson.questions.count
@@ -153,7 +190,11 @@ import Combine
             }
             phase = .complete
             persist()
-            speech.speak(LessonNarration.completion(correct: firstTryCorrect, total: lesson.questions.count), role: .guide, settings: settings, finished: nil)
+            if !wasComplete && store.status(book: book, lesson: lesson).practiceComplete {
+                completionBloomID = UUID()
+                CompletionFeedback.deliver(using: completionFeedback, settings: settings)
+            }
+            speech.speakSegment("completion:\(firstTryCorrect)", text: LessonNarration.completion(correct: firstTryCorrect, total: lesson.questions.count), role: .guide, settings: settings, finished: nil)
         }
     }
 }

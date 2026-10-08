@@ -1,0 +1,11 @@
+{
+  "cardsSHA256" : "7a7014f1c9da4f8ac8a62c1c45bbbf093dad9bf3050cc9515b9dae0ccc713e52",
+  "decodedMP3Bytes" : 10074,
+  "encoding" : "binary-plist-1",
+  "fixture" : "Synthetic tone, not production narration",
+  "historySHA256" : "7c3770751b36225ce870918d55879931090fcdbee395a19b7721dad379713122",
+  "installedBytes" : 15351,
+  "offloadedBytes" : 0,
+  "progressSHA256" : "ba4124a77adb835f05577c42fb6357c2eed55a5a0a491b302b7557948ade9bf9",
+  "reinstalledBytes" : 15351
+}

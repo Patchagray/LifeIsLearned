@@ -4,6 +4,8 @@ struct LibrarySnapshot: Sendable {
     var catalog: CollectionCatalog
     var progress: [String: LessonProgress]
     var cards: [String: IdeaCardRecord] = [:]
+    var installed: [InstalledBookRecord] = []
+    var history: [BookHistoryRecord] = []
     var needsCardMigration = false
     var recoveredCards = false
     var warning: String?
@@ -25,7 +27,7 @@ actor CollectionStorage {
     }
     func setWriteFailure(_ value: Bool) { injectedWriteFailure = value }
 
-    func load(seed: LessonPackage?, seedURL: URL?, legacyProgress: Data?) -> LibrarySnapshot {
+    func load(seed: LessonPackage?, seedURL: URL?, legacyProgress: Data?, saveMigratedCards: Bool = true) -> LibrarySnapshot {
         var snapshot = loadCore(seed: seed, seedURL: seedURL, legacyProgress: legacyProgress)
         if snapshot.needsCardMigration || (snapshot.recoveredCards && !snapshot.readOnly) {
             let earned = migrateCards(catalog: snapshot.catalog, progress: snapshot.progress, seed: seed, seedURL: seedURL)
@@ -38,7 +40,7 @@ actor CollectionStorage {
                     }
                 } else { snapshot.cards[id] = record }
             }
-            if snapshot.needsCardMigration && !snapshot.readOnly {
+            if saveMigratedCards && snapshot.needsCardMigration && !snapshot.readOnly {
                 do { try save(catalog: snapshot.catalog, progress: snapshot.progress, cards: snapshot.cards) }
                 catch { snapshot.warning = "The library could not be saved: \(error.localizedDescription)" }
             }

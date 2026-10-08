@@ -74,8 +74,9 @@ final class IdeaCardTests: XCTestCase {
         XCTAssertEqual(f.store.cards.count, 2, "Removing the unearned third idea creates no card")
         XCTAssertTrue(f.store.cardPresentation(card).archived)
         let archivedReview = await f.store.cardReview(card)
-        XCTAssertEqual(archivedReview?.lesson.revision, 2)
-        XCTAssertNotNil(archivedReview?.archivedPackage)
+        XCTAssertNil(archivedReview, "V3 does not retain obsolete lesson payloads for normal card browsing")
+        XCTAssertEqual(f.store.cards[id], card)
+        XCTAssertEqual(f.store.source(for: card.bookID).restoreTitle, "Re-import book")
         let reload = LibraryStore(documentsURL: f.directory, defaults: f.defaults, includeDemo: false); await reload.ready()
         XCTAssertEqual(reload.cards[id], card); XCTAssertEqual(reload.cards.count, 2)
     }
@@ -83,6 +84,7 @@ final class IdeaCardTests: XCTestCase {
     @MainActor func testLegacyMigrationUsesCommittedCompletionAndUnknownDatesRemainUnknown() async throws {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
         await f.store.flush()
+        try FileManager.default.removeItem(at: f.directory.appendingPathComponent("Library-v3"))
         let old = f.multiIdea(); var current = old; current.book.lessons = [old.book.lessons[0]]
         current.book.lessons[0].revision = 2
         current.manifest = current.book.lessons.map { IdeaManifestEntry(id: $0.id, revision: $0.revision) }
@@ -122,16 +124,16 @@ final class IdeaCardTests: XCTestCase {
         await f.store.flush()
         let id = try XCTUnwrap(f.store.cards.keys.first)
         f.store.toggleFavorite(id); await f.store.flush()
-        let root = f.directory.appendingPathComponent("Library-v2"), pointerURL = root.appendingPathComponent("CURRENT.json")
+        let root = f.directory.appendingPathComponent("Library-v3"), pointerURL = root.appendingPathComponent("CURRENT.json")
         let pointerBytes = try Data(contentsOf: pointerURL)
-        let pointer = try JSONDecoder().decode(CollectionStorage.Pointer.self, from: pointerBytes)
-        let current = root.appendingPathComponent(pointer.current).appendingPathComponent("cards.json")
+        let pointer = try JSONDecoder().decode(LibraryStorage.Pointer.self, from: pointerBytes)
+        let current = root.appendingPathComponent("StateSnapshots/" + pointer.current).appendingPathComponent("cards.json")
         try Data("broken".utf8).write(to: current)
         let recovered = LibraryStore(documentsURL: f.directory, defaults: f.defaults, includeDemo: false); await recovered.ready()
         XCTAssertFalse(recovered.readOnly); XCTAssertEqual(recovered.cards.count, 1)
         XCTAssertTrue(recovered.errorMessage?.contains("Recovered the previous idea-card") == true)
         XCTAssertTrue(recovered.status(book: f.package.book, lesson: f.package.book.lessons[0]).practiceComplete)
-        let previous = root.appendingPathComponent(try XCTUnwrap(pointer.previous)).appendingPathComponent("cards.json")
+        let previous = root.appendingPathComponent("StateSnapshots/" + (try XCTUnwrap(pointer.previous))).appendingPathComponent("cards.json")
         try Data("broken too".utf8).write(to: previous)
         let blocked = LibraryStore(documentsURL: f.directory, defaults: f.defaults, includeDemo: false); await blocked.ready()
         XCTAssertTrue(blocked.readOnly); blocked.toggleFavorite(id); await blocked.flush()
@@ -150,9 +152,9 @@ final class IdeaCardTests: XCTestCase {
             $0.practiceComplete = true; $0.practicedAt = Date(); $0.firstTryCorrect = 1
         }
         await f.store.flush()
-        let root = f.directory.appendingPathComponent("Library-v2")
-        let pointer = try JSONDecoder().decode(CollectionStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json")))
-        try Data("broken".utf8).write(to: root.appendingPathComponent(pointer.current).appendingPathComponent("cards.json"))
+        let root = f.directory.appendingPathComponent("Library-v3")
+        let pointer = try JSONDecoder().decode(LibraryStorage.Pointer.self, from: Data(contentsOf: root.appendingPathComponent("CURRENT.json")))
+        try Data("broken".utf8).write(to: root.appendingPathComponent("StateSnapshots/" + pointer.current).appendingPathComponent("cards.json"))
         let reload = LibraryStore(documentsURL: f.directory, defaults: f.defaults, includeDemo: false)
         await reload.ready()
         XCTAssertFalse(reload.readOnly); XCTAssertEqual(reload.cards.count, 2)

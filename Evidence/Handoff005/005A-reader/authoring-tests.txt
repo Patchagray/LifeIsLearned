@@ -1,0 +1,7 @@
+.....................
+----------------------------------------------------------------------
+Ran 21 tests in 0.880s
+
+OK
+AUTHORING_GATE words=541 plannedSeconds=299.692308 exit=0
+AUTHORING_GATE words=542 plannedSeconds=300.153846 exit=1

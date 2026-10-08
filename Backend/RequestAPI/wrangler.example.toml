@@ -1,0 +1,11 @@
+# Copy locally to wrangler.toml only during reviewer-authorized deployment.
+name = "life-is-learned-requests"
+main = "worker.mjs"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "life-is-learned-requests"
+database_id = "REVIEWER_PROVISIONED_DATABASE_ID"
+# RATE_LIMIT_SALT must be provisioned as a Worker secret, never here or in iOS.

@@ -5,10 +5,10 @@ import SwiftUI
 @MainActor struct LessonJourneyView: View {
     @State private var current: LessonLaunch
     let store: LibraryStore
-    let speech: SpeechPlayer
+    let speech: NarrationController
     let settings: PlaybackSettings
     var onBook: ((LearningBook) -> Void)?
-    init(launch: LessonLaunch, store: LibraryStore, speech: SpeechPlayer, settings: PlaybackSettings,
+    init(launch: LessonLaunch, store: LibraryStore, speech: NarrationController, settings: PlaybackSettings,
          onBook: ((LearningBook) -> Void)? = nil) {
         _current = State(initialValue: launch); self.store = store; self.speech = speech
         self.settings = settings; self.onBook = onBook

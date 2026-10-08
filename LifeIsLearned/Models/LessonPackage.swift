@@ -4,7 +4,7 @@ import ImageIO
 enum NarrationRole: String, Codable, CaseIterable, Identifiable, Sendable {
     case guide, storyteller
     var id: String { rawValue }
-    var label: String { self == .guide ? "Guide · intro & takeaway" : "Storyteller · lesson body" }
+    var label: String { self == .guide ? "Guide voice" : "Storyteller voice" }
 }
 
 enum PageKind: String, Codable, Sendable { case intro, story, explanation, application, takeaway }
@@ -28,6 +28,9 @@ struct LessonPage: Codable, Identifiable, Sendable {
     var imageBase64: String?
     var imageDescription: String?
     var sourceIDs: [String]
+    var secondaryImageID: String? = nil
+    var secondaryImageDescription: String? = nil
+    var isOriginalFiction: Bool? = nil
 }
 
 struct AnswerChoice: Codable, Identifiable, Sendable {
@@ -44,6 +47,7 @@ struct PracticeQuestion: Codable, Identifiable, Sendable {
 }
 
 struct Lesson: Codable, Identifiable, Sendable {
+    enum CodingKeys: String, CodingKey { case id, revision, title, subtitle, estimatedMinutes, scopeNote, pages, questions, diveDeeper, narration }
     var id: String
     var revision: Int
     var title: String
@@ -52,6 +56,8 @@ struct Lesson: Codable, Identifiable, Sendable {
     var scopeNote: String
     var pages: [LessonPage]
     var questions: [PracticeQuestion]
+    var diveDeeper: DiveDeeperContent? = nil
+    var narration: LessonNarrationBundle? = nil
 }
 
 struct LearningBook: Codable, Identifiable, Sendable {
@@ -68,6 +74,7 @@ struct LearningBook: Codable, Identifiable, Sendable {
 }
 
 struct LessonPackage: Codable, Sendable {
+    enum CodingKeys: String, CodingKey { case formatVersion, book, collectionRevision, fullCollection, manifest, removedLessonIDs, assets, audioAssets }
     enum ValidationPurpose { case newImport, storedContent }
     var formatVersion: Int
     var book: LearningBook
@@ -76,8 +83,10 @@ struct LessonPackage: Codable, Sendable {
     var manifest: [IdeaManifestEntry]? = nil
     var removedLessonIDs: [String]? = nil
     var assets: [String: CollectionArtwork]? = nil
+    var audioAssets: [String: CollectionAudio]? = nil
 
     func validated(for purpose: ValidationPurpose = .newImport) throws -> LessonPackage {
+        try AudioContract.validateResourceLimits(audioAssets ?? [:])
         func require(_ condition: Bool, _ message: String) throws {
             if !condition { throw PackageError.invalid(message) }
         }
@@ -115,6 +124,7 @@ struct LessonPackage: Codable, Sendable {
         }
         let sourceIDs = Set(book.sources.map(\.id))
         for lesson in book.lessons {
+            try lesson.diveDeeper?.validate(sourceIDs: sourceIDs)
             try require(lesson.revision > 0 && clean(lesson.title) && clean(lesson.scopeNote), "Lesson \(lesson.id) needs title, positive revision and scopeNote.")
             try require(lesson.estimatedMinutes > 0, "Lesson \(lesson.id) needs a positive time estimate.")
             try require((2...40).contains(lesson.pages.count) && unique(lesson.pages.map(\.id)), "Lesson \(lesson.id) needs 2–40 unique screens.")
@@ -126,6 +136,10 @@ struct LessonPackage: Codable, Sendable {
                 if formatVersion == 2 {
                     try require(page.imageAsset == nil && page.imageBase64 == nil, "Format 2 pages use imageID and the shared assets table; remove legacy inline images.")
                     if let id = page.imageID { try require(artwork[id] != nil, "Screen \(page.id) refers to missing artwork \(id).") }
+                }
+                if let id = page.secondaryImageID {
+                    try require(artwork[id] != nil && page.secondaryImageDescription.map(clean) == true,
+                                "Screen \(page.id) needs valid secondary artwork and its accessible description.")
                 }
                 if let asset = page.imageAsset {
                     try require(["priors-setup", "priors-conflict", "priors-resolution"].contains(asset), "Unknown bundled image \(asset). Use imageBase64 for your own illustration.")

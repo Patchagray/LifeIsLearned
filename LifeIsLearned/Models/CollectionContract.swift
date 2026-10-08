@@ -49,7 +49,11 @@ enum CollectionLimits {
 extension LessonPackage {
     static func decodeImport(_ data: Data) throws -> LessonPackage {
         try CollectionLimits.require(data.count <= CollectionLimits.packageBytes, "Keep the complete collection under 64 MiB; optimize shared images first.")
-        do { return try JSONDecoder().decode(Self.self, from: data).validated() }
+        do {
+            let package = try JSONDecoder().decode(Self.self, from: data).validated()
+            _ = AudioPreflight.importWarnings(package)
+            return package
+        }
         catch let error as PackageError { throw error }
         catch { throw PackageError.invalid("This file isn't a valid collection package. Check its required fields and JSON format with the authoring validator.") }
     }
@@ -72,6 +76,7 @@ extension LessonPackage {
             var sources: [ContentSource]
         }
         var normalized = lesson
+        normalized.narration = nil // Presentation-only audio never resets pedagogical progress.
         var images: [Data?] = []
         for index in normalized.pages.indices {
             let page = normalized.pages[index]
@@ -82,11 +87,14 @@ extension LessonPackage {
                 // the corresponding optimized bytes in v2; installations keep v1 readable.
                 images.append(Data(("bundled:" + name).utf8))
             } else { images.append(nil) }
+            // Omit absent secondary images to preserve pre-005 fingerprints.
+            if let id = page.secondaryImageID { images.append(artwork[id]?.data) }
+            normalized.pages[index].secondaryImageID = nil
             normalized.pages[index].imageID = nil
             normalized.pages[index].imageAsset = nil
             normalized.pages[index].imageBase64 = nil
         }
-        let usedSources = Set(lesson.pages.flatMap(\.sourceIDs))
+        let usedSources = Set(lesson.pages.flatMap(\.sourceIDs) + (lesson.diveDeeper?.sections.flatMap(\.sourceIDs) ?? []))
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         let data = try encoder.encode(LessonContent(lesson: normalized, images: images,
                     sources: book.sources.filter { usedSources.contains($0.id) }.sorted { $0.id < $1.id }))
@@ -102,9 +110,13 @@ struct LessonVersionRecord: Codable, Sendable {
 struct CollectionCatalog: Codable, Sendable {
     var packages: [LessonPackage]
     var knownLessons: [String: LessonVersionRecord] = [:]
+    var knownBooks: [String: BookVersionRecord]? = nil
     var version = UUID()
 
     mutating func record(_ package: LessonPackage) throws {
+        if knownBooks == nil { knownBooks = [:] }
+        knownBooks?[package.book.id] = BookVersionRecord(revision: package.collectionNumber,
+            packageSHA256: LibraryDigest.sha256(try package.canonicalData()), ideas: package.book.lessons.map(BookIdeaIdentity.init))
         for lesson in package.book.lessons {
             knownLessons[LessonProgress.identity(bookID: package.book.id, lessonID: lesson.id)] =
                 LessonVersionRecord(revision: lesson.revision, fingerprint: try package.fingerprint(lesson))
@@ -121,13 +133,15 @@ struct ImportReview: Identifiable, Sendable {
     var unchanged: [Lesson] = []
     var added: [Lesson] = []
     var revised: [Lesson] = []
-    var removed: [Lesson] = []
+    var removed: [BookIdeaIdentity] = []
+    var source: BookSourceRecord? = nil
 }
 
 enum CollectionComparison {
     static func review(_ incoming: LessonPackage, catalog: CollectionCatalog) throws -> ImportReview {
         let previous = catalog.packages.first { $0.book.id == incoming.book.id }
-        var result = ImportReview(package: incoming, catalogVersion: catalog.version, isUpdate: previous != nil)
+        let retained = catalog.knownBooks?[incoming.book.id]
+        var result = ImportReview(package: incoming, catalogVersion: catalog.version, isUpdate: previous != nil || retained != nil)
         if let previous {
             try CollectionLimits.require(incoming.collectionNumber >= previous.collectionNumber,
                 "This is an older collection revision. Choose the latest complete release.")
@@ -138,12 +152,23 @@ enum CollectionComparison {
                 result.unchanged = incoming.book.lessons
                 return result
             }
-            result.removed = previous.book.lessons.filter { old in !incoming.book.lessons.contains { $0.id == old.id } }
+            result.removed = previous.book.lessons.filter { old in !incoming.book.lessons.contains { $0.id == old.id } }.map(BookIdeaIdentity.init)
             let declared = Set(incoming.removedLessonIDs ?? [])
             try CollectionLimits.require(Set(result.removed.map(\.id)).isSubset(of: declared),
                 "This update omits existing ideas. Restore them, or explicitly list their IDs in removedLessonIDs for review.")
             try CollectionLimits.require(declared.isDisjoint(with: Set(incoming.book.lessons.map(\.id))),
                 "An idea cannot appear in both the manifest and removedLessonIDs.")
+        }
+        if previous == nil, let retained {
+            try CollectionLimits.require(incoming.collectionNumber >= retained.revision,
+                "This is an older collection revision. Choose the latest complete release.")
+            if incoming.collectionNumber == retained.revision {
+                try CollectionLimits.require(LibraryDigest.sha256(try incoming.canonicalData()) == retained.packageSHA256,
+                    "This retained collection revision has different content. Increase collectionRevision before exporting.")
+            }
+            result.removed = retained.ideas.filter { old in !incoming.book.lessons.contains { $0.id == old.id } }
+            try CollectionLimits.require(Set(result.removed.map(\.id)).isSubset(of: Set(incoming.removedLessonIDs ?? [])),
+                "This release omits retained ideas. Explicitly list their IDs in removedLessonIDs for review.")
         }
         for lesson in incoming.book.lessons {
             let identity = LessonProgress.identity(bookID: incoming.book.id, lessonID: lesson.id)

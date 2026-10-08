@@ -1,0 +1,25 @@
+{
+  "baseline": "b01b69df7699aa183b4b2538bfee44692f9c68c6",
+  "files": [
+    {
+      "file": "Catalog/Catalog-001.json",
+      "unchanged": true,
+      "sha256": "7424b9d5deff4f1645ca112f1393bfafd84553a040593d53a6af35133826da68"
+    },
+    {
+      "file": "LifeIsLearned/Resources/starter.json",
+      "unchanged": true,
+      "sha256": "6e0a78609124f38b0f2defab8cbef42dda3ccbbfebfbfa89a4b7d4b53989e650"
+    },
+    {
+      "file": "Example-Lesson-Package.json",
+      "unchanged": true,
+      "sha256": "44ec91ae1b57cfcabc471c95e466ef42ef3ec6e36f112d565295bf9024da9c4b"
+    },
+    {
+      "file": "LifeIsLearned.xcodeproj/xcshareddata/xcschemes/LifeIsLearned.xcscheme",
+      "unchanged": true,
+      "sha256": "f20b5697078c9ffa14b0176b02b6f0b72ea976a0ca84974732d5965d3d5ef689"
+    }
+  ]
+}

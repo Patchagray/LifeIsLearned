@@ -1,0 +1,6 @@
+{
+  "result": "passed",
+  "segments": 15,
+  "comparison": "Swift LessonNarration strings versus Python export, exact id/role/text/stage and package script hashes",
+  "sha256Match": true
+}

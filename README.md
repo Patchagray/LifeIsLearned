@@ -2,6 +2,20 @@
 
 An independent native SwiftUI iPhone/iPad app for Mario: learn one idea at a time through illustrated screens, two narration roles, automatic progression, and feedback. The name is provisional.
 
+## Handoff 005 implementation branch
+
+Epics **005A–F are implemented on the dedicated branch**: large reader artwork, optional second Story images, one-time completion feedback, Library-v3 migration/real offload/History, discovery and whole-book downloads, on-device book recognition/reviewed requests, and earned Dive Deeper. The existing core playback and manual import remain.
+
+Use **+ Add Books → Browse Library / Scan a Book / Import File**. The bundled discovery preview lists all 50 approved identities as planned; remote URLs are deliberately unconfigured until reviewer-controlled publication/deployment. [Configuration and release tooling](Catalog/REMOTE_LIBRARY.md) and [request API source/deployment instructions](Backend/RequestAPI/README.md) are included. **Book options → Offload Book** reclaims package/art storage while cards, favorites, progress and History remain.
+
+**005F uses your selected A — Idea Fold direction**, with Any/Dark/Tinted production assets. See the [brand source and rationale](Brand/README.md) and [current verification evidence](Evidence/Handoff005/README.md). Final acceptance remains subject to review and physical checks. Older sections below document prior milestones and their original verification boundaries.
+
+## Packaged narration addendum
+
+Complete exact-script MP3 bundles now play offline for the whole idea, including every question, feedback branch and completion score. Books without a valid complete bundle keep device speech for the whole session. Settings configure **device fallback voices**; studio playback supports speed, timed Story cues, background audio and lock-screen Play/Pause. Audio-only updates preserve idea progress, and offload reclaims narration bytes too.
+
+Sound Production runs once outside the app: [export, normalize, package and validate](Tools/SOUND_PRODUCTION.md). The app needs no ElevenLabs account, API key or runtime connection. [Audio evidence and remaining physical checks](Evidence/Handoff005/PackagedNarration/README.md). Existing supplied books were not silently changed or given synthetic narration.
+
 ## Run it
 
 1. Open the local project folder, or clone this repository on your Mac.
@@ -19,7 +33,7 @@ New collections and updates contain **1–12 selected ideas**. Previously valid 
 
 New authored ideas have exactly two application questions and a **five-minute reference budget for the complete experience**, including narration, options, feedback, transitions and answering time. The interface shows an approximate whole-idea estimate and explains why individual listening time can vary. First start opens the book's selection and source coverage before reading.
 
-The shortened demo is `Example-Lesson-Package.json`: `influential-mind` / `priors`, collection and idea revision **2**, six screens, 413 total reference spoken words. It is an explicit complete update. Select it using **Import book → Files → Import complete update**. The old revision's progress stays archived; the revised idea begins unpracticed. The revision-1 startup seed is frozen to preserve installed content.
+The shortened demo is `Example-Lesson-Package.json`: `influential-mind` / `priors`, collection and idea revision **2**, six screens, 413 total reference spoken words. It is an explicit complete update. Select it using **Add Books → Import File → Import complete update**. The old revision's progress stays archived; the revised idea begins unpracticed. The revision-1 startup seed is frozen to preserve installed content.
 
 - Brief: `LifeIsLearned_Handoff_003_Content_Limits_Patch.pdf`.
 - Authoring limits, timing gate and premium-voice measurement: `CONTENT_AUTHORING.md`.

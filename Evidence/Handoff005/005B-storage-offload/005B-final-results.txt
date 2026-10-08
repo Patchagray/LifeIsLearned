@@ -1,0 +1,31 @@
+Test Suite 'Selected tests' started at 2026-10-07 00:17:24.306.
+Test Suite 'LifeIsLearnedTests.xctest' started at 2026-10-07 00:17:24.307.
+Test Suite 'LibraryV3Tests' started at 2026-10-07 00:17:24.307.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testFailedOffloadAndInterruptedOffloadRecoverAtomically]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testFailedOffloadAndInterruptedOffloadRecoverAtomically]' passed (2.211 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testHistoryOrderingCompletionDatesAndSourceRecovery]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testHistoryOrderingCompletionDatesAndSourceRecovery]' passed (1.068 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testOffloadCannotBypassRevisionOrRemovalRulesAndGCProtectsInstalledFiles]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testOffloadCannotBypassRevisionOrRemovalRulesAndGCProtectsInstalledFiles]' passed (1.002 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testOffloadReclaimsPayloadAndReinstallPreservesState]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testOffloadReclaimsPayloadAndReinstallPreservesState]' passed (0.655 seconds).
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testV2MigrationInterruptionRoundTripAndVerifiedCleanup]' started.
+Test Case '-[LifeIsLearnedTests.LibraryV3Tests testV2MigrationInterruptionRoundTripAndVerifiedCleanup]' passed (0.904 seconds).
+Test Suite 'LibraryV3Tests' passed at 2026-10-07 00:17:30.153.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 5.840 (5.845) seconds
+Test Suite 'LifeIsLearnedTests.xctest' passed at 2026-10-07 00:17:30.154.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 5.840 (5.847) seconds
+Test Suite 'Selected tests' passed at 2026-10-07 00:17:30.155.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 5.840 (5.849) seconds
+Test Suite 'Selected tests' started at 2026-10-07 00:17:33.674.
+Test Suite 'LifeIsLearnedUITests.xctest' started at 2026-10-07 00:17:33.675.
+Test Suite 'LibraryHistoryUITests' started at 2026-10-07 00:17:33.675.
+Test Case '-[LifeIsLearnedUITests.LibraryHistoryUITests testOffloadConfirmationHistoryAndCardsSurviveRelaunch]' started.
+Test Case '-[LifeIsLearnedUITests.LibraryHistoryUITests testOffloadConfirmationHistoryAndCardsSurviveRelaunch]' passed (32.376 seconds).
+Test Suite 'LibraryHistoryUITests' passed at 2026-10-07 00:18:06.054.
+	 Executed 1 test, with 0 failures (0 unexpected) in 32.376 (32.379) seconds
+Test Suite 'LifeIsLearnedUITests.xctest' passed at 2026-10-07 00:18:06.056.
+	 Executed 1 test, with 0 failures (0 unexpected) in 32.376 (32.381) seconds
+Test Suite 'Selected tests' passed at 2026-10-07 00:18:06.058.
+	 Executed 1 test, with 0 failures (0 unexpected) in 32.376 (32.384) seconds
+** TEST SUCCEEDED **

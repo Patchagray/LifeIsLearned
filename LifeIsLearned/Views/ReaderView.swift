@@ -5,7 +5,7 @@ import UIKit
 
 @MainActor struct ReaderView: View {
     @StateObject private var session: LessonSession
-    @ObservedObject private var speech: SpeechPlayer
+    @ObservedObject private var speech: NarrationController
     @ObservedObject private var settings: PlaybackSettings
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
@@ -16,7 +16,7 @@ import UIKit
     private var onNext: ((LessonLaunch) -> Void)?
     @State private var showingCard = false
 
-    init(book: LearningBook, lesson: Lesson, store: LibraryStore, speech: SpeechPlayer,
+    init(book: LearningBook, lesson: Lesson, store: LibraryStore, speech: NarrationController,
          settings: PlaybackSettings, practiceOnly: Bool = false, review: Bool = false, archivedPackage: LessonPackage? = nil, onCompletion: (() -> Void)? = nil, onNext: ((LessonLaunch) -> Void)? = nil) {
         _session = StateObject(wrappedValue: LessonSession(book: book, lesson: lesson, store: store,
                                                          speech: speech, settings: settings, practiceOnly: practiceOnly, review: review, archivedPackage: archivedPackage))
@@ -25,7 +25,7 @@ import UIKit
     }
     // Tests can host a real view with a deterministic session; production uses the
     // same session type and initializer above, without injected UI-only behavior.
-    init(session: LessonSession, speech: SpeechPlayer, settings: PlaybackSettings) {
+    init(session: LessonSession, speech: NarrationController, settings: PlaybackSettings) {
         _session = StateObject(wrappedValue: session)
         _speech = ObservedObject(wrappedValue: speech); _settings = ObservedObject(wrappedValue: settings)
     }
@@ -49,12 +49,12 @@ import UIKit
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Done") { showingCard = false } } } }
             }
             .onAppear { session.engage() }
-            .onDisappear { session.stop(); UIApplication.shared.isIdleTimerDisabled = false }
+            .task { await session.prepareNarration() }
+            .onDisappear { session.close(); UIApplication.shared.isIdleTimerDisabled = false }
             .onChange(of: scenePhase) { _, phase in
-                if phase != .active { session.suspend(); UIApplication.shared.isIdleTimerDisabled = false }
+                if phase != .active { session.sceneBecameInactive(); UIApplication.shared.isIdleTimerDisabled = false }
             }
             .onChange(of: speech.isPlaying) { _, playing in UIApplication.shared.isIdleTimerDisabled = playing && scenePhase == .active }
-            .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.interruptionNotification)) { _ in session.stop() }
             .onChange(of: speech.errorMessage) { _, message in if message != nil { session.stop() } }
     }
     private var header: some View {
@@ -89,12 +89,15 @@ import UIKit
                         } else {
                             Text(session.page.title).font(.system(session.lesson.usesSixStageProgress ? .title2 : .largeTitle, design: .serif)).tracking(-0.5)
                                 .fixedSize(horizontal: false, vertical: true)
-                            LessonIllustration(page: session.page, assets: session.assets)
-                                .frame(maxHeight: session.lesson.usesSixStageProgress && session.page.kind != .story ? 110 : nil)
+                            LessonIllustration(page: session.page, assets: session.assets,
+                                               editorial: session.lesson.usesSixStageProgress && session.page.kind != .story)
                             NarrationText(text: session.page.text, title: session.page.title,
                                           spokenText: speech.spokenText, spokenRange: speech.spokenRange,
                                           isPlaying: speech.isPlaying, textSize: settings.textSize,
                                           followNarration: session.page.kind == .story)
+                            if session.page.kind == .story, session.page.secondaryImageID != nil {
+                                LessonIllustration(page: session.page, assets: session.assets, secondary: true)
+                            }
                         }
                         if session.page.kind == .intro {
                             if session.lesson.usesSixStageProgress {
@@ -117,6 +120,7 @@ import UIKit
     }
     private var controls: some View {
         VStack(spacing: 12) {
+            Text(speech.mode == .preparing ? "Checking narration…" : speech.mode == .packaged ? "Studio narration · available offline" : "Device fallback voices").font(.caption).foregroundStyle(Palette.secondary).accessibilityIdentifier("narration-mode")
             FineRule()
             if session.page.kind == .takeaway {
                 PrimaryButton(title: "Practice this idea", symbol: "arrow.right") { session.beginPractice() }.disabled(!session.takeawayRevealed)

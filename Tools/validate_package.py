@@ -30,6 +30,16 @@ def content(p):
     check(type(p['collectionRevision']) is int and p['collectionRevision']>0,'Positive collectionRevision required')
     check(p['fullCollection'] is True,'Declare fullCollection: true')
     b=p['book'];lessons=b['lessons'];sources=b['sources'];assets=p.get('assets',{})
+    audio_assets = p.get('audioAssets')
+    if isinstance(audio_assets, dict):
+        check(len(audio_assets) <= 2000, 'Audio asset table has at most 2000 entries')
+        audio_bytes = 0
+        for audio in audio_assets.values():
+            try: raw = base64.b64decode(audio['data'], validate=True)
+            except (ValueError, KeyError, TypeError): continue # optional corrupt audio reports invalid/fallback
+            check(len(raw) <= 2*1024*1024, 'Each MP3 must be at most 2 MiB')
+            audio_bytes += len(raw)
+        check(audio_bytes <= 40*1024*1024, 'Total decoded audio must be at most 40 MiB')
     check(all(clean(b[k]) for k in ['id','title','author','coverageNote']),'Book identity and coverage required')
     check(len(lessons)<=12,f'This collection contains {len(lessons)} ideas. Prepare a complete release with no more than 12 selected ideas.')
     check(bool(lessons) and unique([l['id'] for l in lessons]),'Provide 1–12 unique, nonempty idea IDs')
@@ -51,6 +61,14 @@ def content(p):
         check(url.scheme=='https' and bool(url.netloc) and all(clean(source[k]) for k in ['title','locator','scope']),'Source title, HTTPS URL, locator and scope required')
     known={s['id'] for s in sources}
     for lesson in lessons:
+        deeper=lesson.get('diveDeeper')
+        if deeper is not None:
+            check(isinstance(deeper,dict) and clean(deeper.get('title')), 'Dive Deeper needs a title')
+            sections=deeper.get('sections',[])
+            check(bool(sections) and unique([s.get('id') for s in sections]), 'Dive Deeper sections need unique IDs')
+            for section in sections:
+                check(clean(section.get('title')) and clean(section.get('text')), 'Dive Deeper sections need title and text')
+                check(bool(section.get('sourceIDs')) and set(section['sourceIDs'])<=known, 'Dive Deeper needs reviewed source references')
         check(type(lesson['revision']) is int and lesson['revision']>0 and lesson['estimatedMinutes']>0 and clean(lesson['title']) and clean(lesson['scopeNote']),'Idea title, revision, estimate and scope required')
         pages=lesson['pages'];questions=lesson['questions']
         check(2<=len(pages)<=40 and unique([x['id'] for x in pages]),'Use 2–40 unique screens')
@@ -61,6 +79,10 @@ def content(p):
             check(set(page['sourceIDs'])<=known and (page['kind']=='story' or bool(page['sourceIDs'])),'Teaching screens need valid source references')
             check(not page.get('imageAsset') and not page.get('imageBase64'),'Format 2 uses shared imageID references')
             if page.get('imageID'):check(page['imageID'] in assets and clean(page.get('imageDescription')),'Image ID and accessible description required')
+            if page.get('secondaryImageID') is not None:
+                check(page['secondaryImageID'] in assets and clean(page.get('secondaryImageDescription')), 'Secondary image ID and accessible description required')
+            if page.get('isOriginalFiction') is not None:
+                check(type(page['isOriginalFiction']) is bool, 'isOriginalFiction must be a boolean')
         check(2<=len(questions)<=10 and unique([q['id'] for q in questions]),'Use 2–10 unique questions')
         for question in questions:
             choices=question['choices']
@@ -84,22 +106,32 @@ def authoring_art_and_stages(package):
             errors.append(prefix + 'required voice-role sequence: ' + ', '.join(roles))
         ids, digests = [], []
         for page in pages:
-            key = page.get('imageID')
-            if not clean(key) or key not in assets:
-                errors.append(prefix + page['id'] + ': every page requires a valid imageID')
-                continue
-            if not clean(page.get('imageDescription')):
-                errors.append(prefix + page['id'] + ': every page requires imageDescription')
-            ids.append(key)
-            digest = hashlib.sha256(base64.b64decode(assets[key]['data'], validate=True)).hexdigest()
-            digests.append(digest)
-            other = seen.setdefault(digest, lesson['id'])
-            if other != lesson['id']:
-                warning = f"{lesson['id']}: exact artwork bytes also used by {other}; review instructional purpose"
-                if warning not in warnings:
-                    warnings.append(warning)
+            if page['kind'] == 'story' and not page['sourceIDs'] and page.get('isOriginalFiction') is not True:
+                errors.append(prefix + page['id'] + ': unsourced Story requires isOriginalFiction: true')
+            if page.get('secondaryImageID') is not None and page['kind'] != 'story':
+                errors.append(prefix + page['id'] + ': secondaryImageID is only allowed on Story pages')
+            if page['kind'] == 'takeaway' and page.get('imageID') is not None:
+                warnings.append(prefix + 'Takeaway normally uses the Idea Card; review whether separate art is necessary')
+            for field, description in [('imageID', 'imageDescription'), ('secondaryImageID', 'secondaryImageDescription')]:
+                key = page.get(field)
+                required = field == 'imageID' and page['kind'] != 'takeaway'
+                if key is None and not required:
+                    continue
+                if not clean(key) or key not in assets:
+                    errors.append(prefix + page['id'] + ': requires a valid ' + field)
+                    continue
+                if not clean(page.get(description)):
+                    errors.append(prefix + page['id'] + ': requires ' + description)
+                ids.append(key)
+                digest = hashlib.sha256(base64.b64decode(assets[key]['data'], validate=True)).hexdigest()
+                digests.append(digest)
+                other = seen.setdefault(digest, lesson['id'])
+                if other != lesson['id']:
+                    warning = f"{lesson['id']}: exact artwork bytes also used by {other}; review instructional purpose"
+                    if warning not in warnings:
+                        warnings.append(warning)
         if len(set(ids)) != len(ids):
-            errors.append(prefix + 'six distinct page image IDs required')
+            errors.append(prefix + 'distinct page image IDs required')
         if len(set(digests)) != len(digests):
             errors.append(prefix + 'duplicate resolved image bytes within an idea are not allowed')
     return errors, warnings
@@ -180,6 +212,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('packages',type=Path,nargs='*')
     parser.add_argument('--report',type=Path)
+    parser.add_argument('--audio-gate',action='store_true',help='Require a complete valid MP3 bundle for every idea; no narration is still valid without this release gate.')
     parser.add_argument('--authoring-gate',action='store_true',help='Require six canonical illustrated stages, two questions and a consistent plan at or below 300 seconds.')
     parser.add_argument('--measurements',type=Path,help='Premium-voice speech-completion timing JSON for one collection.')
     parser.add_argument('--approve-release',action='store_true',help='Also require matching measured premium-voice timing at or below 300 seconds.')
@@ -192,6 +225,12 @@ def main():
         for path in paths:
             package,size=read_package(path);ideas=content(package)
             timing=package_report(package)
+            from narration_audio import audio_report
+            audio = audio_report(package)
+            if args.audio_gate:
+                errors.extend(f"{idea['id']}: premium narration {idea['premiumNarration']}: {idea['errors']}" for idea in audio['ideas'] if idea['premiumNarration'] != 'complete')
+                errors.extend(audio['assetErrors'].values())
+                errors.extend(f"{idea['id']}: measured studio core exceeds 300 seconds" for idea in audio['ideas'] if idea.get('measuredCoreSeconds', 0) > 300)
             if args.authoring_gate or args.approve_release:
                 errors.extend(planning_errors(package,timing))
                 stage_errors, art_warnings = authoring_art_and_stages(package)
@@ -200,7 +239,7 @@ def main():
                 errors.extend(apply_measurements(timing,json.loads(args.measurements.read_text())))
             elif args.approve_release:
                 errors.append('Release approval requires measured premium voices; a planning estimate alone is insufficient.')
-            results.append(dict(file=path.name,bytes=size,ideas=ideas,assets=len(package.get('assets',{})),timing=timing))
+            results.append(dict(file=path.name,bytes=size,ideas=ideas,assets=len(package.get('assets',{})),timing=timing,audio=audio))
         if not args.packages:
             validate_project()
     except (ValueError,KeyError,TypeError,IndexError,struct.error) as error:

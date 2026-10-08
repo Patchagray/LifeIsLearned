@@ -16,17 +16,17 @@ import Combine
                         Text("A voice. A pace.\nA little space to think.").font(.system(.title, design: .serif))
                     }.padding(.vertical, 10)
                 }.listRowBackground(Palette.paper)
-                Section("Your two voices") {
-                    voicePicker("Guide", selection: $settings.guideVoiceID)
+                Section("Device fallback voices") {
+                    voicePicker("Guide fallback voice", selection: $settings.guideVoiceID)
                     Button("Preview guide") {
                         preview.speak("Welcome. Let's explore one idea, and see what it changes.", role: .guide, settings: settings)
                     }
-                    voicePicker("Storyteller", selection: $settings.storyVoiceID)
+                    voicePicker("Storyteller fallback voice", selection: $settings.storyVoiceID)
                     Button("Preview storyteller") {
                         preview.speak("Malik and Elena opened the same report. Somehow, they saw different stories.", role: .storyteller, settings: settings)
                     }
                     if preview.isPlaying { Button("Stop preview") { preview.stop() } }
-                    Text("Automatic chooses installed English voices by gender and quality. Age and vocal texture need an audition. Enhanced voices may improve the sound; download them in iOS Settings under Accessibility → Read & Speak (or Spoken Content) → Voices → English, then return here.")
+                    Text("Complete studio narration plays automatically when included with a book. These voices are used when an idea has no valid studio bundle. Automatic chooses installed English voices by gender and quality. Age and vocal texture need an audition. Enhanced voices may improve the sound; download them in iOS Settings under Accessibility → Read & Speak (or Spoken Content) → Voices → English, then return here.")
                         .font(.footnote).foregroundStyle(Palette.secondary)
                 }
                 Section("Pacing") {
@@ -36,6 +36,11 @@ import Combine
                     Slider(value: $settings.speed, in: 0.65...1.2, step: 0.05)
                     Text("Time to reflect · \(settings.pagePause, specifier: "%.1f") sec")
                     Slider(value: $settings.pagePause, in: 0...5, step: 0.5)
+                }
+                Section("Completion feedback") {
+                    Toggle("Completion haptics", isOn: $settings.completionHaptics)
+                    Toggle("Completion sound", isOn: $settings.completionSound)
+                    Text("A brief accent when you collect a new idea. Sound follows your device’s silent setting.").font(.footnote).foregroundStyle(Palette.secondary)
                 }
                 Section("Reading") {
                     Text("Base text size · \(Int(settings.textSize)) pt")

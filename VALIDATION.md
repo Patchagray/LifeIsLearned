@@ -1,5 +1,19 @@
 # Validation report
 
+## Library cleanup/recovery fix — October 8, 2026
+
+Source `3e591b664b96f79ed36abf6b86d1400acdf0cdb6`: [root cause, exact restoration and verification](Evidence/Handoff005/Recovery/README.md). Fixed canonical URL comparisons in garbage collection/offload. 28 simulator native tests and 9 physical Patcha storage tests passed; three ordinary cold launches preserved restored payloads and learner state. Xcode UI automation was blocked before execution and is not claimed as a pass.
+
+
+## Handoff 005 audio addendum — October 8, 2026
+
+See [audio commands/results](Evidence/Handoff005/PackagedNarration/README.md) for exact-script parity, native MP3 preflight/playback, fixed whole-idea engine selection, all practice branches, audio-only revision preservation, normalized storage/offload, Python packaging/normalization and iPhone/iPad simulator journeys. The synthetic tone fixture proves routing and bytes, not ElevenLabs voice quality. Physical lock-screen/interruption/Story alignment checks and production voice approval remain pending. No iPad device installation is requested.
+
+
+## Handoff 005 — implementation verified, awaiting review
+
+Branch `feature/handoff-005-library-platform`, baseline `74a18997dbf8931366ae5acd18f5a4a23ed8699d`. Epics 005A–E are implemented in separate commits through `972401e1089f98e56cab8727b26a8346ae2ce4f2`. Final full regression passed on iPhone 16e and iPad (A16), iOS 26.3.1: **94 passed, zero failed, two intentional skips per destination**. The skips require physical premium voices or the actual system Reduce Motion setting; deterministic motion tests passed. **44 Python tests, four backend tests, 484 portable checks and catalog validation passed**. Signed Patcha compilation and strict signature verification passed. Exact commands, source hashes and all test outcomes are in the evidence index. **005F uses reviewer-selected A — Idea Fold**, selected before production asset creation as required by section 12.2. Any/Dark/Tinted assets and their verification are recorded in the evidence index. Per-epic commands, simulator captures, state/byte evidence and remaining gates are in [Evidence/Handoff005](Evidence/Handoff005/README.md). This does not upgrade prior physical-device checks to verification of the new platform. No production releases or endpoints have been deployed.
+
 ## Handoff 004.6 — October 6, 2026
 
 Implemented on `feature/handoff-004-6-six-stage-lessons` from baseline `11742da7aa896ffb4ea77c5f2117d49fd93b5254`. Tested implementation: `dd193108db97166fdcd07cd047ae42ed4f030c3c`. See [exact commands, results, source hashes and 22 screenshots](Evidence/Handoff004_6/README.md).

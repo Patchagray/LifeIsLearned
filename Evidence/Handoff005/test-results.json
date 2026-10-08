@@ -1,0 +1,295 @@
+{
+  "baseline": "74a18997dbf8931366ae5acd18f5a4a23ed8699d",
+  "epics": {
+    "005A": {
+      "status": "passed",
+      "runs": [
+        {
+          "run": "005A-iphone",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 28,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        },
+        {
+          "run": "005A-reader-native",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "os": "26.3.1",
+              "passed": 6,
+              "failed": 0,
+              "skipped": 0
+            },
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 6,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        }
+      ],
+      "authoringTestsPassed": 21,
+      "portableChecksPassed": 400,
+      "physicalChecks": "pending",
+      "implementationCommit": "c3128c3c68177b9661ab4c8726b03f17b30a2380"
+    },
+    "005B": {
+      "status": "passed",
+      "runs": [
+        {
+          "run": "005B-native-final",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 29,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        },
+        {
+          "run": "005B-ui",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 2,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        },
+        {
+          "run": "005B-final",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "os": "26.3.1",
+              "passed": 6,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        },
+        {
+          "run": "005B-large",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "os": "26.3.1",
+              "passed": 1,
+              "failed": 0,
+              "skipped": 0
+            },
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 1,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        }
+      ],
+      "storageProof": {
+        "cardCountAfterReinstall": 1,
+        "cardsSHA256": "345d86fac610d660b1d84af4ba4074ea24f7e3e8b4505980e14395f63bbebe12",
+        "fixture": "bundled starter artwork, isolated temporary installation",
+        "historySHA256": "80c2f302f2640d49f85656690b21b10f6b99d35f334a6326f608e4fa2fa88ebe",
+        "installedPayloadBytes": 1666926,
+        "offloadedPayloadBytes": 0,
+        "progressSHA256": "29bb04c39988cbddb7b0dd6ae7d127a28c819e51bc3ff2c5e79070058ec7160a",
+        "reinstalledPayloadBytes": 1666926
+      },
+      "physicalChecks": "pending",
+      "implementationCommit": "c3955f1aee9cd648b78a5622c5b54c3a65913b51"
+    },
+    "005C": {
+      "status": "Passed",
+      "runs": [
+        {
+          "run": "005C-verified",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "os": "26.3.1",
+              "passed": 7,
+              "failed": 0,
+              "skipped": 0
+            },
+            {
+              "name": "iPhone 16e",
+              "os": "26.3.1",
+              "passed": 7,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        }
+      ],
+      "pythonTestsPassed": 41,
+      "portableChecksPassed": 452,
+      "productionNetwork": "pending reviewer publication/configuration",
+      "implementationCommit": "87e3f870b88ece2a0ea858dcddc233f454438c18"
+    },
+    "005D": {
+      "status": "Passed",
+      "runs": [
+        {
+          "run": "005D-final",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "passed": 12,
+              "failed": 0,
+              "skipped": 0
+            },
+            {
+              "name": "iPhone 16e",
+              "passed": 12,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        }
+      ],
+      "backendTestsPassed": 4,
+      "physicalCamera": "pending",
+      "deployedBackend": "not deployed, reviewer controlled",
+      "implementationCommit": "b6c333046acea3cb74beddad28e632a445662b36"
+    },
+    "005E": {
+      "status": "Passed",
+      "runs": [
+        {
+          "run": "005E-verified",
+          "result": "Passed",
+          "devices": [
+            {
+              "name": "iPad (A16)",
+              "passed": 15,
+              "failed": 0,
+              "skipped": 0
+            },
+            {
+              "name": "iPhone 16e",
+              "passed": 15,
+              "failed": 0,
+              "skipped": 0
+            }
+          ]
+        }
+      ],
+      "pythonTestsPassed": 42,
+      "portableChecksPassed": 484,
+      "implementationCommit": "972401e1089f98e56cab8727b26a8346ae2ce4f2"
+    },
+    "005F": {
+      "status": "Passed",
+      "selectedDirection": "A \u2014 Idea Fold",
+      "reviewerSelectedBeforeProduction": true,
+      "productionIconIntegrated": true,
+      "variants": [
+        "Any",
+        "Dark",
+        "Tinted"
+      ],
+      "resultBundle": "/tmp/LIL005F-brand.xcresult",
+      "runs": [
+        {
+          "destination": "iPhone 16e",
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "destination": "iPad (A16)",
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "implementationCommit": "94707700805d79198156a685e6b4ea4911a1b673"
+    }
+  },
+  "remaining": [
+    "Physical-device camera, premium narration, feedback and layout checks",
+    "Reviewer-controlled production publication/configuration and real-network smoke"
+  ],
+  "integrationRepeat": {
+    "resultBundle": "/tmp/LIL005-measured-cards.xcresult",
+    "destination": "iPad (A16), iOS 26.3.1 Simulator",
+    "tests": [
+      "IdeaCollectionUITests/testAccessibilityTextUsesOneColumnAndReadableCarousel",
+      "IdeaCollectionUITests/testCompletionGoesDirectlyToSavedNextIdea"
+    ],
+    "iterationsPerTest": 3,
+    "passedRuns": 6,
+    "failedRuns": 0,
+    "note": "Intermediate investigation run; not a complete final regression. See final-commands.md."
+  },
+  "integrationViewportChecks": {
+    "resultBundle": "/tmp/LIL005-card-width.xcresult",
+    "destination": "iPad (A16), iOS 26.3.1 Simulator",
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "note": "Intermediate investigation run; not a complete final regression. See final-commands.md."
+  },
+  "finalTargetedCardChecks": {
+    "resultBundle": "/tmp/LIL005-selection-alignment.xcresult",
+    "destination": "iPad (A16), iOS 26.3.1 Simulator",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "finalRegression": {
+    "resultBundle": "/tmp/LIL005-release-review.xcresult",
+    "result": "Passed",
+    "testsPerDestination": 96,
+    "destinations": [
+      {
+        "name": "iPad (A16)",
+        "os": "26.3.1",
+        "platform": "iOS Simulator",
+        "passed": 94,
+        "failed": 0,
+        "skipped": 2
+      },
+      {
+        "name": "iPhone 16e",
+        "os": "26.3.1",
+        "platform": "iOS Simulator",
+        "passed": 94,
+        "failed": 0,
+        "skipped": 2
+      }
+    ],
+    "pythonTestsPassed": 44,
+    "backendTestsPassed": 4,
+    "portableChecksPassed": 484,
+    "catalogValidation": "passed",
+    "signedPatchaBuild": "passed (existing signing)",
+    "physicalDeviceChecks": "pending",
+    "productionNetwork": "not performed; reviewer-controlled publication/configuration",
+    "deviceDeployment": "Patcha installation and launch succeeded; physical feature checks pending",
+    "testedImplementationCommit": "94707700805d79198156a685e6b4ea4911a1b673"
+  }
+}

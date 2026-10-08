@@ -46,3 +46,19 @@ On first card-aware launch, committed completed progress keys authorize backfill
 An archived card can review its exact last-earned revision when the matching retained source remains readable. If unavailable, the card stays readable/favoritable and the app explains why the full lesson cannot open. Active cards review current content; incomplete revised lessons resume saved progress, and completed lessons open at their introduction without starting narration.
 
 Card recovery is independent of catalog/progress recovery and considers only CURRENT and its previous pointer target. When the previous card copy is usable, newer committed completion records can restore missing earned cards or completed-revision text without resetting recovered favorites or dates. The warning explains that very recent favorite changes may need repeating. Both unreadable card copies, or a newer unsupported card-state version, pause saving instead of replacing card history. As with progress, a failed disk write leaves the previous committed state intact and reports the error; the next action can retry pending in-memory state.
+
+## Handoff 005 superseding storage contract
+
+The sections above describe the v2 compatibility/migration source. Handoff 005 moves normal operation to `Library-v3` with separate removable package files and durable lightweight state snapshots. It intentionally ends permanent historical package retention and normal archived-source reconstruction. Earned card text/favorites and all revision progress remain durable. See [the v3 transaction, migration and byte-reclamation evidence](Evidence/Handoff005/005B-storage-offload/README.md).
+
+V2 is untouched before verified v3 publication, then cleaned after a verified v3 launch. An explicit offload verifies v3 before cleanup and uses a recovery journal plus atomic single-file deletion. First-completion events survive later updates, including an unknown historical date without fabrication. Reinstall must pass retained collection and idea revision checks and any required removal acknowledgement. There is no UI-only offload.
+
+### Handoff 005E optional reading
+
+Dive Deeper stays in the removable package. A newly earned card snapshot can record `hasDiveDeeper: true`, a lightweight availability hint, with no deeper prose/source payload. Old snapshots omit it unchanged. Offloaded hints route to source-specific restoration; current updated content stays locked until its revision is practiced. Reinstallation reconnects the existing progress and card identity.
+
+## Handoff 005 packaged audio
+
+Narrated format-2 imports normalize into a single binary property-list `.lilbook` payload with raw binary MP3 Data. `InstalledBookRecord.payloadEncoding` selects `binary-plist-1`; nil continues to mean the existing JSON payload. Byte count and SHA-256 validate the installed file; retained collection identity uses canonical distribution JSON as before. Semantic idea fingerprints omit narration so voice-only collection updates preserve learner state.
+
+Session preflight creates temporary MP3 file leases for the active idea only, using generated filenames and file protection compatible with locked playback after first unlock. Replay reuses the files. Session closure releases the lease; next app startup removes stale leases after a crash. No second durable audio copy, MP3 history snapshot or card audio blob is retained. The existing single-file offload journal remains the atomic commit boundary and reclaims normalized audio alongside prose/art. See `Evidence/Handoff005/PackagedNarration/` for actual storage measurements and failure/reinstall checks.

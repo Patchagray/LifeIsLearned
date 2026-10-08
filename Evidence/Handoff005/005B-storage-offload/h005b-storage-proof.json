@@ -1,0 +1,10 @@
+{
+  "cardCountAfterReinstall" : 1,
+  "cardsSHA256" : "345d86fac610d660b1d84af4ba4074ea24f7e3e8b4505980e14395f63bbebe12",
+  "fixture" : "bundled starter artwork, isolated temporary installation",
+  "historySHA256" : "80c2f302f2640d49f85656690b21b10f6b99d35f334a6326f608e4fa2fa88ebe",
+  "installedPayloadBytes" : 1666926,
+  "offloadedPayloadBytes" : 0,
+  "progressSHA256" : "29bb04c39988cbddb7b0dd6ae7d127a28c819e51bc3ff2c5e79070058ec7160a",
+  "reinstalledPayloadBytes" : 1666926
+}

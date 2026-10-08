@@ -43,8 +43,9 @@ final class LearningJourneyUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
         app.launch()
-        XCTAssertTrue(app.buttons["Import book"].waitForExistence(timeout: 15))
-        app.buttons["Import book"].tap()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 15))
+        app.buttons["Add Books"].tap()
+        app.buttons["Import File"].tap()
         let browse = app.buttons["Browse"].firstMatch
         let local = app.staticTexts.matching(NSPredicate(format: "label IN %@", ["On My iPhone", "On My iPad"])).firstMatch
         let file = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "Handoff003-ShortDemo")).firstMatch

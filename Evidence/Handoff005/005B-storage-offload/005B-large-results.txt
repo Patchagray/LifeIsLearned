@@ -1,0 +1,11 @@
+** TEST SUCCEEDED **
+Test suite 'Selected tests' started on 'iPad (A16) - LifeIsLearnedUITests-Runner (30553)'
+Test suite 'Selected tests' started on 'iPhone 16e - LifeIsLearnedUITests-Runner (30554)'
+Test suite 'LifeIsLearnedUITests.xctest' started on 'iPad (A16) - LifeIsLearnedUITests-Runner (30553)'
+Test suite 'LifeIsLearnedUITests.xctest' started on 'iPhone 16e - LifeIsLearnedUITests-Runner (30554)'
+Test suite 'LibraryHistoryUITests' started on 'iPad (A16) - LifeIsLearnedUITests-Runner (30553)'
+Test suite 'LibraryHistoryUITests' started on 'iPhone 16e - LifeIsLearnedUITests-Runner (30554)'
+Test case 'LibraryHistoryUITests.testHistoryAtAccessibilityTextSize()' passed on 'iPad (A16) - LifeIsLearnedUITests-Runner (30553)' (25.574 seconds)
+Testing passed on 'iPad (A16)'
+Test case 'LibraryHistoryUITests.testHistoryAtAccessibilityTextSize()' passed on 'iPhone 16e - LifeIsLearnedUITests-Runner (30554)' (32.526 seconds)
+Testing passed on 'iPhone 16e'

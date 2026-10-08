@@ -4,10 +4,16 @@ import UniformTypeIdentifiers
 @MainActor struct LibraryView: View {
     @EnvironmentObject private var library: LibraryStore
     @EnvironmentObject private var settings: PlaybackSettings
-    @EnvironmentObject private var speech: SpeechPlayer
+    @EnvironmentObject private var speech: NarrationController
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var importing = false
     @State private var showingIdeas = false
+    @State private var showingHistory = false
+    @State private var addingBooks = false
+    @State private var browsing = false
+    @State private var scanning = false
+    @State private var discoveryEndpoint = RemoteConfiguration.bundled().catalogURL
+    @State private var discoveryFocus: String?
     @State private var showingSettings = false
     @State private var search = ""
     @State private var launch: LessonLaunch?
@@ -36,11 +42,16 @@ import UniformTypeIdentifiers
                         }
                     } else {
                         EmptyLearningView(title: "Make room for a new idea.", message: "Add a prepared book collection to begin reading, listening, and practicing at your own pace.")
-                        PrimaryButton(title: "Import your first book", symbol: "plus") { importing = true }
+                        PrimaryButton(title: "Add your first book", symbol: "plus") { addingBooks = true }
                     }
                     if !library.books.isEmpty {
                         FineRule()
                         librarySection
+                    }
+                    if !library.history.isEmpty {
+                        Button { speech.stop(); showingHistory = true } label: {
+                            Label("History", systemImage: "clock.arrow.circlepath").font(.subheadline).frame(minHeight: 44)
+                        }.accessibilityIdentifier("library-history")
                     }
                 }.padding(24).readingWidth(Layout.homeWidth)
             }.readingCanvas()
@@ -51,17 +62,35 @@ import UniformTypeIdentifiers
                             .accessibilityLabel("Ideas").disabled(library.isLoading)
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button { importing = true } label: { Image(systemName: "plus").frame(minWidth: 44, minHeight: 44) }
-                            .accessibilityLabel("Import book").disabled(library.isLoading || library.readOnly)
+                        Button { addingBooks = true } label: { Image(systemName: "plus").frame(minWidth: 44, minHeight: 44) }
+                            .accessibilityLabel("Add Books").disabled(library.isLoading || library.readOnly)
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button { speech.stop(); showingSettings = true } label: { Image(systemName: "slider.horizontal.3").frame(minWidth: 44, minHeight: 44) }
                             .accessibilityLabel("Playback settings")
                     }
                 }
+                .navigationDestination(isPresented: $scanning) { BookScannerView() }
+                .navigationDestination(isPresented: $browsing) { DiscoveryView(endpoint: discoveryEndpoint, focusID: discoveryFocus) }
+                .navigationDestination(isPresented: $showingHistory) { BookHistoryView() }
                 .navigationDestination(isPresented: $showingIdeas) { IdeaCollectionView() }
                 .navigationDestination(item: $selectedBook) { BookDetailView(book: $0) }
                 .overlay { if library.isPreparingImport { importLoading } }
+        }
+        .onChange(of: library.restoreBookID) { _, bookID in
+            guard let bookID else { return }
+            if library.source(for: bookID).kind == .manualImport { importing = true }
+            else {
+                discoveryFocus = bookID; discoveryEndpoint = library.source(for: bookID).catalogURL ?? RemoteConfiguration.bundled().catalogURL
+                browsing = true
+            }
+            library.restoreBookID = nil
+        }
+        .confirmationDialog("Add Books", isPresented: $addingBooks, titleVisibility: .visible) {
+            Button("Browse Library") { discoveryFocus = nil; browsing = true }
+            Button("Scan a Book") { scanning = true }
+            Button("Import File") { importing = true }
+            Button("Cancel", role: .cancel) { }
         }
         .sheet(isPresented: $showingSettings) { SettingsView() }
         .sheet(isPresented: Binding(get: { library.importReview != nil || library.importedBook != nil }, set: {
