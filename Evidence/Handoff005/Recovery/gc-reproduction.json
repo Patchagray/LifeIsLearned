@@ -1,0 +1,7 @@
+{
+  "canonicalURLMatched" : true,
+  "fixture" : "synthetic temporary directory only",
+  "installedExistsAfterOldCollector" : false,
+  "installedExistsBefore" : true,
+  "oldRelativePathMatched" : false
+}

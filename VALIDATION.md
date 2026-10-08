@@ -1,5 +1,10 @@
 # Validation report
 
+## Library cleanup/recovery fix — October 8, 2026
+
+Source `3e591b664b96f79ed36abf6b86d1400acdf0cdb6`: [root cause, exact restoration and verification](Evidence/Handoff005/Recovery/README.md). Fixed canonical URL comparisons in garbage collection/offload. 28 simulator native tests and 9 physical Patcha storage tests passed; three ordinary cold launches preserved restored payloads and learner state. Xcode UI automation was blocked before execution and is not claimed as a pass.
+
+
 ## Handoff 005 audio addendum — October 8, 2026
 
 See [audio commands/results](Evidence/Handoff005/PackagedNarration/README.md) for exact-script parity, native MP3 preflight/playback, fixed whole-idea engine selection, all practice branches, audio-only revision preservation, normalized storage/offload, Python packaging/normalization and iPhone/iPad simulator journeys. The synthetic tone fixture proves routing and bytes, not ElevenLabs voice quality. Physical lock-screen/interruption/Story alignment checks and production voice approval remain pending. No iPad device installation is requested.

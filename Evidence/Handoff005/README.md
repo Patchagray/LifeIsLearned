@@ -9,6 +9,10 @@ The root PDF and supplied Markdown were reviewed together and agree. Implementat
 
 [Requirement-to-test map](coverage-map.md) · [Machine-readable results](test-results.json) · [Final commands](final-commands.md) · [Pending device checks and fixture setup](physical-checks.md)
 
+## Library recovery fix — October 8, 2026
+
+The [critical storage cleanup fix and device recovery evidence](Recovery/README.md), source `3e591b664b96f79ed36abf6b86d1400acdf0cdb6`, supersede the storage implementation below. It corrects filesystem-alias comparisons that could delete installed payloads on a physical device. Exact missing files were restored on Patcha without resetting learner state. The UI automation limitation and successful native/device data checks are recorded separately.
+
 ## Audio addendum — October 8, 2026
 
 The subsequent [packaged narration implementation and evidence](PackagedNarration/README.md), source `60882b3807f8e91476bbe7f39bce3661ef53d950`, supersede the player/storage details and source SHA above. The results below remain the historical 005A–F baseline. The audio addendum records its own exact source commit, targeted regression, installation and pending hardware checks.

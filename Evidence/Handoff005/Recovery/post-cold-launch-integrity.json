@@ -1,0 +1,12 @@
+{
+  "coldLaunchCount": 3,
+  "allLaunchesSucceeded": true,
+  "priorSnapshotFilesByteIdentical": 68,
+  "currentPointerAdvanced": true,
+  "currentProgressSameExceptActivityTime": true,
+  "currentCardsByteIdentical": true,
+  "currentHistorySameExceptLastOpenedTime": true,
+  "currentAndPreviousPayloadReferencesValid": true,
+  "restoredPayloadCount": 2,
+  "payloadBytesAfterColdLaunches": 5495961
+}

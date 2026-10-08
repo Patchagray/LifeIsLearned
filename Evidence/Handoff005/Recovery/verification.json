@@ -1,0 +1,69 @@
+{
+  "sourceCommit": "3e591b664b96f79ed36abf6b86d1400acdf0cdb6",
+  "branch": "feature/handoff-005-library-platform",
+  "baseline": "85e4b2f671e7d04e2fc2ba25a6c341e49dd26984",
+  "simulator": {
+    "device": "iPhone 16e",
+    "os": "26.3.1",
+    "passed": 28,
+    "failed": 0,
+    "skipped": 0,
+    "suites": [
+      "LibraryV3Tests",
+      "CollectionTests",
+      "PackagedNarrationTests"
+    ]
+  },
+  "physicalNative": {
+    "device": "Patcha",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "suite": "LibraryV3Tests"
+  },
+  "physicalUI": {
+    "status": "blocked before test execution",
+    "reason": "Xcode timed out enabling UI automation",
+    "test": "ExistingLibraryRecoveryUITests/testExistingLibrarySurvivesThreeColdLaunches",
+    "notCountedAsPass": true
+  },
+  "signedBuild": "passed",
+  "strictSignature": "passed",
+  "inPlaceInstall": "passed",
+  "existingSigningRetained": true,
+  "exactPayloadRestoration": "two missing payloads restored after size/SHA256 match; no metadata overwritten",
+  "coldLaunchIntegrity": {
+    "coldLaunchCount": 3,
+    "allLaunchesSucceeded": true,
+    "priorSnapshotFilesByteIdentical": 68,
+    "currentPointerAdvanced": true,
+    "currentProgressSameExceptActivityTime": true,
+    "currentCardsByteIdentical": true,
+    "currentHistorySameExceptLastOpenedTime": true,
+    "currentAndPreviousPayloadReferencesValid": true,
+    "restoredPayloadCount": 2,
+    "payloadBytesAfterColdLaunches": 5495961
+  },
+  "nativeReadOfRecoveredCopy": [
+    {
+      "bookCount": 2,
+      "hasWarning": false,
+      "readOnly": false,
+      "run": 1
+    },
+    {
+      "bookCount": 2,
+      "hasWarning": false,
+      "readOnly": false,
+      "run": 2
+    },
+    {
+      "bookCount": 2,
+      "hasWarning": false,
+      "readOnly": false,
+      "run": 3
+    }
+  ],
+  "privateEvidence": "Full device backups, authored book bytes, reading history and device artifacts remain local and ignored",
+  "merge": "not performed"
+}
