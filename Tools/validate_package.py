@@ -30,6 +30,16 @@ def content(p):
     check(type(p['collectionRevision']) is int and p['collectionRevision']>0,'Positive collectionRevision required')
     check(p['fullCollection'] is True,'Declare fullCollection: true')
     b=p['book'];lessons=b['lessons'];sources=b['sources'];assets=p.get('assets',{})
+    audio_assets = p.get('audioAssets')
+    if isinstance(audio_assets, dict):
+        check(len(audio_assets) <= 2000, 'Audio asset table has at most 2000 entries')
+        audio_bytes = 0
+        for audio in audio_assets.values():
+            try: raw = base64.b64decode(audio['data'], validate=True)
+            except (ValueError, KeyError, TypeError): continue # optional corrupt audio reports invalid/fallback
+            check(len(raw) <= 2*1024*1024, 'Each MP3 must be at most 2 MiB')
+            audio_bytes += len(raw)
+        check(audio_bytes <= 40*1024*1024, 'Total decoded audio must be at most 40 MiB')
     check(all(clean(b[k]) for k in ['id','title','author','coverageNote']),'Book identity and coverage required')
     check(len(lessons)<=12,f'This collection contains {len(lessons)} ideas. Prepare a complete release with no more than 12 selected ideas.')
     check(bool(lessons) and unique([l['id'] for l in lessons]),'Provide 1–12 unique, nonempty idea IDs')
@@ -202,6 +212,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('packages',type=Path,nargs='*')
     parser.add_argument('--report',type=Path)
+    parser.add_argument('--audio-gate',action='store_true',help='Require a complete valid MP3 bundle for every idea; no narration is still valid without this release gate.')
     parser.add_argument('--authoring-gate',action='store_true',help='Require six canonical illustrated stages, two questions and a consistent plan at or below 300 seconds.')
     parser.add_argument('--measurements',type=Path,help='Premium-voice speech-completion timing JSON for one collection.')
     parser.add_argument('--approve-release',action='store_true',help='Also require matching measured premium-voice timing at or below 300 seconds.')
@@ -214,6 +225,12 @@ def main():
         for path in paths:
             package,size=read_package(path);ideas=content(package)
             timing=package_report(package)
+            from narration_audio import audio_report
+            audio = audio_report(package)
+            if args.audio_gate:
+                errors.extend(f"{idea['id']}: premium narration {idea['premiumNarration']}: {idea['errors']}" for idea in audio['ideas'] if idea['premiumNarration'] != 'complete')
+                errors.extend(audio['assetErrors'].values())
+                errors.extend(f"{idea['id']}: measured studio core exceeds 300 seconds" for idea in audio['ideas'] if idea.get('measuredCoreSeconds', 0) > 300)
             if args.authoring_gate or args.approve_release:
                 errors.extend(planning_errors(package,timing))
                 stage_errors, art_warnings = authoring_art_and_stages(package)
@@ -222,7 +239,7 @@ def main():
                 errors.extend(apply_measurements(timing,json.loads(args.measurements.read_text())))
             elif args.approve_release:
                 errors.append('Release approval requires measured premium voices; a planning estimate alone is insufficient.')
-            results.append(dict(file=path.name,bytes=size,ideas=ideas,assets=len(package.get('assets',{})),timing=timing))
+            results.append(dict(file=path.name,bytes=size,ideas=ideas,assets=len(package.get('assets',{})),timing=timing,audio=audio))
         if not args.packages:
             validate_project()
     except (ValueError,KeyError,TypeError,IndexError,struct.error) as error:

@@ -56,3 +56,9 @@ V2 is untouched before verified v3 publication, then cleaned after a verified v3
 ### Handoff 005E optional reading
 
 Dive Deeper stays in the removable package. A newly earned card snapshot can record `hasDiveDeeper: true`, a lightweight availability hint, with no deeper prose/source payload. Old snapshots omit it unchanged. Offloaded hints route to source-specific restoration; current updated content stays locked until its revision is practiced. Reinstallation reconnects the existing progress and card identity.
+
+## Handoff 005 packaged audio
+
+Narrated format-2 imports normalize into a single binary property-list `.lilbook` payload with raw binary MP3 Data. `InstalledBookRecord.payloadEncoding` selects `binary-plist-1`; nil continues to mean the existing JSON payload. Byte count and SHA-256 validate the installed file; retained collection identity uses canonical distribution JSON as before. Semantic idea fingerprints omit narration so voice-only collection updates preserve learner state.
+
+Session preflight creates temporary MP3 file leases for the active idea only, using generated filenames and file protection compatible with locked playback after first unlock. Replay reuses the files. Session closure releases the lease; next app startup removes stale leases after a crash. No second durable audio copy, MP3 history snapshot or card audio blob is retained. The existing single-file offload journal remains the atomic commit boundary and reclaims normalized audio alongside prose/art. See `Evidence/Handoff005/PackagedNarration/` for actual storage measurements and failure/reinstall checks.

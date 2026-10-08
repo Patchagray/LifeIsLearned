@@ -10,6 +10,12 @@ Use **+ Add Books → Browse Library / Scan a Book / Import File**. The bundled 
 
 **005F uses your selected A — Idea Fold direction**, with Any/Dark/Tinted production assets. See the [brand source and rationale](Brand/README.md) and [current verification evidence](Evidence/Handoff005/README.md). Final acceptance remains subject to review and physical checks. Older sections below document prior milestones and their original verification boundaries.
 
+## Packaged narration addendum
+
+Complete exact-script MP3 bundles now play offline for the whole idea, including every question, feedback branch and completion score. Books without a valid complete bundle keep device speech for the whole session. Settings configure **device fallback voices**; studio playback supports speed, timed Story cues, background audio and lock-screen Play/Pause. Audio-only updates preserve idea progress, and offload reclaims narration bytes too.
+
+Sound Production runs once outside the app: [export, normalize, package and validate](Tools/SOUND_PRODUCTION.md). The app needs no ElevenLabs account, API key or runtime connection. [Audio evidence and remaining physical checks](Evidence/Handoff005/PackagedNarration/README.md). Existing supplied books were not silently changed or given synthetic narration.
+
 ## Run it
 
 1. Open the local project folder, or clone this repository on your Mac.
