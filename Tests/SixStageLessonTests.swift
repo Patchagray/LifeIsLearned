@@ -128,7 +128,7 @@ final class SixStageLessonTests: XCTestCase {
     @MainActor func testSixStageReaderRenderedEvidence() async throws {
         let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
         let package = canonical(f.package)
-        let settings = PlaybackSettings(defaults: f.defaults), speech = SpeechPlayer()
+        let settings = PlaybackSettings(defaults: f.defaults), speech = NarrationController()
         let session = LessonSession(book: package.book, lesson: package.book.lessons[0], store: f.store,
                                     speech: FakeNarrator(), settings: settings, practiceOnly: false, archivedPackage: package)
         let pad = UIDevice.current.userInterfaceIdiom == .pad

@@ -4,4 +4,5 @@
     <key>DiscoveryCatalogURL</key><string>$(LIL_DISCOVERY_CATALOG_URL)</string>
     <key>BookRequestAPIURL</key><string>$(LIL_BOOK_REQUEST_API_URL)</string>
 <key>NSCameraUsageDescription</key><string>Recognize a book barcode or cover text on your device to find prepared collections. Camera images are not uploaded.</string>
+<key>UIBackgroundModes</key><array><string>audio</string></array>
 </dict></plist>

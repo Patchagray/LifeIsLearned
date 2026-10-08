@@ -7,7 +7,7 @@ final class PresentationTests: XCTestCase {
         let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
         let store = f.store
         let settings = PlaybackSettings(defaults: f.defaults)
-        let speech = SpeechPlayer()
+        let speech = NarrationController()
         let narrator = FakeNarrator()
         let lesson = f.package.book.lessons[0]
         let session = LessonSession(book: f.package.book, lesson: lesson, store: store, speech: narrator, settings: settings, practiceOnly: false)
@@ -102,7 +102,7 @@ final class PresentationTests: XCTestCase {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
         XCTAssertNil(f.store.continueLearning)
         let host = UIHostingController(rootView: LibraryView().environmentObject(f.store)
-            .environmentObject(PlaybackSettings(defaults: f.defaults)).environmentObject(SpeechPlayer()))
+            .environmentObject(PlaybackSettings(defaults: f.defaults)).environmentObject(NarrationController()))
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
         window.rootViewController = host; window.makeKeyAndVisible()
         try await Task.sleep(nanoseconds: 200_000_000)

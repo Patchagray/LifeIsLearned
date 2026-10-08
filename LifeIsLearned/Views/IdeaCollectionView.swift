@@ -3,7 +3,7 @@ import SwiftUI
 @MainActor struct IdeaCollectionView: View {
     @EnvironmentObject private var library: LibraryStore
     @EnvironmentObject private var settings: PlaybackSettings
-    @EnvironmentObject private var speech: SpeechPlayer
+    @EnvironmentObject private var speech: NarrationController
     @State private var selectedID: String?
     @State private var detailsID: String?
     @State private var carousel: Bool

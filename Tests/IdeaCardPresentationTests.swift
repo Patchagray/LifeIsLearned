@@ -41,7 +41,7 @@ final class IdeaCardPresentationTests: XCTestCase {
 
     @MainActor func testRenderedCollectionStates() async throws {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
-        let store = f.store, speech = SpeechPlayer(), settings = PlaybackSettings(defaults: f.defaults)
+        let store = f.store, speech = NarrationController(), settings = PlaybackSettings(defaults: f.defaults)
         let pad = UIDevice.current.userInterfaceIdiom == .pad
         let prefix = pad ? "ipad" : "iphone"
         let size = CGSize(width: pad ? 820 : 390, height: pad ? 1180 : 844)

@@ -21,6 +21,7 @@ struct InstalledBookRecord: Codable, Equatable, Sendable {
     var packageSHA256: String
     var packageBytes: Int
     var source: BookSourceRecord
+    var payloadEncoding: String? = nil
 }
 
 /// No prose, source definitions, covers or illustration data in durable metadata.

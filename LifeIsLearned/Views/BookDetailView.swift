@@ -4,7 +4,7 @@ import SwiftUI
     let book: LearningBook
     @EnvironmentObject private var library: LibraryStore
     @EnvironmentObject private var settings: PlaybackSettings
-    @EnvironmentObject private var speech: SpeechPlayer
+    @EnvironmentObject private var speech: NarrationController
     @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.dismiss) private var dismiss
     @State private var confirmingOffload = false

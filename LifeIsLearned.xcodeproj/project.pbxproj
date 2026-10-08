@@ -83,6 +83,13 @@
 		2BE4038CE88B9712F5C0C7E0 /* DiveDeeper.swift */ = {isa = PBXBuildFile; fileRef = 735950B392AEB122F195DAD5; };
 		BF91ECDCA03BB0BC96AD1CCF /* DiveDeeperView.swift */ = {isa = PBXBuildFile; fileRef = DCA9D9F09E5C7F41FDA810C4; };
 		E1AE3D2CE0C34B3B961F7FAA /* DiveDeeperTests.swift */ = {isa = PBXBuildFile; fileRef = BD46DD523486AF8275430DAF; };
+		C0F3A3C1E299DCC7A89C7D99 /* PackagedNarration.swift */ = {isa = PBXBuildFile; fileRef = 97949BEC46C05BD4FDB966E4; };
+		E45858050BF9FCEFD091B33B /* AudioPreflight.swift */ = {isa = PBXBuildFile; fileRef = D49A3AA63866D3163ED0AE27; };
+		F73F4CA8D8DBE8BB38173EE9 /* InstalledPayload.swift */ = {isa = PBXBuildFile; fileRef = F13F97CAAFA024677802B166; };
+		B7EDD47D8C8AE6CA75732C6C /* PackagedNarrationPlayer.swift */ = {isa = PBXBuildFile; fileRef = FF5153353032B60AFAD8542F; };
+		4448EC7E5B69E5732B105A42 /* NarrationController.swift */ = {isa = PBXBuildFile; fileRef = E4BCE7B7C460D47549297247; };
+		64B0059216770BED55140EF1 /* PackagedNarrationFixture.swift */ = {isa = PBXBuildFile; fileRef = 4A6D6660AF0A10D9F466CAA1; };
+		9000D17860FB364BBC1AE50B /* PackagedNarrationTests.swift */ = {isa = PBXBuildFile; fileRef = 10897E5A7444D409A56C8333; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +182,13 @@
 		735950B392AEB122F195DAD5 /* DiveDeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiveDeeper.swift"; sourceTree = "<group>"; };
 		DCA9D9F09E5C7F41FDA810C4 /* DiveDeeperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiveDeeperView.swift"; sourceTree = "<group>"; };
 		BD46DD523486AF8275430DAF /* DiveDeeperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiveDeeperTests.swift"; sourceTree = "<group>"; };
+		97949BEC46C05BD4FDB966E4 /* PackagedNarration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagedNarration.swift; sourceTree = "<group>"; };
+		D49A3AA63866D3163ED0AE27 /* AudioPreflight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreflight.swift; sourceTree = "<group>"; };
+		F13F97CAAFA024677802B166 /* InstalledPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledPayload.swift; sourceTree = "<group>"; };
+		FF5153353032B60AFAD8542F /* PackagedNarrationPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagedNarrationPlayer.swift; sourceTree = "<group>"; };
+		E4BCE7B7C460D47549297247 /* NarrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NarrationController.swift; sourceTree = "<group>"; };
+		4A6D6660AF0A10D9F466CAA1 /* PackagedNarrationFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagedNarrationFixture.swift; sourceTree = "<group>"; };
+		10897E5A7444D409A56C8333 /* PackagedNarrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagedNarrationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +245,11 @@
 		6B8B2B5CD808F874BF4EE1BA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4A6D6660AF0A10D9F466CAA1,
+				E4BCE7B7C460D47549297247,
+				FF5153353032B60AFAD8542F,
+				F13F97CAAFA024677802B166,
+				D49A3AA63866D3163ED0AE27,
 				2A39CC195BCF071700D678C7 /* BookRequestClient.swift */,
 				DFFBFE7F007AD1ADCD4551A1 /* DiscoveryFixture.swift */,
 				580DBCA082C92AA87EA455B5 /* PackageDownloadService.swift */,
@@ -287,6 +306,7 @@
 		A2A9809DAF0AEE6960B34B37 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				97949BEC46C05BD4FDB966E4,
 				735950B392AEB122F195DAD5 /* DiveDeeper.swift */,
 				AE34C1AD1C96471526045479 /* BookRecognition.swift */,
 				527F8C6A868325F28B713B75 /* DiscoveryCatalog.swift */,
@@ -305,6 +325,7 @@
 		C4E2E7F217DE3642E7714F4E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				10897E5A7444D409A56C8333,
 				BD46DD523486AF8275430DAF /* DiveDeeperTests.swift */,
 				6A252050D121069DB895333B /* BookDiscoveryRequestTests.swift */,
 				0ECAB63461C6224B4C04EE08 /* DiscoveryTests.swift */,
@@ -441,6 +462,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64B0059216770BED55140EF1,
+				4448EC7E5B69E5732B105A42,
+				B7EDD47D8C8AE6CA75732C6C,
+				F73F4CA8D8DBE8BB38173EE9,
+				E45858050BF9FCEFD091B33B,
+				C0F3A3C1E299DCC7A89C7D99,
 				BF91ECDCA03BB0BC96AD1CCF /* DiveDeeperView.swift */,
 				2BE4038CE88B9712F5C0C7E0 /* DiveDeeper.swift */,
 				49F103FFB5A89431E09C99EF /* BookScannerView.swift */,
@@ -502,6 +529,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9000D17860FB364BBC1AE50B,
 				E1AE3D2CE0C34B3B961F7FAA /* DiveDeeperTests.swift */,
 				432C206233D31C063BA255CA /* BookDiscoveryRequestTests.swift */,
 				AAFD282596ED272DC37AB758 /* DiscoveryTests.swift */,

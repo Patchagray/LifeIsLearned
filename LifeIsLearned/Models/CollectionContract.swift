@@ -49,7 +49,11 @@ enum CollectionLimits {
 extension LessonPackage {
     static func decodeImport(_ data: Data) throws -> LessonPackage {
         try CollectionLimits.require(data.count <= CollectionLimits.packageBytes, "Keep the complete collection under 64 MiB; optimize shared images first.")
-        do { return try JSONDecoder().decode(Self.self, from: data).validated() }
+        do {
+            let package = try JSONDecoder().decode(Self.self, from: data).validated()
+            _ = AudioPreflight.importWarnings(package)
+            return package
+        }
         catch let error as PackageError { throw error }
         catch { throw PackageError.invalid("This file isn't a valid collection package. Check its required fields and JSON format with the authoring validator.") }
     }
@@ -72,6 +76,7 @@ extension LessonPackage {
             var sources: [ContentSource]
         }
         var normalized = lesson
+        normalized.narration = nil // Presentation-only audio never resets pedagogical progress.
         var images: [Data?] = []
         for index in normalized.pages.indices {
             let page = normalized.pages[index]

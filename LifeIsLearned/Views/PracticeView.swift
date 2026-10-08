@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PracticeView: View {
     @ObservedObject var session: LessonSession
-    @ObservedObject var speech: SpeechPlayer
+    @ObservedObject var speech: NarrationController
     @ObservedObject var settings: PlaybackSettings
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     var body: some View {

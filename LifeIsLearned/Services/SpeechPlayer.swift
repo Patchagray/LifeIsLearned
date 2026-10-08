@@ -5,10 +5,21 @@ import AVFoundation
 @MainActor protocol Narrating: AnyObject {
     var isPlaying: Bool { get }
     var isPaused: Bool { get }
+    var ready: Bool { get }
+    var supportsBackground: Bool { get }
+    func speakSegment(_ id: String, text: String, role: NarrationRole, settings: PlaybackSettings, finished: (() -> Void)?)
     func speak(_ text: String, role: NarrationRole, settings: PlaybackSettings, finished: (() -> Void)?)
     func pause()
     func resume()
     func stop()
+}
+
+extension Narrating {
+    var ready: Bool { true }
+    var supportsBackground: Bool { false }
+    func speakSegment(_ id: String, text: String, role: NarrationRole, settings: PlaybackSettings, finished: (() -> Void)?) {
+        speak(text, role: role, settings: settings, finished: finished)
+    }
 }
 
 @MainActor final class SpeechPlayer: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, Narrating {

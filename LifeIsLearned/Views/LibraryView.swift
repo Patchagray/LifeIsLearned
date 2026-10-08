@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 @MainActor struct LibraryView: View {
     @EnvironmentObject private var library: LibraryStore
     @EnvironmentObject private var settings: PlaybackSettings
-    @EnvironmentObject private var speech: SpeechPlayer
+    @EnvironmentObject private var speech: NarrationController
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var importing = false
     @State private var showingIdeas = false

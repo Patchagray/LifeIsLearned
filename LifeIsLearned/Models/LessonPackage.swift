@@ -47,6 +47,7 @@ struct PracticeQuestion: Codable, Identifiable, Sendable {
 }
 
 struct Lesson: Codable, Identifiable, Sendable {
+    enum CodingKeys: String, CodingKey { case id, revision, title, subtitle, estimatedMinutes, scopeNote, pages, questions, diveDeeper, narration }
     var id: String
     var revision: Int
     var title: String
@@ -56,6 +57,7 @@ struct Lesson: Codable, Identifiable, Sendable {
     var pages: [LessonPage]
     var questions: [PracticeQuestion]
     var diveDeeper: DiveDeeperContent? = nil
+    var narration: LessonNarrationBundle? = nil
 }
 
 struct LearningBook: Codable, Identifiable, Sendable {
@@ -72,6 +74,7 @@ struct LearningBook: Codable, Identifiable, Sendable {
 }
 
 struct LessonPackage: Codable, Sendable {
+    enum CodingKeys: String, CodingKey { case formatVersion, book, collectionRevision, fullCollection, manifest, removedLessonIDs, assets, audioAssets }
     enum ValidationPurpose { case newImport, storedContent }
     var formatVersion: Int
     var book: LearningBook
@@ -80,8 +83,10 @@ struct LessonPackage: Codable, Sendable {
     var manifest: [IdeaManifestEntry]? = nil
     var removedLessonIDs: [String]? = nil
     var assets: [String: CollectionArtwork]? = nil
+    var audioAssets: [String: CollectionAudio]? = nil
 
     func validated(for purpose: ValidationPurpose = .newImport) throws -> LessonPackage {
+        try AudioContract.validateResourceLimits(audioAssets ?? [:])
         func require(_ condition: Bool, _ message: String) throws {
             if !condition { throw PackageError.invalid(message) }
         }

@@ -492,3 +492,39 @@ final class BrandUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Ideas"].waitForExistence(timeout: 10))
     }
 }
+
+final class PackagedNarrationUITests: XCTestCase {
+    func testOfflineStudioModeBackgroundReturnAndFallbackSettings() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_AUDIO_FIXTURE"] = "1"
+        app.launch()
+        let book = app.buttons["book-audio-verification-fixture"]
+        XCTAssertTrue(book.waitForExistence(timeout: 30))
+        for _ in 0..<8 { if book.isHittable { break }; app.swipeUp() }
+        book.tap()
+        let idea = app.buttons["idea-audio-check"]
+        for _ in 0..<10 { if idea.exists && idea.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(idea.isHittable); idea.tap()
+        XCTAssertTrue(app.staticTexts["Studio narration · available offline"].waitForExistence(timeout: 15))
+        snapshot("audio-studio-mode")
+        app.buttons["Play narration"].tap()
+        XCUIDevice.shared.press(.home)
+        Thread.sleep(forTimeInterval: 4)
+        app.activate()
+        XCTAssertTrue(app.staticTexts["Studio narration · available offline"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["Device fallback voices"].exists)
+        XCTAssertFalse(app.staticTexts["Audio check 1"].exists, "Packaged auto-run should advance the reading stage while backgrounded")
+        snapshot("audio-foreground-return-simulator")
+        if app.buttons["Pause narration"].exists { app.buttons["Pause narration"].tap() }
+        app.buttons["Playback settings"].tap()
+        XCTAssertTrue(app.staticTexts["Device fallback voices"].waitForExistence(timeout: 5))
+        snapshot("audio-fallback-voice-settings")
+        app.buttons["Done"].tap()
+        app.buttons["Close lesson"].tap()
+    }
+    private func snapshot(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
+    }
+}

@@ -43,7 +43,7 @@ actor LibraryStorage {
     }
     private func payloadURL(_ path: String) throws -> URL {
         // Stable book IDs never become filesystem paths. All path components are generated hashes.
-        let pattern = #"^Packages/[a-f0-9]{64}/[0-9]+-[a-f0-9]{64}\.json$"#
+        let pattern = #"^Packages/[a-f0-9]{64}/[0-9]+-[a-f0-9]{64}\.(json|lilbook)$"#
         try CollectionLimits.require(path.range(of: pattern, options: .regularExpression) != nil, "Invalid package reference.")
         return root.appendingPathComponent(path)
     }
@@ -112,9 +112,9 @@ actor LibraryStorage {
             try CollectionLimits.require(size == record.packageBytes && size <= CollectionLimits.packageBytes, "A saved package has an unexpected size.")
             let bytes = try Data(contentsOf: url)
             try CollectionLimits.require(LibraryDigest.sha256(bytes) == record.packageSHA256, "A saved package checksum does not match.")
-            let package = try JSONDecoder().decode(LessonPackage.self, from: bytes).validated(for: .storedContent)
+            let package = try InstalledPayload.decode(bytes, encoding: record.payloadEncoding).validated(for: .storedContent)
             try CollectionLimits.require(package.book.id == record.bookID && package.collectionNumber == record.collectionRevision &&
-                record.packageFile == packagePath(bookID: record.bookID, revision: record.collectionRevision, sha: record.packageSHA256), "Saved package identity mismatch.")
+                record.packageFile == packagePath(bookID: record.bookID, revision: record.collectionRevision, sha: record.packageSHA256, encoding: record.payloadEncoding), "Saved package identity mismatch.")
             packages.append(package)
         }
         return (state, CollectionCatalog(packages: packages, knownLessons: state.knownLessons, knownBooks: state.knownBooks, version: state.version))
@@ -183,8 +183,8 @@ actor LibraryStorage {
         return result
     }
 
-    private func packagePath(bookID: String, revision: Int, sha: String) -> String {
-        "Packages/\(LibraryDigest.bookDirectory(bookID))/\(revision)-\(sha).json"
+    private func packagePath(bookID: String, revision: Int, sha: String, encoding: String? = nil) -> String {
+        "Packages/\(LibraryDigest.bookDirectory(bookID))/\(revision)-\(sha)." + (encoding == nil ? "json" : "lilbook")
     }
     private func prepareSnapshot(catalog: CollectionCatalog, progress: [String: LessonProgress],
                                  cards: [String: IdeaCardRecord], history: [BookHistoryRecord]) throws -> (id: String, installed: [InstalledBookRecord]) {
@@ -193,14 +193,15 @@ actor LibraryStorage {
         if cachedVersion == catalog.version { installed = cachedInstalled }
         else {
             for package in catalog.packages {
-                let bytes = try package.canonicalData(), sha = LibraryDigest.sha256(bytes)
-                let path = packagePath(bookID: package.book.id, revision: package.collectionNumber, sha: sha)
+                let encoded = try InstalledPayload.encode(package)
+                let bytes = encoded.bytes, sha = LibraryDigest.sha256(bytes)
+                let path = packagePath(bookID: package.book.id, revision: package.collectionNumber, sha: sha, encoding: encoded.encoding)
                 let url = try payloadURL(path)
                 try manager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
                 if !manager.fileExists(atPath: url.path) { try bytes.write(to: url, options: .atomic) }
                 else { try CollectionLimits.require(LibraryDigest.sha256(Data(contentsOf: url)) == sha, "Existing package checksum mismatch.") }
                 installed.append(InstalledBookRecord(bookID: package.book.id, collectionRevision: package.collectionNumber,
-                    packageFile: path, packageSHA256: sha, packageBytes: bytes.count, source: .manual))
+                    packageFile: path, packageSHA256: sha, packageBytes: bytes.count, source: .manual, payloadEncoding: encoded.encoding))
             }
         }
         for index in installed.indices {
