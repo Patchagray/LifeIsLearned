@@ -1,0 +1,152 @@
+{
+  "checksPassed": 52,
+  "packages": [
+    {
+      "file": "audio-tone-package-fixture.json",
+      "bytes": 21094,
+      "ideas": 1,
+      "assets": 0,
+      "timing": {
+        "bookID": "audio-verification-fixture",
+        "collectionRevision": 1,
+        "method": "word-count planning estimate; not measured playback",
+        "prefaceNarrated": false,
+        "sourcesAndInterfaceNarrated": false,
+        "feedbackPolicy": "Longest single response per question, including its spoken prefix; retries excluded.",
+        "ideas": [
+          {
+            "id": "audio-check",
+            "revision": 1,
+            "spokenWords": 141,
+            "wordsByKind": {
+              "application": 13,
+              "completion": 15,
+              "explanation": 13,
+              "feedback": 16,
+              "intro": 13,
+              "question": 32,
+              "story": 26,
+              "takeaway": 13
+            },
+            "wordsByRole": {
+              "guide": 115,
+              "storyteller": 26
+            },
+            "wordsPerMinute": 130,
+            "transitionCount": 5,
+            "pagePauseSeconds": 2,
+            "pauseSeconds": 10,
+            "answerAllowanceSeconds": 40,
+            "estimatedSpeechSeconds": 65.07692307692308,
+            "estimatedTotalSeconds": 115.07692307692308,
+            "approximateMinutes": 2,
+            "planningPass": true,
+            "measurementStatus": "pending-premium-voices",
+            "segments": [
+              {
+                "id": "page:screen-0",
+                "kind": "intro",
+                "role": "guide",
+                "text": "Audio check 1. A synthetic tone checks offline playback. This is verification content.",
+                "words": 13
+              },
+              {
+                "id": "page:screen-1",
+                "kind": "explanation",
+                "role": "guide",
+                "text": "Audio check 2. A synthetic tone checks offline playback. This is verification content.",
+                "words": 13
+              },
+              {
+                "id": "page:screen-2",
+                "kind": "story",
+                "role": "storyteller",
+                "text": "Audio check 3. A synthetic tone checks offline playback. This is verification content.",
+                "words": 13
+              },
+              {
+                "id": "page:screen-3",
+                "kind": "story",
+                "role": "storyteller",
+                "text": "Audio check 4. A synthetic tone checks offline playback. This is verification content.",
+                "words": 13
+              },
+              {
+                "id": "page:screen-4",
+                "kind": "application",
+                "role": "guide",
+                "text": "Audio check 5. A synthetic tone checks offline playback. This is verification content.",
+                "words": 13
+              },
+              {
+                "id": "page:screen-5",
+                "kind": "takeaway",
+                "role": "guide",
+                "text": "Audio check 6. A synthetic tone checks offline playback. This is verification content.",
+                "words": 13
+              },
+              {
+                "id": "question:question-0",
+                "kind": "question",
+                "role": "guide",
+                "text": "Which option completes this test?\nOption 1. Complete the check\nOption 2. Try the retry path",
+                "words": 16
+              },
+              {
+                "id": "feedback:question-0",
+                "kind": "feedback",
+                "role": "guide",
+                "text": "That's right. This is the correct verification choice.",
+                "words": 8
+              },
+              {
+                "id": "question:question-1",
+                "kind": "question",
+                "role": "guide",
+                "text": "Which option completes this test?\nOption 1. Complete the check\nOption 2. Try the retry path",
+                "words": 16
+              },
+              {
+                "id": "feedback:question-1",
+                "kind": "feedback",
+                "role": "guide",
+                "text": "That's right. This is the correct verification choice.",
+                "words": 8
+              },
+              {
+                "id": "completion",
+                "kind": "completion",
+                "role": "guide",
+                "text": "Lesson complete. You've practiced a new idea. 2 of 2 correct on the first try.",
+                "words": 15
+              }
+            ]
+          }
+        ]
+      },
+      "audio": {
+        "decodedAudioBytes": 10074,
+        "assetErrors": {},
+        "ideas": [
+          {
+            "id": "audio-check",
+            "revision": 1,
+            "premiumNarration": "complete",
+            "segmentCount": 15,
+            "audioBytes": 10074,
+            "measuredNarrationMilliseconds": 18000,
+            "errors": [],
+            "cueWarnings": [],
+            "measuredCoreSeconds": 63.2,
+            "provenance": null
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "authoringGate": "not-requested",
+  "releaseApproval": "not-approved",
+  "scope": "Portable structural/header checks and explicit planning estimates. Native decoding, compilation and measured playback are separate."
+}

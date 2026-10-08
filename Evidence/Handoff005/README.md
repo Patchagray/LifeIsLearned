@@ -3,11 +3,15 @@
 Baseline: `74a18997dbf8931366ae5acd18f5a4a23ed8699d` on `feature/handoff-004-6-six-stage-lessons`.
 Working branch: `feature/handoff-005-library-platform`.
 
-Final tested and installed implementation: `94707700805d79198156a685e6b4ea4911a1b673`. The following evidence-only commit records this SHA; its source files are identical to the tested implementation.
+Pre-audio 005A–F tested and installed implementation: `94707700805d79198156a685e6b4ea4911a1b673`. The following evidence-only commit records this SHA; its source files are identical to the tested implementation.
 
 The root PDF and supplied Markdown were reviewed together and agree. Implementation proceeds in sequential green epics; this evidence is expanded after each epic. No merge, public release publication, endpoint deployment or production secret provisioning is authorized here.
 
 [Requirement-to-test map](coverage-map.md) · [Machine-readable results](test-results.json) · [Final commands](final-commands.md) · [Pending device checks and fixture setup](physical-checks.md)
+
+## Audio addendum — October 8, 2026
+
+The subsequent [packaged narration implementation and evidence](PackagedNarration/README.md), source `60882b3807f8e91476bbe7f39bce3661ef53d950`, supersede the player/storage details and source SHA above. The results below remain the historical 005A–F baseline. The audio addendum records its own exact source commit, targeted regression, installation and pending hardware checks.
 
 ## Verification boundaries
 

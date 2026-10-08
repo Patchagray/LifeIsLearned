@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "60882b3807f8e91476bbe7f39bce3661ef53d950",
+  "device": "Patcha",
+  "model": "iPhone 15 Pro Max",
+  "bundleID": "com.mariosinclair.lifeislearned",
+  "signedBuild": "passed",
+  "strictCodeSignature": "passed",
+  "existingSigningPreserved": true,
+  "installation": "succeeded in place",
+  "launch": "succeeded 2026-10-08 15:05 EDT",
+  "initialLaunchAttempt": "blocked by locked device; subsequent final-build launch succeeded",
+  "fixtureLaunchFlags": false,
+  "physicalFeatureVerification": "pending; installation and launch only",
+  "physicalIPadInstall": "cancelled by user; not performed"
+}
