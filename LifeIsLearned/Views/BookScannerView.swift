@@ -11,7 +11,9 @@ import AVFoundation
     @State private var cameraMessage: String?
     @State private var denied = false
     @FocusState private var editing: Bool
-    init() {
+    let explore: (String) -> Void
+    init(explore: @escaping (String) -> Void = { _ in }) {
+        self.explore = explore
         let identity = (try? CatalogIdentity.bundled()) ?? CatalogIdentity(catalogID: "catalog-001", catalogRevision: 1, shelves: [], books: [])
         var endpoint = RemoteConfiguration.bundled().catalogURL
         var config = URLSessionConfiguration.ephemeral
@@ -46,9 +48,9 @@ import AVFoundation
                             Text(match.book.author).foregroundStyle(Palette.secondary)
                             Text(match.exactISBN ? "Exact ISBN match" : "Title / author match").font(.caption).foregroundStyle(Palette.teal)
                             if match.book.availability == .available {
-                                NavigationLink("View prepared book") { DiscoveryView(endpoint: discovery.endpoint, focusID: match.id) }
+                                Button("View prepared book") { explore(match.id) }
                             } else {
-                                NavigationLink("Request this book") { BookRequestView(book: RecognizedBook(title: match.book.title, author: match.book.author, isbn13: match.book.isbn13.first ?? ""), catalogBookID: match.id) }
+                                Button("View in Explore") { explore(match.id) }
                             }
                         }.padding(18).frame(maxWidth: .infinity, alignment: .leading).background(Palette.surface, in: RoundedRectangle(cornerRadius: 16))
                     }

@@ -324,8 +324,9 @@ final class DiscoveryUITests: XCTestCase {
         app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
         app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
         app.launch()
-        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
-        app.buttons["Browse Library"].tap()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25))
+        for _ in 0..<8 { if app.buttons["Explore"].isHittable { break }; app.swipeUp() }
+        app.buttons["Explore"].tap()
         let download = app.buttons["download-influence-the-psychology-of-persuasion"]
         XCTAssertTrue(download.waitForExistence(timeout: 20))
         snapshot("h005c-browse-synthetic")
@@ -335,19 +336,40 @@ final class DiscoveryUITests: XCTestCase {
         snapshot("h005c-download-progress")
         let done = app.buttons["Done"]
         XCTAssertTrue(done.waitForExistence(timeout: 20)); done.tap()
-        XCTAssertTrue(app.staticTexts["In Library"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Installed"].firstMatch.waitForExistence(timeout: 10))
         snapshot("h005c-in-library")
         app.buttons["Refresh catalog"].tap()
         XCTAssertTrue(app.buttons["Update"].waitForExistence(timeout: 10))
         snapshot("h005c-update-available")
         app.buttons["Update"].tap()
         XCTAssertTrue(done.waitForExistence(timeout: 20)); done.tap()
-        XCTAssertTrue(app.staticTexts["In Library"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Installed"].firstMatch.waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["Update"].exists)
         snapshot("h005c-update-installed")
         app.buttons["Refresh catalog"].tap()
-        XCTAssertTrue(app.staticTexts["Showing saved catalog · refresh unavailable"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Showing saved catalog · refresh unavailable")).firstMatch.waitForExistence(timeout: 10))
         snapshot("h005c-offline-cache")
+        let open = app.buttons["open-discovery-influence-the-psychology-of-persuasion"]
+        for _ in 0..<8 { if open.isHittable { break }; app.swipeUp() }
+        open.tap()
+        XCTAssertTrue(app.buttons["Book options"].waitForExistence(timeout: 10))
+        app.buttons["Book options"].tap(); app.buttons["Offload Book"].tap()
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "You can download this book again.")).firstMatch.waitForExistence(timeout: 5))
+        app.buttons["Offload Book"].tap()
+        XCTAssertTrue(app.buttons["Your Library"].waitForExistence(timeout: 10))
+        for _ in 0..<8 { if app.buttons["Your Library"].isHittable { break }; app.swipeDown() }
+        app.buttons["Your Library"].tap()
+        let restore = app.buttons["local-restore-influence-the-psychology-of-persuasion"]
+        for _ in 0..<10 { if restore.exists && restore.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(restore.exists); snapshot("h006-local-offloaded"); restore.tap()
+        XCTAssertTrue(download.waitForExistence(timeout: 10))
+        XCTAssertEqual(app.staticTexts["explore-count"].label, "1 title")
+        XCTAssertTrue(app.navigationBars["Life Is Learned"].exists)
+        snapshot("h006-restore-focused-explore")
+        for _ in 0..<6 { if download.isHittable { break }; app.swipeUp() }
+        download.tap(); XCTAssertTrue(done.waitForExistence(timeout: 20)); done.tap()
+        XCTAssertTrue(app.staticTexts["Installed"].firstMatch.waitForExistence(timeout: 10))
+        snapshot("h006-restored")
     }
     private func snapshot(_ name: String) {
         let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
@@ -362,15 +384,15 @@ final class ScannerRequestUITests: XCTestCase {
         app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
         app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
         app.launch()
-        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25)); app.buttons["Add Books"].tap()
-        app.buttons["Browse Library"].tap()
+        XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25))
+        for _ in 0..<8 { if app.buttons["Explore"].isHittable { break }; app.swipeUp() }
+        app.buttons["Explore"].tap()
         func reveal(_ element: XCUIElement) {
             for _ in 0..<16 { if element.exists && element.isHittable { return }; app.swipeUp() }
             XCTAssertTrue(element.isHittable)
         }
         let download = app.buttons["download-influence-the-psychology-of-persuasion"]
         reveal(download); snapshot("h005c-browse-large-text")
-        app.navigationBars.buttons.element(boundBy: 0).tap()
         app.buttons["Add Books"].tap(); app.buttons["Scan a Book"].tap()
         let title = app.textFields["scan-title"]; reveal(title); title.tap(); title.typeText("An unlisted book")
         let keyboardDone = app.buttons["scanner-keyboard-done"]
@@ -416,6 +438,8 @@ final class ScannerRequestUITests: XCTestCase {
         app.buttons["Find matches"].tap(); app.swipeUp()
         XCTAssertTrue(app.staticTexts["Title / author match"].firstMatch.waitForExistence(timeout: 10))
         snapshot("h005d-title-match")
+        app.buttons["View in Explore"].firstMatch.tap()
+        XCTAssertTrue(app.buttons["Request this book"].waitForExistence(timeout: 10))
         app.buttons["Request this book"].firstMatch.tap()
         XCTAssertTrue(app.buttons["Request this book"].waitForExistence(timeout: 10))
         snapshot("h005d-review-before-request")
@@ -559,5 +583,77 @@ final class ExistingLibraryRecoveryUITests: XCTestCase {
         app.launch() // Leave the ordinary library open for the owner.
         XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 30))
         #endif
+    }
+}
+
+final class ExploreUITests: XCTestCase {
+    private func launch(empty: Bool = false, large: Bool = false) -> XCUIApplication {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
+        app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
+        if empty { app.launchEnvironment["LIL_EMPTY_LIBRARY"] = "1" }
+        if large { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
+        app.launch(); XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25))
+        return app
+    }
+    private func reveal(_ element: XCUIElement, _ app: XCUIApplication) {
+        for _ in 0..<14 { if element.exists && element.isHittable { return }; app.swipeUp() }
+        XCTAssertTrue(element.isHittable)
+    }
+    private func capture(_ name: String) {
+        let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = "h006-" + name; a.lifetime = .keepAlways; add(a)
+    }
+    func testEmptyLibraryExploreAndPlusMenu() {
+        let app = launch(empty: true)
+        reveal(app.buttons["Explore"], app)
+        XCTAssertTrue(app.buttons["Your Library"].exists)
+        capture("empty-library")
+        app.buttons["Explore"].tap()
+        XCTAssertTrue(app.textFields["explore-search"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.navigationBars["Life Is Learned"].exists, "Explore must remain in the home navigation")
+        let details = app.buttons["details-thinking-fast-and-slow"]; reveal(details, app); details.tap()
+        capture("explore-details")
+        app.buttons["Add Books"].tap()
+        XCTAssertTrue(app.buttons["Scan a Book"].exists); XCTAssertTrue(app.buttons["Import File"].exists)
+        XCTAssertFalse(app.buttons["Browse Library"].exists)
+        capture("plus-menu")
+        // iOS 26 renders this as a dismissible popover and may omit the Cancel row.
+        if app.buttons["Cancel"].exists { app.buttons["Cancel"].tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.05, dy: 0.3)).tap() }
+        XCTAssertFalse(app.buttons["Scan a Book"].exists)
+    }
+    func testSearchModesRemainSeparateAndShelfFilters() {
+        let app = launch()
+        reveal(app.textFields["library-search"], app)
+        app.textFields["library-search"].tap(); app.textFields["library-search"].typeText("Sharot\n")
+        app.buttons["Explore"].tap()
+        let search = app.textFields["explore-search"]; XCTAssertTrue(search.waitForExistence(timeout: 10))
+        XCTAssertEqual(search.value as? String, "Search Explore")
+        search.tap(); search.typeText("Kahneman\n")
+        let filtered = NSPredicate(format: "label == %@", "1 title")
+        expectation(for: filtered, evaluatedWith: app.staticTexts["explore-count"])
+        waitForExpectations(timeout: 5)
+        XCTAssertEqual(app.staticTexts["explore-count"].label, "1 title")
+        capture("explore-search")
+        app.buttons["Your Library"].tap()
+        XCTAssertEqual(app.textFields["library-search"].value as? String, "Sharot")
+        XCTAssertEqual(app.staticTexts["library-count"].label, "1 collection")
+        app.buttons["Explore"].tap()
+        XCTAssertEqual(app.textFields["explore-search"].value as? String, "Kahneman")
+        app.buttons["Clear Explore search"].tap()
+        let shelf = app.buttons["discovery-shelf"]; shelf.tap()
+        app.buttons["Money & Personal Finance"].tap()
+        XCTAssertFalse(app.buttons["details-thinking-fast-and-slow"].exists)
+        capture("shelf-filter")
+    }
+    func testExploreAtAccessibilityTextSize() {
+        let app = launch(empty: true, large: true)
+        reveal(app.buttons["Explore"], app); app.buttons["Explore"].tap()
+        reveal(app.buttons["details-thinking-fast-and-slow"], app)
+        app.buttons["details-thinking-fast-and-slow"].tap()
+        capture("explore-large-text")
+        XCTAssertTrue(app.navigationBars["Life Is Learned"].exists)
+        reveal(app.buttons["Request this book"].firstMatch, app)
     }
 }

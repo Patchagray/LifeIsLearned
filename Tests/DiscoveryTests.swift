@@ -5,12 +5,13 @@ final class RemoteFixtureProtocol: URLProtocol, @unchecked Sendable {
     static var response: (URLRequest) throws -> (Int, Data) = { _ in (500, Data()) }
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    static var headers: [String: String] = [:]
     static var delayChunks = false
     private var work: Task<Void, Never>?
     override func startLoading() {
         work = Task { do {
             let (status, data) = try Self.response(request)
-            let response = HTTPURLResponse(url: request.url!, statusCode: status, httpVersion: "HTTP/1.1", headerFields: ["Content-Length": String(data.count)])!
+            let response = HTTPURLResponse(url: request.url!, statusCode: status, httpVersion: "HTTP/1.1", headerFields: Self.headers.merging(["Content-Length": String(data.count)]) { _, new in new })!
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             if Self.delayChunks {
                 let chunk = max(1, data.count / 12)
@@ -171,5 +172,95 @@ final class RemoteFixtureProtocol: URLProtocol, @unchecked Sendable {
         XCTAssertEqual(result.book.id, book.id)
         let staging = f.directory.appendingPathComponent("Library-v3/Downloads/staging")
         XCTAssertEqual(try FileManager.default.contentsOfDirectory(atPath: staging.path), [])
+    }
+}
+
+@MainActor final class ExploreContractTests: XCTestCase {
+    private func catalog() throws -> DiscoveryCatalog {
+        try DiscoveryCatalog.decode(Data(contentsOf: XCTUnwrap(Bundle.main.url(forResource: "Remote-Catalog-001", withExtension: "json"))), identity: CatalogIdentity.bundled())
+    }
+    func testNetworkErrorsUseActionableCopy() {
+        XCTAssertEqual(RemoteResponse.message(URLError(.notConnectedToInternet)), "You’re offline. Reconnect and try again when ready.")
+        XCTAssertTrue(RemoteResponse.message(URLError(.timedOut)).contains("retry"))
+        XCTAssertFalse(RemoteResponse.message(URLError(.cannotFindHost)).contains("NSURLError"))
+        XCTAssertTrue(RemoteResponse.message(RemoteResponse.error(404)).contains("Refresh Explore"))
+    }
+    func testPublicOriginAndCDNTrustBoundary() throws {
+        try DistributionURL.validate(DistributionURL.catalog)
+        try DistributionURL.validate(URL(string: "https://github.com/Patchagray/LifeIsLearned-Catalog/releases/download/book-r1/book.json")!)
+        try DistributionURL.validate(URL(string: "https://release-assets.githubusercontent.com/asset?signature=temporary")!, redirect: true)
+        for text in ["https://github.com/Patchagray/LifeIsLearned/private.json", "https://raw.githubusercontent.com/Other/Repo/main/catalog.json", "https://github.com.evil.test/Patchagray/LifeIsLearned-Catalog/releases/download/book", "http://raw.githubusercontent.com/Patchagray/LifeIsLearned-Catalog/main/catalog.json", "https://user:password@github.com/Patchagray/LifeIsLearned-Catalog/releases/download/book", "https://release-assets.githubusercontent.com/asset"] {
+            XCTAssertThrowsError(try DistributionURL.validate(URL(string: text)!))
+        }
+        XCTAssertThrowsError(try DistributionURL.validate(URL(string: "https://example.com/book")!, redirect: true))
+    }
+    func testCanonicalOrderAvailabilityAndImmutableRevision() throws {
+        var original = try catalog()
+        let identity = try CatalogIdentity.bundled()
+        original.shelves = identity.shelves.reversed()
+        XCTAssertThrowsError(try original.validated(identity: identity))
+        original.shelves = identity.shelves
+        original.updatedAt = "not-a-date"
+        XCTAssertThrowsError(try original.validated(identity: identity))
+        original.updatedAt = "2026-10-09T00:00:00Z"
+        let ids = original.books.map(\.id)
+        original.books.reverse()
+        XCTAssertEqual(try original.validated(identity: CatalogIdentity.bundled()).books.map(\.id), ids)
+        let metadata = RemotePackage(collectionRevision: 2, url: URL(string: "https://fixture.invalid/book.json")!, sha256: String(repeating: "a", count: 64), bytes: 100)
+        original.books[0].package = metadata
+        XCTAssertThrowsError(try original.validated(identity: CatalogIdentity.bundled()), "Planned title cannot advertise a package")
+        original.books[0].availability = .available
+        _ = try original.validated(identity: CatalogIdentity.bundled())
+        var revised = original; revised.books[0].package!.collectionRevision = 1
+        XCTAssertThrowsError(try revised.validateUpdate(from: original))
+        revised = original; revised.books[0].package!.sha256 = String(repeating: "b", count: 64)
+        XCTAssertThrowsError(try revised.validateUpdate(from: original))
+        revised.books[0].package!.collectionRevision = 3
+        XCTAssertNoThrow(try revised.validateUpdate(from: original))
+    }
+    func testETag304AndRejectedRollbackRetainLastGoodCache() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory); RemoteFixtureProtocol.headers = [:] }
+        var original = try catalog(); original.updatedAt = "2026-10-09T00:00:00Z"
+        let bytes = try JSONEncoder().encode(original)
+        RemoteFixtureProtocol.headers = ["ETag": "\"catalog-006\""]
+        RemoteFixtureProtocol.response = { _ in (200, bytes) }
+        let service = DiscoveryService(endpoint: URL(string: "https://fixture.invalid/catalog.json"), directory: directory, identity: try CatalogIdentity.bundled(), session: URLSession(configuration: RemoteFixtureProtocol.configuration()))
+        let first = try await service.refresh(); XCTAssertEqual(first.etag, "\"catalog-006\"")
+        RemoteFixtureProtocol.response = { request in
+            XCTAssertEqual(request.value(forHTTPHeaderField: "If-None-Match"), "\"catalog-006\"")
+            return (304, Data())
+        }
+        let unchanged = try await service.refresh(); XCTAssertEqual(unchanged.catalog.books.count, 50)
+        original.updatedAt = "2026-10-08T00:00:00Z"
+        let stale = try JSONEncoder().encode(original)
+        RemoteFixtureProtocol.response = { _ in (200, stale) }
+        do { _ = try await service.refresh(); XCTFail("Rollback accepted") } catch { }
+        let cached = await service.cached(); XCTAssertEqual(cached?.catalog.updatedAt, "2026-10-09T00:00:00Z")
+        XCTAssertEqual(cached?.etag, first.etag)
+    }
+    func testRemoteReinstallRetainsLearnerStateAndCardIdentity() async throws {
+        let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
+        var review = try await f.store.storage.review(package: f.package, catalog: f.store.catalog)
+        review.source = BookSourceRecord(kind: .remoteCatalog, catalogID: "catalog-001", catalogURL: DistributionURL.catalog)
+        await f.store.commitImport(review)
+        let book = f.package.book, lesson = book.lessons[0]
+        var progress = f.store.status(book: book, lesson: lesson); progress.practiceComplete = true; progress.firstTryCorrect = 1
+        f.store.update(book: book, lesson: lesson) { $0 = progress }
+        await f.store.flush()
+        let before = f.store.status(book: book, lesson: lesson)
+        let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
+        let cards = try encoder.encode(f.store.cards)
+        XCTAssertEqual(f.store.cards.count, 1)
+        let offloaded = await f.store.offload(book); XCTAssertTrue(offloaded)
+        XCTAssertEqual(f.store.source(for: book.id).kind, .remoteCatalog)
+        var reinstall = try await f.store.storage.review(package: f.package, catalog: f.store.catalog)
+        reinstall.source = review.source
+        await f.store.commitImport(reinstall)
+        XCTAssertNil(f.store.errorMessage)
+        XCTAssertEqual(f.store.status(book: book, lesson: lesson).practiceComplete, before.practiceComplete)
+        XCTAssertEqual(f.store.status(book: book, lesson: lesson).firstTryCorrect, before.firstTryCorrect)
+        XCTAssertEqual(try encoder.encode(f.store.cards), cards)
+        XCTAssertEqual(f.store.history.filter { $0.bookID == book.id }.count, 1)
     }
 }

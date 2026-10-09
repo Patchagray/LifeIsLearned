@@ -2,6 +2,12 @@
 
 An independent native SwiftUI iPhone/iPad app for Mario: learn one idea at a time through illustrated screens, two narration roles, automatic progression, and feedback. The name is provisional.
 
+## Handoff 006: Your Library / Explore
+
+The home library section now has **Your Library / Explore**. Searches and result counts stay separate; installed books open normally, and offloaded books remain visible with Restore or Re-import. Explore preserves the existing metadata-only browsing, whole-book downloads and learner-state protection. **+ Add Books** now offers Scan a Book and Import File; scanner matches and remote restores focus Explore in place.
+
+The separate public distribution scaffold, validation and approval-gated publishing helper are prepared. Public availability depends on explicit owner approval of the repository metadata and each exact book release; planned titles are never advertised as downloadable. See [distribution operations](Catalog/PUBLIC_DISTRIBUTION.md) and [H006 evidence](Evidence/Handoff006/README.md). The H005 implementation and historical milestones follow.
+
 ## Handoff 005 implementation branch
 
 Epics **005A–F are implemented on the dedicated branch**: large reader artwork, optional second Story images, one-time completion feedback, Library-v3 migration/real offload/History, discovery and whole-book downloads, on-device book recognition/reviewed requests, and earned Dive Deeper. The existing core playback and manual import remain.

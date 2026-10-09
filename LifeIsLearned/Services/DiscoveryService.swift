@@ -3,7 +3,7 @@ import Combine
 import ImageIO
 
 actor DiscoveryService {
-    struct Cache: Codable { var fetchedAt: Date; var catalog: DiscoveryCatalog }
+    struct Cache: Codable { var fetchedAt: Date; var catalog: DiscoveryCatalog; var etag: String? = nil }
     let endpoint: URL?
     private let cacheFile: URL
     private let identity: CatalogIdentity
@@ -16,15 +16,27 @@ actor DiscoveryService {
     func cached() -> Cache? {
         guard let size = try? cacheFile.resourceValues(forKeys: [.fileSizeKey]).fileSize, size <= DiscoveryCatalog.maximumBytes * 2,
               let data = try? Data(contentsOf: cacheFile), data.count <= DiscoveryCatalog.maximumBytes * 2,
-              let value = try? JSONDecoder().decode(Cache.self, from: data),
-              (try? value.catalog.validated(identity: identity)) != nil else { return nil }
+              var value = try? JSONDecoder().decode(Cache.self, from: data),
+              let ordered = try? value.catalog.validated(identity: identity) else { return nil }
+        value.catalog = ordered
         return value
     }
     func refresh() async throws -> Cache {
         guard let endpoint else { throw PackageError.invalid("The remote library is not configured yet.") }
-        let data = try await fetch(endpoint, limit: DiscoveryCatalog.maximumBytes)
-        let value = Cache(fetchedAt: Date(), catalog: try DiscoveryCatalog.decode(data, identity: identity))
+        let previous = cached()
+        let (data, response) = try await fetch(endpoint, limit: DiscoveryCatalog.maximumBytes, etag: previous?.etag)
+        var value: Cache
+        if response.statusCode == 304, let previous {
+            value = previous; value.fetchedAt = Date()
+        } else {
+            let catalog = try DiscoveryCatalog.decode(data, identity: identity)
+            if let previous { try catalog.validateUpdate(from: previous.catalog) }
+            value = Cache(fetchedAt: Date(), catalog: catalog, etag: response.value(forHTTPHeaderField: "ETag"))
+        }
         try Task.checkCancellation()
+        // Another scanner/home service can refresh the same endpoint while this
+        // request is in flight. Compare against the latest disk snapshot as well.
+        if let latest = cached() { try value.catalog.validateUpdate(from: latest.catalog) }
         let bytes = try JSONEncoder().encode(value)
         try FileManager.default.createDirectory(at: cacheFile.deletingLastPathComponent(), withIntermediateDirectories: true)
         try bytes.write(to: cacheFile, options: .atomic)
@@ -32,7 +44,7 @@ actor DiscoveryService {
     }
     func thumbnail(_ asset: RemoteAsset) async throws -> Data {
         try asset.validate(limit: 512 * 1_024)
-        let data = try await fetch(asset.url, limit: asset.bytes)
+        let (data, _) = try await fetch(asset.url, limit: asset.bytes)
         try CollectionLimits.require(data.count == asset.bytes && LibraryDigest.sha256(data) == asset.sha256, "Thumbnail integrity check failed.")
         guard let source = CGImageSourceCreateWithData(data as CFData, [kCGImageSourceShouldCache: false] as CFDictionary),
               let type = CGImageSourceGetType(source) as String?, ["public.png", "public.jpeg"].contains(type) else {
@@ -41,13 +53,16 @@ actor DiscoveryService {
         try CollectionLimits.validateImage(CollectionArtwork(mediaType: type == "public.png" ? "image/png" : "image/jpeg", data: data))
         return data
     }
-    private func fetch(_ url: URL, limit: Int) async throws -> Data {
-        try RemoteURL.validate(url)
+    private func fetch(_ url: URL, limit: Int, etag: String? = nil) async throws -> (Data, HTTPURLResponse) {
+        try DistributionURL.validate(url)
         var request = URLRequest(url: url); request.timeoutInterval = 25; request.cachePolicy = .reloadIgnoringLocalCacheData
-        let (bytes, response) = try await session.bytes(for: request, delegate: HTTPSRedirectDelegate())
+        if let etag { request.setValue(etag, forHTTPHeaderField: "If-None-Match") }
+        let (bytes, response) = try await session.bytes(for: request, delegate: DistributionRedirectDelegate())
         defer { bytes.task.cancel() }
-        guard let http = response as? HTTPURLResponse, http.statusCode == 200, let finalURL = http.url else { throw PackageError.invalid("The remote library did not return a valid response.") }
-        try RemoteURL.validate(finalURL)
+        guard let http = response as? HTTPURLResponse, let finalURL = http.url else { throw RemoteResponse.error(nil) }
+        try DistributionURL.validate(finalURL, redirect: true)
+        if http.statusCode == 304, etag != nil { return (Data(), http) }
+        guard http.statusCode == 200 else { throw RemoteResponse.error(http.statusCode) }
         try CollectionLimits.require(response.expectedContentLength <= limit, "Remote metadata exceeds its size limit.")
         var result = Data()
         for try await byte in bytes {
@@ -55,7 +70,7 @@ actor DiscoveryService {
             try CollectionLimits.require(result.count < limit, "Remote metadata exceeds its size limit.")
             result.append(byte)
         }
-        return result
+        return (result, http)
     }
 }
 
@@ -93,7 +108,7 @@ actor DiscoveryService {
             guard !Task.isCancelled, token == generation else { return }
             catalog = value.catalog; status = nil
         } catch {
-            if !Task.isCancelled, token == generation { status = catalog == nil ? "Library unavailable. Try again later." : "Showing saved catalog · refresh unavailable" }
+            if !Task.isCancelled, token == generation { status = (catalog == nil ? "Library unavailable. " : "Showing saved catalog · refresh unavailable. ") + RemoteResponse.message(error) }
         }
     }
     func cancelRefresh() { task?.cancel(); generation = UUID(); refreshing = false }
@@ -103,5 +118,37 @@ final class HTTPSRedirectDelegate: NSObject, URLSessionTaskDelegate, @unchecked 
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
                     newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
         completionHandler(request.url.flatMap { (try? RemoteURL.validate($0)) != nil ? request : nil })
+    }
+}
+
+final class DistributionRedirectDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
+    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
+                    newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
+        completionHandler(request.url.flatMap { (try? DistributionURL.validate($0, redirect: true)) != nil ? request : nil })
+    }
+}
+enum RemoteResponse {
+    static func message(_ error: Error) -> String {
+        if let network = error as? URLError {
+            switch network.code {
+            case .notConnectedToInternet: return "You’re offline. Reconnect and try again when ready."
+            case .timedOut: return "The connection took too long. Please retry."
+            case .cancelled: return "The request was cancelled. You can try again."
+            default: return "Couldn’t reach the public library. Check your connection and retry."
+            }
+        }
+        if let validation = error as? PackageError { return validation.localizedDescription }
+        return "The library request could not finish. Please try again."
+    }
+
+    static func error(_ status: Int?) -> PackageError {
+        let message: String
+        switch status {
+        case 404: message = "This release is not available (404). Refresh Explore and try again."
+        case 401, 403: message = "GitHub denied this download or reached a request limit. Try later; no sign-in is needed."
+        case 429: message = "The public library is busy. Wait a little, then retry."
+        default: message = "The public library could not respond. Check your connection and retry."
+        }
+        return .invalid(message)
     }
 }
