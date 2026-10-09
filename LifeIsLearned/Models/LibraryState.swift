@@ -9,7 +9,7 @@ struct BookSourceRecord: Codable, Equatable, Sendable {
     static let manual = BookSourceRecord(kind: .manualImport)
     var restoreTitle: String { kind == .remoteCatalog ? "Download current book" : "Re-import book" }
     var restoreMessage: String {
-        kind == .remoteCatalog ? "Download the current book from Browse Library. Its current lessons may differ from your earned card."
+        kind == .remoteCatalog ? "Download the current book from Explore. Its current lessons may differ from your earned card."
             : "Re-import the complete book file to read its lessons again. Your Idea Cards, favorites, progress and History remain here."
     }
 }

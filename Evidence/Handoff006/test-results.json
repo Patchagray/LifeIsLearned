@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "437c368d4755eaffa2fe3bcc077d7cd74787a0b6",
+  "baselineCommit": "19c73333ac3d0fdf26541de2096c2452c0c01c33",
+  "branch": "feature/handoff-006-explore-distribution",
+  "date": "2026-10-09",
+  "xcode": "26.5 (17F42)",
+  "nativeAndUIRuns": [
+    {
+      "run": "final-native",
+      "phase": "full regression before final copy/layout refinements",
+      "result": "Passed",
+      "passedTests": 92,
+      "failedTests": 0,
+      "skippedTests": 1,
+      "totalTestCount": 93,
+      "devices": [
+        {
+          "architecture": "x86_64",
+          "deviceId": "20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+          "deviceName": "iPhone 16e",
+          "modelName": "iPhone 16e",
+          "osBuildNumber": "23D8133",
+          "osVersion": "26.3.1",
+          "platform": "iOS Simulator"
+        }
+      ]
+    },
+    {
+      "run": "final-ui-phone",
+      "phase": "full affected UI before final copy/layout refinements",
+      "result": "Passed",
+      "passedTests": 8,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 8,
+      "devices": [
+        {
+          "architecture": "x86_64",
+          "deviceId": "20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+          "deviceName": "iPhone 16e",
+          "modelName": "iPhone 16e",
+          "osBuildNumber": "23D8133",
+          "osVersion": "26.3.1",
+          "platform": "iOS Simulator"
+        }
+      ]
+    },
+    {
+      "run": "final-ui-pad",
+      "phase": "full affected UI before final copy/layout refinements",
+      "result": "Passed",
+      "passedTests": 8,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 8,
+      "devices": [
+        {
+          "architecture": "x86_64",
+          "deviceId": "B219EF2E-CFAA-43D2-8F69-804ED944F678",
+          "deviceName": "iPad (A16)",
+          "modelName": "iPad (A16)",
+          "osBuildNumber": "23D8133",
+          "osVersion": "26.3.1",
+          "platform": "iOS Simulator"
+        }
+      ]
+    },
+    {
+      "run": "polish-phone",
+      "phase": "final networking plus download flow",
+      "result": "Passed",
+      "passedTests": 14,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 14,
+      "devices": [
+        {
+          "architecture": "x86_64",
+          "deviceId": "20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+          "deviceName": "iPhone 16e",
+          "modelName": "iPhone 16e",
+          "osBuildNumber": "23D8133",
+          "osVersion": "26.3.1",
+          "platform": "iOS Simulator"
+        }
+      ]
+    },
+    {
+      "run": "polish-pad",
+      "phase": "final networking download flow",
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "devices": [
+        {
+          "architecture": "x86_64",
+          "deviceId": "B219EF2E-CFAA-43D2-8F69-804ED944F678",
+          "deviceName": "iPad (A16)",
+          "modelName": "iPad (A16)",
+          "osBuildNumber": "23D8133",
+          "osVersion": "26.3.1",
+          "platform": "iOS Simulator"
+        }
+      ]
+    },
+    {
+      "run": "accessibility-phone",
+      "phase": "final source: accessibility and full download/update/offload/restore",
+      "result": "Passed",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 2,
+      "devices": [
+        {
+          "architecture": "x86_64",
+          "deviceId": "20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+          "deviceName": "iPhone 16e",
+          "modelName": "iPhone 16e",
+          "osBuildNumber": "23D8133",
+          "osVersion": "26.3.1",
+          "platform": "iOS Simulator"
+        }
+      ]
+    },
+    {
+      "run": "accessibility-pad",
+      "phase": "final source: accessibility and full download/update/offload/restore",
+      "result": "Passed",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 2,
+      "devices": [
+        {
+          "architecture": "x86_64",
+          "deviceId": "B219EF2E-CFAA-43D2-8F69-804ED944F678",
+          "deviceName": "iPad (A16)",
+          "modelName": "iPad (A16)",
+          "osBuildNumber": "23D8133",
+          "osVersion": "26.3.1",
+          "platform": "iOS Simulator"
+        }
+      ]
+    }
+  ],
+  "python": {
+    "passed": 62,
+    "failed": 0,
+    "distributionTestsIncluded": 9
+  },
+  "catalog": {
+    "valid": true,
+    "books": 50,
+    "shelves": 8,
+    "revision": 1
+  },
+  "publicScaffold": {
+    "valid": true,
+    "allowlistedFiles": 3,
+    "planned": 50,
+    "available": 0
+  },
+  "portablePackageChecks": {
+    "passed": 512,
+    "releaseApproval": false
+  },
+  "releaseBuild": "passed after final source changes",
+  "releaseBinary": {
+    "releaseBinaryPresent": true,
+    "distributionRepositoryConstantPresent": true,
+    "debugFixtureOriginAbsent": true,
+    "syntheticDiscoveryTitleAbsent": true
+  },
+  "publication": {
+    "newRepositoryCreated": false,
+    "bookAssetsPublished": 0,
+    "ownerApproval": "pending",
+    "liveNetworkSmoke": "pending approved assets"
+  },
+  "physicalDevice": "not run for H006",
+  "skippedTest": "Physical installed-premium-voice timing requires hardware/reference voices; not a passing measurement",
+  "testIsolation": "UUID simulator storage and URLProtocol fixtures; personal device data untouched"
+}

@@ -1,0 +1,71 @@
+{
+  "baselineCommit": "19c73333ac3d0fdf26541de2096c2452c0c01c33",
+  "sourceCommit": "437c368d4755eaffa2fe3bcc077d7cd74787a0b6",
+  "files": [
+    {
+      "file": "Catalog/Catalog-001.json",
+      "sha256": "7424b9d5deff4f1645ca112f1393bfafd84553a040593d53a6af35133826da68",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned.xcodeproj/project.pbxproj",
+      "sha256": "3ee6e611e74cbbd0bd9a8117e87695bb6a716d7dc6dd2c89c7e55f5bbbd412fa",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned.xcodeproj/xcshareddata/xcschemes/LifeIsLearned.xcscheme",
+      "sha256": "f20b5697078c9ffa14b0176b02b6f0b72ea976a0ca84974732d5965d3d5ef689",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Models/LessonPackage.swift",
+      "sha256": "11011a08f8470baf1dbe4a81be5ec9ffca740c98356d2c800f265ba00934b128",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Services/AudioPreflight.swift",
+      "sha256": "6d54d3266f2b069a487351454922512b00b3e7863a55007f98d739133ebb918b",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Services/InstalledPayload.swift",
+      "sha256": "e1c6891d2f5acb20e11e97cd0a93d95582f859e9f49029b39274793b0d7ceaee",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Services/LessonSession.swift",
+      "sha256": "e26d34f41595080ee1fbbb82e636042d74ecefeac70c1d0bdeabc67efbfb1f71",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Services/LibraryStorage.swift",
+      "sha256": "122b667fb0d099f4448a77426e67703ef2acca5e35d495eb691c703331dcc1bc",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Services/LibraryStore.swift",
+      "sha256": "accebc0b6a3f66b00d5d1ea86babfb664cba68cff6e7d88cdcf2225d504ffce1",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Services/NarrationController.swift",
+      "sha256": "6a252d3daa3ebd854201a25bdd6fc6c2d3f5138e5716be68be3266841b58d62d",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Services/PackagedNarrationPlayer.swift",
+      "sha256": "cd7379fbea78cd6640c7d171f238b12bfe581cc316de9272505fcde6d3f7d219",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "LifeIsLearned/Services/SpeechPlayer.swift",
+      "sha256": "7f38fb407b2cfc7c8ffbda5212247f598ba66d097ed7acb6317584b2dd46cb22",
+      "identicalToBaseline": true
+    },
+    {
+      "file": "Example-Lesson-Package.json",
+      "sha256": "44ec91ae1b57cfcabc471c95e466ef42ef3ec6e36f112d565295bf9024da9c4b",
+      "identicalToBaseline": true
+    }
+  ]
+}
