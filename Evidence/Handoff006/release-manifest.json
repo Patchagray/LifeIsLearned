@@ -1,0 +1,9 @@
+{
+  "repository": "Patchagray/LifeIsLearned-Catalog",
+  "repositoryStatus": "awaiting-owner-metadata-publication-approval",
+  "catalogPath": "Distribution/catalog.json",
+  "plannedTitles": 50,
+  "approvedBookAssets": [],
+  "publishedBookAssets": [],
+  "reason": "Four possible local final packages were inspected, but selection and exact-byte owner approval remain unconfirmed. All four have authoring duration-label discrepancies to resolve before release review. No package was modified or published."
+}

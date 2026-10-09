@@ -1,0 +1,17 @@
+{
+  "directory": "LocalVerification/Handoff006 (ignored, not published)",
+  "files": {
+    "final-native.log": "3919ac274148c522f10799dca957e81c23d82d476e4b175dbc10ce3aab23b4eb",
+    "final-ui-phone.log": "cd023e4eb18730e994d84de00d28ff35d917beb458d089fa757fcc64b121d040",
+    "final-ui-pad.log": "b87bd991cb0077939f2d225dfe6c6138bb39f5efcc576052c7eaed2aa1ebd592",
+    "polish-phone.log": "52a0f8abb1254f2658b41781c7765a2a7c611c2038bbc039fa9e8e34dd1f4277",
+    "polish-pad.log": "f2b0860cff8fd0c2150d4c96fca6fee5e2cd74581b94265869fa385e55ecdedf",
+    "accessibility-phone.log": "c230f2246b72bef8fcda7a35b95ac192b39e2cfb6c1d9f205cdbb24e2fc04b53",
+    "accessibility-pad.log": "d5959ded303177b17f8a40a7a3a9a8f0434d54acae8dc95d6b9ead06d667cc67",
+    "accessibility-build.log": "d557d92e0fd2635be46f7bc1d667159a571bb14643f2a6b061791638abb0234f",
+    "release-build-final.log": "8994a7ea603b4cd1c3e9e95296b4fa71787db25aba6839ddcef5234320143b6e",
+    "python-tests.log": "0b79560493e270cc9ba657c162200931424f7e006c17eede8d93c0a1e5d7563a",
+    "catalog-validation.log": "20a0cbb20c4a87d86702add5efd21abcc4e56b188ff87b226c2670b3a3f26ea1",
+    "package-validation.log": "a0df26281bacf6d0c3c60e5e7ad504d2f7d210ae10ac7af61c1faaed14982952"
+  }
+}
