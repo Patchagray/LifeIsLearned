@@ -1,12 +1,14 @@
 {
   "worker": "lifeislearned-catalog-staging",
-  "deployed": false,
-  "endpoint": null,
-  "cloudflareLogin": "expired; OAuth attempt timed out",
-  "githubApp": "owner setup pending",
-  "workerSecrets": "not provisioned or verified",
-  "localRuntime": "passed",
-  "dryRun": "passed",
-  "productionDeployment": "not authorized",
-  "bookAndCoverPublication": "not authorized"
+  "deployed": true,
+  "endpoint": "https://lifeislearned-catalog-staging.marioams2.workers.dev",
+  "cloudflareLogin": "authenticated",
+  "githubApp": "created; installed with Contents read-only on LifeIsLearned-Published only",
+  "workerSecrets": "all three names verified present; values never displayed",
+  "liveAuthenticatedCatalog": "200; 50 planned titles; 0 available packages; 0 covers",
+  "health": 200,
+  "unapprovedBookDownload": 404,
+  "unknownRoute": 404,
+  "productionDeployment": "not deployed; reviewer controlled",
+  "bookAndCoverPublication": "none; no package or cover approval exists"
 }

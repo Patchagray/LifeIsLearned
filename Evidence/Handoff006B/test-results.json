@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "30985dd98c1ba7898b546fc8cb0757ffee9af5cc",
+  "sourceCommit": "c71e5eb2ca27659674e9ec94c7570ba78020e8f0",
   "branch": "feature/handoff-006-private-cloudflare-explore",
   "date": "2026-10-10",
   "nativeAndUIChronology": [
@@ -150,9 +150,13 @@
     }
   ],
   "worker": {
-    "passed": 11,
+    "passed": 12,
     "failed": 0,
-    "command": "node --test Backend/CatalogWorker/test/*.test.js"
+    "command": "node --test Backend/CatalogWorker/test/*.test.js",
+    "runtimeFixes": [
+      "Cloudflare global fetch receiver",
+      "Supported manual redirect mode for edge Fetch"
+    ]
   },
   "publicationGuards": {
     "passed": 12,
@@ -166,11 +170,18 @@
   },
   "canonicalCatalog": "50 books / 8 shelves / revision 1 valid",
   "releaseBuild": "passed",
-  "wranglerDryRun": "passed",
-  "localWorkerdSmoke": "passed, unauthenticated planned-only origin",
-  "liveStaging": "blocked: Cloudflare authorization and scoped GitHub App provisioning",
+  "wranglerDryRun": "passed after runtime fixes",
+  "localWorkerdSmoke": "passed with authenticated GitHub App; 50 planned, 0 packages, 0 covers",
+  "liveStaging": "passed: authenticated catalog 200 (50 planned, no package/cover overlays), health 200, unapproved and unknown routes 404",
   "physicalDevice": "not performed for H006B",
   "originalFailureRetained": true,
   "finalUnresolvedAutomatedFailures": 0,
-  "sourceCoverage": "Full regression plus targeted tests after final changes; not a claim that the complete suite was rerun at final source. Final change after affected app run was DEBUG-only deterministic preview fixture selection, verified on both simulators."
+  "sourceCoverage": "Full iOS regression predates the final backend-only fetch fix and Debug-only endpoint setting; no iOS source changed. Final Worker source has 12 passing tests and authenticated staging smoke. The affected app target rebuilt successfully and its generated Info.plist URL was inspected.",
+  "deploymentSecrets": "three required secret names present; values never displayed",
+  "debugAppBuild": {
+    "result": "passed",
+    "catalogURL": "https://lifeislearned-catalog-staging.marioams2.workers.dev/v1/catalog",
+    "verifiedInBuiltInfoPlist": true,
+    "releaseConfigurationHasStagingURL": false
+  }
 }

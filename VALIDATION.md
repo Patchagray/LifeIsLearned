@@ -293,4 +293,4 @@ Core storage/recovery, playback, lesson/package models, canonical IDs and Xcode 
 
 ## Handoff 006B — private catalog infrastructure
 
-See [H006B evidence](Evidence/Handoff006B/README.md) for native/UI/Worker/publication checks and source hashes. The private origin was created with zero book/cover releases. Live Cloudflare deployment awaits account authorization and scoped GitHub App secrets; no live endpoint or physical-device pass is claimed.
+See [H006B evidence](Evidence/Handoff006B/README.md) for native/UI/Worker/publication checks and source hashes. The private origin was created with zero book/cover releases. Authenticated staging is deployed at `https://lifeislearned-catalog-staging.marioams2.workers.dev`; live smoke returns 50 planned entries, zero packages/covers, health 200, and refuses unapproved downloads. No actual package is approved, so package-stream and physical-device checks remain pending.

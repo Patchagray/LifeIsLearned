@@ -4,10 +4,10 @@ The Worker returns the canonical 50-title catalog, separately approved previews,
 
 ## Staging setup
 
-1. Run `wrangler login` on the Mac and complete Cloudflare's browser authorization. The saved login expired during implementation.
-2. Open GitHub **Settings → Developer settings → GitHub Apps → New GitHub App**. Name it **Life Is Learned Published Reader**, set the homepage to the app repository, disable the webhook, and grant **Repository permissions → Contents: Read-only** (Metadata read is implicit). Restrict installation to your account. The matching non-secret manifest is included here.
-3. Click **Create GitHub App**, generate a private key, then **Install App → Patchagray → Only select repositories → LifeIsLearned-Published → Install**. Record the App ID and installation ID (the number in the installation URL). Keep the downloaded PEM private on the Mac.
-4. From this directory, use secure prompts/local redirection:
+1. Cloudflare Wrangler authorization is complete for the current local user. Re-run `wrangler login` only if `wrangler whoami` no longer shows the staging account.
+2. The existing App is at **Settings → Developer settings → GitHub Apps → Life Is Learned Published Reader**. If rebuilding it, use account-only installation, disable webhooks, grant **Repository permissions → Contents: Read-only**, and keep the App private to the Patchagray account. Metadata read is mandatory in GitHub. The matching non-secret manifest is included here.
+3. The App is installed on **Patchagray → Only select repositories → LifeIsLearned-Published**. Its current installation ID is stored in a Worker Secret; do not broaden repository access. The private key remains in local ignored storage and a Worker Secret.
+4. The current installation is provisioned with all three secrets. For future rotation/recovery, from this directory use secure prompts/local redirection:
 
 ```sh
 wrangler secret put GITHUB_APP_ID --env staging

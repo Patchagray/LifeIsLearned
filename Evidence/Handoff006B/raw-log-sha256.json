@@ -15,6 +15,11 @@
     "catalog-validation.log": "20a0cbb20c4a87d86702add5efd21abcc4e56b188ff87b226c2670b3a3f26ea1",
     "worker-dry-run.log": "c137dd4b6e75e71b16e9fd0260167625bc3ce8b83176340e1c8697ccf0030c92",
     "worker-local-final.log": "005b04052c3e1b7d3f24dfafdae59bd1698c61ff9ca67941216298b57a146742",
-    "refused-legacy.log": "86885e574bd9630d840887e140cb3e820302d546e7c8052f6411a483bc874cae"
+    "refused-legacy.log": "86885e574bd9630d840887e140cb3e820302d546e7c8052f6411a483bc874cae",
+    "worker-tests-fetch-fix.log": "4a70080d27be6c1cd8f85a6ba8fa464f2b3e2119acec4722df5c173b81ba10b5",
+    "worker-deploy-clean.log": "c2aa71712d761b717f3c3b30a3ac79f345c8515c29a7cdd5a65eb30c71c08d55",
+    "worker-dry-run-fetch-fix.log": "9ed00c3dfde4a753da0e513e157960b09a78e5b0e19b0a2ec37087a5c0d488f4",
+    "debug-config-build.log": "c428415973c561cf91624226778e8b4f68df8b4c6fb8d0b1a901d7a2c2e64dca",
+    "worker-deploy-final.log": "656e4819eb8466c58848f410ea98c8672d26b030ef6e2d388890ea4c6e67f345"
   }
 }

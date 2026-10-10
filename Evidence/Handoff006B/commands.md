@@ -69,11 +69,30 @@ wrangler deploy --env staging --dry-run
 wrangler dev --env staging --port 8796
 ```
 
-Local HTTP smoke exercised `/v1/catalog`, `/healthz`, an unavailable book download and an arbitrary route. Exact statuses/counts are in `local-runtime-smoke.json`. Dry-run bundles only; neither command deploys a live Worker.
+Local HTTP smoke exercised `/v1/catalog`, `/healthz`, an unapproved book download and an arbitrary route. The authenticated local runtime returned all 50 planned entries without the planned-only fallback header. The live staging catalog returned 200 with 50 planned entries and no package/cover overlays; `/healthz` returned 200 and unapproved downloads/unknown routes returned 404. See `live-staging-smoke.json` for the sanitized record.
+
+```sh
+wrangler deploy --env staging
+wrangler secret list --env staging
+curl -fsS https://lifeislearned-catalog-staging.marioams2.workers.dev/v1/catalog
+curl -fsS https://lifeislearned-catalog-staging.marioams2.workers.dev/healthz
+```
+
+The three secret names were listed without printing values. The deployed staging Worker version is recorded in the smoke evidence. No books or covers were published.
 
 ## Access and private origin
 
-Authenticated `gh repo view Patchagray/LifeIsLearned-Published --json nameWithOwner,isPrivate,url` and release listing confirmed the private zero-release scaffold. An anonymous GitHub API request returned 404. Cloudflare `wrangler whoami` failed with expired credentials; `wrangler login` timed out waiting for browser authorization. OAuth URLs and credentials are excluded from evidence.
+Authenticated `gh repo view Patchagray/LifeIsLearned-Published --json nameWithOwner,isPrivate,url` and release listing confirmed the private zero-release scaffold. An anonymous GitHub API request returned 404. Cloudflare login initially expired; the owner then completed `wrangler login`. The scoped GitHub App was created/installed, and the live authenticated staging smoke passed. OAuth URLs and credential values are excluded from evidence.
+
+The app's Debug build was built and its generated Info.plist checked:
+
+```sh
+xcodebuild -project LifeIsLearned.xcodeproj -scheme LifeIsLearned -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/LIL006B-config build
+/usr/libexec/PlistBuddy -c 'Print :DiscoveryCatalogURL' /tmp/LIL006B-config/Build/Products/Debug-iphonesimulator/LifeIsLearned.app/Info.plist
+/usr/libexec/PlistBuddy -c 'Print :DiscoveryCatalogURL' /tmp/LIL006B-release/Build/Products/Release-iphonesimulator/LifeIsLearned.app/Info.plist
+```
+
+Debug resolves to the staging `/v1/catalog` URL; Release resolves to an empty URL. No physical app installation or live package download was performed because no package is approved.
 
 ## Screenshot inspection
 

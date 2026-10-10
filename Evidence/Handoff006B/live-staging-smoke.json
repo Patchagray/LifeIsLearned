@@ -1,0 +1,41 @@
+{
+  "endpoint": "https://lifeislearned-catalog-staging.marioams2.workers.dev",
+  "deployedVersion": "bccf27a3-8d27-48af-99aa-af3f4b99550e",
+  "catalog": {
+    "httpStatus": 200,
+    "authenticatedOriginHeader": "X-Library-State absent",
+    "etagPresent": true,
+    "schemaVersion": 1,
+    "catalogID": "catalog-001",
+    "catalogRevision": 1,
+    "books": 50,
+    "available": 0,
+    "covers": 0
+  },
+  "health": {
+    "httpStatus": 200,
+    "bodyStatus": "up"
+  },
+  "unapprovedCanonicalBookDownload": 404,
+  "unknownRoute": 404,
+  "workerSecrets": [
+    "GITHUB_APP_ID",
+    "GITHUB_INSTALLATION_ID",
+    "GITHUB_APP_PRIVATE_KEY"
+  ],
+  "secretValuesDisplayed": false,
+  "githubApp": {
+    "name": "Life Is Learned Published Reader",
+    "owner": "Patchagray",
+    "installationScope": "LifeIsLearned-Published only",
+    "repositoryContents": "read-only",
+    "repositoryMetadata": "read-only required by GitHub",
+    "webhooks": false
+  },
+  "publicationState": {
+    "privateRepository": true,
+    "plannedBooks": 50,
+    "packageReleases": 0,
+    "coverReleases": 0
+  }
+}
