@@ -623,6 +623,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_KEY_CFBundleDisplayName = "Life Is Learned";
+				LIL_DISCOVERY_CATALOG_URL = "https://lifeislearned-catalog-staging.marioams2.workers.dev/v1/catalog";
 				INFOPLIST_FILE = LifeIsLearned/Resources/App-Info.plist;
 				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

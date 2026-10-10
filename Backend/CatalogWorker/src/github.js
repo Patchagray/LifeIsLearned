@@ -35,14 +35,14 @@ export async function appJWT(env) {
 }
 const tokens = new WeakMap();
 export class GitHub {
-  constructor(env, fetcher=fetch) { this.env=env; this.fetcher=fetcher; }
+  constructor(env, fetcher=(...args)=>globalThis.fetch(...args)) { this.env=env; this.fetcher=fetcher; }
   async token() {
     let saved=tokens.get(this.env);
     if (saved && saved.until > Date.now()+60000) return saved.value;
     require(/^\d+$/.test(this.env.GITHUB_INSTALLATION_ID || ''));
     const jwt=await appJWT(this.env);
     const response=await this.fetcher(`${API}/app/installations/${this.env.GITHUB_INSTALLATION_ID}/access_tokens`,{
-      method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),
+      method:'POST',redirect:'manual',signal:AbortSignal.timeout(15000),
       headers:{'Content-Type':'application/json',Authorization:`Bearer ${jwt}`,Accept:'application/vnd.github+json','User-Agent':'LifeIsLearned-Catalog','X-GitHub-Api-Version':'2022-11-28'},
       body:JSON.stringify({repositories:['LifeIsLearned-Published'],permissions:{contents:'read'}})});
     const data=JSON.parse(new TextDecoder().decode(await bounded(response,32768)));

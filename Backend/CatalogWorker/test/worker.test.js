@@ -88,11 +88,20 @@ test('GitHub 302 followed server-side with no Authorization or Range on CDN',asy
 test('JWT supports GitHub PEM, expires within 10 minutes, token scopes one repo/read',async()=>{
  const {privateKey,publicKey}=generateKeyPairSync('rsa',{modulusLength:2048});const e={GITHUB_APP_ID:'123',GITHUB_INSTALLATION_ID:'456',GITHUB_APP_PRIVATE_KEY:privateKey.export({type:'pkcs1',format:'pem'})};
  const jwt=await appJWT(e);const [head,payload,signature]=jwt.split('.');const verify=createVerify('RSA-SHA256');verify.update(head+'.'+payload);assert.ok(verify.verify(publicKey,Buffer.from(signature,'base64url')));const claims=JSON.parse(Buffer.from(payload,'base64url'));assert.ok(claims.exp-claims.iat<=600);
- let calls=0;const gh=new GitHub(e,async(url,options)=>{calls++;assert.equal(options.headers['Content-Type'],'application/json');assert.deepEqual(JSON.parse(options.body),{repositories:['LifeIsLearned-Published'],permissions:{contents:'read'}});return Response.json({token:'synthetic-token',expires_at:new Date(Date.now()+3600000).toISOString()});});assert.equal(await gh.token(),'synthetic-token');await gh.token();assert.equal(calls,1);
+ let calls=0;const gh=new GitHub(e,async(url,options)=>{calls++;assert.equal(options.headers['Content-Type'],'application/json');assert.equal(options.redirect,'manual');assert.deepEqual(JSON.parse(options.body),{repositories:['LifeIsLearned-Published'],permissions:{contents:'read'}});return Response.json({token:'synthetic-token',expires_at:new Date(Date.now()+3600000).toISOString()});});assert.equal(await gh.token(),'synthetic-token');await gh.token();assert.equal(calls,1);
 });
 
 test('bundled planned metadata matches the source contract and public origins fail closed',async()=>{
  assert.deepEqual(canonical,JSON.parse(readFileSync(new URL('../../../Catalog/Remote-Catalog-001.json',import.meta.url),'utf8')));
  const f=fixture();const original=f.gh.json;f.gh.json=async p=>p===`/repos/${REPO}`?{private:false,full_name:REPO}:original(p);
  const r=await f.request('/v1/catalog');assert.equal(r.headers.get('x-library-state'),'planned-only');assert.ok((await r.json()).books.every(b=>!b.package));
+});
+
+test('default Worker fetch keeps the global receiver instead of binding to the GitHub client',async()=>{
+ const {privateKey}=generateKeyPairSync('rsa',{modulusLength:2048});
+ const e={GITHUB_APP_ID:'123',GITHUB_INSTALLATION_ID:'456',GITHUB_APP_PRIVATE_KEY:privateKey.export({type:'pkcs1',format:'pem'})};
+ const original=globalThis.fetch;let receiver;
+ globalThis.fetch=function(_url,_options){receiver=this;return Promise.resolve(Response.json({token:'synthetic-token',expires_at:new Date(Date.now()+3600000).toISOString()}));};
+ try {const gh=new GitHub(e);assert.equal(await gh.token(),'synthetic-token');assert.equal(receiver,globalThis);}
+ finally {globalThis.fetch=original;}
 });
