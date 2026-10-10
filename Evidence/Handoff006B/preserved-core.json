@@ -4,7 +4,9 @@
     {
       "file": "LifeIsLearned.xcodeproj/project.pbxproj",
       "sha256": "3ee6e611e74cbbd0bd9a8117e87695bb6a716d7dc6dd2c89c7e55f5bbbd412fa",
-      "identical": true
+      "identical": false,
+      "currentSHA256": "ddfc5d410a4a81905835cd0b16a500b739a2a1716b976e2679f18ba066c546f0",
+      "change": "Debug-only LIL_DISCOVERY_CATALOG_URL points to authenticated staging; Release URL remains empty. Xcode signing settings are unchanged."
     },
     {
       "file": "LifeIsLearned.xcodeproj/xcshareddata/xcschemes/LifeIsLearned.xcscheme",
