@@ -1,0 +1,20 @@
+{
+  "localDirectory": "LocalVerification/Handoff006B",
+  "files": {
+    "native.log": "58db6fe56c6e7d9e9d65d3eff79d2bc2453dd8cf55ed80167d29012fb4995d74",
+    "final-build.log": "32721e3226c4c264c5339bdd47bc35cf6f3f1c0cb7d3fea4f6c594a6b7a50652",
+    "final-phone.log": "f7b02ecac96c57e21b8b166bf258bf7a94060b40abe9d1947231afcf3368e53b",
+    "final-pad.log": "7c7746751bc22eb07761a346cd52d5d7fe6d6c2dd592e6ad487b1e9ec9531c8f",
+    "cover-build.log": "08a278219365df37e4d00fbef32ec4442837bdd455e849550e50672afd289591",
+    "cover-phone.log": "4fb9d9e7fd712d264b6f1204fad079236a2f78d7b1731c824c8333f7b5aacc43",
+    "cover-pad.log": "f7a523328a8988d7203c431ea6e2de1c8cf5ba1c92b96dc53557fe238a7a250f",
+    "release-build.log": "b1fdae6072410a66a2388976776e10828b9a739d7df0f9e9a81fc2a42ed69abc",
+    "worker-tests-final.log": "5d00b0ff3fe4a8aef654f0aa471308a57a199439e3acca534429db3d36c8618a",
+    "release-tests-final.log": "b950e65b00f5bb0fc8df6f10bf0c23c263ef95b07554ed03230fdfdbc2133e9d",
+    "python-tests.log": "c6f2f3e0e1c5965f44d5ad1e877c3e9aa0924ef45f11c1668d94220f554d3647",
+    "catalog-validation.log": "20a0cbb20c4a87d86702add5efd21abcc4e56b188ff87b226c2670b3a3f26ea1",
+    "worker-dry-run.log": "c137dd4b6e75e71b16e9fd0260167625bc3ce8b83176340e1c8697ccf0030c92",
+    "worker-local-final.log": "005b04052c3e1b7d3f24dfafdae59bd1698c61ff9ca67941216298b57a146742",
+    "refused-legacy.log": "86885e574bd9630d840887e140cb3e820302d546e7c8052f6411a483bc874cae"
+  }
+}

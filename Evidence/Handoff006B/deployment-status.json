@@ -1,0 +1,12 @@
+{
+  "worker": "lifeislearned-catalog-staging",
+  "deployed": false,
+  "endpoint": null,
+  "cloudflareLogin": "expired; OAuth attempt timed out",
+  "githubApp": "owner setup pending",
+  "workerSecrets": "not provisioned or verified",
+  "localRuntime": "passed",
+  "dryRun": "passed",
+  "productionDeployment": "not authorized",
+  "bookAndCoverPublication": "not authorized"
+}

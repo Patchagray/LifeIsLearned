@@ -1,0 +1,11 @@
+{
+  "runtime": "local Cloudflare workerd",
+  "catalogStatus": 200,
+  "state": "planned-only",
+  "plannedTitles": 50,
+  "available": 0,
+  "covers": 0,
+  "health": 200,
+  "unconfiguredDownload": 503,
+  "arbitraryRoute": 404
+}

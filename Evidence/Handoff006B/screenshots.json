@@ -1,0 +1,74 @@
+[
+  {
+    "file": "phone-restore.jpg",
+    "device": "iPhone 16e",
+    "environment": "simulator synthetic fixture",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "sourceBundle": "/tmp/LIL006B-final-phone.xcresult",
+    "originalSHA256": "78720f7bc2ee5a472f516b3243401984a1472dae98fa12dc4f12ea0db0a31133",
+    "previewSHA256": "f7ea539fc26c4a2246751eda9a85edf2dc97d85c45bc8c77f7ded24814028872"
+  },
+  {
+    "file": "phone-plus-menu.jpg",
+    "device": "iPhone 16e",
+    "environment": "simulator synthetic fixture",
+    "test": "ExploreUITests/testEmptyLibraryExploreAndPlusMenu()",
+    "sourceBundle": "/tmp/LIL006B-final-phone.xcresult",
+    "originalSHA256": "fcf4ee2376bd236f43e046727f7dfb6190b8f2645848bc758083c52221ceb41e",
+    "previewSHA256": "59410da0c1e17ecd11859984bf8c2e5ec63d891a9ad62b55a72da258855a7283"
+  },
+  {
+    "file": "phone-large-text.jpg",
+    "device": "iPhone 16e",
+    "environment": "simulator synthetic fixture",
+    "test": "ExploreUITests/testExploreAtAccessibilityTextSize()",
+    "sourceBundle": "/tmp/LIL006B-final-phone.xcresult",
+    "originalSHA256": "0a413538efb1bbf8ca55ae9d198ba4cfa446b7ab75cddd05013703afdec65bb6",
+    "previewSHA256": "1a6441b38b04e8bf60b32e94041cf81aabda50624835bbac06bb0139897fff3a"
+  },
+  {
+    "file": "phone-planned-cover.jpg",
+    "device": "iPhone 16e",
+    "environment": "simulator synthetic fixture",
+    "test": "ExploreUITests/testPlannedCoverPreviewDoesNotEnableDownload()",
+    "sourceBundle": "/tmp/LIL006B-cover-phone.xcresult",
+    "originalSHA256": "b3f56c296f999be5f37d4a989515d6c42c56d89a1ede6553f29ef61a61a6cf88",
+    "previewSHA256": "fa84d675d41b64ec94e1ae26aa2fe40582e8068ccced1abdb8e2b4132a88dcda"
+  },
+  {
+    "file": "pad-restore.jpg",
+    "device": "iPad (A16)",
+    "environment": "simulator synthetic fixture",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "sourceBundle": "/tmp/LIL006B-final-pad.xcresult",
+    "originalSHA256": "2fceb86aecc25cf8d4fa4116eb5a4c6b006b581a7026276e234b35eb09b156d4",
+    "previewSHA256": "5ba359f90b5ada2932daf4e04a7f9ae52ffdfd3fd481f8b5ad49a38886957957"
+  },
+  {
+    "file": "pad-plus-menu.jpg",
+    "device": "iPad (A16)",
+    "environment": "simulator synthetic fixture",
+    "test": "ExploreUITests/testEmptyLibraryExploreAndPlusMenu()",
+    "sourceBundle": "/tmp/LIL006B-final-pad.xcresult",
+    "originalSHA256": "077cd818252e7892065f57e16ff7a65d3767d8ac964dabd85fb6c96e1c2b00c8",
+    "previewSHA256": "c1aed44af12814287cda691dd449b264132d6bf9215d3d9590fd3335bd4735c2"
+  },
+  {
+    "file": "pad-large-text.jpg",
+    "device": "iPad (A16)",
+    "environment": "simulator synthetic fixture",
+    "test": "ExploreUITests/testExploreAtAccessibilityTextSize()",
+    "sourceBundle": "/tmp/LIL006B-final-pad.xcresult",
+    "originalSHA256": "3bb579f8940642c656ba07f46dc960f0c6c4bae84765456d9f2d04f2600ed3a0",
+    "previewSHA256": "90394d65354cf61d854bcdeb504b7492d318b1455376962e6af4379c8ca951ec"
+  },
+  {
+    "file": "pad-planned-cover.jpg",
+    "device": "iPad (A16)",
+    "environment": "simulator synthetic fixture",
+    "test": "ExploreUITests/testPlannedCoverPreviewDoesNotEnableDownload()",
+    "sourceBundle": "/tmp/LIL006B-cover-pad.xcresult",
+    "originalSHA256": "b7dd8e48c3fe6689afe63c7cda055f4c1cda85a356cb8cda74021eb500ccf49d",
+    "previewSHA256": "55784b18197f51af0acb2f733987a02cf0d7704e1499d6d34b166fa641bfdd53"
+  }
+]
