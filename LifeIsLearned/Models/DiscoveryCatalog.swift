@@ -150,24 +150,31 @@ enum ISBN {
     }
 }
 
-/// Public distribution is deliberately isolated from request API endpoints.
-/// Redirects may use GitHub's release CDN, but catalog asset URLs must name our repo.
+/// The reviewer provisions one Worker endpoint. Catalog and asset routes share its
+/// exact HTTPS origin; private GitHub URLs and redirects never reach the client.
 enum DistributionURL {
-    static let repository = "Patchagray/LifeIsLearned-Catalog"
-    static let catalog = URL(string: "https://raw.githubusercontent.com/\(repository)/main/catalog.json")!
-    static func validate(_ url: URL, redirect: Bool = false) throws {
+    static var catalog: URL? {
+        guard let text = Bundle.main.object(forInfoDictionaryKey: "DiscoveryCatalogURL") as? String,
+              let url = URL(string: text), (try? validateEndpoint(url)) != nil else { return nil }
+        return url
+    }
+    static func validateEndpoint(_ url: URL) throws {
         try RemoteURL.validate(url)
         let host = url.host?.lowercased() ?? ""
+        try CollectionLimits.require(url.path == "/v1/catalog" && url.query == nil && url.fragment == nil &&
+            (url.port == nil || url.port == 443) && !["github.com", "api.github.com", "raw.githubusercontent.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"].contains(host),
+            "Configure the library's HTTPS catalog service endpoint.")
+    }
+    static func validate(_ url: URL, redirect: Bool = false, catalogURL: URL? = catalog) throws {
+        try RemoteURL.validate(url)
         #if DEBUG
-        if ["fixture.invalid", "h005-fixture.invalid"].contains(host) { return }
+        if ["fixture.invalid", "h005-fixture.invalid"].contains(url.host?.lowercased() ?? "") { return }
         #endif
-        let path = url.path.lowercased()
-        try CollectionLimits.require(!path.split(separator: "/").contains(where: { $0 == "." || $0 == ".." }), "Unsafe distribution path.")
-        let prefix = "/" + repository.lowercased() + "/"
-        let origin = (host == "raw.githubusercontent.com" && path.hasPrefix(prefix)) ||
-            (host == "github.com" && path.hasPrefix(prefix + "releases/download/"))
-        let cdn = redirect && ["release-assets.githubusercontent.com", "objects.githubusercontent.com"].contains(host)
-        try CollectionLimits.require((origin || cdn) && (url.port == nil || url.port == 443) && url.fragment == nil && (cdn || url.query == nil),
-                                    "The library URL is outside the approved public GitHub distribution repository.")
+        guard let endpoint = catalogURL else { throw PackageError.invalid("The remote library is not configured yet.") }
+        try validateEndpoint(endpoint)
+        let route = url.path == "/v1/catalog" || url.path.range(of: #"^/v1/(covers/[a-z0-9-]+|books/[a-z0-9-]+/download)$"#, options: .regularExpression) != nil
+        try CollectionLimits.require(url.host?.lowercased() == endpoint.host?.lowercased() &&
+            (url.port == nil || url.port == 443) && url.query == nil && url.fragment == nil && route &&
+            !url.absoluteString.contains("%"), "The library URL is outside the configured catalog service.")
     }
 }

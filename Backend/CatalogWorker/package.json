@@ -1,0 +1,1 @@
+{"name":"lifeislearned-catalog-worker","private":true,"type":"module","scripts":{"test":"node --test test/*.test.js","dev":"wrangler dev","deploy:staging":"wrangler deploy --env staging"}}

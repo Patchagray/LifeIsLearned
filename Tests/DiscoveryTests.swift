@@ -60,6 +60,9 @@ final class RemoteFixtureProtocol: URLProtocol, @unchecked Sendable {
             identity: try CatalogIdentity.bundled(), session: URLSession(configuration: RemoteFixtureProtocol.configuration()))
         let fresh = try await service.refresh(); XCTAssertEqual(fresh.catalog.books.count, 50)
         XCTAssertEqual(requests.map(\.lastPathComponent), ["catalog.json"], "Browsing never fetches a package")
+        RemoteFixtureProtocol.headers = ["X-Library-State": "planned-only"]
+        do { _ = try await service.refresh(); XCTFail("Unavailable origin replaced the good cache") } catch { }
+        RemoteFixtureProtocol.headers = [:]
         RemoteFixtureProtocol.response = { _ in (200, Data("broken".utf8)) }
         do { _ = try await service.refresh(); XCTFail("Malformed refresh accepted") } catch { }
         RemoteFixtureProtocol.response = { _ in throw URLError(.notConnectedToInternet) }
@@ -80,6 +83,20 @@ final class RemoteFixtureProtocol: URLProtocol, @unchecked Sendable {
         asset.sha256 = LibraryDigest.sha256(invalid); asset.bytes = invalid.count
         RemoteFixtureProtocol.response = { _ in (200, invalid) }
         do { _ = try await service.thumbnail(asset); XCTFail("Invalid image accepted") } catch { }
+    }
+    func testApprovedThumbnailCacheWorksOfflineAndRejectsTampering() async throws {
+        let f = try await CollectionFixture.make(); addTeardownBlock { await f.cleanup() }
+        let image = try XCTUnwrap(f.package.assets?.values.first { $0.data.count < 512 * 1024 }).data
+        let asset = RemoteAsset(url: URL(string: "https://fixture.invalid/cover.png")!, sha256: LibraryDigest.sha256(image), bytes: image.count)
+        let service = DiscoveryService(endpoint: nil, directory: f.directory, identity: try CatalogIdentity.bundled(), session: URLSession(configuration: RemoteFixtureProtocol.configuration()))
+        var requests = 0
+        RemoteFixtureProtocol.response = { _ in requests += 1; return (200, image) }
+        let first = try await service.thumbnail(asset); XCTAssertEqual(first, image)
+        RemoteFixtureProtocol.response = { _ in requests += 1; throw URLError(.notConnectedToInternet) }
+        let second = try await service.thumbnail(asset); XCTAssertEqual(second, image); XCTAssertEqual(requests, 1)
+        let file = f.directory.appendingPathComponent("Discovery/Thumbnails/" + asset.sha256)
+        try Data(repeating: 0, count: image.count).write(to: file)
+        do { _ = try await service.thumbnail(asset); XCTFail("Corrupt cached cover accepted") } catch { }
     }
     func testDownloadIntegrityBeforeDecodeAndInstallSource() async throws {
         let f = try await CollectionFixture.make(empty: true); addTeardownBlock { await f.cleanup() }
@@ -185,14 +202,15 @@ final class RemoteFixtureProtocol: URLProtocol, @unchecked Sendable {
         XCTAssertFalse(RemoteResponse.message(URLError(.cannotFindHost)).contains("NSURLError"))
         XCTAssertTrue(RemoteResponse.message(RemoteResponse.error(404)).contains("Refresh Explore"))
     }
-    func testPublicOriginAndCDNTrustBoundary() throws {
-        try DistributionURL.validate(DistributionURL.catalog)
-        try DistributionURL.validate(URL(string: "https://github.com/Patchagray/LifeIsLearned-Catalog/releases/download/book-r1/book.json")!)
-        try DistributionURL.validate(URL(string: "https://release-assets.githubusercontent.com/asset?signature=temporary")!, redirect: true)
-        for text in ["https://github.com/Patchagray/LifeIsLearned/private.json", "https://raw.githubusercontent.com/Other/Repo/main/catalog.json", "https://github.com.evil.test/Patchagray/LifeIsLearned-Catalog/releases/download/book", "http://raw.githubusercontent.com/Patchagray/LifeIsLearned-Catalog/main/catalog.json", "https://user:password@github.com/Patchagray/LifeIsLearned-Catalog/releases/download/book", "https://release-assets.githubusercontent.com/asset"] {
-            XCTAssertThrowsError(try DistributionURL.validate(URL(string: text)!))
+    func testWorkerOriginTrustBoundary() throws {
+        let endpoint = URL(string: "https://catalog.example/v1/catalog")!
+        for path in ["/v1/catalog", "/v1/covers/atomic-habits", "/v1/books/atomic-habits/download"] {
+            try DistributionURL.validate(URL(string: "https://catalog.example" + path)!, catalogURL: endpoint)
         }
-        XCTAssertThrowsError(try DistributionURL.validate(URL(string: "https://example.com/book")!, redirect: true))
+        for text in ["https://github.com/Patchagray/LifeIsLearned-Published/private.json", "https://raw.githubusercontent.com/Other/Repo/main/catalog.json", "https://release-assets.githubusercontent.com/asset?signature=x", "https://evil.test/v1/catalog", "http://catalog.example/v1/catalog", "https://user:password@catalog.example/v1/catalog", "https://catalog.example/arbitrary", "https://catalog.example/v1/catalog?path=private", "https://catalog.example/v1/covers/%2e%2e"] {
+            XCTAssertThrowsError(try DistributionURL.validate(URL(string: text)!, redirect: true, catalogURL: endpoint))
+        }
+        XCTAssertThrowsError(try DistributionURL.validateEndpoint(URL(string: "https://github.com/v1/catalog")!))
     }
     func testCanonicalOrderAvailabilityAndImmutableRevision() throws {
         var original = try catalog()

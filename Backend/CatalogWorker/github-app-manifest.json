@@ -1,0 +1,9 @@
+{
+  "name": "Life Is Learned Published Reader",
+  "url": "https://github.com/Patchagray/LifeIsLearned",
+  "description": "Read approved catalog metadata and release assets from LifeIsLearned-Published for the staging catalog Worker.",
+  "public": false,
+  "default_permissions": { "contents": "read" },
+  "default_events": [],
+  "hook_attributes": { "active": false }
+}

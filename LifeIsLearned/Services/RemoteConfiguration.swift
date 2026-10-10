@@ -11,10 +11,7 @@ struct RemoteConfiguration: Sendable {
                   let url = URL(string: text), (try? RemoteURL.validate(url)) != nil else { return nil }
             return url
         }
-        var catalogURL = DistributionURL.catalog
-        #if DEBUG
-        if let override = url("DiscoveryCatalogURL"), (try? DistributionURL.validate(override)) != nil { catalogURL = override }
-        #endif
+        let catalogURL = DistributionURL.catalog
         return Self(catalogURL: catalogURL, requestURL: url("BookRequestAPIURL"))
     }
 }

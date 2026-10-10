@@ -40,3 +40,10 @@ LocalVerification/
 Backend/RequestAPI/wrangler.toml
 Backend/RequestAPI/.dev.vars*
 Backend/RequestAPI/.wrangler/
+
+# Worker local credentials, cache and build output
+.dev.vars*
+.wrangler/
+node_modules/
+*.pem
+Backend/CatalogWorker/dist/

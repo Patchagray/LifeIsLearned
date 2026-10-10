@@ -1,0 +1,18 @@
+# Supplied reference only. Executable staging config: Backend/CatalogWorker/wrangler.toml
+# Codex integration starting point, NOT a deployed Worker.
+name = "lifeislearned-catalog"
+main = "src/index.ts"
+compatibility_date = "2026-10-10"
+
+# Non-secret pinned identity only. Avoid private GitHub URLs in client-facing JSON.
+[vars]
+CATALOG_SCHEMA_VERSION = "1"
+CATALOG_ID = "catalog-001"
+CATALOG_REVISION = "1"
+
+# REQUIRED Worker Secrets (set with `wrangler secret put`, never commit values):
+# GITHUB_APP_ID
+# GITHUB_INSTALLATION_ID
+# GITHUB_APP_PRIVATE_KEY
+# Codex must implement the Worker, configure repo identity server side,
+# and add staged tests before deployment.

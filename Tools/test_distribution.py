@@ -42,7 +42,7 @@ class DistributionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d, patch('publish_distribution.run') as command:
             p=Path(d); (p/'release-manifest.json').write_text(json.dumps({'repository':REPOSITORY,'id':'atomic-habits','package':{'collectionRevision':1,'sha256':'a'*64,'bytes':10}}))
             (p/'approval.json').write_text(json.dumps({'repository':REPOSITORY,'publicRepositoryApproved':True,'books':[]}))
-            with self.assertRaisesRegex(ValueError,'Exact-byte'):publish(p,p/'approval.json',ROOT/'Distribution')
+            with self.assertRaisesRegex(ValueError,'006B retired'):publish(p,p/'approval.json',ROOT/'Distribution')
             command.assert_not_called()
 
     def review_fixture(self, root):
@@ -68,34 +68,13 @@ class DistributionTests(unittest.TestCase):
             candidate=copy.deepcopy(package);mutate(candidate)
             with self.assertRaises(ValueError):public_payload_check(candidate)
 
-    def fake_command(self, *args):
-        if 'get-url' in args: return f'https://github.com/{REPOSITORY}.git'
-        if 'status' in args: return ''
-        if 'view' in args: return json.dumps({'visibility':'PUBLIC'})
-        if 'api' in args: return json.dumps({'enabled':True})
-        return ''
-
-    def test_approved_publication_updates_catalog_only_after_verified_download(self):
-        with tempfile.TemporaryDirectory() as d:
-            root=Path(d);manifest,public,approval=self.review_fixture(root)
-            with patch('publish_distribution.run',side_effect=self.fake_command) as command, patch('publish_distribution.subprocess.run',return_value=SimpleNamespace(returncode=1)), patch('publish_distribution.verify_download') as verify:
-                publish(root/'review',approval,public)
-            verify.assert_called_once_with(manifest['package'])
-            books=load(public/'catalog.json')['books']
-            self.assertEqual(next(b for b in books if b['id']==manifest['id'])['package'],manifest['package'])
-            self.assertEqual(sum(b['availability']=='available' for b in books),1)
-            self.assertEqual(audit_directory(public), ['README.md','catalog.json','checksums.json'])
-            calls=[c.args for c in command.call_args_list]
-            self.assertTrue(any('create' in c and '--draft' in c for c in calls))
-            self.assertTrue(any('edit' in c and '--draft=false' in c for c in calls))
-            self.assertFalse(any('--clobber' in c or 'push' in c for c in calls))
-
-    def test_failed_anonymous_verification_does_not_advertise_release(self):
+    def test_prepared_exact_bytes_cannot_enable_retired_public_publication(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);_,public,approval=self.review_fixture(root)
             before=(public/'catalog.json').read_bytes()
-            with patch('publish_distribution.run',side_effect=self.fake_command), patch('publish_distribution.subprocess.run',return_value=SimpleNamespace(returncode=1)), patch('publish_distribution.verify_download',side_effect=ValueError('checksum mismatch')):
-                with self.assertRaisesRegex(ValueError,'checksum'):publish(root/'review',approval,public)
+            with patch('publish_distribution.run') as command:
+                with self.assertRaisesRegex(ValueError,'006B retired'):publish(root/'review',approval,public)
+                command.assert_not_called()
             self.assertEqual((public/'catalog.json').read_bytes(),before)
 
 if __name__=='__main__':unittest.main()

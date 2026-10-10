@@ -1,3 +1,7 @@
+# Superseded by Handoff 006B
+
+This public-repository procedure is historical and must not be executed. `Tools/publish_distribution.py publish` now refuses publication. Use [private publication gates](../ReleaseGate/README.md) and [Cloudflare operations](../Backend/CatalogWorker/README.md). No public distribution repository was created.
+
 # Handoff 006 public distribution operations
 
 The app source and public package distribution are separate repositories. H006 does not change visibility of any existing repository. The proposed distribution repository is `Patchagray/LifeIsLearned-Catalog`. The reviewed local scaffold is `Distribution/`; it currently contains metadata for 50 planned titles, with no downloadable book assets.

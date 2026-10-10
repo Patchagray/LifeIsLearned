@@ -6,10 +6,12 @@ actor DiscoveryService {
     struct Cache: Codable { var fetchedAt: Date; var catalog: DiscoveryCatalog; var etag: String? = nil }
     let endpoint: URL?
     private let cacheFile: URL
+    private let thumbnailDirectory: URL
     private let identity: CatalogIdentity
     private let session: URLSession
     init(endpoint: URL?, directory: URL, identity: CatalogIdentity, session: URLSession = .shared) {
         self.endpoint = endpoint; self.identity = identity; self.session = session
+        thumbnailDirectory = directory.appendingPathComponent("Discovery/Thumbnails")
         let key = LibraryDigest.sha256(Data((endpoint?.absoluteString ?? "preview").utf8))
         cacheFile = directory.appendingPathComponent("Discovery/" + key + ".json")
     }
@@ -44,14 +46,31 @@ actor DiscoveryService {
     }
     func thumbnail(_ asset: RemoteAsset) async throws -> Data {
         try asset.validate(limit: 512 * 1_024)
+        let file = thumbnailDirectory.appendingPathComponent(asset.sha256)
+        if let size = try? file.resourceValues(forKeys: [.fileSizeKey]).fileSize, size == asset.bytes,
+           let cached = try? Data(contentsOf: file), (try? validateThumbnail(cached, asset: asset)) != nil { return cached }
         let (data, _) = try await fetch(asset.url, limit: asset.bytes)
+        try validateThumbnail(data, asset: asset)
+        try Task.checkCancellation()
+        try FileManager.default.createDirectory(at: thumbnailDirectory, withIntermediateDirectories: true)
+        try data.write(to: file, options: .atomic)
+        // Keep thumbnails separately bounded; old versions may be removed and re-fetched.
+        let files = (try? FileManager.default.contentsOfDirectory(at: thumbnailDirectory, includingPropertiesForKeys: [.contentModificationDateKey, .fileSizeKey])) ?? []
+        let oldest = files.sorted { ((try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast) < ((try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast) }
+        var total = files.reduce(0) { $0 + ((try? $1.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) }
+        for candidate in oldest where total > 32 * 1_024 * 1_024 && candidate != file {
+            let size = (try? candidate.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
+            if (try? FileManager.default.removeItem(at: candidate)) != nil { total -= size }
+        }
+        return data
+    }
+    private func validateThumbnail(_ data: Data, asset: RemoteAsset) throws {
         try CollectionLimits.require(data.count == asset.bytes && LibraryDigest.sha256(data) == asset.sha256, "Thumbnail integrity check failed.")
         guard let source = CGImageSourceCreateWithData(data as CFData, [kCGImageSourceShouldCache: false] as CFDictionary),
               let type = CGImageSourceGetType(source) as String?, ["public.png", "public.jpeg"].contains(type) else {
             throw PackageError.invalid("Library thumbnails must be PNG or JPEG.")
         }
         try CollectionLimits.validateImage(CollectionArtwork(mediaType: type == "public.png" ? "image/png" : "image/jpeg", data: data))
-        return data
     }
     private func fetch(_ url: URL, limit: Int, etag: String? = nil) async throws -> (Data, HTTPURLResponse) {
         try DistributionURL.validate(url)
@@ -61,6 +80,7 @@ actor DiscoveryService {
         defer { bytes.task.cancel() }
         guard let http = response as? HTTPURLResponse, let finalURL = http.url else { throw RemoteResponse.error(nil) }
         try DistributionURL.validate(finalURL, redirect: true)
+        if http.value(forHTTPHeaderField: "X-Library-State") == "planned-only" { throw RemoteResponse.error(503) }
         if http.statusCode == 304, etag != nil { return (Data(), http) }
         guard http.statusCode == 200 else { throw RemoteResponse.error(http.statusCode) }
         try CollectionLimits.require(response.expectedContentLength <= limit, "Remote metadata exceeds its size limit.")
@@ -134,7 +154,7 @@ enum RemoteResponse {
             case .notConnectedToInternet: return "You’re offline. Reconnect and try again when ready."
             case .timedOut: return "The connection took too long. Please retry."
             case .cancelled: return "The request was cancelled. You can try again."
-            default: return "Couldn’t reach the public library. Check your connection and retry."
+            default: return "Couldn’t reach the library service. Check your connection and retry."
             }
         }
         if let validation = error as? PackageError { return validation.localizedDescription }
@@ -145,9 +165,9 @@ enum RemoteResponse {
         let message: String
         switch status {
         case 404: message = "This release is not available (404). Refresh Explore and try again."
-        case 401, 403: message = "GitHub denied this download or reached a request limit. Try later; no sign-in is needed."
-        case 429: message = "The public library is busy. Wait a little, then retry."
-        default: message = "The public library could not respond. Check your connection and retry."
+        case 401, 403: message = "The library service could not authorize this download. Please try again later."
+        case 429: message = "The library service is busy. Wait a little, then retry."
+        default: message = "The library service could not respond. Check your connection and retry."
         }
         return .invalid(message)
     }

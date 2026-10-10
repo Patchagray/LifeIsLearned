@@ -587,11 +587,12 @@ final class ExistingLibraryRecoveryUITests: XCTestCase {
 }
 
 final class ExploreUITests: XCTestCase {
-    private func launch(empty: Bool = false, large: Bool = false) -> XCUIApplication {
+    private func launch(empty: Bool = false, large: Bool = false, cover: Bool = false) -> XCUIApplication {
         continueAfterFailure = false
         let app = XCUIApplication()
         app.launchEnvironment["LIL_UI_TEST_RUN_ID"] = UUID().uuidString
         app.launchEnvironment["LIL_DISCOVERY_FIXTURE"] = "1"
+        if cover { app.launchEnvironment["LIL_COVER_FIXTURE"] = "1" }
         if empty { app.launchEnvironment["LIL_EMPTY_LIBRARY"] = "1" }
         if large { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
         app.launch(); XCTAssertTrue(app.buttons["Add Books"].waitForExistence(timeout: 25))
@@ -646,6 +647,18 @@ final class ExploreUITests: XCTestCase {
         app.buttons["Money & Personal Finance"].tap()
         XCTAssertFalse(app.buttons["details-thinking-fast-and-slow"].exists)
         capture("shelf-filter")
+    }
+    func testPlannedCoverPreviewDoesNotEnableDownload() {
+        let app = launch(empty: true, cover: true)
+        reveal(app.buttons["Explore"], app); app.buttons["Explore"].tap()
+        let search = app.textFields["explore-search"]
+        XCTAssertTrue(search.waitForExistence(timeout: 10)); search.tap(); search.typeText("Discovery verification\n")
+        let book = app.buttons["details-influence-the-psychology-of-persuasion"]
+        reveal(book, app)
+        expectation(for: NSPredicate(format: "value CONTAINS 'cover preview loaded'"), evaluatedWith: book)
+        waitForExpectations(timeout: 10)
+        XCTAssertFalse(app.buttons["download-influence-the-psychology-of-persuasion"].exists)
+        capture("006b-planned-cover")
     }
     func testExploreAtAccessibilityTextSize() {
         let app = launch(empty: true, large: true)

@@ -86,47 +86,7 @@ def verify_download(asset):
 
 
 def publish(review_directory, approval_file, public_directory):
-    directory, public = Path(review_directory), Path(public_directory)
-    manifest, approval = load(directory/'release-manifest.json'), load(approval_file)
-    require(manifest['repository'] == REPOSITORY, 'Wrong distribution repository')
-    require(approval.get('repository') == REPOSITORY and approval.get('publicRepositoryApproved') is True, 'Owner repository approval required')
-    require(any(a.get('id') == manifest['id'] and a.get('collectionRevision') == manifest['package']['collectionRevision'] and
-                a.get('sha256') == manifest['package']['sha256'] and a.get('bytes') == manifest['package']['bytes'] and
-                a.get('publicRedistributionApproved') is True and a.get('rightsIncludingImagesAndNarrationConfirmed') is True and
-                a.get('releaseQAApproved') is True for a in approval.get('books', [])), 'Exact-byte owner rights/publication and release QA approval required')
-    filename = f"{manifest['id']}-r{manifest['package']['collectionRevision']}.json"
-    require(manifest['filename'] == filename and manifest['tag'] == filename[:-5], 'Unexpected release filename/tag')
-    source = directory/filename
-    public_payload_check(read_package(source)[0])
-    require(metadata(source, manifest['package']['url']) == {'id': manifest['id'], 'package': manifest['package']}, 'Review bytes changed')
-    audit_directory(public)
-    require(run('git', '-C', str(public), 'remote', 'get-url', 'origin') in (f'https://github.com/{REPOSITORY}.git', f'git@github.com:{REPOSITORY}.git'), 'Wrong public working copy')
-    require(not run('git', '-C', str(public), 'status', '--porcelain'), 'Public worktree must be clean')
-    old = load(public/'catalog.json'); revised = json.loads(json.dumps(old))
-    book = next(b for b in revised['books'] if b['id'] == manifest['id'])
-    from datetime import datetime, timezone
-    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-    approved_package, _ = read_package(source)
-    book.update(availability='available', package=manifest['package'], updatedAt=now, description=approved_package['book']['synopsis'])
-    revised['updatedAt'] = now; validate(revised, old)
-    visibility = json.loads(run('gh','repo','view',REPOSITORY,'--json','visibility'))['visibility']
-    require(visibility == 'PUBLIC', 'Distribution repository must be public')
-    immutable = json.loads(run('gh','api',f'repos/{REPOSITORY}/immutable-releases'))
-    require(immutable.get('enabled') is True, 'Enable immutable releases in GitHub repository Settings first')
-    # An existing tag/release is a hard stop. No --clobber, deletion, or force update.
-    existing = subprocess.run(['gh','release','view',manifest['tag'],'--repo',REPOSITORY], capture_output=True)
-    require(existing.returncode != 0, 'Release already exists; inspect it manually, never overwrite')
-    notes = 'Approved prepared learning collection. Embedded text, illustrations and narration are publicly downloadable. SHA-256: ' + manifest['package']['sha256']
-    with tempfile.TemporaryDirectory() as scratch:
-        note = Path(scratch)/'notes.md'; note.write_text(notes+'\n')
-        run('gh','release','create',manifest['tag'],str(source),'--repo',REPOSITORY,'--draft','--title',f"{manifest['title']} · collection {manifest['package']['collectionRevision']}",'--notes-file',str(note),'--target','main')
-    run('gh','release','edit',manifest['tag'],'--repo',REPOSITORY,'--draft=false')
-    verify_download(manifest['package'])
-    raw = (json.dumps(revised,ensure_ascii=False,indent=2)+'\n').encode()
-    (public/'catalog.json').write_bytes(raw)
-    (public/'checksums.json').write_text(json.dumps({'catalog.json':hashlib.sha256(raw).hexdigest()},indent=2)+'\n')
-    audit_directory(public)
-    return {'published': manifest['package']['url'], 'catalog': 'Updated locally. Review, commit and push catalog.json/checksums.json explicitly.'}
+    raise ValueError('Handoff 006B retired public GitHub publication. Use the private publication preflight and obtain separate owner release approval.')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)

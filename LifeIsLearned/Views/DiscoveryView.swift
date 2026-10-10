@@ -124,7 +124,7 @@ private struct DiscoveryBookRow: View {
                     }
                 }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
             }.buttonStyle(.plain).accessibilityLabel("\(book.title), \(book.author), \(state.status), book details")
-                .accessibilityIdentifier("details-" + book.id).accessibilityValue(details ? "Expanded" : "Collapsed")
+                .accessibilityIdentifier("details-" + book.id).accessibilityValue((details ? "Expanded" : "Collapsed") + (thumbnail != nil ? ", cover preview loaded" : ""))
             if details {
                 Text(shelf).font(.caption.weight(.semibold)).foregroundStyle(Palette.teal)
                 if let description = book.description, !description.isEmpty { Text(description).font(.subheadline) }
@@ -146,6 +146,7 @@ private struct DiscoveryBookRow: View {
             if let message, message != "In Library" { Text(message).font(.footnote).foregroundStyle(Palette.secondary).accessibilityIdentifier("download-message") }
         }.accessibilityElement(children: .contain).accessibilityIdentifier("discovery-" + book.id)
             .task(id: book.thumbnail) {
+                thumbnail = nil
                 if let asset = book.thumbnail, let data = try? await service.thumbnail(asset) { thumbnail = UIImage(data: data) }
             }
     }

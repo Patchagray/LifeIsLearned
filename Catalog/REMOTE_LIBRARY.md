@@ -1,3 +1,7 @@
+# Handoff 006B update
+
+H006B supersedes the public GitHub distribution proposal. Explore uses the reviewer-configured HTTPS Cloudflare catalog endpoint, backed by PRIVATE `Patchagray/LifeIsLearned-Published`. No package or cover is approved at bootstrap. See [Worker operations](../Backend/CatalogWorker/README.md) and [private release gates](../ReleaseGate/README.md). The notes below retain prior implementation history.
+
 # Handoff 006 update
 
 Explore now lives in the home library section. The shipped public endpoint, origin policy, ETag caching and separate distribution repository supersede the unconfigured H005 preview below. See [public distribution operations](PUBLIC_DISTRIBUTION.md). The request backend remains separately configured. H005's historical implementation notes follow.

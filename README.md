@@ -1,3 +1,7 @@
+# Current distribution work — Handoff 006B
+
+Your Library / Explore remains in place. Distribution now uses a private approved-publication GitHub origin and a Cloudflare Worker configured through `LIL_DISCOVERY_CATALOG_URL`. The private repository starts with 50 planned titles and zero book/cover releases. See [H006B implementation report](HANDOFF_006B_IMPLEMENTATION_REPORT.md), [Worker setup](Backend/CatalogWorker/README.md), and [publication gates](ReleaseGate/README.md). Earlier public-distribution instructions are superseded.
+
 # Life Is Learned · An illustrated reading room
 
 An independent native SwiftUI iPhone/iPad app for Mario: learn one idea at a time through illustrated screens, two narration roles, automatic progression, and feedback. The name is provisional.
