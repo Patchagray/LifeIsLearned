@@ -1,0 +1,46 @@
+# Future private publication gate
+
+H006B authorizes zero books and zero covers. These scripts perform local validation only. No upload command or inferred owner approval is provided. The former public publisher now refuses all publication attempts.
+
+## Book review
+
+```sh
+python3 ReleaseGate/publication_preflight.py --package /private/final.json --output /private/new-review
+```
+
+Without owner approval this writes the technical QA reports and a denied `release-decision.json`. It runs the repository's exact authoring and audio gates in separate processes, preserving exit codes and deterministic JSON reports. Configure the existing `LIL_FFMPEG` authoring executable. No runtime app dependency is added.
+
+Every exact idea must have complete, decodable mono MP3s bound to its scripts and roles, all feedback choices and all completion scores, within the core timing/resource budgets. Every provenance record must name ElevenLabs, model and voice IDs. `producedAt` is optional in formatVersion 2; when absent, the preflight reports a warning instead of inventing a timestamp. The owner approval must list every Guide voice ID used by the exact package (`approvedGuideVoiceIDs`; legacy single-voice `approvedGuideVoiceID` remains accepted) and its Storyteller voice. Known synthetic tones, demo content and identical MP3 bytes assigned to different scripts are refused. An owner must audition the actual speech: metadata cannot cryptographically prove which provider generated a recording, and these checks do not claim arbitrary acoustic forgery detection.
+
+Preflight writes `preflight.json` as a deterministic technical report and `release-decision.json` as the owner-bound decision. This keeps the owner approval's `preflightReportSHA256` from forming a self-referential hash. After explicit owner approval of the exact package and audio report, create the owner record with that technical report hash, then rerun into a fresh directory with `--approval /private/owner-record.json`. Require `release-decision.json` to say passed. The owner record follows `PrivateRepoScaffold/approvals/README.md`, plus `packageBytes` and `speechAuditioned:true`. Every hash, revision, voice ID and report must match. The code cannot authenticate a human by reading `approved:true`; verify the record's explicit owner authorization before any later upload. Preflight always reruns the real validators and refuses a substitute `--validator`.
+
+## Future publication transaction (separately authorized)
+
+1. Recheck origin privacy and the exact local package against the owner approval.
+2. Run preflight, require the technical `preflight.json` to say passed and both exit codes to be zero; bind that exact JSON SHA as `preflightReportSHA256` in the owner record. Rerun with that record and require `release-decision.json` to say passed.
+3. Verify the proposed registry against the current remote registry using `validate_registry.py`. Changed releases need a newer collection revision and a fresh approval path. No silent downgrade, same-revision byte rewrite or deletion.
+4. Enable GitHub immutable releases before the first approved release. Upload the approved exact bytes as a new versioned private immutable GitHub Release; verify downloaded bytes, asset ID, size and GitHub SHA-256 digest. Do not overwrite an existing asset.
+5. Add the corroborating approval record with `technicalGate:"all-idea-elevenlabs-passed"`, `preflightReportSHA256`, every approved Guide voice ID, the approved Storyteller ID, audio QA hash, package hash/size/revision and traceable owner approval. Preserve any preflight warnings (such as absent optional production timestamps) for reviewer visibility.
+6. Update `catalog/approved-packages.json` last. Until that commit, the Worker cannot advertise the release. Preserve the prior working entry if any step fails.
+
+The two allowlists use `{ "schemaVersion": 1, "entries": [] }`. Each package entry contains `bookID`, `collectionRevision`, `releaseID`, `releaseAssetID`, `bytes`, `sha256`, `approvalRecord`, and `preflightReportRecord` (paths under approvals/, such as `approvals/book-r2.json`). Worker validates the private immutable release, its uploaded asset digest/size and matching owner record. The Worker also fetches the bound preflight JSON, verifies its hash, matching package identity and both passing validator exit codes. The trusted publication workflow certifies complete audio; the Worker does not download/FFmpeg-decode a whole book on catalog requests.
+
+Each cover entry contains `bookID`, `path` (under covers/, PNG/JPEG), `mediaType`, `bytes`, `sha256`, and `approvalRecord`. Its separate record has `type:"life-is-learned-cover-preview-approval-v1"`, `approved:true`, exact `bookID`, `bytes`, `sha256`, `mediaType`, `approvedBy`, `approvedAt`, and `approvalReference`. A cover record cannot satisfy the book gate. Preview bytes are separately reviewed, <=512 KiB, and must pass the existing image decoder/dimension constraints before committing them. No example here represents an actual approval.
+
+A deliberate revocation or rollback requires a separate reviewed procedure; do not bypass the monotonic update guard. No production books, voices, private QA reports or approval records belong in the public app-source repository. Synthetic unit fixtures remain local/test-only and are never uploaded to the publication repository.
+
+## Include catalog covers with approved book releases
+
+Every approved published book with a package cover should also publish a separate catalog cover. This keeps Explore metadata small and avoids embedding the library's artwork in the app. Prepare the cover before committing the package/cover registry updates:
+
+```sh
+python3 Tools/extract_catalog_cover.py /private/final.json --output-directory /private/published-checkout/covers > /private/cover-entry.json
+```
+
+The helper extracts the exact referenced `book.coverAssetID` bytes, validates canonical identity, declared PNG/JPEG type, dimensions and the 512 KiB catalog-cover budget, and prints the entry for `catalog/approved-covers.json`. It does not upload or issue approval. For oversized covers, prepare a reviewed thumbnail separately; it never silently recompresses a book's art. Inspect/native-decode the extracted image, record the owner's authorization at the returned `approvalRecord` path using the cover schema above, and include that entry with the release's registry commit. Preserve existing entries. Publish only books/cover art within the owner's authorized scope.
+
+The Worker adds a separate cover URL, SHA-256 and byte count to the discovery metadata. Explore downloads visible covers without fetching the lesson package. The app verifies and caches image bytes under their SHA-256, including across app launches. An unchanged cover is read locally; a changed hash fetches the new image. Cache eviction by iOS or the app's 32 MiB cover-cache limit may require a later re-fetch. No app rebuild or reinstallation is needed for catalog cover additions.
+
+## Explicit owner timing exceptions
+
+A separately authorized release may carry an exact-package `timingWaiver` in its owner approval. This is a recorded exception, not a normal passing timing gate. The preflight preserves raw validator reports and nonzero exit codes and returns `passed-with-owner-timing-waiver` only when the exact listed failures are exclusively core-timing/estimatedMinutes messages, every idea has complete valid narration, and measured cores fit the owner's declared exception ceiling (currently bounded to at most 360 seconds). Asset, content, narration, script, identity, and approval failures cannot be waived by this path. The owner approval binds the package hash, exact error list and technical-report hash. Worker metadata verifies the matching exception record before advertising the release. The default 300-second validators are unchanged.

@@ -1,3 +1,11 @@
+# Handoff 006B update
+
+H006B supersedes the public GitHub distribution proposal. Explore uses the reviewer-configured HTTPS Cloudflare catalog endpoint, backed by PRIVATE `Patchagray/LifeIsLearned-Published`. No package or cover is approved at bootstrap. See [Worker operations](../Backend/CatalogWorker/README.md) and [private release gates](../ReleaseGate/README.md). The notes below retain prior implementation history.
+
+# Handoff 006 update
+
+Explore now lives in the home library section. The shipped public endpoint, origin policy, ETag caching and separate distribution repository supersede the unconfigured H005 preview below. See [public distribution operations](PUBLIC_DISTRIBUTION.md). The request backend remains separately configured. H005's historical implementation notes follow.
+
 # Discovery catalog contract (Handoff 005C)
 
 `Remote-Catalog-001.json` is schemaVersion 1, catalogID `catalog-001`, catalogRevision **1**. The catalogRevision refers to the approved identity contract; availability can refresh without changing that contract. Other schema/identity revisions are rejected until explicitly approved. All 50 stable IDs and shelf assignments come from Catalog 001. `CollectionCatalog` remains installed learner state.
@@ -17,7 +25,7 @@ Generate metadata from the final local JSON without rewriting IDs or publishing:
 
 ```sh
 python3 Tools/remote_catalog_metadata.py path/to/book.json \
-  --url https://github.com/Patchagray/LifeIsLearned/releases/download/APPROVED_TAG/book.json \
+  --url https://github.com/Patchagray/LifeIsLearned-Catalog/releases/download/APPROVED_TAG/book.json \
   --thumbnail path/to/cover.jpg --thumbnail-url https://example.org/cover.jpg
 ```
 

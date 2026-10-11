@@ -1,0 +1,264 @@
+[
+  {
+    "file": "phone-plus-menu.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-phone.xcresult",
+    "test": "ExploreUITests/testEmptyLibraryExploreAndPlusMenu()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "cf6e274435567a930565472f46d0d1dc3f2d1b779277bd868453761cc586e84b",
+    "previewSHA256": "1a38f62db74657b0539d7c8a34669c17ce888987e7c75307363a55a4fd1e4e51",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish"
+  },
+  {
+    "file": "phone-explore-details.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-phone.xcresult",
+    "test": "ExploreUITests/testEmptyLibraryExploreAndPlusMenu()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "2623620eed15e090b56fd48fe4887f7eef2c9fd4a1faac8029474e45d60b024b",
+    "previewSHA256": "0f9cac2e15d2d3105c8d60779e5be6f76265f4716217995d6ac67ae226fb1f18",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish",
+    "note": "Intermediate screenshot; final code replaces the transient SF Symbol disclosure morph with a single rotated chevron. Final expanded state is visible in phone-large-text.jpg."
+  },
+  {
+    "file": "phone-empty-library.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-phone.xcresult",
+    "test": "ExploreUITests/testEmptyLibraryExploreAndPlusMenu()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "083bdcbf01398e68f5bdc554dabfcdca83608917ae3d8d4a4d44a4b8d3654fbd",
+    "previewSHA256": "e2bfa314fe2b9db3eb867ac82d915c9df86a124f1cca9bc408cd38832f972b65",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish"
+  },
+  {
+    "file": "phone-shelf-filter.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-phone.xcresult",
+    "test": "ExploreUITests/testSearchModesRemainSeparateAndShelfFilters()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "bfe1102177571aea6e4bd2c4b4cc33a5b4c053cda4510367811348d20dee6d03",
+    "previewSHA256": "e4f9e02dbe4059485fff3fb26f4a3b7422bcf8c382fa55dbf8572f11ea99277b",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish"
+  },
+  {
+    "file": "phone-explore-search.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-phone.xcresult",
+    "test": "ExploreUITests/testSearchModesRemainSeparateAndShelfFilters()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "178fa5174d03f85484920118ea5ec55107c77c2aebd12fa515e10ab3b6c42c3a",
+    "previewSHA256": "3a6c13aff82dde3874d0cebc4a36416e9a216110a21acce43eb03ba35c5c9e9f",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish"
+  },
+  {
+    "file": "pad-plus-menu.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-pad.xcresult",
+    "test": "ExploreUITests/testEmptyLibraryExploreAndPlusMenu()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "7a33fedc35a9205e460b82914a9a15b819f7b95e1e0fc1744459afdb2b9acc42",
+    "previewSHA256": "0413d44a0122a6667baef98e88b1768b23a902ac1670e35a29ce55c6dbb3aa9f",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish"
+  },
+  {
+    "file": "pad-explore-details.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-pad.xcresult",
+    "test": "ExploreUITests/testEmptyLibraryExploreAndPlusMenu()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "826c029a3badb950b15bcd5377067a12f33f2dce0992fea47a0158c9bf756c5d",
+    "previewSHA256": "de6345685547937cffae74e1becdada42ae7529f006f21fce27949c663c6f96b",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish",
+    "note": "Intermediate screenshot; final code replaces the transient SF Symbol disclosure morph with a single rotated chevron. Final expanded state is visible in phone-large-text.jpg."
+  },
+  {
+    "file": "pad-empty-library.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-pad.xcresult",
+    "test": "ExploreUITests/testEmptyLibraryExploreAndPlusMenu()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "58f6483e34061d57a0bd31c0979473a61c14a63a3c641479c2ded498fbf971da",
+    "previewSHA256": "73946b1e61503a6253059f6030d1160d18c3917312dea08589ffbbc0e3e8f596",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish"
+  },
+  {
+    "file": "pad-shelf-filter.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-pad.xcresult",
+    "test": "ExploreUITests/testSearchModesRemainSeparateAndShelfFilters()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "ef60750456a98e4e7a38bc1ecc5a5419f0a5f0b849f23e65e7c1306c62bfe9bb",
+    "previewSHA256": "cb909551d255d3d5851590d9a40ac0c7b420a45de72eb1cc40ad68b296b47916",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish"
+  },
+  {
+    "file": "pad-explore-search.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-final-ui-pad.xcresult",
+    "test": "ExploreUITests/testSearchModesRemainSeparateAndShelfFilters()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "5cad3984b4346b652ad23a1f2e45cc713fb7acf6fe4481c743851a7d84daf4f5",
+    "previewSHA256": "b324bf1ea7be7c620d7f4e6c0038354e1098fe9ad830326128cd72e217a7cd62",
+    "phase": "full affected suite before final network-copy/accessibility/disclosure polish"
+  },
+  {
+    "file": "phone-restored.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-phone.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "16beb1d5219ce6067f759b021932fc743a01d7eaa534d5b089eb13af3f6d7a14",
+    "previewSHA256": "0bc59530cf7ec8e6e3cb99c348c68248e791a81100cf158d95ae686b9b8bf34e",
+    "phase": "final source"
+  },
+  {
+    "file": "phone-restore-focused-explore.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-phone.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "68b5343e3ddab575c87bd25c520b4ab1b5718b76f20ef237a627974bd5934b84",
+    "previewSHA256": "cad09060dafa71e7f595d996e018290c42246a176b470aea8d1900f5fd0b2e8d",
+    "phase": "final source"
+  },
+  {
+    "file": "phone-local-offloaded.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-phone.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "aeaa2aea5fdb2c1b634883d19cc1ec76be3a33c6ce367343b17281dd6458c833",
+    "previewSHA256": "d0ec806731f15429f4632fb2639b840d9e14221d35e5db49144aeb40c7977a5a",
+    "phase": "final source"
+  },
+  {
+    "file": "phone-offline-cache.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-phone.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "32dea832e69b036850096ab32c43bd5a1674d4baebcb2c2edea1e8c5ad307b32",
+    "previewSHA256": "f1fdfa5057d1b195a76928fd74367972eca0dd26bef01410033a2f807fc53fb4",
+    "phase": "final source"
+  },
+  {
+    "file": "phone-update-available-synthetic.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-phone.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "768f93f0061cb75a1698fbef6c94d24c27b55744b9d361cf778638c26f250a32",
+    "previewSHA256": "31a262720c3190590df7fc377fde9df7f14f2c5a46c64e3013937ff670128303",
+    "phase": "final source"
+  },
+  {
+    "file": "phone-download-progress-synthetic.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-phone.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "952f152e4becb2e7a5fcba81e2e09c8cef29356d31497c1e0bd94c6cc252e953",
+    "previewSHA256": "3b2079943e05706f45c762ded55b18fa77d8a6ef0c9cedd0191ede66d1e2967d",
+    "phase": "final source"
+  },
+  {
+    "file": "phone-explore-available-synthetic.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-phone.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "1c45c70973cc1b3086507c160940f2a48bc93b2c6ecd56bb11b9e6b3d8d78296",
+    "previewSHA256": "dce3f0b4f4c5e9242810b120449729a7df56fcba69516b94705faa67d95ee011",
+    "phase": "final source"
+  },
+  {
+    "file": "phone-large-text.jpg",
+    "environment": "iPhone 16e simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-phone.xcresult",
+    "test": "ExploreUITests/testExploreAtAccessibilityTextSize()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "f60bfa609112360f20191d1817373c57c43e36a8b0005980b28d299450164ecf",
+    "previewSHA256": "50be53083331adb6af003474aeb75f6595d90ba55ca9ef3065da0bd5a0616d5a",
+    "phase": "final source"
+  },
+  {
+    "file": "pad-restored.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-pad.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "f34a525f16cbf41da379b7b8150a00ddb02693c119a0dc26c924fe9b08325b86",
+    "previewSHA256": "f16d7645c7485a8d8059e16cb5e3702064d2335fef936b1ceb8ae3c5109c964b",
+    "phase": "final source"
+  },
+  {
+    "file": "pad-restore-focused-explore.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-pad.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "8a9bec954edd5c41ae8bc89e4820ae08aab63e7efa69e8d0a39d08d0e7598595",
+    "previewSHA256": "502e2ea163b1cbece69806bd3ddc8cf4bc92923204a496fb773401ffa11a1783",
+    "phase": "final source"
+  },
+  {
+    "file": "pad-local-offloaded.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-pad.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "006089a5fbdca33544623bc6cb15c939fdd3293cc6e14b3b18691e9f12eada28",
+    "previewSHA256": "bcb8dc3e50494453d08553b7af6bb2fb717901c3542d8278b72b742445b55105",
+    "phase": "final source"
+  },
+  {
+    "file": "pad-offline-cache.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-pad.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "4f34c3a9f35af141a9f0fbbacead857c3e53ceca6fdc29e931e38610355b2902",
+    "previewSHA256": "d3192b87b1abbc647ee89fb6c91118273679484405e2848d7927fc02161b440e",
+    "phase": "final source"
+  },
+  {
+    "file": "pad-update-available-synthetic.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-pad.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "c15630b35786221e6f3aea1e54e262895b69783661ed1ebc722375ff2da4b7a6",
+    "previewSHA256": "d60b1c6a2be2b760fbe3fa29b0754726d619ac97712315be6fbcac18de214460",
+    "phase": "final source"
+  },
+  {
+    "file": "pad-download-progress-synthetic.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-pad.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "423c5b10f796c903a3a161337864da700dfefac31afaf71ad6f8b31199dbdb61",
+    "previewSHA256": "d8d1b0b3d48f02876ab1c4db2e29f6d47a772f9014eb6e6238b615fc347b45e9",
+    "phase": "final source"
+  },
+  {
+    "file": "pad-explore-available-synthetic.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-pad.xcresult",
+    "test": "DiscoveryUITests/testBrowseDownloadUpdateAndOfflineCache()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "b9ceb00d21cccd4e495a554779faa57ba6ea3823b682db0a422c427f39836ee8",
+    "previewSHA256": "26ed21683454bed1094a61d39e5b03a98b0276eff312931584995e6db67139db",
+    "phase": "final source"
+  },
+  {
+    "file": "pad-large-text.jpg",
+    "environment": "iPad A16 simulator",
+    "sourceBundle": "/tmp/LIL006-accessibility-pad.xcresult",
+    "test": "ExploreUITests/testExploreAtAccessibilityTextSize()",
+    "syntheticFixture": true,
+    "originalPNGsha256": "dde7ea6b136376e535dbac29c3853f0e42f71d79decf606dfa753e95e8e785ec",
+    "previewSHA256": "55729b5fa7b6589607360749334472e44744dd59fe3c861e51032833541cacad",
+    "phase": "final source"
+  }
+]

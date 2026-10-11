@@ -284,3 +284,13 @@ xcodebuild -project LifeIsLearned.xcodeproj -scheme LifeIsLearned -destination '
 ## Review handoff
 
 The review branch contains the narration-scrolling implementation, focused tests, sanitized evidence, user-reported phone acceptance, and the existing Xcode signing-team configuration. Application source is unchanged from the passing simulator runs recorded above. The handoff changes only project metadata and verification documentation, so the simulator tests were not repeated for this commit.
+
+## Handoff 006 — Explore and distribution
+
+Implementation `437c368d4755eaffa2fe3bcc077d7cd74787a0b6`: full native suite 92 passed / 1 hardware-only timing test skipped; affected UI 8 passed on each iPhone 16e and iPad A16 simulator. Final network refinements passed 13 native tests plus the complete download UI flow, and final accessibility/download reruns passed 2 UI tests on each device. Python suite: 62 passed. Final Release build passed. See [exact commands, chronological results and screenshots](Evidence/Handoff006/README.md).
+
+Core storage/recovery, playback, lesson/package models, canonical IDs and Xcode configuration are byte-for-byte unchanged from the H005 baseline. Public repository creation, exact-package publication approvals, live-network smoke and physical checks remain pending. No releases, device data resets or merge occurred.
+
+## Handoff 006B — private catalog infrastructure
+
+See [H006B evidence](Evidence/Handoff006B/README.md) for native/UI/Worker/publication checks and source hashes. The private origin was created with zero book/cover releases. Authenticated staging is deployed at `https://lifeislearned-catalog-staging.marioams2.workers.dev`; live smoke returns 50 planned entries, zero packages/covers, health 200, and refuses unapproved downloads. No actual package is approved, so package-stream and physical-device checks remain pending.

@@ -41,7 +41,7 @@ private final class PackageTransfer: NSObject, URLSessionDownloadDelegate, @unch
     }
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
                     newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
-        completionHandler(request.url.flatMap { (try? RemoteURL.validate($0)) != nil ? request : nil })
+        completionHandler(request.url.flatMap { (try? DistributionURL.validate($0, redirect: true)) != nil ? request : nil })
     }
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64,
                     totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
@@ -53,9 +53,9 @@ private final class PackageTransfer: NSObject, URLSessionDownloadDelegate, @unch
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         do {
             guard let response = downloadTask.response as? HTTPURLResponse, [200, 206].contains(response.statusCode), let url = response.url else {
-                throw PackageError.invalid("The book download did not return a valid response.")
+                throw RemoteResponse.error((downloadTask.response as? HTTPURLResponse)?.statusCode)
             }
-            try RemoteURL.validate(url)
+            try DistributionURL.validate(url, redirect: true)
             try FileManager.default.moveItem(at: location, to: destination)
             result = .success(destination)
         } catch { result = .failure(error) }
@@ -122,6 +122,7 @@ actor PackageDownloadService {
     @Published private(set) var progress: Double = 0
     @Published private(set) var message: String?
     @Published private(set) var resumable = false
+    @Published private(set) var failed = false
     @Published private(set) var busy = false
     @Published private(set) var canCancel = false
     private let service: PackageDownloadService
@@ -130,6 +131,7 @@ actor PackageDownloadService {
     init(directory: URL, configuration: URLSessionConfiguration = .ephemeral) { service = PackageDownloadService(directory: directory, configuration: configuration) }
     func start(_ book: DiscoveryBook, source: BookSourceRecord, library: LibraryStore) {
         guard !busy else { return }
+        failed = false
         bookID = book.id; asset = book.package?.asset; progress = 0; message = "Downloading…"; busy = true; canCancel = true; resumable = false
         task = Task {
             defer { busy = false; canCancel = false }
@@ -146,10 +148,11 @@ actor PackageDownloadService {
                     message = "Installing…"
                     await library.commitImport(review)
                     message = library.errorMessage == nil ? "In Library" : library.errorMessage
+                    failed = library.errorMessage != nil
                 }
             } catch {
                 if Task.isCancelled || error is CancellationError { message = "Download cancelled. Your library is unchanged." }
-                else { message = error.localizedDescription }
+                else { failed = true; message = RemoteResponse.message(error) }
                 if let asset = book.package?.asset { resumable = await service.canResume(asset) }
             }
         }

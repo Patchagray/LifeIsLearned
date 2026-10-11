@@ -1,6 +1,16 @@
+# Current distribution work — Handoff 006B
+
+Your Library / Explore remains in place. Distribution now uses a private approved-publication GitHub origin and a Cloudflare Worker configured through `LIL_DISCOVERY_CATALOG_URL`. The private repository starts with 50 planned titles and zero book/cover releases. See [H006B implementation report](HANDOFF_006B_IMPLEMENTATION_REPORT.md), [Worker setup](Backend/CatalogWorker/README.md), and [publication gates](ReleaseGate/README.md). Earlier public-distribution instructions are superseded.
+
 # Life Is Learned · An illustrated reading room
 
 An independent native SwiftUI iPhone/iPad app for Mario: learn one idea at a time through illustrated screens, two narration roles, automatic progression, and feedback. The name is provisional.
+
+## Handoff 006: Your Library / Explore
+
+The home library section now has **Your Library / Explore**. Searches and result counts stay separate; installed books open normally, and offloaded books remain visible with Restore or Re-import. Explore preserves the existing metadata-only browsing, whole-book downloads and learner-state protection. **+ Add Books** now offers Scan a Book and Import File; scanner matches and remote restores focus Explore in place.
+
+The separate public distribution scaffold, validation and approval-gated publishing helper are prepared. Public availability depends on explicit owner approval of the repository metadata and each exact book release; planned titles are never advertised as downloadable. See [distribution operations](Catalog/PUBLIC_DISTRIBUTION.md) and [H006 evidence](Evidence/Handoff006/README.md). The H005 implementation and historical milestones follow.
 
 ## Handoff 005 implementation branch
 

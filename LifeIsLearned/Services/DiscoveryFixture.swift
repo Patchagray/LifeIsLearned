@@ -25,8 +25,12 @@ final class DiscoveryFixtureProtocol: URLProtocol, @unchecked Sendable {
                 let filename = request.url?.lastPathComponent ?? ""
                 if filename.hasPrefix("book-"), let revision = Int(filename.dropFirst(5).dropLast(5)) { package.collectionRevision = revision }
                 var bytes = try package.canonicalData()
+                let preview = package.assets!.keys.sorted().compactMap { package.assets![$0] }.first { $0.data.count < 512 * 1_024 }!.data
+                let coverFixture = ProcessInfo.processInfo.environment["LIL_COVER_FIXTURE"] == "1"
                 let data: Data
-                if request.url?.lastPathComponent == "requests" {
+                if filename == "preview.png" {
+                    data = preview
+                } else if request.url?.lastPathComponent == "requests" {
                     data = try JSONEncoder().encode(BookRequestReceipt(status: "accepted", requestKey: "synthetic-fixture", requestCount: 1))
                 } else if request.url?.lastPathComponent == "catalog.json" {
                     let count = Self.nextRefresh()
@@ -39,6 +43,10 @@ final class DiscoveryFixtureProtocol: URLProtocol, @unchecked Sendable {
                     book.isbn13 = ["9780141033570"] // Synthetic ISBN association for matcher UI testing only
                     book.availability = .available
                     book.package = RemotePackage(collectionRevision: count, url: URL(string: "https://h005-fixture.invalid/book-\(count).json")!, sha256: LibraryDigest.sha256(bytes), bytes: bytes.count)
+                    if coverFixture {
+                        book.availability = .planned; book.package = nil
+                        book.thumbnail = RemoteAsset(url: URL(string: "https://h005-fixture.invalid/preview.png")!, sha256: LibraryDigest.sha256(preview), bytes: preview.count)
+                    }
                     data = try JSONEncoder().encode(DiscoveryCatalog(schemaVersion: 1, catalogID: "catalog-001", catalogRevision: 1, books: [book] + original.books.filter { $0.id != book.id }))
                 } else { data = bytes }
                 let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Length": String(data.count)])!

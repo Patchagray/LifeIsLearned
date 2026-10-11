@@ -1,0 +1,187 @@
+{
+  "sourceCommit": "c71e5eb2ca27659674e9ec94c7570ba78020e8f0",
+  "branch": "feature/handoff-006-private-cloudflare-explore",
+  "date": "2026-10-10",
+  "nativeAndUIChronology": [
+    {
+      "run": "native",
+      "passed": 94,
+      "failed": 0,
+      "skipped": 1,
+      "result": "Passed",
+      "destinations": [
+        {
+          "device": {
+            "architecture": "x86_64",
+            "deviceId": "20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+            "deviceName": "iPhone 16e",
+            "modelName": "iPhone 16e",
+            "osBuildNumber": "23D8133",
+            "osVersion": "26.3.1",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 94,
+          "skippedTests": 1,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "note": "Full native regression before final discovery refinements. One premium-voice hardware timing check skipped."
+    },
+    {
+      "run": "final-phone",
+      "passed": 22,
+      "failed": 1,
+      "skipped": 0,
+      "result": "Failed",
+      "destinations": [
+        {
+          "device": {
+            "architecture": "x86_64",
+            "deviceId": "20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+            "deviceName": "iPhone 16e",
+            "modelName": "iPhone 16e",
+            "osBuildNumber": "23D8133",
+            "osVersion": "26.3.1",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 22,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "note": "Final affected native/UI: 14 native and 8 UI passed; new preview UI failed because unordered fixture asset selection changed the bytes between metadata and image requests. Fixed by sorted fixture IDs; focused reruns below passed. Production checksum checks were preserved."
+    },
+    {
+      "run": "final-pad",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "result": "Passed",
+      "destinations": [
+        {
+          "device": {
+            "architecture": "x86_64",
+            "deviceId": "B219EF2E-CFAA-43D2-8F69-804ED944F678",
+            "deviceName": "iPad (A16)",
+            "modelName": "iPad (A16)",
+            "osBuildNumber": "23D8133",
+            "osVersion": "26.3.1",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 9,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "note": "All 9 affected UI tests passed. Final fixture correction rerun below."
+    },
+    {
+      "run": "cover-phone",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "Passed",
+      "destinations": [
+        {
+          "device": {
+            "architecture": "x86_64",
+            "deviceId": "20E0C31B-8975-45A3-8E2C-B91BC6C64E66",
+            "deviceName": "iPhone 16e",
+            "modelName": "iPhone 16e",
+            "osBuildNumber": "23D8133",
+            "osVersion": "26.3.1",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "note": "Corrected deterministic preview fixture: real cover loaded, Coming Soon and no Download. Final app source."
+    },
+    {
+      "run": "cover-pad",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "Passed",
+      "destinations": [
+        {
+          "device": {
+            "architecture": "x86_64",
+            "deviceId": "B219EF2E-CFAA-43D2-8F69-804ED944F678",
+            "deviceName": "iPad (A16)",
+            "modelName": "iPad (A16)",
+            "osBuildNumber": "23D8133",
+            "osVersion": "26.3.1",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "note": "Same corrected preview check on iPad; final app source."
+    }
+  ],
+  "worker": {
+    "passed": 12,
+    "failed": 0,
+    "command": "node --test Backend/CatalogWorker/test/*.test.js",
+    "runtimeFixes": [
+      "Cloudflare global fetch receiver",
+      "Supported manual redirect mode for edge Fetch"
+    ]
+  },
+  "publicationGuards": {
+    "passed": 12,
+    "failed": 0,
+    "command": "python3 -m unittest discover -s ReleaseGate -p 'test*.py' -v"
+  },
+  "pythonAuthoringCatalogDistribution": {
+    "passed": 61,
+    "failed": 0,
+    "command": "python3 -m unittest discover -s Tools -p 'test_*.py' -v"
+  },
+  "canonicalCatalog": "50 books / 8 shelves / revision 1 valid",
+  "releaseBuild": "passed",
+  "wranglerDryRun": "passed after runtime fixes",
+  "localWorkerdSmoke": "passed with authenticated GitHub App; 50 planned, 0 packages, 0 covers",
+  "liveStaging": "passed: authenticated catalog 200 (50 planned, no package/cover overlays), health 200, unapproved and unknown routes 404",
+  "physicalDevice": "not performed for H006B",
+  "originalFailureRetained": true,
+  "finalUnresolvedAutomatedFailures": 0,
+  "sourceCoverage": "Full iOS regression predates the final backend-only fetch fix and Debug-only endpoint setting; no iOS source changed. Final Worker source has 12 passing tests and authenticated staging smoke. The affected app target rebuilt successfully and its generated Info.plist URL was inspected.",
+  "deploymentSecrets": "three required secret names present; values never displayed",
+  "debugAppBuild": {
+    "result": "passed",
+    "catalogURL": "https://lifeislearned-catalog-staging.marioams2.workers.dev/v1/catalog",
+    "verifiedInBuiltInfoPlist": true,
+    "releaseConfigurationHasStagingURL": false
+  }
+}

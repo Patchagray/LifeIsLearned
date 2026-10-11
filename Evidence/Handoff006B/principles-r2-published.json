@@ -1,0 +1,47 @@
+{
+  "bookID": "principles",
+  "collectionRevision": 2,
+  "packageBytes": 43217027,
+  "packageSHA256": "b8ed065faf3c66e4f6a7a150a8dae98e26811e4793b74ab16cde11f7b06327a0",
+  "releaseURL": "https://github.com/Patchagray/LifeIsLearned-Published/releases/tag/principles-r2",
+  "releaseID": 409300396,
+  "assetID": 629381587,
+  "immutable": true,
+  "publishedRepositoryCommit": "becee5a6f0681a75565e4cd27140f8d183270239",
+  "implementationCommit": "db62f61ebce3960e356b0f0d41c7982d58ff9ef2",
+  "preflightResult": "passed-with-owner-timing-waiver",
+  "rawValidatorExitCodes": {
+    "authoring": 1,
+    "audio": 1
+  },
+  "ownerAuthorization": "Owner explicitly instructed publication with a waiver after timing/estimatedMinutes failures were disclosed. Raw failed timing checks are retained in private release QA; default authoring validators were not changed.",
+  "measuredMaximumCoreSeconds": 353.68,
+  "waiverCeilingSeconds": 354,
+  "completeNarrationIdeas": 12,
+  "audioQAReportSHA256": "52c98908acabfbd89ba6ed8fc27f7e10784743add03738ff84f2c1283e865705",
+  "preflightReportSHA256": "e7e66635bf5095d1b7672db52a8fcff83fd54b25873a802648aa2829c32010c1",
+  "cover": {
+    "bookID": "principles",
+    "path": "covers/principles-7c82d798ba60264d653428e6c2367bdd07ad40983b4bcc3a4c100827126e42f7.jpg",
+    "mediaType": "image/jpeg",
+    "bytes": 437422,
+    "sha256": "7c82d798ba60264d653428e6c2367bdd07ad40983b4bcc3a4c100827126e42f7",
+    "approvalRecord": "approvals/principles-cover-7c82d798ba60264d653428e6c2367bdd07ad40983b4bcc3a4c100827126e42f7.json"
+  },
+  "tests": {
+    "releaseGate": 17,
+    "worker": 14,
+    "outcome": "passed"
+  },
+  "stagingWorkerVersion": "3389f40b-91e2-459d-b56c-51119e1eaf34",
+  "smoke": {
+    "catalog": "available revision 2, thumbnail present; prior Thanks for the Feedback remains available",
+    "fullPackageDownload": "43,217,027 bytes and exact approved SHA-256 matched",
+    "coverDownload": "437,422 bytes and exact approved SHA-256 matched"
+  },
+  "remainingObservations": [
+    "Optional producedAt and narration cue timestamps absent.",
+    "No post-publication Principles import on physical iPhone was performed by Codex.",
+    "No iOS code changed or app rebuild performed for this release."
+  ]
+}

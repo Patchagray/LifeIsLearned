@@ -1,0 +1,27 @@
+.DS_Store
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+*.p8
+*.p12
+*.mobileprovision
+*.wav
+*.aiff
+*.mp3
+*.mp4
+*.zip
+*.lilbook
+*debug*
+*secret*
+*token*
+__pycache__/
+LocalVerification/
+Research/
+Authoring/
+Sheets/
+Masters/
+# Do not add local final JSON copies by accident; approved releases use GitHub Release assets.
+*.json.bak
