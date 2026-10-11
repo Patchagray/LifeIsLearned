@@ -71,8 +71,8 @@ def policy_errors(pkg: dict, approval: dict, raw: bytes, audio_report_raw: bytes
             h=hashes.get(segment.get('assetID')); script=segment.get('scriptSHA256')
             if h and h in scripts_by_audio and scripts_by_audio[h]!=script: errors.append("Identical MP3 bytes assigned to different spoken scripts")
             if h: scripts_by_audio[h]=script
-        for key in ('modelID','producedAt'):
-            if not prov.get(key): errors.append(f"{idea}: missing production {key}")
+        if not isinstance(prov.get('modelID'),str) or not prov['modelID'].strip():
+            errors.append(f"{idea}: missing production modelID")
         # Segment completeness, script hashes, duration, decoding and audio timing
         # MUST be established by the real app validator --audio-gate below.
     if not isinstance(approval,dict) or approval.get("type")!="life-is-learned-book-release-approval-v1" or approval.get("approved") is not True:
@@ -83,19 +83,49 @@ def policy_errors(pkg: dict, approval: dict, raw: bytes, audio_report_raw: bytes
         errors.append("Owner approval SHA-256 does not bind this exact final package")
     if approval.get("audioQAReportSHA256") != digest(audio_report_raw):
         errors.append("Audio QA report SHA-256 does not match owner approval")
-    for key in ("approvedAt","approvalReference","approvedBy","approvedGuideVoiceID","approvedStorytellerVoiceID"):
+    for key in ("approvedAt","approvalReference","approvedBy","approvedStorytellerVoiceID"):
         if not isinstance(approval.get(key),str) or not approval[key].strip():
             errors.append(f"Owner approval missing {key}")
+    guide_ids=approval.get('approvedGuideVoiceIDs')
+    if guide_ids is None and isinstance(approval.get('approvedGuideVoiceID'),str):
+        guide_ids=[approval['approvedGuideVoiceID']]
+    if (not isinstance(guide_ids,list) or not guide_ids or len(guide_ids)>8 or
+            any(not isinstance(v,str) or not v.strip() for v in guide_ids) or len(set(guide_ids))!=len(guide_ids)):
+        errors.append('Owner approval needs one or more unique approved Guide voice IDs')
+        guide_ids=[]
+    packaged_guide_ids=set()
     for lesson in lessons:
         if not isinstance(lesson,dict): continue
         prov=((lesson.get("narration") or {}).get("provenance") or {}) if isinstance(lesson.get("narration"),dict) else {}
         if not isinstance(prov,dict): continue
-        for key,approval_key in (("guideVoiceID","approvedGuideVoiceID"),("storytellerVoiceID","approvedStorytellerVoiceID")):
-            if prov.get(key) and approval.get(approval_key) and prov[key]!=approval[approval_key]:
-                errors.append(f"{lesson.get('id')}: packaged {key} differs from approved voice")
+        guide_id=prov.get('guideVoiceID')
+        if isinstance(guide_id,str):
+            packaged_guide_ids.add(guide_id)
+            if guide_id not in guide_ids:
+                errors.append(f"{lesson.get('id')}: packaged Guide voice is not owner-approved")
+        storyteller_id=prov.get('storytellerVoiceID')
+        if storyteller_id and approval.get('approvedStorytellerVoiceID') and storyteller_id!=approval['approvedStorytellerVoiceID']:
+            errors.append(f"{lesson.get('id')}: packaged storytellerVoiceID differs from approved voice")
+    if isinstance(guide_ids,list) and set(guide_ids)!=packaged_guide_ids:
+        errors.append('Approved Guide voice IDs must exactly match packaged provenance')
     if approval.get('packageBytes') != len(raw): errors.append("Approval byte size does not match")
     if approval.get('speechAuditioned') is not True: errors.append("Owner must confirm the exact audio was auditioned as speech")
     return errors
+
+
+def policy_warnings(pkg: dict):
+    """Optional format provenance is surfaced honestly without fabricating timestamps."""
+    warnings=[]
+    lessons=(pkg.get('book') or {}).get('lessons',[]) if isinstance(pkg,dict) else []
+    missing=[lesson.get('id','<unknown>') for lesson in lessons
+             if not (((lesson.get('narration') or {}).get('provenance') or {}).get('producedAt'))]
+    if missing:
+        warnings.append('Narration producedAt is absent (optional in formatVersion 2) for: '+', '.join(missing))
+    guide_ids={((lesson.get('narration') or {}).get('provenance') or {}).get('guideVoiceID') for lesson in lessons}
+    guide_ids.discard(None)
+    if len(guide_ids)>1:
+        warnings.append('Package uses multiple Guide voices; every ID must be listed in the exact-hash owner approval.')
+    return warnings
 
 
 def technical_reports(package, output):
@@ -123,6 +153,13 @@ def report_errors(reports,exits,package):
     return errors
 
 
+def approval_errors(package, approval, package_raw, audio_raw, preflight_raw):
+    errors=policy_errors(package,approval,package_raw,audio_raw)
+    if not isinstance(approval,dict) or approval.get('preflightReportSHA256')!=digest(preflight_raw):
+        errors.append('Owner approval does not bind the exact technical preflight report')
+    return errors
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--package",type=Path,required=True)
@@ -138,14 +175,24 @@ def main():
         args.output.mkdir(parents=True,exist_ok=False)
         reports,exits=technical_reports(args.package,args.output)
         audio_raw=(args.output/'audio-qa.json').read_bytes()
-        errors=report_errors(reports,exits,pkg)+policy_errors(pkg,approval,raw,audio_raw)
-        result={'schemaVersion':1,'bookID':pkg['book']['id'],'collectionRevision':pkg['collectionRevision'],
+        errors=report_errors(reports,exits,pkg)
+        technical={'schemaVersion':1,'bookID':pkg['book']['id'],'collectionRevision':pkg['collectionRevision'],
                 'packageSHA256':digest(raw),'packageBytes':len(raw),'audioQAReportSHA256':digest(audio_raw),
-                'validatorExitCodes':exits,'errors':errors,'result':'denied' if errors else 'passed',
-                'scope':'Local preflight only; owner approval provenance must be independently verified before any upload.'}
-        (args.output/'preflight.json').write_text(json.dumps(result,indent=2)+'\n')
-        print(json.dumps(result,indent=2))
-        return 1 if errors else 0
+                'validatorExitCodes':exits,'errors':errors,'warnings':policy_warnings(pkg),
+                'result':'denied' if errors else 'passed',
+                'scope':'Deterministic technical report; the exact-hash owner approval is recorded separately.'}
+        preflight_raw=(json.dumps(technical,indent=2)+'\n').encode()
+        (args.output/'preflight.json').write_bytes(preflight_raw)
+        owner_errors=approval_errors(pkg,approval,raw,audio_raw,preflight_raw)
+        decision={'schemaVersion':1,'bookID':pkg['book']['id'],'collectionRevision':pkg['collectionRevision'],
+                  'packageSHA256':digest(raw),'packageBytes':len(raw),'audioQAReportSHA256':digest(audio_raw),
+                  'preflightReportSHA256':digest(preflight_raw),'validatorExitCodes':exits,
+                  'errors':errors+owner_errors,'warnings':technical['warnings'],
+                  'result':'passed' if not errors and not owner_errors else 'denied',
+                  'scope':'Local decision only; verify owner approval provenance before upload.'}
+        (args.output/'release-decision.json').write_text(json.dumps(decision,indent=2)+'\n')
+        print(json.dumps(decision,indent=2))
+        return 0 if decision['result']=='passed' else 1
     except (OSError,ValueError,KeyError,TypeError,subprocess.TimeoutExpired,json.JSONDecodeError) as exc:
         print(f"DENIED: preflight error: {exc}",file=sys.stderr)
         return 1

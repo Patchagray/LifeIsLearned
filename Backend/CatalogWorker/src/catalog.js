@@ -43,8 +43,10 @@ export async function snapshot(github) {
   for(const e of packages) {
     const a=await approval(e);common(e,a,'book-release');
     require(e.bytes<=64*1024*1024 && positive(e.collectionRevision)&&positive(e.releaseAssetID)&&positive(e.releaseID));
+    const guideVoices=Array.isArray(a.approvedGuideVoiceIDs)?a.approvedGuideVoiceIDs:[a.approvedGuideVoiceID];
     require(a.collectionRevision===e.collectionRevision && a.packageSHA256===e.sha256 && a.packageBytes===e.bytes &&
-      hash(a.audioQAReportSHA256) && typeof a.approvedGuideVoiceID==='string'&&a.approvedGuideVoiceID.trim() &&
+      hash(a.audioQAReportSHA256) && Array.isArray(guideVoices)&&guideVoices.length>0&&guideVoices.length<=8&&
+      guideVoices.every(v=>typeof v==='string'&&v.trim())&&new Set(guideVoices).size===guideVoices.length&&
       typeof a.approvedStorytellerVoiceID==='string'&&a.approvedStorytellerVoiceID.trim() &&
       a.technicalGate==='all-idea-elevenlabs-passed' && hash(a.preflightReportSHA256));
     require(/^approvals\/[a-z0-9-]+\.json$/.test(e.preflightReportRecord));

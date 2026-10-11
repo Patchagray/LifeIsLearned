@@ -1,6 +1,6 @@
 import unittest
 from copy import deepcopy
-from publication_preflight import policy_errors, digest
+from publication_preflight import approval_errors, policy_errors, policy_warnings, digest
 
 RAW=b'{"mock":true}'
 QA=b'{"audioPass":true}'
@@ -31,6 +31,27 @@ class ReleaseGuardUnitTests(unittest.TestCase):
   def test_voice_change_requires_new_approval(self):
     p=deepcopy(BASE);p['book']['lessons'][1]['narration']['provenance']['storytellerVoiceID']='different'
     self.assertTrue(policy_errors(p,APPROVAL,RAW,QA))
+  def test_multiple_explicitly_approved_guide_voices_are_bound_to_package(self):
+    p=deepcopy(BASE);p['book']['lessons'][1]['narration']=deepcopy(BUNDLE);p['book']['lessons'][1]['narration']['provenance']['guideVoiceID']='guide-two'
+    a=deepcopy(APPROVAL);a.pop('approvedGuideVoiceID');a['approvedGuideVoiceIDs']=['approved-guide','guide-two']
+    self.assertEqual([],policy_errors(p,a,RAW,QA))
+    self.assertTrue(any('multiple Guide voices' in w for w in policy_warnings(p)))
+  def test_unapproved_or_overbroad_guide_voice_set_fails(self):
+    p=deepcopy(BASE);p['book']['lessons'][1]['narration']=deepcopy(BUNDLE);p['book']['lessons'][1]['narration']['provenance']['guideVoiceID']='guide-two'
+    a=deepcopy(APPROVAL);a.pop('approvedGuideVoiceID');a['approvedGuideVoiceIDs']=['approved-guide']
+    self.assertTrue(policy_errors(p,a,RAW,QA))
+    a['approvedGuideVoiceIDs']=['approved-guide','guide-two','unused-guide']
+    self.assertTrue(policy_errors(p,a,RAW,QA))
+  def test_missing_produced_at_is_disclosed_not_fabricated(self):
+    p=deepcopy(BASE);p['book']['lessons'][1]['narration']['provenance'].pop('producedAt')
+    self.assertEqual([],policy_errors(p,APPROVAL,RAW,QA))
+    self.assertTrue(any('producedAt is absent' in w for w in policy_warnings(p)))
+  def test_owner_approval_binds_a_stable_technical_report_without_hash_cycle(self):
+    preflight=b'{"result":"passed"}\n'
+    a=deepcopy(APPROVAL);a['preflightReportSHA256']=digest(preflight)
+    self.assertEqual([],approval_errors(BASE,a,RAW,QA,preflight))
+    a['preflightReportSHA256']='0'*64
+    self.assertTrue(any('technical preflight' in e for e in approval_errors(BASE,a,RAW,QA,preflight)))
 if __name__=='__main__':unittest.main()
 
 class RegistryTests(unittest.TestCase):

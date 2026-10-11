@@ -20,7 +20,7 @@ function fixture() {
   const hash=await digest(payload);
   files['catalog/approved-packages.json'].entries=[{bookID:id,collectionRevision:1,releaseAssetID:2,releaseID:1,bytes:payload.length,sha256:hash,approvalRecord:'approvals/test-book.json',preflightReportRecord:'approvals/test-preflight.json'}];
   files['approvals/test-book.json']={type:'life-is-learned-book-release-approval-v1',approved:true,bookID:id,collectionRevision:1,packageBytes:payload.length,packageSHA256:hash,audioQAReportSHA256:'b'.repeat(64),preflightReportSHA256:'c'.repeat(64),technicalGate:'all-idea-elevenlabs-passed',approvedGuideVoiceID:'fixture-guide',approvedStorytellerVoiceID:'fixture-story',approvedBy:'test-only',approvalReference:'unit fixture, not actual approval',approvedAt:'2026-10-10T00:00:00Z'};
-  files['approvals/test-preflight.json']={result:'passed',errors:[],validatorExitCodes:{authoring:0,audio:0},bookID:id,collectionRevision:1,packageSHA256:hash,packageBytes:payload.length,audioQAReportSHA256:'b'.repeat(64)};
+  files['approvals/test-preflight.json']={result:'passed',errors:[],warnings:['optional producedAt omitted'],validatorExitCodes:{authoring:0,audio:0},bookID:id,collectionRevision:1,packageSHA256:hash,packageBytes:payload.length,audioQAReportSHA256:'b'.repeat(64)};
   files['approvals/test-book.json'].preflightReportSHA256=await digest(bytes(files['approvals/test-preflight.json']));
   release={id:1,immutable:true,draft:false,assets:[{id:2,state:'uploaded',size:payload.length,digest:'sha256:'+hash}]};
  }
@@ -61,6 +61,15 @@ test('approved planned cover remains nondownloadable and integrity checked',asyn
 test('approval required; private manifest failures never advertise releases',async()=>{
  for(const mutate of [f=>delete f.files['approvals/test-book.json'],f=>delete f.files['approvals/test-preflight.json'],f=>f.files['approvals/test-preflight.json'].validatorExitCodes.audio=1,f=>f.files['approvals/test-book.json'].approved=false,f=>f.files['approvals/test-book.json'].packageSHA256='0'.repeat(64),f=>f.files['catalog/approved-packages.json'].entries[0].bookID='unknown',f=>f.files['catalog/approved-packages.json'].entries[0].approvalRecord='../private',f=>f.files['approvals/test-book.json'].technicalGate='failed']){
   const f=fixture();await f.approveBook();mutate(f);const c=await(await f.request('/v1/catalog')).json();assert.ok(c.books.every(b=>!b.package));assert.equal((await f.request(`/v1/books/${id}/download`)).status,503);
+ }
+});
+test('an exact approval may bind all packaged Guide voice IDs',async()=>{
+ const f=fixture();await f.approveBook();const approval=f.files['approvals/test-book.json'];
+ approval.approvedGuideVoiceIDs=['fixture-guide','fixture-guide-two'];delete approval.approvedGuideVoiceID;
+ const c=await(await f.request('/v1/catalog')).json();assert.equal(c.books[0].availability,'available');
+ for(const voices of [[],['fixture-guide','fixture-guide'],['']]){
+  approval.approvedGuideVoiceIDs=voices;
+  const hidden=await(await f.request('/v1/catalog')).json();assert.ok(hidden.books.every(b=>!b.package));
  }
 });
 test('release missing, mutable or wrong digest/size fails closed',async()=>{
