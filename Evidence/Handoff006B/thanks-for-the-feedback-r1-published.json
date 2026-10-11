@@ -1,0 +1,47 @@
+{
+  "bookID": "thanks-for-the-feedback",
+  "collectionRevision": 1,
+  "package": {
+    "bytes": 35139188,
+    "sha256": "8f5fb585250328333c2a171f049c0350755d4df64510714c32918c2456292520",
+    "ideas": 12,
+    "audioAssets": 171,
+    "imageAssets": 61
+  },
+  "productionSource": {
+    "repository": "Patchagray/life-is-learned-books",
+    "commit": "10baf2759a11fe13c524302c74517d0b5e1c5821",
+    "path": "books/thanks-for-the-feedback/Thanks_for_the_Feedback_LifeIsLearned_FINAL.json"
+  },
+  "publication": {
+    "repository": "Patchagray/LifeIsLearned-Published",
+    "commit": "16541882f2a7fc9c88b4ad4412f2f3dfd8db02a8",
+    "tag": "thanks-for-the-feedback-r1",
+    "releaseID": 409286715,
+    "assetID": 629330911,
+    "immutable": true,
+    "releaseURL": "https://github.com/Patchagray/LifeIsLearned-Published/releases/tag/thanks-for-the-feedback-r1"
+  },
+  "sourceImplementation": {
+    "repository": "Patchagray/LifeIsLearned",
+    "branch": "feature/handoff-006-private-cloudflare-explore",
+    "commit": "f96ccfda156ac7b60a9e8126b14908d709f4adf9"
+  },
+  "verification": {
+    "authoringPackageGate": "787 checks, 0 errors",
+    "premiumAudioGate": "12 of 12 ideas complete; 171 segments/assets validated; 22,064,230 decoded audio bytes",
+    "releasePreflight": "passed; 0 errors; optional producedAt omission and multiple approved Guide voices recorded as warnings",
+    "releasePreflightReportSHA256": "8a909e8758850c79680f2df65c6e3d7db317dbd883841ccdc96a13679f93512f",
+    "audioQAReportSHA256": "7552f2323a8c6be1335ade68afc2dfb5c9ea42e2f75102fb111a64b112a7cd4e",
+    "workerTests": "13 passed",
+    "releaseGateTests": "16 passed",
+    "stagingCatalog": "HTTP 200; 50 entries; this book available at revision 1",
+    "stagingPackageDownload": "exact 35,139,188 bytes and SHA-256 verified against approved package",
+    "deviceObservation": "Owner reports production-device playback, practice feedback/retry, completion, and progression work; highlight synchronization issue is acknowledged and deferred to a future update. No Codex post-publication device import was performed."
+  },
+  "knownLimitations": [
+    "Narration cue metadata is absent, so synchronized text highlighting is not provided by this package.",
+    "The staging Worker endpoint is publicly reachable to anyone who knows its URL; use is for staging smoke checks, not production privacy controls.",
+    "Optional narration producedAt metadata is absent."
+  ]
+}

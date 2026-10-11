@@ -31,3 +31,7 @@ See [chronological results](test-results.json), [commands and visual inspection]
 ## Live staging
 
 The scoped GitHub App is installed read-only on the private publication repository. All three Worker Secret names are present, and the live endpoint serves the authenticated planned catalog. The Debug build embeds the staging catalog URL; Release configuration leaves that setting empty. See live-staging-smoke.json.
+
+## First published package: Thanks for the Feedback
+
+Revision 1 was published as an immutable release at [thanks-for-the-feedback-r1](https://github.com/Patchagray/LifeIsLearned-Published/releases/tag/thanks-for-the-feedback-r1). The exact package hash, release IDs, preflight evidence, staging download verification, and owner-reported device observations are recorded in [thanks-for-the-feedback-r1-published.json](thanks-for-the-feedback-r1-published.json). The production device's only reported issue is synchronized highlights; the owner accepted that limitation for this release and plans to address it in a future update. Codex verified the staging catalog and full package download from the Mac; it did not perform a post-publication import on the iPhone.
