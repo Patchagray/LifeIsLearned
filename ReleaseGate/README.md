@@ -28,3 +28,15 @@ The two allowlists use `{ "schemaVersion": 1, "entries": [] }`. Each package ent
 Each cover entry contains `bookID`, `path` (under covers/, PNG/JPEG), `mediaType`, `bytes`, `sha256`, and `approvalRecord`. Its separate record has `type:"life-is-learned-cover-preview-approval-v1"`, `approved:true`, exact `bookID`, `bytes`, `sha256`, `mediaType`, `approvedBy`, `approvedAt`, and `approvalReference`. A cover record cannot satisfy the book gate. Preview bytes are separately reviewed, <=512 KiB, and must pass the existing image decoder/dimension constraints before committing them. No example here represents an actual approval.
 
 A deliberate revocation or rollback requires a separate reviewed procedure; do not bypass the monotonic update guard. No production books, voices, private QA reports or approval records belong in the public app-source repository. Synthetic unit fixtures remain local/test-only and are never uploaded to the publication repository.
+
+## Include catalog covers with approved book releases
+
+Every approved published book with a package cover should also publish a separate catalog cover. This keeps Explore metadata small and avoids embedding the library's artwork in the app. Prepare the cover before committing the package/cover registry updates:
+
+```sh
+python3 Tools/extract_catalog_cover.py /private/final.json --output-directory /private/published-checkout/covers > /private/cover-entry.json
+```
+
+The helper extracts the exact referenced `book.coverAssetID` bytes, validates canonical identity, declared PNG/JPEG type, dimensions and the 512 KiB catalog-cover budget, and prints the entry for `catalog/approved-covers.json`. It does not upload or issue approval. For oversized covers, prepare a reviewed thumbnail separately; it never silently recompresses a book's art. Inspect/native-decode the extracted image, record the owner's authorization at the returned `approvalRecord` path using the cover schema above, and include that entry with the release's registry commit. Preserve existing entries. Publish only books/cover art within the owner's authorized scope.
+
+The Worker adds a separate cover URL, SHA-256 and byte count to the discovery metadata. Explore downloads visible covers without fetching the lesson package. The app verifies and caches image bytes under their SHA-256, including across app launches. An unchanged cover is read locally; a changed hash fetches the new image. Cache eviction by iOS or the app's 32 MiB cover-cache limit may require a later re-fetch. No app rebuild or reinstallation is needed for catalog cover additions.
