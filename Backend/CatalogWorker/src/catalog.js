@@ -48,13 +48,21 @@ export async function snapshot(github) {
       hash(a.audioQAReportSHA256) && Array.isArray(guideVoices)&&guideVoices.length>0&&guideVoices.length<=8&&
       guideVoices.every(v=>typeof v==='string'&&v.trim())&&new Set(guideVoices).size===guideVoices.length&&
       typeof a.approvedStorytellerVoiceID==='string'&&a.approvedStorytellerVoiceID.trim() &&
-      a.technicalGate==='all-idea-elevenlabs-passed' && hash(a.preflightReportSHA256));
+      ['all-idea-elevenlabs-passed','all-idea-elevenlabs-passed-with-owner-timing-waiver'].includes(a.technicalGate) && hash(a.preflightReportSHA256));
     require(/^approvals\/[a-z0-9-]+\.json$/.test(e.preflightReportRecord));
     const reportBytes=await github.file(e.preflightReportRecord,ref,65536);
     require(await digest(reportBytes)===a.preflightReportSHA256);
     const report=parse(reportBytes);
-    require(report.result==='passed' && Array.isArray(report.errors) && report.errors.length===0 &&
-      report.validatorExitCodes?.authoring===0 && report.validatorExitCodes?.audio===0 &&
+    const normal=report.result==='passed' && report.validatorExitCodes?.authoring===0 && report.validatorExitCodes?.audio===0 && a.technicalGate==='all-idea-elevenlabs-passed';
+    const w=a.timingWaiver;
+    const waived=report.result==='passed-with-owner-timing-waiver' && a.technicalGate==='all-idea-elevenlabs-passed-with-owner-timing-waiver' &&
+      report.validatorExitCodes?.authoring===1 && report.validatorExitCodes?.audio===1 &&
+      w?.type==='life-is-learned-timing-waiver-v1' && w.packageSHA256===e.sha256 &&
+      Number.isFinite(w.maximumMeasuredCoreSeconds) && w.maximumMeasuredCoreSeconds>300 && w.maximumMeasuredCoreSeconds<=360 &&
+      ['approvedBy','approvedAt','approvalReference'].every(k=>typeof w[k]==='string'&&w[k].trim()) &&
+      Array.isArray(w.validatorErrors)&&w.validatorErrors.length>0&&w.validatorErrors.every(x=>typeof x==='string'&&/^[a-z0-9-]+: (?:[0-9.]+ seconds exceeds the 300-second whole-idea budget\. Shorten the content; do not speed up playback\.|estimatedMinutes must be [0-9]+ for the reference whole-idea plan\.|measured studio core exceeds 300 seconds)$/.test(x)) &&
+      JSON.stringify(w)===JSON.stringify(report.timingWaiver);
+    require((normal || waived) && Array.isArray(report.errors) && report.errors.length===0 &&
       report.bookID===e.bookID && report.collectionRevision===e.collectionRevision &&
       report.packageSHA256===e.sha256 && report.packageBytes===e.bytes && report.audioQAReportSHA256===a.audioQAReportSHA256);
     const release=await github.json(`/repos/${REPO}/releases/${e.releaseID}`);

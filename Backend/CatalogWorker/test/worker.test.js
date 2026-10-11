@@ -114,3 +114,14 @@ test('default Worker fetch keeps the global receiver instead of binding to the G
  try {const gh=new GitHub(e);assert.equal(await gh.token(),'synthetic-token');assert.equal(receiver,globalThis);}
  finally {globalThis.fetch=original;}
 });
+test('exact owner timing waiver preserves raw failures without permitting other exceptions',async()=>{
+ const f=fixture();await f.approveBook();
+ const a=f.files['approvals/test-book.json'],r=f.files['approvals/test-preflight.json'];
+ a.technicalGate='all-idea-elevenlabs-passed-with-owner-timing-waiver';
+ a.timingWaiver={type:'life-is-learned-timing-waiver-v1',packageSHA256:a.packageSHA256,maximumMeasuredCoreSeconds:354,approvedBy:'test-owner',approvedAt:'2026-10-10T00:00:00Z',approvalReference:'test timing waiver',validatorErrors:['idea-a: measured studio core exceeds 300 seconds']};
+ r.result='passed-with-owner-timing-waiver';r.validatorExitCodes={authoring:1,audio:1};r.timingWaiver=structuredClone(a.timingWaiver);
+ a.preflightReportSHA256=await digest(bytes(r));
+ assert.equal((await(await f.request('/v1/catalog')).json()).books.find(b=>b.id===id).availability,'available');
+ a.timingWaiver.validatorErrors=['Missing required image'];r.timingWaiver=structuredClone(a.timingWaiver);a.preflightReportSHA256=await digest(bytes(r));
+ assert.equal((await f.request('/v1/catalog')).headers.get('x-library-state'),'planned-only');
+});

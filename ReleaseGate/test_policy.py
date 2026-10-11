@@ -63,3 +63,22 @@ class RegistryTests(unittest.TestCase):
       with self.assertRaises(ValueError):validate_update(old,proposed)
     new=deepcopy(old);new['entries'][0].update(collectionRevision=3,sha256='b'*64,approvalRecord='approvals/new.json')
     self.assertEqual(validate_update(old,new),new)
+
+class TimingWaiverTests(unittest.TestCase):
+  def test_only_exact_owner_authorized_timing_failures_can_be_waived(self):
+    from publication_preflight import accepted_timing_waiver
+    pkg=deepcopy(BASE)
+    failures=['idea-a: measured studio core exceeds 300 seconds']
+    reports={'authoring':{'errors':[]},'audio':{'errors':failures,'packages':[{'audio':{'assetErrors':{},'ideas':[{'id':'idea-a','revision':1,'premiumNarration':'complete','errors':[],'measuredCoreSeconds':320},{'id':'idea-b','revision':1,'premiumNarration':'complete','errors':[],'measuredCoreSeconds':290}]}}]}}
+    for idea in pkg['book']['lessons']: idea['revision']=1
+    a=deepcopy(APPROVAL)
+    a['timingWaiver']={'type':'life-is-learned-timing-waiver-v1','packageSHA256':digest(RAW),'validatorErrors':failures,'maximumMeasuredCoreSeconds':320,'approvedBy':'test-owner','approvedAt':'2026-10-10T00:00:00Z','approvalReference':'test-only explicit timing exception'}
+    exits={'authoring':1,'audio':1}
+    self.assertIsNotNone(accepted_timing_waiver(pkg,RAW,a,reports,exits))
+    self.assertIsNone(accepted_timing_waiver(pkg,RAW+b'changed',a,reports,exits))
+    broken=deepcopy(reports);broken['audio']['packages'][0]['audio']['ideas'][0]['premiumNarration']='invalid'
+    self.assertIsNone(accepted_timing_waiver(pkg,RAW,a,broken,exits))
+    broken=deepcopy(reports);broken['authoring']['errors']=['Missing required illustration']
+    self.assertIsNone(accepted_timing_waiver(pkg,RAW,a,broken,exits))
+    a['timingWaiver']['maximumMeasuredCoreSeconds']=319
+    self.assertIsNone(accepted_timing_waiver(pkg,RAW,a,reports,exits))

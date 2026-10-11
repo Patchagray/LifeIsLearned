@@ -153,6 +153,29 @@ def report_errors(reports,exits,package):
     return errors
 
 
+def accepted_timing_waiver(pkg, raw, approval, reports, exits):
+    """Owner may waive only reported timing/estimate failures for these exact bytes."""
+    waiver = approval.get('timingWaiver', {})
+    actual = reports['authoring'].get('errors', []) + reports['audio'].get('errors', [])
+    pattern = r"^[a-z0-9-]+: (?:[0-9.]+ seconds exceeds the 300-second whole-idea budget\. Shorten the content; do not speed up playback\.|estimatedMinutes must be [0-9]+ for the reference whole-idea plan\.|measured studio core exceeds 300 seconds)$"
+    if not actual or any(not re.fullmatch(pattern, e) for e in actual): return None
+    if (approval.get('approved') is not True or approval.get('bookID') != pkg['book']['id'] or
+        approval.get('collectionRevision') != pkg['collectionRevision'] or approval.get('packageSHA256') != digest(raw) or
+        not isinstance(waiver, dict) or waiver.get('type') != 'life-is-learned-timing-waiver-v1' or
+        waiver.get('packageSHA256') != digest(raw) or waiver.get('validatorErrors') != actual or
+        not all(isinstance(waiver.get(k), str) and waiver[k].strip() for k in ('approvedBy', 'approvedAt', 'approvalReference')) or
+        exits != {'authoring': 1, 'audio': 1}): return None
+    audio = reports['audio'].get('packages', [{}])[0].get('audio', {})
+    ideas = audio.get('ideas', [])
+    expected = [(l['id'], l['revision']) for l in pkg['book']['lessons']]
+    limit = waiver.get('maximumMeasuredCoreSeconds', 0)
+    if (not isinstance(limit, (int, float)) or not 300 < limit <= 360 or audio.get('assetErrors') or
+        [(i.get('id'), i.get('revision')) for i in ideas] != expected or
+        any(i.get('premiumNarration') != 'complete' or i.get('errors') or not 0 < i.get('measuredCoreSeconds', 0) <= limit for i in ideas)):
+        return None
+    return waiver
+
+
 def approval_errors(package, approval, package_raw, audio_raw, preflight_raw):
     errors=policy_errors(package,approval,package_raw,audio_raw)
     if not isinstance(approval,dict) or approval.get('preflightReportSHA256')!=digest(preflight_raw):
@@ -176,11 +199,16 @@ def main():
         reports,exits=technical_reports(args.package,args.output)
         audio_raw=(args.output/'audio-qa.json').read_bytes()
         errors=report_errors(reports,exits,pkg)
+        waiver=accepted_timing_waiver(pkg,raw,approval,reports,exits)
+        if waiver: errors=[]
         technical={'schemaVersion':1,'bookID':pkg['book']['id'],'collectionRevision':pkg['collectionRevision'],
                 'packageSHA256':digest(raw),'packageBytes':len(raw),'audioQAReportSHA256':digest(audio_raw),
                 'validatorExitCodes':exits,'errors':errors,'warnings':policy_warnings(pkg),
                 'result':'denied' if errors else 'passed',
                 'scope':'Deterministic technical report; the exact-hash owner approval is recorded separately.'}
+        if waiver:
+            technical['result']='passed-with-owner-timing-waiver'
+            technical['timingWaiver']=waiver
         preflight_raw=(json.dumps(technical,indent=2)+'\n').encode()
         (args.output/'preflight.json').write_bytes(preflight_raw)
         owner_errors=approval_errors(pkg,approval,raw,audio_raw,preflight_raw)
@@ -190,9 +218,12 @@ def main():
                   'errors':errors+owner_errors,'warnings':technical['warnings'],
                   'result':'passed' if not errors and not owner_errors else 'denied',
                   'scope':'Local decision only; verify owner approval provenance before upload.'}
+        if waiver and decision['result']=='passed':
+            decision['result']='passed-with-owner-timing-waiver'
+            decision['timingWaiver']=waiver
         (args.output/'release-decision.json').write_text(json.dumps(decision,indent=2)+'\n')
         print(json.dumps(decision,indent=2))
-        return 0 if decision['result']=='passed' else 1
+        return 0 if decision['result'] in ('passed','passed-with-owner-timing-waiver') else 1
     except (OSError,ValueError,KeyError,TypeError,subprocess.TimeoutExpired,json.JSONDecodeError) as exc:
         print(f"DENIED: preflight error: {exc}",file=sys.stderr)
         return 1
