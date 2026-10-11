@@ -50,6 +50,17 @@ final class RemoteFixtureProtocol: URLProtocol, @unchecked Sendable {
         for url in ["http://example.com/book", "https://user:secret@example.com/book"] { XCTAssertThrowsError(try RemoteURL.validate(URL(string: url)!)) }
         XCTAssertTrue(ISBN.isValid("9780141033570")); XCTAssertFalse(ISBN.isValid("9780141033571"))
     }
+    func testAvailabilityFilterCombinesWithSearchAndShelf() throws {
+        var value = try catalog()
+        let id = "thinking-fast-and-slow"
+        let index = try XCTUnwrap(value.books.firstIndex { $0.id == id })
+        value.books[index].availability = .available
+        XCTAssertEqual(value.filtered(query: "", shelfID: nil, showComingSoon: false).map(\.id), [id])
+        XCTAssertEqual(value.filtered(query: "KAHNEMAN", shelfID: "psychology-human-behavior", showComingSoon: false).map(\.id), [id])
+        XCTAssertTrue(value.filtered(query: "", shelfID: "money-personal-finance", showComingSoon: false).isEmpty)
+        XCTAssertEqual(value.filtered(query: "", shelfID: nil, showComingSoon: true).count, 50)
+        XCTAssertFalse(value.filtered(query: "", shelfID: "psychology-human-behavior", showComingSoon: true).isEmpty)
+    }
     func testLastGoodCacheSurvivesMalformedAndOfflineRefresh() async throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: directory) }

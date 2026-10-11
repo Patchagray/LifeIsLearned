@@ -127,9 +127,10 @@ struct DiscoveryCatalog: Codable, Sendable {
             try CollectionLimits.require(new >= old, "Catalog refresh is older than the saved catalog.")
         }
     }
-    func filtered(query: String, shelfID: String?) -> [DiscoveryBook] {
+    func filtered(query: String, shelfID: String?, showComingSoon: Bool = true) -> [DiscoveryBook] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
         return books.filter { book in
+            (showComingSoon || book.availability == .available) &&
             (q.isEmpty || (book.title + " " + book.author).localizedStandardContains(q)) &&
             (shelfID == nil || book.primaryShelfID == shelfID || book.secondaryShelfIDs.contains(shelfID!))
         }

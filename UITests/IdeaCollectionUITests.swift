@@ -605,6 +605,22 @@ final class ExploreUITests: XCTestCase {
     private func capture(_ name: String) {
         let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = "h006-" + name; a.lifetime = .keepAlways; add(a)
     }
+    func testAvailableByDefaultAndComingSoonToggle() {
+        let app = launch(empty: true)
+        reveal(app.buttons["Explore"], app); app.buttons["Explore"].tap()
+        let toggle = app.switches["discovery-coming-soon"]
+        XCTAssertTrue(toggle.waitForExistence(timeout: 10))
+        XCTAssertEqual(toggle.value as? String, "0")
+        let count = app.staticTexts["explore-count"]
+        expectation(for: NSPredicate(format: "label == '1 title'"), evaluatedWith: count)
+        waitForExpectations(timeout: 10)
+        capture("available-only")
+        toggle.tap()
+        XCTAssertEqual(count.label, "50 titles")
+        capture("coming-soon-included")
+        toggle.tap()
+        XCTAssertEqual(count.label, "1 title")
+    }
     func testEmptyLibraryExploreAndPlusMenu() {
         let app = launch(empty: true)
         reveal(app.buttons["Explore"], app)
@@ -613,6 +629,7 @@ final class ExploreUITests: XCTestCase {
         app.buttons["Explore"].tap()
         XCTAssertTrue(app.textFields["explore-search"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.navigationBars["Life Is Learned"].exists, "Explore must remain in the home navigation")
+        app.switches["discovery-coming-soon"].tap()
         let details = app.buttons["details-thinking-fast-and-slow"]; reveal(details, app); details.tap()
         capture("explore-details")
         app.buttons["Add Books"].tap()
@@ -631,6 +648,7 @@ final class ExploreUITests: XCTestCase {
         app.buttons["Explore"].tap()
         let search = app.textFields["explore-search"]; XCTAssertTrue(search.waitForExistence(timeout: 10))
         XCTAssertEqual(search.value as? String, "Search Explore")
+        app.switches["discovery-coming-soon"].tap()
         search.tap(); search.typeText("Kahneman\n")
         let filtered = NSPredicate(format: "label == %@", "1 title")
         expectation(for: filtered, evaluatedWith: app.staticTexts["explore-count"])
@@ -652,7 +670,9 @@ final class ExploreUITests: XCTestCase {
         let app = launch(empty: true, cover: true)
         reveal(app.buttons["Explore"], app); app.buttons["Explore"].tap()
         let search = app.textFields["explore-search"]
-        XCTAssertTrue(search.waitForExistence(timeout: 10)); search.tap(); search.typeText("Discovery verification\n")
+        XCTAssertTrue(search.waitForExistence(timeout: 10))
+        app.switches["discovery-coming-soon"].tap()
+        search.tap(); search.typeText("Discovery verification\n")
         let book = app.buttons["details-influence-the-psychology-of-persuasion"]
         reveal(book, app)
         expectation(for: NSPredicate(format: "value CONTAINS 'cover preview loaded'"), evaluatedWith: book)
@@ -663,6 +683,7 @@ final class ExploreUITests: XCTestCase {
     func testExploreAtAccessibilityTextSize() {
         let app = launch(empty: true, large: true)
         reveal(app.buttons["Explore"], app); app.buttons["Explore"].tap()
+        let toggle = app.switches["discovery-coming-soon"]; reveal(toggle, app); toggle.tap()
         reveal(app.buttons["details-thinking-fast-and-slow"], app)
         app.buttons["details-thinking-fast-and-slow"].tap()
         capture("explore-large-text")

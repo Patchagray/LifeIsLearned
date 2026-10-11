@@ -4,6 +4,7 @@ import SwiftUI
 @MainActor final class ExploreSession: ObservableObject {
     @Published var query = ""
     @Published var shelfID: String?
+    @Published var showComingSoon = false
     @Published var focusID: String?
     let discovery: DiscoveryStore
     let download: BookDownloadManager
@@ -40,8 +41,22 @@ import SwiftUI
     private var books: [DiscoveryBook] {
         guard let catalog = discovery.catalog else { return [] }
         return session.focusID.map { id in catalog.books.filter { $0.id == id } }
-            ?? catalog.filtered(query: session.query, shelfID: session.shelfID)
+            ?? catalog.filtered(query: session.query, shelfID: session.shelfID, showComingSoon: session.showComingSoon)
     }
+    private var shelfFilter: some View {
+        Picker("Shelf", selection: Binding(get: { session.shelfID }, set: { session.focusID = nil; session.shelfID = $0 })) {
+            Text("All shelves").tag(String?.none)
+            ForEach(discovery.identity.shelves) { Text($0.name).tag(Optional($0.id)) }
+        }.pickerStyle(.menu).accessibilityIdentifier("discovery-shelf")
+    }
+    private var comingSoonFilter: some View {
+        Toggle("Show Coming Soon", isOn: Binding(get: { session.showComingSoon }, set: {
+            session.focusID = nil; session.showComingSoon = $0
+        }))
+        .font(.subheadline).tint(Palette.teal)
+        .accessibilityIdentifier("discovery-coming-soon")
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             HStack(alignment: .firstTextBaseline) {
@@ -61,14 +76,14 @@ import SwiftUI
             }.padding(.horizontal, 14).frame(minHeight: 48).background(Palette.surface, in: RoundedRectangle(cornerRadius: 12))
                 .overlay(RoundedRectangle(cornerRadius: 12).stroke(Palette.rule, lineWidth: 1))
             if session.focusID != nil { Button("Show all books") { session.focusID = nil } }
-            Picker("Shelf", selection: Binding(get: { session.shelfID }, set: { session.focusID = nil; session.shelfID = $0 })) {
-                Text("All shelves").tag(String?.none)
-                ForEach(discovery.identity.shelves) { Text($0.name).tag(Optional($0.id)) }
-            }.pickerStyle(.menu).accessibilityIdentifier("discovery-shelf")
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 16) { shelfFilter; comingSoonFilter }.fixedSize(horizontal: true, vertical: false)
+                VStack(alignment: .leading, spacing: 12) { shelfFilter; comingSoonFilter }
+            }
             Text("\(books.count) \(books.count == 1 ? "title" : "titles")").font(.caption).foregroundStyle(Palette.secondary).accessibilityIdentifier("explore-count")
             if let status = discovery.status { Label(status, systemImage: "info.circle").font(.footnote).foregroundStyle(Palette.secondary).accessibilityIdentifier("discovery-status") }
             if discovery.refreshing { HStack { ProgressView("Refreshing catalog"); Spacer(); Button("Cancel refresh") { discovery.cancelRefresh() } } }
-            if books.isEmpty { EmptyLearningView(title: "No matching books.", message: session.focusID == nil ? "Try another title, author or shelf. Refresh to check for new releases." : "This book is not in the current public catalog. Your progress and cards remain saved. You can re-import its complete book file.") }
+            if books.isEmpty { EmptyLearningView(title: "No matching books.", message: session.focusID == nil ? "Try another title or shelf, or turn on Show Coming Soon to include planned books." : "This book is not in the current public catalog. Your progress and cards remain saved. You can re-import its complete book file.") }
             LazyVStack(alignment: .leading, spacing: 24) {
                 ForEach(books) { book in
                     DiscoveryBookRow(book: book, service: discovery.service,
